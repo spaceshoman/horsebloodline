@@ -1,8 +1,9 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 
 /* ===== Constants ===== */
 const SURFACE = { TURF:"芝", DIRT:"ダート", BOTH:"芝・ダート兼用" };
 const DISTANCE = { SPRINT:"短距離 (~1400m)", MILE:"マイル (1400~1800m)", MIDDLE:"中距離 (1800~2400m)", LONG:"長距離 (2400m~)", VERSATILE:"万能" };
+const DIST_SHORT = { SPRINT:"短距離", MILE:"マイル", MIDDLE:"中距離", LONG:"長距離" };
 const COURSE = { RIGHT:"右回り", LEFT:"左回り", BOTH:"左右兼用" };
 const GROWTH = { EARLY:"早熟", NORMAL:"普通", LATE:"晩成" };
 const TRACK_COND = { GOOD:"良", SLIGHTLY_HEAVY:"稍重", HEAVY:"重", BAD:"不良" };
@@ -86,13 +87,11 @@ function calcAptitude(stallion, race) {
   let details = [];
   const w = race.weights || {surface:25,distance:25,course:20,track:15,growth:15};
 
-  // Surface match (max 25)
   const surfMax = w.surface;
   if(stallion.surface==="BOTH"){score+=surfMax*0.9;details.push({label:"馬場",pts:+(surfMax*0.9).toFixed(1),max:surfMax,note:"兼用"});}
   else if(stallion.surface===race.surface){score+=surfMax;details.push({label:"馬場",pts:surfMax,max:surfMax,note:"完全一致"});}
   else{score+=0;details.push({label:"馬場",pts:0,max:surfMax,note:"不適合"});}
 
-  // Distance match (max 25)
   const distMax = w.distance;
   const dOrder=["SPRINT","MILE","MIDDLE","LONG"];
   const ri=dOrder.indexOf(race.distance);
@@ -108,13 +107,11 @@ function calcAptitude(stallion, race) {
     score+=pts;details.push({label:"距離",pts:+pts.toFixed(1),max:distMax,note:gap===1?"やや範囲外":"大きく範囲外"});
   }
 
-  // Course match (max 20)
   const cMax = w.course;
   if(stallion.course==="BOTH"){score+=cMax*0.85;details.push({label:"コース",pts:+(cMax*0.85).toFixed(1),max:cMax,note:"左右兼用"});}
   else if(stallion.course===race.course){score+=cMax;details.push({label:"コース",pts:cMax,max:cMax,note:"完全一致"});}
   else{score+=cMax*0.3;details.push({label:"コース",pts:+(cMax*0.3).toFixed(1),max:cMax,note:"逆回り"});}
 
-  // Track condition (max 15)
   const tMax = w.track;
   const condMap={GOOD:0,SLIGHTLY_HEAVY:1,HEAVY:2,BAD:3};
   const condLevel=condMap[race.trackCondition]||0;
@@ -127,7 +124,6 @@ function calcAptitude(stallion, race) {
     score+=realPts;details.push({label:"馬場状態",pts:realPts,max:tMax,note:`重適性${stallion.heavyTrack}/10`});
   }
 
-  // Growth match (max 15)
   const gMax = w.growth;
   if(!race.horseAge||race.horseAge==="ANY"){
     score+=gMax*0.7;details.push({label:"成長",pts:+(gMax*0.7).toFixed(1),max:gMax,note:"年齢不問"});
@@ -141,7 +137,6 @@ function calcAptitude(stallion, race) {
     score+=pts;details.push({label:"成長",pts,max:gMax,note:`${GROWTH[stallion.growth]}×${age}歳`});
   }
 
-  // Bonus: ability scores context
   let bonus = 0;
   if(race.distance==="SPRINT"||race.distance==="MILE") bonus+=stallion.speedScore*0.3;
   if(race.distance==="LONG") bonus+=stallion.staminaScore*0.3;
@@ -328,6 +323,848 @@ const AptitudeCard=({stallion,result,rank})=>{
   );
 };
 
+/* ================================================================
+   ===== PHASE 3: ANALYSIS COMPONENTS =====
+   ================================================================ */
+
+/* --- Utility: Sire Line Classification --- */
+const SIRE_LINES = {
+  "サンデーサイレンス系": ["サンデーサイレンス","ディープインパクト","ステイゴールド","ハーツクライ","アグネスタキオン","フジキセキ","マンハッタンカフェ","ダイワメジャー","ネオユニヴァース","ゴールドアリュール","ブラックタイド","アドマイヤベガ","キタサンブラック"],
+  "キングマンボ系": ["キングカメハメハ","キングマンボ","ドゥラメンテ","ロードカナロア","ルーラーシップ","リオンディーズ","エイシンフラッシュ","キングズベスト"],
+  "ロベルト系": ["シンボリクリスエス","クリスエス","ブライアンズタイム","タニノギムレット","リアルシャダイ","ロベルト","スクリーンヒーロー","グラスワンダー","モーリス"],
+  "ノーザンダンサー系": ["デインヒル","ダンジグ","ハービンジャー","タートルボウル","サドラーズウェルズ","オペラハウス","ダンシングブレーヴ","リファール","ノーザンテースト","ディンヒル","ローエングリン","シングスピール"],
+  "ミスタープロスペクター系": ["エンドスウィープ","フォーティナイナー","アドマイヤムーン"],
+  "ストームキャット系": ["ヘネシー","ヘニーヒューズ","ストームキャット","レイヴンズパス","エルーシヴクオリティ"],
+  "エーピーインディ系": ["エーピーインディ","プルピット","パイロ","シニスターミニスター","オールドトリエステ"],
+  "その他": [],
+};
+
+function getSireLine(sireName) {
+  for(const [line, sires] of Object.entries(SIRE_LINES)){
+    if(sires.includes(sireName)) return line;
+  }
+  return "その他";
+}
+
+const LINE_COLORS = {
+  "サンデーサイレンス系":"#1D9E75",
+  "キングマンボ系":"#378ADD",
+  "ロベルト系":"#D85A30",
+  "ノーザンダンサー系":"#7F77DD",
+  "ミスタープロスペクター系":"#EF9F27",
+  "ストームキャット系":"#E05C97",
+  "エーピーインディ系":"#44B8A8",
+  "その他":"#999",
+};
+
+/* --- 1. Distance Range Chart --- */
+const DistanceRangeChart=({stallions})=>{
+  const distOrder=["SPRINT","MILE","MIDDLE","LONG"];
+  const distX={SPRINT:0, MILE:1, MIDDLE:2, LONG:3};
+  const sorted=[...stallions].sort((a,b)=>{
+    const aMid=(distX[a.distanceMin]+distX[a.distanceMax])/2;
+    const bMid=(distX[b.distanceMin]+distX[b.distanceMax])/2;
+    return aMid-bMid || a.name.localeCompare(b.name,"ja");
+  });
+  const [hovered,setHovered]=useState(null);
+  const barH=22, gap=3, padTop=36, padLeft=110, padRight=20;
+  const chartW=500;
+  const totalH=padTop+(barH+gap)*sorted.length+20;
+  const colW=(chartW-padLeft-padRight)/4;
+
+  return(
+    <div style={{overflowX:"auto"}}>
+      <svg viewBox={`0 0 ${chartW} ${totalH}`} style={{width:"100%",maxWidth:chartW,display:"block"}}>
+        {/* Column headers */}
+        {distOrder.map((d,i)=>(
+          <g key={d}>
+            <rect x={padLeft+i*colW} y={0} width={colW} height={totalH} fill={i%2===0?"transparent":"var(--color-background-secondary)"} opacity={0.3}/>
+            <text x={padLeft+i*colW+colW/2} y={24} textAnchor="middle" fontSize={11} fontWeight={500} fill="var(--color-text-secondary)">{DIST_SHORT[d]}</text>
+          </g>
+        ))}
+        {/* Bars */}
+        {sorted.map((s,i)=>{
+          const minI=distX[s.distanceMin]||0;
+          const maxI=distX[s.distanceMax]||0;
+          const x1=padLeft+minI*colW+4;
+          const x2=padLeft+(maxI+1)*colW-4;
+          const y=padTop+i*(barH+gap);
+          const surfColor=s.surface==="TURF"?"#1D9E75":s.surface==="DIRT"?"#EF9F27":"#7F77DD";
+          const isHover=hovered===s.id;
+          return(
+            <g key={s.id} onMouseEnter={()=>setHovered(s.id)} onMouseLeave={()=>setHovered(null)} style={{cursor:"pointer"}}>
+              <text x={padLeft-6} y={y+barH/2+4} textAnchor="end" fontSize={10} fontWeight={isHover?600:400} fill={isHover?surfColor:"var(--color-text-primary)"}>{s.name}</text>
+              <rect x={x1} y={y+2} width={Math.max(x2-x1,8)} height={barH-4} rx={6} fill={surfColor} opacity={isHover?1:0.7}/>
+              {isHover&&<text x={x2+6} y={y+barH/2+4} fontSize={9} fill="var(--color-text-secondary)">SP:{s.speedScore} ST:{s.staminaScore} PW:{s.powerScore}</text>}
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+};
+
+/* --- 2. Surface Aptitude Scatter --- */
+const SurfaceScatter=({stallions})=>{
+  const [hovered,setHovered]=useState(null);
+  const padL=50,padR=30,padT=40,padB=50;
+  const w=480,h=380;
+  const innerW=w-padL-padR, innerH=h-padT-padB;
+
+  // X = speed, Y = stamina, color = surface, size = power
+  return(
+    <div>
+      <div style={{fontSize:11,color:"var(--color-text-tertiary)",marginBottom:8}}>X軸: スピード / Y軸: スタミナ / 円の大きさ: パワー / 色: 馬場適性</div>
+      <svg viewBox={`0 0 ${w} ${h}`} style={{width:"100%",maxWidth:w,display:"block"}}>
+        {/* Grid */}
+        {[...Array(10)].map((_,i)=>{
+          const x=padL+(i/9)*innerW;
+          const y=padT+(i/9)*innerH;
+          return(<g key={i}>
+            <line x1={x} y1={padT} x2={x} y2={padT+innerH} stroke="var(--color-border-tertiary)" strokeWidth={0.5}/>
+            <line x1={padL} y1={y} x2={padL+innerW} y2={y} stroke="var(--color-border-tertiary)" strokeWidth={0.5}/>
+            <text x={x} y={h-padB+16} textAnchor="middle" fontSize={9} fill="var(--color-text-tertiary)">{i+1}</text>
+            <text x={padL-8} y={padT+innerH-(i/9)*innerH+3} textAnchor="end" fontSize={9} fill="var(--color-text-tertiary)">{i+1}</text>
+          </g>);
+        })}
+        <text x={w/2} y={h-6} textAnchor="middle" fontSize={11} fill="var(--color-text-secondary)">スピード →</text>
+        <text x={10} y={h/2} textAnchor="middle" fontSize={11} fill="var(--color-text-secondary)" transform={`rotate(-90,10,${h/2})`}>スタミナ →</text>
+        {/* Bubbles */}
+        {stallions.map(s=>{
+          const cx=padL+((s.speedScore-1)/9)*innerW;
+          const cy=padT+innerH-((s.staminaScore-1)/9)*innerH;
+          const r=6+s.powerScore*1.5;
+          const surfColor=s.surface==="TURF"?"#1D9E75":s.surface==="DIRT"?"#EF9F27":"#7F77DD";
+          const isH=hovered===s.id;
+          return(
+            <g key={s.id} onMouseEnter={()=>setHovered(s.id)} onMouseLeave={()=>setHovered(null)} style={{cursor:"pointer"}}>
+              <circle cx={cx} cy={cy} r={r} fill={surfColor} opacity={isH?0.95:0.55} stroke={isH?surfColor:"none"} strokeWidth={2}/>
+              {isH&&<>
+                <text x={cx} y={cy-r-4} textAnchor="middle" fontSize={10} fontWeight={600} fill="var(--color-text-primary)">{s.name}</text>
+                <text x={cx} y={cy-r-16} textAnchor="middle" fontSize={9} fill="var(--color-text-secondary)">{SURFACE[s.surface]} / PW:{s.powerScore}</text>
+              </>}
+            </g>
+          );
+        })}
+        {/* Legend */}
+        {[{l:"芝",c:"#1D9E75"},{l:"ダート",c:"#EF9F27"},{l:"兼用",c:"#7F77DD"}].map((item,i)=>(
+          <g key={i} transform={`translate(${padL+i*70},${padT-28})`}>
+            <circle cx={6} cy={0} r={5} fill={item.c} opacity={0.7}/>
+            <text x={16} y={4} fontSize={10} fill="var(--color-text-secondary)">{item.l}</text>
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+};
+
+/* --- 3. Sire x BMS Heatmap --- */
+const SireBmsHeatmap=({stallions})=>{
+  // Build unique sire and sireOfDam (BMS) names from actual data
+  const sireNames=[...new Set(stallions.map(s=>s.pedigree?.sire).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"ja"));
+  const bmsNames=[...new Set(stallions.map(s=>s.pedigree?.sireOfDam).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"ja"));
+  
+  // For the heatmap, pick top sires and top BMS that appear at least once
+  const sireCount={};
+  stallions.forEach(s=>{if(s.pedigree?.sire)sireCount[s.pedigree.sire]=(sireCount[s.pedigree.sire]||0)+1;});
+  const bmsCount={};
+  stallions.forEach(s=>{if(s.pedigree?.sireOfDam)bmsCount[s.pedigree.sireOfDam]=(bmsCount[s.pedigree.sireOfDam]||0)+1;});
+
+  const topSires=Object.entries(sireCount).sort((a,b)=>b[1]-a[1]).slice(0,10).map(e=>e[0]);
+  const topBms=Object.entries(bmsCount).sort((a,b)=>b[1]-a[1]).slice(0,10).map(e=>e[0]);
+
+  // Build matrix: for each (sire, bms) pair, average total ability
+  const matrix={};
+  stallions.forEach(s=>{
+    const sr=s.pedigree?.sire;
+    const bm=s.pedigree?.sireOfDam;
+    if(!sr||!bm) return;
+    const key=`${sr}|${bm}`;
+    if(!matrix[key]) matrix[key]={sum:0,count:0,names:[]};
+    const total=(s.speedScore+s.staminaScore+s.powerScore)/3;
+    matrix[key].sum+=total;
+    matrix[key].count++;
+    matrix[key].names.push(s.name);
+  });
+
+  // Also show sire-line affinity scores (simulated from data)
+  const cellSize=42, padL=90, padT=90, padR=10, padB=10;
+  const w=padL+topSires.length*cellSize+padR;
+  const h=padT+topBms.length*cellSize+padB;
+
+  const [hoverCell,setHoverCell]=useState(null);
+
+  const getColor=(val)=>{
+    if(!val) return "var(--color-background-secondary)";
+    const t=Math.max(0,Math.min(1,(val-4)/5));
+    const r=Math.round(29+t*0);
+    const g=Math.round(158*t);
+    const b=Math.round(117*t);
+    return `rgb(${r},${g},${b})`;
+  };
+
+  return(
+    <div>
+      <div style={{fontSize:11,color:"var(--color-text-tertiary)",marginBottom:8}}>父 × 母父の組み合わせ別 平均能力値（データが存在するセルのみ着色）</div>
+      <div style={{overflowX:"auto"}}>
+        <svg viewBox={`0 0 ${w} ${h}`} style={{width:"100%",maxWidth:w,minWidth:400,display:"block"}}>
+          {/* Column headers (sires) */}
+          {topSires.map((sr,i)=>(
+            <text key={sr} x={padL+i*cellSize+cellSize/2} y={padT-8} textAnchor="end" fontSize={9} fill="var(--color-text-secondary)" transform={`rotate(-45,${padL+i*cellSize+cellSize/2},${padT-8})`}>{sr.slice(0,6)}</text>
+          ))}
+          {/* Row headers (BMS) */}
+          {topBms.map((bm,j)=>(
+            <text key={bm} x={padL-6} y={padT+j*cellSize+cellSize/2+3} textAnchor="end" fontSize={9} fill="var(--color-text-secondary)">{bm.slice(0,7)}</text>
+          ))}
+          {/* Cells */}
+          {topSires.map((sr,i)=>
+            topBms.map((bm,j)=>{
+              const key=`${sr}|${bm}`;
+              const cell=matrix[key];
+              const avg=cell?cell.sum/cell.count:null;
+              const isH=hoverCell===key;
+              return(
+                <g key={key} onMouseEnter={()=>setHoverCell(key)} onMouseLeave={()=>setHoverCell(null)} style={{cursor:cell?"pointer":"default"}}>
+                  <rect x={padL+i*cellSize+1} y={padT+j*cellSize+1} width={cellSize-2} height={cellSize-2} rx={4}
+                    fill={avg?getColor(avg):"var(--color-background-secondary)"} opacity={avg?(isH?1:0.8):0.3}
+                    stroke={isH&&avg?"var(--color-text-primary)":"none"} strokeWidth={1.5}/>
+                  {avg&&<text x={padL+i*cellSize+cellSize/2} y={padT+j*cellSize+cellSize/2+4} textAnchor="middle" fontSize={10} fontWeight={500} fill="#fff">{avg.toFixed(1)}</text>}
+                </g>
+              );
+            })
+          )}
+          {/* Hover tooltip */}
+          {hoverCell&&matrix[hoverCell]&&(()=>{
+            const [sr,bm]=hoverCell.split("|");
+            const cell=matrix[hoverCell];
+            const i=topSires.indexOf(sr);
+            const j=topBms.indexOf(bm);
+            const tx=padL+i*cellSize+cellSize+4;
+            const ty=padT+j*cellSize;
+            return(
+              <g>
+                <rect x={tx} y={ty} width={130} height={40} rx={6} fill="var(--color-background-primary)" stroke="var(--color-border-tertiary)"/>
+                <text x={tx+8} y={ty+14} fontSize={9} fontWeight={500} fill="var(--color-text-primary)">{sr}×{bm}</text>
+                <text x={tx+8} y={ty+28} fontSize={9} fill="var(--color-text-secondary)">{cell.names.join(", ")}</text>
+              </g>
+            );
+          })()}
+        </svg>
+      </div>
+    </div>
+  );
+};
+
+/* --- 4. Sire Line Trend (Stacked Bar) --- */
+const SireLineTrend=({stallions})=>{
+  // Group stallions by sire line
+  const lineData={};
+  const allLines=new Set();
+  
+  stallions.forEach(s=>{
+    const sireName=s.pedigree?.sire||"不明";
+    const line=getSireLine(sireName);
+    allLines.add(line);
+    if(!lineData[line]) lineData[line]={count:0,stallions:[],avgSpeed:0,avgStamina:0,avgPower:0};
+    lineData[line].count++;
+    lineData[line].stallions.push(s);
+    lineData[line].avgSpeed+=s.speedScore;
+    lineData[line].avgStamina+=s.staminaScore;
+    lineData[line].avgPower+=s.powerScore;
+  });
+
+  // Compute averages
+  Object.values(lineData).forEach(d=>{
+    d.avgSpeed=+(d.avgSpeed/d.count).toFixed(1);
+    d.avgStamina=+(d.avgStamina/d.count).toFixed(1);
+    d.avgPower=+(d.avgPower/d.count).toFixed(1);
+  });
+
+  const lines=Object.entries(lineData).sort((a,b)=>b[1].count-a[1].count);
+  const total=stallions.length;
+  const [hoveredLine,setHoveredLine]=useState(null);
+
+  // Surface distribution per line
+  const surfDist=(lst)=>{
+    const t=lst.filter(s=>s.surface==="TURF").length;
+    const d=lst.filter(s=>s.surface==="DIRT").length;
+    const b=lst.filter(s=>s.surface==="BOTH").length;
+    return {turf:t,dirt:d,both:b};
+  };
+
+  // Growth distribution per line
+  const growthDist=(lst)=>{
+    const e=lst.filter(s=>s.growth==="EARLY").length;
+    const n=lst.filter(s=>s.growth==="NORMAL").length;
+    const l=lst.filter(s=>s.growth==="LATE").length;
+    return {early:e,normal:n,late:l};
+  };
+
+  const barMaxW=300, barH=32, gap=8, padL=140, padR=60;
+  const svgW=padL+barMaxW+padR;
+  const svgH=40+lines.length*(barH+gap)+60;
+
+  return(
+    <div>
+      <div style={{fontSize:11,color:"var(--color-text-tertiary)",marginBottom:12}}>父系統（サイアーライン）ごとの頭数分布と平均能力値</div>
+      <svg viewBox={`0 0 ${svgW} ${svgH}`} style={{width:"100%",maxWidth:svgW,display:"block"}}>
+        <text x={padL} y={20} fontSize={11} fontWeight={500} fill="var(--color-text-secondary)">系統別構成比（{total}頭）</text>
+        {lines.map(([name,data],i)=>{
+          const y=40+i*(barH+gap);
+          const bw=(data.count/total)*barMaxW;
+          const pct=((data.count/total)*100).toFixed(0);
+          const col=LINE_COLORS[name]||"#999";
+          const isH=hoveredLine===name;
+          const sd=surfDist(data.stallions);
+          const gd=growthDist(data.stallions);
+          return(
+            <g key={name} onMouseEnter={()=>setHoveredLine(name)} onMouseLeave={()=>setHoveredLine(null)} style={{cursor:"pointer"}}>
+              <text x={padL-8} y={y+barH/2+4} textAnchor="end" fontSize={10} fontWeight={isH?600:400} fill={isH?col:"var(--color-text-primary)"}>{name}</text>
+              <rect x={padL} y={y+2} width={Math.max(bw,4)} height={barH-4} rx={6} fill={col} opacity={isH?1:0.7}/>
+              <text x={padL+bw+8} y={y+barH/2+4} fontSize={10} fontWeight={500} fill="var(--color-text-secondary)">{data.count}頭 ({pct}%)</text>
+              {isH&&(
+                <g>
+                  <rect x={padL} y={y+barH+2} width={barMaxW+padR} height={52} rx={6} fill="var(--color-background-primary)" stroke="var(--color-border-tertiary)" strokeWidth={0.5}/>
+                  <text x={padL+8} y={y+barH+18} fontSize={9} fill="var(--color-text-secondary)">
+                    平均 — SP: {data.avgSpeed}　ST: {data.avgStamina}　PW: {data.avgPower}
+                  </text>
+                  <text x={padL+8} y={y+barH+32} fontSize={9} fill="var(--color-text-secondary)">
+                    馬場 — 芝:{sd.turf} ダ:{sd.dirt} 兼:{sd.both}　成長 — 早:{gd.early} 普:{gd.normal} 晩:{gd.late}
+                  </text>
+                  <text x={padL+8} y={y+barH+46} fontSize={8} fill="var(--color-text-tertiary)">
+                    {data.stallions.map(s=>s.name).join("、")}
+                  </text>
+                </g>
+              )}
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+};
+
+/* --- Analysis Tab Wrapper --- */
+const AnalysisTab=({stallions})=>{
+  const [subTab,setSubTab]=useState("distance");
+  const tabs=[
+    {id:"distance",label:"距離適性"},
+    {id:"surface",label:"芝/ダート"},
+    {id:"heatmap",label:"父×母父"},
+    {id:"trend",label:"系統トレンド"},
+  ];
+  const subBtn=(id,label)=>(
+    <button key={id} onClick={()=>setSubTab(id)} style={{
+      padding:"6px 14px",borderRadius:20,border:subTab===id?"none":"1px solid var(--color-border-tertiary)",
+      background:subTab===id?"#378ADD":"transparent",
+      color:subTab===id?"#fff":"var(--color-text-secondary)",
+      fontSize:11,fontWeight:500,cursor:"pointer",transition:"all 0.2s"
+    }}>{label}</button>
+  );
+
+  return(
+    <div>
+      <div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:16}}>
+        {tabs.map(t=>subBtn(t.id,t.label))}
+      </div>
+      <div style={{background:"var(--color-background-primary)",border:"1px solid var(--color-border-tertiary)",borderRadius:12,padding:16}}>
+        {subTab==="distance"&&<DistanceRangeChart stallions={stallions}/>}
+        {subTab==="surface"&&<SurfaceScatter stallions={stallions}/>}
+        {subTab==="heatmap"&&<SireBmsHeatmap stallions={stallions}/>}
+        {subTab==="trend"&&<SireLineTrend stallions={stallions}/>}
+      </div>
+    </div>
+  );
+};
+
+/* ================================================================
+   ===== PHASE 4: RACE PREDICTION =====
+   ================================================================ */
+
+const SAMPLE_RACES = [
+  { name:"東京11R 芝2400m", venue:"tokyo", surface:"TURF", distance:"MIDDLE", cond:"GOOD",
+    runners:[
+      {name:"ナチュラルボーン",sire:"ディープインパクト",bms:"キングカメハメハ",age:"3"},
+      {name:"スターライトレイン",sire:"キタサンブラック",bms:"ハーツクライ",age:"3"},
+      {name:"ロイヤルブレイブ",sire:"ドゥラメンテ",bms:"ディープインパクト",age:"3"},
+      {name:"ミラクルウィンド",sire:"エピファネイア",bms:"サンデーサイレンス",age:"4"},
+      {name:"ゴールデンクラウン",sire:"ロードカナロア",bms:"ステイゴールド",age:"4"},
+      {name:"サンダーボルト",sire:"オルフェーヴル",bms:"キングカメハメハ",age:"3"},
+    ]},
+  { name:"阪神10R ダ1800m", venue:"hanshin", surface:"DIRT", distance:"MILE", cond:"SLIGHTLY_HEAVY",
+    runners:[
+      {name:"ダートキング",sire:"ヘニーヒューズ",bms:"サンデーサイレンス",age:"4"},
+      {name:"パワーストーム",sire:"シニスターミニスター",bms:"ブライアンズタイム",age:"5"},
+      {name:"サンドブラスト",sire:"ゴールドアリュール",bms:"フレンチデピュティ",age:"4"},
+      {name:"ミッドナイトラン",sire:"パイロ",bms:"キングカメハメハ",age:"3"},
+      {name:"アイアンフィスト",sire:"クロフネ",bms:"サンデーサイレンス",age:"5"},
+    ]},
+  { name:"中山12R 芝1600m", venue:"nakayama", surface:"TURF", distance:"MILE", cond:"GOOD",
+    runners:[
+      {name:"ライトニングマイル",sire:"ダイワメジャー",bms:"サクラバクシンオー",age:"3"},
+      {name:"シルバーアロー",sire:"ロードカナロア",bms:"ディープインパクト",age:"4"},
+      {name:"フラッシュダンス",sire:"モーリス",bms:"キングカメハメハ",age:"3"},
+      {name:"クイーンズガード",sire:"キズナ",bms:"ハーツクライ",age:"4"},
+    ]},
+];
+
+/* Runner entry row */
+const RunnerRow=({runner,index,onChange,onRemove,matchedSire,matchedBms})=>{
+  const scoreColor=(s)=>s>=75?"#1D9E75":s>=55?"#378ADD":s>=35?"#EF9F27":"#A32D2D";
+  return(
+    <div style={{display:"flex",gap:6,alignItems:"center",padding:"6px 0",borderBottom:"1px solid var(--color-border-tertiary)"}}>
+      <span style={{width:22,fontSize:12,fontWeight:500,color:"var(--color-text-tertiary)",textAlign:"center",flexShrink:0}}>{index+1}</span>
+      <input value={runner.name} onChange={e=>onChange("name",e.target.value)} placeholder="馬名"
+        style={{flex:2,padding:"5px 8px",borderRadius:6,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:12,minWidth:0}}/>
+      <div style={{flex:2,position:"relative"}}>
+        <input value={runner.sire} onChange={e=>onChange("sire",e.target.value)} placeholder="父"
+          style={{width:"100%",padding:"5px 8px",borderRadius:6,border:`1px solid ${matchedSire?"#1D9E75":"var(--color-border-tertiary)"}`,background:matchedSire?"#E1F5EE":"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:12,boxSizing:"border-box"}}/>
+        {matchedSire&&<span style={{position:"absolute",right:4,top:6,fontSize:9,color:"#1D9E75"}}>✓DB</span>}
+      </div>
+      <div style={{flex:2,position:"relative"}}>
+        <input value={runner.bms} onChange={e=>onChange("bms",e.target.value)} placeholder="母父"
+          style={{width:"100%",padding:"5px 8px",borderRadius:6,border:`1px solid ${matchedBms?"#378ADD":"var(--color-border-tertiary)"}`,background:matchedBms?"#E6F1FB":"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:12,boxSizing:"border-box"}}/>
+        {matchedBms&&<span style={{position:"absolute",right:4,top:6,fontSize:9,color:"#378ADD"}}>✓DB</span>}
+      </div>
+      <select value={runner.age} onChange={e=>onChange("age",e.target.value)}
+        style={{width:52,padding:"5px 4px",borderRadius:6,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:11,flexShrink:0}}>
+        <option value="ANY">齢</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6+</option>
+      </select>
+      <button onClick={onRemove} style={{width:24,height:24,borderRadius:6,border:"none",background:"transparent",color:"var(--color-text-tertiary)",fontSize:14,cursor:"pointer",flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center"}}>×</button>
+    </div>
+  );
+};
+
+/* Prediction result card */
+const PredictionCard=({entry,rank,expanded,onToggle})=>{
+  const scoreColor=entry.score>=75?"#1D9E75":entry.score>=55?"#378ADD":entry.score>=35?"#EF9F27":"#A32D2D";
+  const recLabel=entry.score>=80?"◎ 本命":entry.score>=70?"○ 対抗":entry.score>=60?"▲ 単穴":entry.score>=50?"△ 連下":"☆ 穴";
+  const recColor=entry.score>=80?"#1D9E75":entry.score>=70?"#378ADD":entry.score>=60?"#7F77DD":entry.score>=50?"#EF9F27":"#E05C97";
+  return(
+    <div style={{background:"var(--color-background-primary)",border:"1px solid var(--color-border-tertiary)",borderRadius:12,overflow:"hidden",marginBottom:6}}>
+      <div onClick={onToggle} style={{padding:"10px 14px",cursor:"pointer",display:"flex",alignItems:"center",gap:10}}>
+        <div style={{width:30,height:30,borderRadius:8,background:scoreColor,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:600,fontSize:12,flexShrink:0}}>{rank}</div>
+        <div style={{flex:1,minWidth:0}}>
+          <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:2}}>
+            <span style={{fontSize:14,fontWeight:600,color:"var(--color-text-primary)"}}>{entry.runner.name||"(未入力)"}</span>
+            <span style={{fontSize:10,padding:"1px 8px",borderRadius:10,background:recColor,color:"#fff",fontWeight:600}}>{recLabel}</span>
+          </div>
+          <div style={{fontSize:10,color:"var(--color-text-secondary)"}}>
+            父: {entry.runner.sire||"—"} / 母父: {entry.runner.bms||"—"}{entry.runner.age&&entry.runner.age!=="ANY"?` / ${entry.runner.age}歳`:""}
+          </div>
+        </div>
+        <div style={{textAlign:"right",flexShrink:0}}>
+          <div style={{fontSize:22,fontWeight:600,color:scoreColor}}>{entry.score}</div>
+          <div style={{fontSize:9,color:"var(--color-text-tertiary)"}}>/ 100</div>
+        </div>
+        <span style={{fontSize:14,color:"var(--color-text-tertiary)",transform:expanded?"rotate(180deg)":"none",transition:"transform 0.2s"}}>▾</span>
+      </div>
+      {expanded&&(
+        <div style={{padding:"0 14px 14px",borderTop:"1px solid var(--color-border-tertiary)"}}>
+          <div style={{paddingTop:10}}>
+            {/* Score breakdown */}
+            <div style={{fontSize:11,fontWeight:500,color:"var(--color-text-secondary)",marginBottom:8}}>血統スコア内訳</div>
+            {entry.details.map((d,i)=>(
+              <div key={i} style={{display:"flex",alignItems:"center",gap:8,marginBottom:4}}>
+                <span style={{width:65,fontSize:10,color:"var(--color-text-secondary)",textAlign:"right"}}>{d.label}</span>
+                <div style={{flex:1,height:7,borderRadius:4,background:"var(--color-background-tertiary)",overflow:"hidden"}}>
+                  <div style={{width:`${(d.pts/d.max)*100}%`,height:"100%",borderRadius:4,background:d.pts>=d.max*0.8?"#1D9E75":d.pts>=d.max*0.5?"#378ADD":"#EF9F27",transition:"width 0.3s"}}/>
+                </div>
+                <span style={{width:45,fontSize:9,color:"var(--color-text-secondary)",textAlign:"right"}}>{d.pts}/{d.max}</span>
+                <span style={{fontSize:9,color:"var(--color-text-tertiary)",width:75}}>{d.note}</span>
+              </div>
+            ))}
+            {entry.bonus>0&&(
+              <div style={{display:"flex",alignItems:"center",gap:8,marginTop:2}}>
+                <span style={{width:65,fontSize:10,color:"var(--color-text-secondary)",textAlign:"right"}}>能力補正</span>
+                <span style={{fontSize:11,fontWeight:500,color:"#7F77DD"}}>+{entry.bonus}</span>
+              </div>
+            )}
+            {/* Matched DB info */}
+            {entry.matchedSire&&(
+              <div style={{marginTop:10,padding:"8px 10px",background:"var(--color-background-tertiary)",borderRadius:8}}>
+                <div style={{fontSize:10,fontWeight:500,color:"#1D9E75",marginBottom:4}}>父 {entry.matchedSire.name} — DB照合済</div>
+                <div style={{display:"flex",gap:4,flexWrap:"wrap",marginBottom:4}}>
+                  {surfBadge(entry.matchedSire.surface)}{courseBadge(entry.matchedSire.course)}{growthBadge(entry.matchedSire.growth)}
+                </div>
+                <div style={{fontSize:10,color:"var(--color-text-secondary)"}}>
+                  SP:{entry.matchedSire.speedScore} / ST:{entry.matchedSire.staminaScore} / PW:{entry.matchedSire.powerScore} / 重:{entry.matchedSire.heavyTrack}
+                </div>
+                {entry.matchedSire.notes&&<div style={{fontSize:9,color:"var(--color-text-tertiary)",marginTop:4}}>{entry.matchedSire.notes}</div>}
+              </div>
+            )}
+            {entry.matchedBms&&(
+              <div style={{marginTop:6,padding:"8px 10px",background:"var(--color-background-tertiary)",borderRadius:8}}>
+                <div style={{fontSize:10,fontWeight:500,color:"#378ADD",marginBottom:4}}>母父 {entry.matchedBms.name} — DB照合済</div>
+                <div style={{display:"flex",gap:4,flexWrap:"wrap",marginBottom:4}}>
+                  {surfBadge(entry.matchedBms.surface)}{courseBadge(entry.matchedBms.course)}{growthBadge(entry.matchedBms.growth)}
+                </div>
+                <div style={{fontSize:10,color:"var(--color-text-secondary)"}}>
+                  SP:{entry.matchedBms.speedScore} / ST:{entry.matchedBms.staminaScore} / PW:{entry.matchedBms.powerScore} / 重:{entry.matchedBms.heavyTrack}
+                </div>
+              </div>
+            )}
+            {/* Strengths / Weaknesses */}
+            {entry.strengths.length>0&&(
+              <div style={{marginTop:8,fontSize:10,color:"#1D9E75"}}>
+                <span style={{fontWeight:500}}>強み: </span>{entry.strengths.join(" / ")}
+              </div>
+            )}
+            {entry.weaknesses.length>0&&(
+              <div style={{marginTop:3,fontSize:10,color:"#A32D2D"}}>
+                <span style={{fontWeight:500}}>弱点: </span>{entry.weaknesses.join(" / ")}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+/* Mini radar chart for comparing top runners */
+const MiniRadar=({entries,labels})=>{
+  const size=200, cx=size/2, cy=size/2, r=70;
+  const axes=labels||["馬場","距離","コース","馬場状態","成長"];
+  const n=axes.length;
+  const angleStep=(Math.PI*2)/n;
+  const colors=["#1D9E75","#378ADD","#D85A30","#7F77DD","#E05C97"];
+
+  const getPoint=(i,val)=>{
+    const angle=-Math.PI/2+i*angleStep;
+    const dist=(val/100)*r;
+    return [cx+Math.cos(angle)*dist, cy+Math.sin(angle)*dist];
+  };
+
+  return(
+    <svg viewBox={`0 0 ${size} ${size}`} style={{width:"100%",maxWidth:size}}>
+      {/* Grid rings */}
+      {[0.25,0.5,0.75,1].map((s,i)=>(
+        <polygon key={i} points={Array.from({length:n},(_,j)=>{const a=-Math.PI/2+j*angleStep;return `${cx+Math.cos(a)*r*s},${cy+Math.sin(a)*r*s}`;}).join(" ")}
+          fill="none" stroke="var(--color-border-tertiary)" strokeWidth={0.5}/>
+      ))}
+      {/* Axis lines & labels */}
+      {axes.map((label,i)=>{
+        const a=-Math.PI/2+i*angleStep;
+        const lx=cx+Math.cos(a)*(r+18);
+        const ly=cy+Math.sin(a)*(r+18);
+        return(<g key={i}>
+          <line x1={cx} y1={cy} x2={cx+Math.cos(a)*r} y2={cy+Math.sin(a)*r} stroke="var(--color-border-tertiary)" strokeWidth={0.5}/>
+          <text x={lx} y={ly+3} textAnchor="middle" fontSize={8} fill="var(--color-text-tertiary)">{label}</text>
+        </g>);
+      })}
+      {/* Data polygons */}
+      {entries.slice(0,4).map((e,ei)=>{
+        const vals=e.details.map(d=>(d.pts/d.max)*100);
+        const points=vals.map((v,i)=>getPoint(i,v).join(",")).join(" ");
+        return(<g key={ei}>
+          <polygon points={points} fill={colors[ei]} fillOpacity={0.12} stroke={colors[ei]} strokeWidth={1.5}/>
+          {vals.map((v,i)=>{const[px,py]=getPoint(i,v);return <circle key={i} cx={px} cy={py} r={2.5} fill={colors[ei]}/>;})}
+        </g>);
+      })}
+    </svg>
+  );
+};
+
+/* Main Prediction Tab */
+const RacePredictionTab=({stallions})=>{
+  const [pVenue,setPVenue]=useState("tokyo");
+  const [pSurface,setPSurface]=useState("TURF");
+  const [pDistance,setPDistance]=useState("MIDDLE");
+  const [pCond,setPCond]=useState("GOOD");
+  const [runners,setRunners]=useState([
+    {name:"",sire:"",bms:"",age:"3"},
+    {name:"",sire:"",bms:"",age:"3"},
+    {name:"",sire:"",bms:"",age:"3"},
+  ]);
+  const [results,setResults]=useState(null);
+  const [expandedId,setExpandedId]=useState(null);
+  const [showInput,setShowInput]=useState(true);
+
+  const pVenueData=VENUES[pVenue];
+  const pCourse=pVenueData?.course||"RIGHT";
+
+  // Update surface if venue doesn't support it
+  useEffect(()=>{
+    const v=VENUES[pVenue];
+    if(v&&!v.surface.includes(pSurface)) setPSurface(v.surface[0]);
+  },[pVenue]);
+
+  const updateRunner=(i,field,val)=>{
+    setRunners(prev=>{const n=[...prev];n[i]={...n[i],[field]:val};return n;});
+  };
+  const removeRunner=(i)=>{
+    setRunners(prev=>prev.filter((_,j)=>j!==i));
+  };
+  const addRunner=()=>{
+    if(runners.length<18) setRunners(prev=>[...prev,{name:"",sire:"",bms:"",age:"3"}]);
+  };
+
+  // Find matching stallion in DB
+  const findStallion=(name)=>{
+    if(!name) return null;
+    const q=name.trim();
+    return stallions.find(s=>s.name===q)||stallions.find(s=>s.nameEn?.toLowerCase()===q.toLowerCase())||null;
+  };
+
+  // Load sample race
+  const loadSample=(sample)=>{
+    setPVenue(sample.venue);
+    setPSurface(sample.surface);
+    setPDistance(sample.distance);
+    setPCond(sample.cond);
+    setRunners(sample.runners.map(r=>({...r})));
+    setResults(null);
+  };
+
+  // Calculate predictions
+  const calcPredictions=()=>{
+    const validRunners=runners.filter(r=>r.name||r.sire);
+    if(validRunners.length===0) return;
+
+    const raceConfig={surface:pSurface, distance:pDistance, course:pCourse, trackCondition:pCond};
+    
+    const scored=validRunners.map(runner=>{
+      const matchedSire=findStallion(runner.sire);
+      const matchedBms=findStallion(runner.bms);
+      
+      let score=0, details=[], bonus=0, strengths=[], weaknesses=[];
+
+      if(matchedSire){
+        // Primary: use sire's aptitude (weighted 70%)
+        const sireResult=calcAptitude(matchedSire, {...raceConfig, horseAge:runner.age});
+        const sireContrib=sireResult.score*0.70;
+        details=sireResult.details.map(d=>({...d,pts:+(d.pts*0.70).toFixed(1),max:+(d.max*0.70).toFixed(1)}));
+        score+=sireContrib;
+        bonus+=sireResult.bonus*0.70;
+
+        // Analyze strengths/weaknesses from sire
+        if(matchedSire.speedScore>=9) strengths.push("父のスピード◎");
+        if(matchedSire.staminaScore>=9) strengths.push("父のスタミナ◎");
+        if(matchedSire.powerScore>=9) strengths.push("父のパワー◎");
+        if(matchedSire.heavyTrack>=8&&(pCond==="HEAVY"||pCond==="BAD")) strengths.push("重馬場巧者の血統");
+        if(matchedSire.heavyTrack<=3&&(pCond==="HEAVY"||pCond==="BAD")) weaknesses.push("父は重馬場苦手");
+        if(matchedSire.growth==="LATE"&&runner.age&&parseInt(runner.age)<=2) weaknesses.push("晩成血統×若駒");
+        if(matchedSire.growth==="EARLY"&&runner.age&&parseInt(runner.age)>=5) weaknesses.push("早熟血統×高齢");
+      } else if(runner.sire) {
+        // Unknown sire: give base score
+        score+=40;
+        details=[
+          {label:"馬場",pts:7,max:17.5,note:"DB未登録"},
+          {label:"距離",pts:7,max:17.5,note:"DB未登録"},
+          {label:"コース",pts:6,max:14,note:"DB未登録"},
+          {label:"馬場状態",pts:4,max:10.5,note:"DB未登録"},
+          {label:"成長",pts:4,max:10.5,note:"DB未登録"},
+        ];
+        weaknesses.push("父がDB未登録");
+      } else {
+        score+=30;
+        details=[
+          {label:"馬場",pts:5,max:17.5,note:"父不明"},
+          {label:"距離",pts:5,max:17.5,note:"父不明"},
+          {label:"コース",pts:4,max:14,note:"父不明"},
+          {label:"馬場状態",pts:3,max:10.5,note:"父不明"},
+          {label:"成長",pts:3,max:10.5,note:"父不明"},
+        ];
+        weaknesses.push("父情報なし");
+      }
+
+      if(matchedBms){
+        // BMS contribution (weighted 30%)
+        const bmsResult=calcAptitude(matchedBms, {...raceConfig, horseAge:runner.age});
+        const bmsContrib=bmsResult.score*0.30;
+        // Add BMS contribution to existing details
+        details=details.map((d,i)=>{
+          const bmsD=bmsResult.details[i];
+          if(bmsD){
+            return {...d, pts:+(d.pts+bmsD.pts*0.30).toFixed(1), max:+(d.max+bmsD.max*0.30).toFixed(1)};
+          }
+          return d;
+        });
+        score+=bmsContrib;
+        bonus+=bmsResult.bonus*0.30;
+
+        if(matchedBms.speedScore>=9) strengths.push("母父のスピード◎");
+        if(matchedBms.staminaScore>=9) strengths.push("母父のスタミナ◎");
+        if(matchedBms.powerScore>=9&&pSurface==="DIRT") strengths.push("母父パワー×ダート◎");
+      } else if(!matchedSire) {
+        // Neither matched, remain at base
+      } else {
+        // Sire matched, BMS unknown: small penalty
+        score*=0.95;
+      }
+
+      // Sire-BMS synergy bonus
+      if(matchedSire&&matchedBms){
+        // Check complementary traits
+        if(matchedSire.speedScore>=8&&matchedBms.staminaScore>=8) {bonus+=3;strengths.push("スピード×スタミナの補完◎");}
+        if(matchedSire.surface==="TURF"&&matchedBms.surface==="BOTH") {bonus+=1;strengths.push("芝適性を幅広くカバー");}
+        if(matchedSire.surface===pSurface&&matchedBms.surface===pSurface) {bonus+=2;strengths.push("父母父ともに馬場一致");}
+        if(matchedSire.surface!==pSurface&&matchedSire.surface!=="BOTH"&&matchedBms.surface!==pSurface&&matchedBms.surface!=="BOTH") weaknesses.push("父母父ともに馬場不適合");
+      }
+
+      return {
+        runner,
+        matchedSire,
+        matchedBms,
+        score:Math.min(100,Math.max(0,+((score+bonus)).toFixed(1))),
+        details,
+        bonus:+bonus.toFixed(1),
+        strengths:[...new Set(strengths)],
+        weaknesses:[...new Set(weaknesses)],
+      };
+    });
+
+    scored.sort((a,b)=>b.score-a.score);
+    setResults(scored);
+    setShowInput(false);
+  };
+
+  return(
+    <div>
+      {/* Sample race shortcuts */}
+      <div style={{marginBottom:12}}>
+        <div style={{fontSize:11,color:"var(--color-text-tertiary)",marginBottom:6}}>サンプルレースを読み込む:</div>
+        <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
+          {SAMPLE_RACES.map((sr,i)=>(
+            <button key={i} onClick={()=>loadSample(sr)} style={{padding:"5px 12px",borderRadius:8,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-secondary)",fontSize:11,cursor:"pointer"}}>
+              {sr.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Toggle input/results */}
+      {results&&(
+        <button onClick={()=>setShowInput(!showInput)} style={{marginBottom:12,padding:"6px 14px",borderRadius:8,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-secondary)",fontSize:11,cursor:"pointer"}}>
+          {showInput?"▲ 入力を閉じる":"▼ 出走馬を編集"}
+        </button>
+      )}
+
+      {/* Race conditions & runner input */}
+      {showInput&&(
+        <div style={{background:"var(--color-background-secondary)",borderRadius:12,padding:16,marginBottom:16}}>
+          <div style={{fontSize:13,fontWeight:500,color:"var(--color-text-primary)",marginBottom:12}}>レース条件</div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr",gap:10,marginBottom:16}}>
+            <Field label="競馬場">
+              <select value={pVenue} onChange={e=>setPVenue(e.target.value)} style={inputStyle}>
+                {Object.entries(VENUES).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}
+              </select>
+            </Field>
+            <Field label="馬場">
+              <select value={pSurface} onChange={e=>setPSurface(e.target.value)} style={inputStyle}>
+                {(pVenueData?.surface||["TURF","DIRT"]).map(k=><option key={k} value={k}>{SURFACE[k]}</option>)}
+              </select>
+            </Field>
+            <Field label="距離">
+              <select value={pDistance} onChange={e=>setPDistance(e.target.value)} style={inputStyle}>
+                {(pVenueData?.distances||Object.keys(DISTANCE)).filter(k=>k!=="VERSATILE").map(k=><option key={k} value={k}>{DISTANCE[k]}</option>)}
+              </select>
+            </Field>
+            <Field label="馬場状態">
+              <select value={pCond} onChange={e=>setPCond(e.target.value)} style={inputStyle}>
+                {Object.entries(TRACK_COND).map(([k,v])=><option key={k} value={k}>{v}</option>)}
+              </select>
+            </Field>
+          </div>
+
+          {/* Runner condition summary */}
+          <div style={{padding:"6px 10px",background:"var(--color-background-primary)",borderRadius:8,display:"flex",gap:6,flexWrap:"wrap",alignItems:"center",marginBottom:14}}>
+            <span style={{fontSize:11,fontWeight:500,color:"var(--color-text-primary)"}}>{pVenueData?.name}</span>
+            <Badge variant={pSurface==="TURF"?"turf":"dirt"}>{SURFACE[pSurface]}</Badge>
+            <Badge>{DISTANCE[pDistance]}</Badge>
+            <Badge variant={pCourse==="RIGHT"?"right":"left"}>{COURSE[pCourse]}</Badge>
+            <Badge>{TRACK_COND[pCond]}</Badge>
+          </div>
+
+          {/* Runner list header */}
+          <div style={{fontSize:13,fontWeight:500,color:"var(--color-text-primary)",marginBottom:8}}>出走馬リスト</div>
+          <div style={{display:"flex",gap:6,alignItems:"center",padding:"0 0 6px",borderBottom:"1px solid var(--color-border-tertiary)",marginBottom:2}}>
+            <span style={{width:22,fontSize:9,color:"var(--color-text-tertiary)",textAlign:"center"}}>枠</span>
+            <span style={{flex:2,fontSize:9,color:"var(--color-text-tertiary)"}}>馬名</span>
+            <span style={{flex:2,fontSize:9,color:"var(--color-text-tertiary)"}}>父</span>
+            <span style={{flex:2,fontSize:9,color:"var(--color-text-tertiary)"}}>母父(BMS)</span>
+            <span style={{width:52,fontSize:9,color:"var(--color-text-tertiary)"}}>齢</span>
+            <span style={{width:24}}/>
+          </div>
+          {runners.map((r,i)=>(
+            <RunnerRow key={i} runner={r} index={i}
+              onChange={(f,v)=>updateRunner(i,f,v)}
+              onRemove={()=>removeRunner(i)}
+              matchedSire={!!findStallion(r.sire)}
+              matchedBms={!!findStallion(r.bms)}/>
+          ))}
+          <div style={{display:"flex",gap:8,marginTop:10}}>
+            <button onClick={addRunner} disabled={runners.length>=18}
+              style={{padding:"6px 14px",borderRadius:8,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:runners.length>=18?"var(--color-text-tertiary)":"var(--color-text-secondary)",fontSize:11,cursor:runners.length>=18?"default":"pointer"}}>
+              + 馬を追加 ({runners.length}/18)
+            </button>
+            <button onClick={calcPredictions}
+              style={{padding:"6px 20px",borderRadius:8,border:"none",background:"#1D9E75",color:"#fff",fontSize:12,fontWeight:600,cursor:"pointer",marginLeft:"auto"}}>
+              🏇 血統診断を実行
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Results */}
+      {results&&(
+        <div>
+          <div style={{fontSize:13,fontWeight:500,color:"var(--color-text-primary)",marginBottom:4}}>血統診断結果</div>
+          <div style={{fontSize:10,color:"var(--color-text-tertiary)",marginBottom:12}}>
+            {pVenueData?.name} {SURFACE[pSurface]} {DISTANCE[pDistance]} / {TRACK_COND[pCond]} — {results.length}頭を診断
+          </div>
+
+          {/* Top pick summary */}
+          {results.length>=3&&(
+            <div style={{background:"var(--color-background-secondary)",borderRadius:12,padding:14,marginBottom:16}}>
+              <div style={{fontSize:12,fontWeight:500,color:"var(--color-text-primary)",marginBottom:10}}>血統的注目馬</div>
+              <div style={{display:"flex",gap:12,flexWrap:"wrap",marginBottom:10}}>
+                {results.slice(0,3).map((e,i)=>{
+                  const marks=["◎","○","▲"];
+                  const cols=["#1D9E75","#378ADD","#7F77DD"];
+                  return(
+                    <div key={i} style={{flex:1,minWidth:120,background:"var(--color-background-primary)",borderRadius:10,padding:"10px 12px",border:`2px solid ${cols[i]}`}}>
+                      <div style={{fontSize:18,fontWeight:700,color:cols[i],marginBottom:2}}>{marks[i]} {e.runner.name||"(未入力)"}</div>
+                      <div style={{fontSize:22,fontWeight:700,color:cols[i]}}>{e.score}<span style={{fontSize:11,fontWeight:400,color:"var(--color-text-tertiary)"}}> pts</span></div>
+                      <div style={{fontSize:9,color:"var(--color-text-secondary)",marginTop:3}}>
+                        {e.strengths.slice(0,2).join(" / ")||"—"}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              {/* Radar comparison */}
+              <div style={{display:"flex",justifyContent:"center"}}>
+                <MiniRadar entries={results} labels={["馬場","距離","コース","馬場状態","成長"]}/>
+              </div>
+              <div style={{display:"flex",gap:12,justifyContent:"center",marginTop:4}}>
+                {results.slice(0,4).map((e,i)=>{
+                  const cols=["#1D9E75","#378ADD","#D85A30","#7F77DD"];
+                  return <span key={i} style={{fontSize:9,color:cols[i],fontWeight:500}}>{`● ${e.runner.name||"—"}`}</span>;
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Full ranking */}
+          <div style={{display:"flex",flexDirection:"column"}}>
+            {results.map((e,i)=>(
+              <PredictionCard key={i} entry={e} rank={i+1}
+                expanded={expandedId===i} onToggle={()=>setExpandedId(expandedId===i?null:i)}/>
+            ))}
+          </div>
+
+          {/* Disclaimer */}
+          <div style={{marginTop:12,padding:"8px 12px",background:"var(--color-background-secondary)",borderRadius:8,fontSize:10,color:"var(--color-text-tertiary)",lineHeight:1.6}}>
+            ※ この診断は血統データベースに基づく適性評価です。実際のレース結果は馬の能力・調教状態・騎手・展開など多くの要素に左右されます。投票の最終判断はご自身の責任でお願いします。
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 /* ===== Main App ===== */
 export default function App(){
   const[stallions,setStallions]=useState(()=>load()||STALLIONS);
@@ -389,7 +1226,7 @@ export default function App(){
 
       {/* Tab navigation */}
       <div style={{display:"flex",gap:6,marginBottom:20}}>
-        {tabBtn("aptitude","適性判定")}{tabBtn("database","血統DB")}
+        {tabBtn("aptitude","適性判定")}{tabBtn("database","血統DB")}{tabBtn("analysis","分析")}{tabBtn("predict","予想")}
       </div>
 
       {/* ===== APTITUDE TAB ===== */}
@@ -494,8 +1331,14 @@ export default function App(){
         </div>
       )}
 
+      {/* ===== ANALYSIS TAB (Phase 3) ===== */}
+      {tab==="analysis"&&<AnalysisTab stallions={stallions}/>}
+
+      {/* ===== PREDICTION TAB (Phase 4) ===== */}
+      {tab==="predict"&&<RacePredictionTab stallions={stallions}/>}
+
       <div style={{marginTop:20,padding:"10px 0",borderTop:"1px solid var(--color-border-tertiary)",fontSize:10,color:"var(--color-text-tertiary)",textAlign:"center"}}>
-        Phase 1+2: 血統DB + 適性判定エンジン v1.0 / {stats.total}頭登録
+        Phase 1〜4: 血統DB + 適性判定 + 分析 + レース予想 v3.0 / {stats.total}頭登録
       </div>
     </div>
   );
