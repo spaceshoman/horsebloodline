@@ -75,6 +75,15 @@ const STALLIONS=[
   {id:"48",name:"パイロ",nameEn:"Pyro",pedigree:{sire:"プルピット",dam:"ワイルドヴィジョン",sireOfSire:"エーピーインディ",damOfSire:"プレイ",sireOfDam:"ワイルドアゲイン",damOfDam:"キャロルズクリスマス"},surface:"DIRT",distanceMin:"SPRINT",distanceMax:"MILE",course:"BOTH",growth:"EARLY",heavyTrack:8,staminaScore:5,speedScore:8,powerScore:9,notes:"ダート短距離〜マイル。メイショウハリオ等輩出。"},
   {id:"49",name:"フェノーメノ",nameEn:"Fenomeno",pedigree:{sire:"ステイゴールド",dam:"ディアデラノビア",sireOfSire:"サンデーサイレンス",damOfSire:"ゴールデンサッシュ",sireOfDam:"サンデーサイレンス",damOfDam:"ポトリザリス"},surface:"TURF",distanceMin:"MIDDLE",distanceMax:"LONG",course:"LEFT",growth:"LATE",heavyTrack:5,staminaScore:9,speedScore:6,powerScore:7,notes:"天皇賞(春)連覇。左回り巧者。スタミナ型。"},
   {id:"50",name:"ゴールドアリュール",nameEn:"Gold Allure",pedigree:{sire:"サンデーサイレンス",dam:"ニキーヤ",sireOfSire:"ヘイロー",damOfSire:"ワキア",sireOfDam:"ヌレイエフ",damOfDam:"アンティックヴァリュー"},surface:"DIRT",distanceMin:"MILE",distanceMax:"MIDDLE",course:"BOTH",growth:"NORMAL",heavyTrack:9,staminaScore:7,speedScore:7,powerScore:9,notes:"ダートの大種牡馬。コパノリッキー、スマートファルコン等輩出。"},
+  {id:"51",name:"ファインニードル",nameEn:"Fine Needle",pedigree:{sire:"アドマイヤムーン",dam:"ニードルクラフト",sireOfSire:"エンドスウィープ",damOfSire:"マイケイティーズ",sireOfDam:"マークオブエスティーム",damOfDam:"ニードルクラフト母"},surface:"TURF",distanceMin:"SPRINT",distanceMax:"MILE",course:"BOTH",growth:"EARLY",heavyTrack:6,staminaScore:4,speedScore:9,powerScore:7,notes:"高松宮記念・スプリンターズS制覇。春秋スプリントGI連覇。産駒は短距離中心、道悪にも強い。"},
+  {id:"52",name:"ドレフォン",nameEn:"Drefong",pedigree:{sire:"ジオポンティ",dam:"エルティマース",sireOfSire:"テイルオブザキャット",damOfSire:"チアリーディーダー",sireOfDam:"ゴーストザッパー",damOfDam:"エルティマース母"},surface:"BOTH",distanceMin:"SPRINT",distanceMax:"MIDDLE",course:"RIGHT",growth:"EARLY",heavyTrack:7,staminaScore:6,speedScore:9,powerScore:9,notes:"BCスプリント優勝。ストームキャット系。ジオグリフ(皐月賞)等輩出。芝ダート兼用でパワー型。"},
+  {id:"53",name:"ダノンプレミアム",nameEn:"Danon Premium",pedigree:{sire:"ディープインパクト",dam:"インディアナギャル",sireOfSire:"サンデーサイレンス",damOfSire:"ウインドインハーヘア",sireOfDam:"インティカブ",damOfDam:"レッドカメリア"},surface:"TURF",distanceMin:"MILE",distanceMax:"MIDDLE",course:"BOTH",growth:"EARLY",heavyTrack:3,staminaScore:6,speedScore:9,powerScore:6,notes:"朝日杯FS・マイルCS制覇。ディープ産駒の早熟マイラー。新種牡馬。"},
+  {id:"54",name:"シルバーステート",nameEn:"Silver State",pedigree:{sire:"ディープインパクト",dam:"シルヴァースカヤ",sireOfSire:"サンデーサイレンス",damOfSire:"ウインドインハーヘア",sireOfDam:"シルヴァーホーク",damOfDam:"ハサナ"},surface:"TURF",distanceMin:"MILE",distanceMax:"MIDDLE",course:"BOTH",growth:"NORMAL",heavyTrack:4,staminaScore:7,speedScore:8,powerScore:7,notes:"重賞未出走ながら種牡馬で大成功。ソールオリエンス(皐月賞)等輩出。ディープ後継の注目株。"},
+  {id:"55",name:"サートゥルナーリア",nameEn:"Saturnalia",pedigree:{sire:"ロードカナロア",dam:"シーザリオ",sireOfSire:"キングカメハメハ",damOfSire:"レディブラッサム",sireOfDam:"スペシャルウィーク",damOfDam:"キロフプリミエール"},surface:"TURF",distanceMin:"MILE",distanceMax:"MIDDLE",course:"BOTH",growth:"EARLY",heavyTrack:4,staminaScore:7,speedScore:9,powerScore:8,notes:"皐月賞・ホープフルS制覇。エピファネイアの半弟。ロードカナロア×シーザリオの黄金配合。"},
+  {id:"56",name:"ポエティックフレア",nameEn:"Poetic Flare",pedigree:{sire:"ドーンアプローチ",dam:"マリーリー",sireOfSire:"ニューアプローチ",damOfSire:"ヒムオブザドーン",sireOfDam:"ガリレオ",damOfDam:"カレドニア"},surface:"TURF",distanceMin:"MILE",distanceMax:"MILE",course:"BOTH",growth:"EARLY",heavyTrack:5,staminaScore:5,speedScore:8,powerScore:7,notes:"英2000ギニー・セントジェームズパレスS制覇。欧州マイル王。ガリレオ系の仕上がり早タイプ。"},
+  {id:"57",name:"リアルインパクト",nameEn:"Real Impact",pedigree:{sire:"ディープインパクト",dam:"リアルサファイア",sireOfSire:"サンデーサイレンス",damOfSire:"ウインドインハーヘア",sireOfDam:"Belong to Me",damOfDam:"リアルサファイア母"},surface:"TURF",distanceMin:"MILE",distanceMax:"MILE",course:"BOTH",growth:"NORMAL",heavyTrack:4,staminaScore:5,speedScore:9,powerScore:6,notes:"安田記念・ジョージライダーS(豪G1)優勝。ディープ産駒のマイラー種牡馬。ラウダシオン等輩出。"},
+  {id:"58",name:"アメリカンペイトリオット",nameEn:"American Patriot",pedigree:{sire:"ウォーフロント",dam:"ライフウェルリヴド",sireOfSire:"ダンジグ",damOfSire:"スターリーデイ",sireOfDam:"ティズナウ",damOfDam:"ウェルドレスド"},surface:"BOTH",distanceMin:"SPRINT",distanceMax:"MILE",course:"BOTH",growth:"EARLY",heavyTrack:6,staminaScore:5,speedScore:8,powerScore:8,notes:"米芝G1メイカーズ46マイルS優勝。ダンジグ系ウォーフロント後継。芝で穴馬出しやすい。"},
+  {id:"59",name:"パドトロワ",nameEn:"Pas de Trois",pedigree:{sire:"ファルブラヴ",dam:"パドブレ",sireOfSire:"フェアリーキング",damOfSire:"ギフトオブザナイト",sireOfDam:"ダンスインザダーク",damOfDam:"パドシス"},surface:"TURF",distanceMin:"SPRINT",distanceMax:"SPRINT",course:"BOTH",growth:"EARLY",heavyTrack:5,staminaScore:3,speedScore:9,powerScore:6,notes:"CBC賞・アイビスSD制覇。超短距離のスペシャリスト。"},
 ];
 
 const STORAGE_KEY="keiba-v4";
@@ -329,12 +338,12 @@ const AptitudeCard=({stallion,result,rank})=>{
 
 /* --- Utility: Sire Line Classification --- */
 const SIRE_LINES = {
-  "サンデーサイレンス系": ["サンデーサイレンス","ディープインパクト","ステイゴールド","ハーツクライ","アグネスタキオン","フジキセキ","マンハッタンカフェ","ダイワメジャー","ネオユニヴァース","ゴールドアリュール","ブラックタイド","アドマイヤベガ","キタサンブラック"],
-  "キングマンボ系": ["キングカメハメハ","キングマンボ","ドゥラメンテ","ロードカナロア","ルーラーシップ","リオンディーズ","エイシンフラッシュ","キングズベスト"],
+  "サンデーサイレンス系": ["サンデーサイレンス","ディープインパクト","ステイゴールド","ハーツクライ","アグネスタキオン","フジキセキ","マンハッタンカフェ","ダイワメジャー","ネオユニヴァース","ゴールドアリュール","ブラックタイド","アドマイヤベガ","キタサンブラック","ダノンプレミアム","シルバーステート"],
+  "キングマンボ系": ["キングカメハメハ","キングマンボ","ドゥラメンテ","ロードカナロア","ルーラーシップ","リオンディーズ","エイシンフラッシュ","キングズベスト","サートゥルナーリア"],
   "ロベルト系": ["シンボリクリスエス","クリスエス","ブライアンズタイム","タニノギムレット","リアルシャダイ","ロベルト","スクリーンヒーロー","グラスワンダー","モーリス"],
-  "ノーザンダンサー系": ["デインヒル","ダンジグ","ハービンジャー","タートルボウル","サドラーズウェルズ","オペラハウス","ダンシングブレーヴ","リファール","ノーザンテースト","ディンヒル","ローエングリン","シングスピール"],
-  "ミスタープロスペクター系": ["エンドスウィープ","フォーティナイナー","アドマイヤムーン"],
-  "ストームキャット系": ["ヘネシー","ヘニーヒューズ","ストームキャット","レイヴンズパス","エルーシヴクオリティ"],
+  "ノーザンダンサー系": ["デインヒル","ダンジグ","ハービンジャー","タートルボウル","サドラーズウェルズ","オペラハウス","ダンシングブレーヴ","リファール","ノーザンテースト","ディンヒル","ローエングリン","シングスピール","ウォーフロント","アメリカンペイトリオット","ドーンアプローチ","ポエティックフレア","ファルブラヴ","パドトロワ"],
+  "ミスタープロスペクター系": ["エンドスウィープ","フォーティナイナー","アドマイヤムーン","ファインニードル","リアルインパクト"],
+  "ストームキャット系": ["ヘネシー","ヘニーヒューズ","ストームキャット","レイヴンズパス","エルーシヴクオリティ","ジオポンティ","ドレフォン"],
   "エーピーインディ系": ["エーピーインディ","プルピット","パイロ","シニスターミニスター","オールドトリエステ"],
   "その他": [],
 };
@@ -682,6 +691,25 @@ const AnalysisTab=({stallions})=>{
    ================================================================ */
 
 const SAMPLE_RACES = [
+  { name:"🏆 桜花賞 (G1) 阪神芝1600m", venue:"hanshin", surface:"TURF", distance:"MILE", cond:"GOOD", isG1:true,
+    runners:[
+      {name:"1枠 ファインニードル産駒",sire:"ファインニードル",bms:"",age:"3"},
+      {name:"2枠 エピファネイア産駒",sire:"エピファネイア",bms:"",age:"3"},
+      {name:"3枠 ポエティックフレア産駒",sire:"ポエティックフレア",bms:"",age:"3"},
+      {name:"4枠 ロードカナロア産駒",sire:"ロードカナロア",bms:"",age:"3"},
+      {name:"5枠 ドレフォン産駒",sire:"ドレフォン",bms:"",age:"3"},
+      {name:"6枠 リアルスティール産駒",sire:"リアルスティール",bms:"",age:"3"},
+      {name:"7枠 リアルインパクト産駒",sire:"リアルインパクト",bms:"",age:"3"},
+      {name:"8枠 サートゥルナーリア産駒①",sire:"サートゥルナーリア",bms:"",age:"3"},
+      {name:"9枠 キズナ産駒",sire:"キズナ",bms:"",age:"3"},
+      {name:"10枠 ダノンプレミアム産駒",sire:"ダノンプレミアム",bms:"",age:"3"},
+      {name:"11枠 アメリカンペイトリオット産駒",sire:"アメリカンペイトリオット",bms:"",age:"3"},
+      {name:"12枠 サートゥルナーリア産駒②",sire:"サートゥルナーリア",bms:"",age:"3"},
+      {name:"13枠 キタサンブラック産駒",sire:"キタサンブラック",bms:"",age:"3"},
+      {name:"14枠 パドトロワ産駒",sire:"パドトロワ",bms:"",age:"3"},
+      {name:"15枠 シルバーステート産駒",sire:"シルバーステート",bms:"",age:"3"},
+      {name:"16枠 モーリス産駒",sire:"モーリス",bms:"",age:"3"},
+    ]},
   { name:"東京11R 芝2400m", venue:"tokyo", surface:"TURF", distance:"MIDDLE", cond:"GOOD",
     runners:[
       {name:"ナチュラルボーン",sire:"ディープインパクト",bms:"キングカメハメハ",age:"3"},
@@ -1027,7 +1055,7 @@ const RacePredictionTab=({stallions})=>{
         <div style={{fontSize:11,color:"var(--color-text-tertiary)",marginBottom:6}}>サンプルレースを読み込む:</div>
         <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
           {SAMPLE_RACES.map((sr,i)=>(
-            <button key={i} onClick={()=>loadSample(sr)} style={{padding:"5px 12px",borderRadius:8,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-secondary)",fontSize:11,cursor:"pointer"}}>
+            <button key={i} onClick={()=>loadSample(sr)} style={{padding:"5px 12px",borderRadius:8,border:sr.isG1?"2px solid #D85A30":"1px solid var(--color-border-tertiary)",background:sr.isG1?"#FFF3EE":"var(--color-background-primary)",color:sr.isG1?"#D85A30":"var(--color-text-secondary)",fontSize:11,fontWeight:sr.isG1?600:400,cursor:"pointer"}}>
               {sr.name}
             </button>
           ))}
@@ -1220,8 +1248,8 @@ export default function App(){
   return(
     <div style={{maxWidth:720,margin:"0 auto",fontFamily:"var(--font-sans)"}}>
       <div style={{marginBottom:16}}>
-        <h1 style={{fontSize:22,fontWeight:500,color:"var(--color-text-primary)",margin:"0 0 2px",letterSpacing:"-0.02em"}}>血統くん</h1>
-        <p style={{fontSize:12,color:"var(--color-text-tertiary)",margin:0}}>サラブレッド血統分析アプリ — {stats.total} stallions</p>
+        <h1 style={{fontSize:22,fontWeight:500,color:"var(--color-text-primary)",margin:"0 0 2px",letterSpacing:"-0.02em"}}>血統くん（プロトタイプ）</h1>
+        <p style={{fontSize:12,color:"var(--color-text-tertiary)",margin:0}}>Thoroughbred bloodline analyzer — {stats.total} stallions</p>
       </div>
 
       {/* Tab navigation */}
@@ -1338,7 +1366,7 @@ export default function App(){
       {tab==="predict"&&<RacePredictionTab stallions={stallions}/>}
 
       <div style={{marginTop:20,padding:"10px 0",borderTop:"1px solid var(--color-border-tertiary)",fontSize:10,color:"var(--color-text-tertiary)",textAlign:"center"}}>
-        Phase 1〜4: 血統DB + 適性判定 + 分析 + レース予想 v3.0 / {stats.total}頭登録
+        Phase 1〜4: 血統DB + 適性判定 + 分析 + レース予想 v3.1 (G1モード対応) / {stats.total}頭登録
       </div>
     </div>
   );
