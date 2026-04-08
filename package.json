@@ -1,0 +1,34 @@
+{
+  "name": "horsebloodline",
+  "version": "1.0.0",
+  "description": "競馬の血統で予想するよう",
+  "main": "vite.config.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spaceshoman/horsebloodline.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/spaceshoman/horsebloodline/issues"
+  },
+  "homepage": "https://github.com/spaceshoman/horsebloodline#readme",
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.1",
+    "gh-pages": "^6.3.0",
+    "vite": "^8.0.7"
+  },
+  "dependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  }
+}
