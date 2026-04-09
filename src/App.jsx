@@ -1331,8 +1331,8 @@ export default function App(){
   return(
     <div style={{maxWidth:720,margin:"0 auto",fontFamily:"var(--font-sans)"}}>
       <div style={{marginBottom:16}}>
-        <h1 style={{fontSize:22,fontWeight:500,color:"var(--color-text-primary)",margin:"0 0 2px",letterSpacing:"-0.02em"}}>競馬血統分析</h1>
-        <p style={{fontSize:12,color:"var(--color-text-tertiary)",margin:0}}>Thoroughbred bloodline analyzer — {stats.total} stallions</p>
+        <h1 style={{fontSize:22,fontWeight:500,color:"var(--color-text-primary)",margin:"0 0 2px",letterSpacing:"-0.02em"}}>血統くん（プロトタイプ）</h1>
+        <p style={{fontSize:12,color:"var(--color-text-tertiary)",margin:0}}>サラブレッド血統分析 — {stats.total} stallions</p>
       </div>
 
       {/* Tab navigation */}
