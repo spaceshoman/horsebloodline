@@ -720,27 +720,68 @@ const AnalysisTab=({stallions})=>{
    ===== PHASE 4: RACE PREDICTION =====
    ================================================================ */
 
+/* ===== Jockey Data ===== */
+// venueAff: venue key → affinity score (1-10). Higher = better at that venue.
+const JOCKEYS=[
+  {name:"坂井瑠星",nameEn:"Rusei Sakai",style:"差し・追込",venueAff:{hanshin:8,kyoto:7,tokyo:7,nakayama:6,chukyo:7,kokura:7,niigata:6,sapporo:6,hakodate:6},winRate:0.12,g1Wins:4,notes:"追込み一発型。阪神外回りの末脚勝負◎。"},
+  {name:"荻野極",nameEn:"Kiwamu Ogino",style:"先行・差し",venueAff:{hanshin:6,kyoto:6,tokyo:5,nakayama:6,chukyo:6,kokura:6,niigata:5,sapporo:5,hakodate:5},winRate:0.07,g1Wins:0,notes:"若手成長株。G1実績はこれから。"},
+  {name:"戸崎圭太",nameEn:"Keita Tosaki",style:"差し・好位",venueAff:{hanshin:6,kyoto:6,tokyo:9,nakayama:8,chukyo:6,kokura:5,niigata:7,sapporo:6,hakodate:5},winRate:0.14,g1Wins:15,notes:"関東リーディング常連。東京・中山に強い。"},
+  {name:"岩田望来",nameEn:"Miraisuke Iwata",style:"先行・捲り",venueAff:{hanshin:7,kyoto:7,tokyo:6,nakayama:5,chukyo:7,kokura:6,niigata:5,sapporo:5,hakodate:5},winRate:0.08,g1Wins:2,notes:"父譲りの積極策。阪神・京都の内回り巧者。"},
+  {name:"西村淳也",nameEn:"Junya Nishimura",style:"先行",venueAff:{hanshin:7,kyoto:7,tokyo:5,nakayama:5,chukyo:7,kokura:8,niigata:6,sapporo:7,hakodate:7},winRate:0.10,g1Wins:2,notes:"ローカル巧者。先行押切りが得意。小倉◎。"},
+  {name:"川田将雅",nameEn:"Yuga Kawada",style:"好位・差し",venueAff:{hanshin:9,kyoto:9,tokyo:8,nakayama:7,chukyo:8,kokura:7,niigata:7,sapporo:7,hakodate:7},winRate:0.20,g1Wins:40,notes:"日本トップジョッキー。どの競馬場でも高水準。阪神◎。"},
+  {name:"武豊",nameEn:"Yutaka Take",style:"自在",venueAff:{hanshin:8,kyoto:9,tokyo:8,nakayama:7,chukyo:8,kokura:7,niigata:7,sapporo:8,hakodate:7},winRate:0.12,g1Wins:80,notes:"レジェンド。京都の鬼。経験値は唯一無二。"},
+  {name:"石橋脩",nameEn:"Shu Ishibashi",style:"差し・追込",venueAff:{hanshin:5,kyoto:5,tokyo:7,nakayama:7,chukyo:5,kokura:5,niigata:7,sapporo:6,hakodate:6},winRate:0.08,g1Wins:3,notes:"関東ベテラン。東京・中山で安定。"},
+  {name:"原優介",nameEn:"Yusuke Hara",style:"先行・好位",venueAff:{hanshin:5,kyoto:5,tokyo:6,nakayama:7,chukyo:5,kokura:5,niigata:6,sapporo:5,hakodate:5},winRate:0.06,g1Wins:0,notes:"若手有望株。中山で好騎乗多い。"},
+  {name:"田口貫太",nameEn:"Kanta Taguchi",style:"差し",venueAff:{hanshin:6,kyoto:7,tokyo:5,nakayama:5,chukyo:6,kokura:6,niigata:5,sapporo:5,hakodate:5},winRate:0.06,g1Wins:0,notes:"京都の穴騎手。差し脚を活かす。"},
+  {name:"北村友一",nameEn:"Yuichi Kitamura",style:"好位・差し",venueAff:{hanshin:8,kyoto:8,tokyo:6,nakayama:6,chukyo:7,kokura:7,niigata:5,sapporo:6,hakodate:6},winRate:0.10,g1Wins:5,notes:"関西のベテラン。阪神・京都で堅実。"},
+  {name:"高杉吏麒",nameEn:"Riki Takasugi",style:"差し・追込",venueAff:{hanshin:7,kyoto:8,tokyo:5,nakayama:5,chukyo:6,kokura:6,niigata:5,sapporo:5,hakodate:5},winRate:0.07,g1Wins:0,notes:"若手成長中。京都での追込み巧い。"},
+  {name:"浜中俊",nameEn:"Suguru Hamanaka",style:"好位・差し",venueAff:{hanshin:8,kyoto:8,tokyo:6,nakayama:6,chukyo:7,kokura:7,niigata:5,sapporo:7,hakodate:7},winRate:0.11,g1Wins:10,notes:"関西重賞常連。阪神外回りでの手腕◎。"},
+  {name:"C.ルメール",nameEn:"Christophe Lemaire",style:"自在",venueAff:{hanshin:9,kyoto:9,tokyo:10,nakayama:9,chukyo:8,kokura:7,niigata:8,sapporo:8,hakodate:8},winRate:0.22,g1Wins:55,notes:"リーディングジョッキー。全場トップクラス。東京は別格。"},
+  {name:"松山弘平",nameEn:"Kohei Matsuyama",style:"先行・好位",venueAff:{hanshin:8,kyoto:8,tokyo:7,nakayama:6,chukyo:8,kokura:8,niigata:6,sapporo:7,hakodate:7},winRate:0.12,g1Wins:8,notes:"関西の実力者。先行策が冴える。阪神◎。"},
+  {name:"池添謙一",nameEn:"Kenichi Ikezoe",style:"差し・追込",venueAff:{hanshin:7,kyoto:7,tokyo:6,nakayama:6,chukyo:7,kokura:7,niigata:5,sapporo:7,hakodate:7},winRate:0.09,g1Wins:20,notes:"大舞台の経験豊富。追込みの一撃。"},
+  {name:"津村明秀",nameEn:"Akihide Tsumura",style:"先行・捲り",venueAff:{hanshin:5,kyoto:5,tokyo:7,nakayama:8,chukyo:5,kokura:5,niigata:7,sapporo:6,hakodate:6},winRate:0.07,g1Wins:1,notes:"中山巧者。内枠先行で味を出す。"},
+  {name:"富田暁",nameEn:"Akira Tomita",style:"先行",venueAff:{hanshin:6,kyoto:6,tokyo:5,nakayama:5,chukyo:6,kokura:6,niigata:5,sapporo:5,hakodate:5},winRate:0.05,g1Wins:0,notes:"若手。先行粘り込みが武器。"},
+];
+
+const findJockey=(name)=>{
+  if(!name) return null;
+  return JOCKEYS.find(j=>j.name===name)||null;
+};
+
+const calcJockeyVenueScore=(jockeyName,venueKey)=>{
+  const j=findJockey(jockeyName);
+  if(!j) return {score:0,aff:0,label:"騎手DB未登録"};
+  const aff=j.venueAff[venueKey]||5;
+  // Score out of 10: venue affinity + win rate bonus + G1 bonus
+  const wrBonus=Math.min(3,j.winRate*15);
+  const g1Bonus=Math.min(2,j.g1Wins/20);
+  const total=Math.min(10,+(aff*0.6+wrBonus+g1Bonus).toFixed(1));
+  const label=total>=8?"◎ 絶好":total>=6.5?"○ 好相性":total>=5?"▲ 普通":total>=3.5?"✖ やや不安":"⭐ 未知数";
+  return {score:total,aff,label,jockey:j};
+};
+
+/* ===== Sample Races ===== */
 const SAMPLE_RACES = [
   { name:"🏆 第86回 桜花賞 (G1) 阪神芝1600m 4/12", venue:"hanshin", surface:"TURF", distance:"MILE", cond:"GOOD", isG1:true,
     runners:[
-      {name:"フェスティバルヒル",sire:"サートゥルナーリア",bms:"ハーツクライ",dam:"ミュージアムヒル",age:"3"},
-      {name:"サンアントワーヌ",sire:"ドレフォン",bms:"ハービンジャー",dam:"サンティール",age:"3"},
-      {name:"ディアダイヤモンド",sire:"サートゥルナーリア",bms:"First Dude",dam:"スカイダイヤモンズ",age:"3"},
-      {name:"エレガンスアスク",sire:"ポエティックフレア",bms:"ハーツクライ",dam:"ネヴァーハーツ",age:"3"},
-      {name:"ギャラボーグ",sire:"ロードカナロア",bms:"Sligo Bay",dam:"レキシールー",age:"3"},
-      {name:"アイニードユー",sire:"ファインニードル",bms:"ハードスパン",dam:"プリディカメント",age:"3"},
-      {name:"アランカール",sire:"エピファネイア",bms:"ディープインパクト",dam:"シンハライト",age:"3"},
-      {name:"ロンギングセリーヌ",sire:"モーリス",bms:"ダイワメジャー",dam:"パセンジャーシップ",age:"3"},
-      {name:"ルールザウェイヴ",sire:"ロードカナロア",bms:"ディープインパクト",dam:"ルールブリタニア",age:"3"},
-      {name:"ナムラコスモス",sire:"ダノンプレミアム",bms:"ジョーカプチーノ",dam:"ナムラリコリス",age:"3"},
-      {name:"ジッピーチューン",sire:"ロードカナロア",bms:"City Zip",dam:"ジペッサ",age:"3"},
-      {name:"スウィートハピネス",sire:"リアルインパクト",bms:"ワークフォース",dam:"フラル",age:"3"},
-      {name:"リリージョワ",sire:"シルバーステート",bms:"キングカメハメハ",dam:"デサフィアンテ",age:"3"},
-      {name:"ドリームコア",sire:"キズナ",bms:"ハービンジャー",dam:"ノームコア",age:"3"},
-      {name:"スターアニス",sire:"ドレフォン",bms:"ダイワメジャー",dam:"エピセアローム",age:"3"},
-      {name:"ショウナンカリス",sire:"リアルスティール",bms:"American Pharoah",dam:"ロシアンサモワール",age:"3"},
-      {name:"ブラックチャリス",sire:"キタサンブラック",bms:"トゥザワールド",dam:"ゴールドチャリス",age:"3"},
-      {name:"プレセピオ",sire:"パドトロワ",bms:"エピファネイア",dam:"パネットーネ",age:"3"},
+      {name:"フェスティバルヒル",sire:"サートゥルナーリア",bms:"ハーツクライ",dam:"ミュージアムヒル",jockey:"坂井瑠星",age:"3"},
+      {name:"サンアントワーヌ",sire:"ドレフォン",bms:"ハービンジャー",dam:"サンティール",jockey:"荻野極",age:"3"},
+      {name:"ディアダイヤモンド",sire:"サートゥルナーリア",bms:"First Dude",dam:"スカイダイヤモンズ",jockey:"戸崎圭太",age:"3"},
+      {name:"エレガンスアスク",sire:"ポエティックフレア",bms:"ハーツクライ",dam:"ネヴァーハーツ",jockey:"岩田望来",age:"3"},
+      {name:"ギャラボーグ",sire:"ロードカナロア",bms:"Sligo Bay",dam:"レキシールー",jockey:"西村淳也",age:"3"},
+      {name:"アイニードユー",sire:"ファインニードル",bms:"ハードスパン",dam:"プリディカメント",jockey:"川田将雅",age:"3"},
+      {name:"アランカール",sire:"エピファネイア",bms:"ディープインパクト",dam:"シンハライト",jockey:"武豊",age:"3"},
+      {name:"ロンギングセリーヌ",sire:"モーリス",bms:"ダイワメジャー",dam:"パセンジャーシップ",jockey:"石橋脩",age:"3"},
+      {name:"ルールザウェイヴ",sire:"ロードカナロア",bms:"ディープインパクト",dam:"ルールブリタニア",jockey:"原優介",age:"3"},
+      {name:"ナムラコスモス",sire:"ダノンプレミアム",bms:"ジョーカプチーノ",dam:"ナムラリコリス",jockey:"田口貫太",age:"3"},
+      {name:"ジッピーチューン",sire:"ロードカナロア",bms:"City Zip",dam:"ジペッサ",jockey:"北村友一",age:"3"},
+      {name:"スウィートハピネス",sire:"リアルインパクト",bms:"ワークフォース",dam:"フラル",jockey:"高杉吏麒",age:"3"},
+      {name:"リリージョワ",sire:"シルバーステート",bms:"キングカメハメハ",dam:"デサフィアンテ",jockey:"浜中俊",age:"3"},
+      {name:"ドリームコア",sire:"キズナ",bms:"ハービンジャー",dam:"ノームコア",jockey:"C.ルメール",age:"3"},
+      {name:"スターアニス",sire:"ドレフォン",bms:"ダイワメジャー",dam:"エピセアローム",jockey:"松山弘平",age:"3"},
+      {name:"ショウナンカリス",sire:"リアルスティール",bms:"American Pharoah",dam:"ロシアンサモワール",jockey:"池添謙一",age:"3"},
+      {name:"ブラックチャリス",sire:"キタサンブラック",bms:"トゥザワールド",dam:"ゴールドチャリス",jockey:"津村明秀",age:"3"},
+      {name:"プレセピオ",sire:"パドトロワ",bms:"エピファネイア",dam:"パネットーネ",jockey:"富田暁",age:"3"},
     ]},
   { name:"東京11R 芝2400m (サンプル)", venue:"tokyo", surface:"TURF", distance:"MIDDLE", cond:"GOOD",
     runners:[
@@ -763,52 +804,67 @@ const SAMPLE_RACES = [
 
 /* Runner entry row */
 const RunnerRow=({runner,index,onChange,onRemove,matchedSire,matchedBms,matchedDam})=>{
+  const jMatch=!!findJockey(runner.jockey);
   return(
-    <div style={{display:"flex",gap:4,alignItems:"center",padding:"6px 0",borderBottom:"1px solid var(--color-border-tertiary)"}}>
-      <span style={{width:20,fontSize:12,fontWeight:500,color:"var(--color-text-tertiary)",textAlign:"center",flexShrink:0}}>{index+1}</span>
+    <div style={{display:"flex",gap:3,alignItems:"center",padding:"5px 0",borderBottom:"1px solid var(--color-border-tertiary)"}}>
+      <span style={{width:18,fontSize:11,fontWeight:500,color:"var(--color-text-tertiary)",textAlign:"center",flexShrink:0}}>{index+1}</span>
       <input value={runner.name} onChange={e=>onChange("name",e.target.value)} placeholder="馬名"
-        style={{flex:2,padding:"5px 6px",borderRadius:6,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:11,minWidth:0}}/>
-      <div style={{flex:1.5,position:"relative"}}>
+        style={{flex:2,padding:"4px 5px",borderRadius:6,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:10,minWidth:0}}/>
+      <div style={{flex:1.3,position:"relative"}}>
         <input value={runner.sire} onChange={e=>onChange("sire",e.target.value)} placeholder="父"
-          style={{width:"100%",padding:"5px 6px",borderRadius:6,border:`1px solid ${matchedSire?"#1D9E75":"var(--color-border-tertiary)"}`,background:matchedSire?"#E1F5EE":"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:11,boxSizing:"border-box"}}/>
-        {matchedSire&&<span style={{position:"absolute",right:3,top:6,fontSize:8,color:"#1D9E75"}}>✓</span>}
+          style={{width:"100%",padding:"4px 5px",borderRadius:6,border:`1px solid ${matchedSire?"#1D9E75":"var(--color-border-tertiary)"}`,background:matchedSire?"#E1F5EE":"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:10,boxSizing:"border-box"}}/>
+        {matchedSire&&<span style={{position:"absolute",right:2,top:5,fontSize:7,color:"#1D9E75"}}>✓</span>}
       </div>
-      <div style={{flex:1.5,position:"relative"}}>
+      <div style={{flex:1.3,position:"relative"}}>
         <input value={runner.bms||""} onChange={e=>onChange("bms",e.target.value)} placeholder="母父"
-          style={{width:"100%",padding:"5px 6px",borderRadius:6,border:`1px solid ${matchedBms?"#378ADD":"var(--color-border-tertiary)"}`,background:matchedBms?"#E6F1FB":"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:11,boxSizing:"border-box"}}/>
-        {matchedBms&&<span style={{position:"absolute",right:3,top:6,fontSize:8,color:"#378ADD"}}>✓</span>}
+          style={{width:"100%",padding:"4px 5px",borderRadius:6,border:`1px solid ${matchedBms?"#378ADD":"var(--color-border-tertiary)"}`,background:matchedBms?"#E6F1FB":"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:10,boxSizing:"border-box"}}/>
+        {matchedBms&&<span style={{position:"absolute",right:2,top:5,fontSize:7,color:"#378ADD"}}>✓</span>}
       </div>
-      <div style={{flex:1.5,position:"relative"}}>
+      <div style={{flex:1.3,position:"relative"}}>
         <input value={runner.dam||""} onChange={e=>onChange("dam",e.target.value)} placeholder="母"
-          style={{width:"100%",padding:"5px 6px",borderRadius:6,border:`1px solid ${matchedDam?"#E05C97":"var(--color-border-tertiary)"}`,background:matchedDam?"#FBEAF0":"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:11,boxSizing:"border-box"}}/>
-        {matchedDam&&<span style={{position:"absolute",right:3,top:6,fontSize:8,color:"#E05C97"}}>✓</span>}
+          style={{width:"100%",padding:"4px 5px",borderRadius:6,border:`1px solid ${matchedDam?"#E05C97":"var(--color-border-tertiary)"}`,background:matchedDam?"#FBEAF0":"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:10,boxSizing:"border-box"}}/>
+        {matchedDam&&<span style={{position:"absolute",right:2,top:5,fontSize:7,color:"#E05C97"}}>✓</span>}
+      </div>
+      <div style={{flex:1.2,position:"relative"}}>
+        <input value={runner.jockey||""} onChange={e=>onChange("jockey",e.target.value)} placeholder="騎手"
+          style={{width:"100%",padding:"4px 5px",borderRadius:6,border:`1px solid ${jMatch?"#D85A30":"var(--color-border-tertiary)"}`,background:jMatch?"#FFF3EE":"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:10,boxSizing:"border-box"}}/>
+        {jMatch&&<span style={{position:"absolute",right:2,top:5,fontSize:7,color:"#D85A30"}}>✓</span>}
       </div>
       <select value={runner.age} onChange={e=>onChange("age",e.target.value)}
-        style={{width:42,padding:"5px 2px",borderRadius:6,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:10,flexShrink:0}}>
+        style={{width:36,padding:"4px 1px",borderRadius:6,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:9,flexShrink:0}}>
         <option value="ANY">齢</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6+</option>
       </select>
-      <button onClick={onRemove} style={{width:22,height:22,borderRadius:6,border:"none",background:"transparent",color:"var(--color-text-tertiary)",fontSize:13,cursor:"pointer",flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center"}}>×</button>
+      <button onClick={onRemove} style={{width:20,height:20,borderRadius:6,border:"none",background:"transparent",color:"var(--color-text-tertiary)",fontSize:12,cursor:"pointer",flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center"}}>×</button>
     </div>
   );
 };
 
 /* Prediction result card */
-const PredictionCard=({entry,rank,expanded,onToggle})=>{
+const PredictionCard=({entry,rank,expanded,onToggle,venueKey})=>{
   const scoreColor=entry.score>=75?"#1D9E75":entry.score>=55?"#378ADD":entry.score>=35?"#EF9F27":"#A32D2D";
-  const recLabel=entry.score>=80?"◎ 本命":entry.score>=70?"○ 対抗":entry.score>=60?"▲ 単穴":entry.score>=50?"△ 連下":"☆ 穴";
-  const recColor=entry.score>=80?"#1D9E75":entry.score>=70?"#378ADD":entry.score>=60?"#7F77DD":entry.score>=50?"#EF9F27":"#E05C97";
+  const recLabel=entry.score>=80?"◎":entry.score>=70?"○":entry.score>=60?"▲":entry.score>=50?"✖":"⭐";
+  const recFull=entry.score>=80?"◎ 本命":entry.score>=70?"○ 対抗":entry.score>=60?"▲ 単穴":entry.score>=50?"✖ 軽視":"⭐ 大穴";
+  const recColor=entry.score>=80?"#1D9E75":entry.score>=70?"#378ADD":entry.score>=60?"#7F77DD":entry.score>=50?"#A32D2D":"#E05C97";
+  const jvs=entry.jockeyVenue;
   return(
     <div style={{background:"var(--color-background-primary)",border:"1px solid var(--color-border-tertiary)",borderRadius:12,overflow:"hidden",marginBottom:6}}>
       <div onClick={onToggle} style={{padding:"10px 14px",cursor:"pointer",display:"flex",alignItems:"center",gap:10}}>
         <div style={{width:30,height:30,borderRadius:8,background:scoreColor,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:600,fontSize:12,flexShrink:0}}>{rank}</div>
         <div style={{flex:1,minWidth:0}}>
-          <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:2}}>
+          <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:2,flexWrap:"wrap"}}>
+            <span style={{fontSize:16,fontWeight:700,color:recColor}}>{recLabel}</span>
             <span style={{fontSize:14,fontWeight:600,color:"var(--color-text-primary)"}}>{entry.runner.name||"(未入力)"}</span>
-            <span style={{fontSize:10,padding:"1px 8px",borderRadius:10,background:recColor,color:"#fff",fontWeight:600}}>{recLabel}</span>
+            {entry.runner.jockey&&<span style={{fontSize:9,padding:"1px 6px",borderRadius:8,background:"var(--color-background-secondary)",color:"var(--color-text-secondary)",fontWeight:500}}>{entry.runner.jockey}</span>}
           </div>
           <div style={{fontSize:10,color:"var(--color-text-secondary)"}}>
             父: {entry.runner.sire||"—"} / 母父: {entry.runner.bms||"—"}{entry.runner.dam?` / 母: ${entry.runner.dam}`:""}{entry.runner.age&&entry.runner.age!=="ANY"?` / ${entry.runner.age}歳`:""}
           </div>
+          {jvs&&jvs.jockey&&(
+            <div style={{display:"flex",alignItems:"center",gap:6,marginTop:3}}>
+              <span style={{fontSize:9,color:jvs.score>=7?"#1D9E75":jvs.score>=5?"#378ADD":"#EF9F27",fontWeight:600}}>🏇 騎手×会場: {jvs.label}</span>
+              <span style={{fontSize:9,color:"var(--color-text-tertiary)"}}>({jvs.score}/10)</span>
+            </div>
+          )}
         </div>
         <div style={{textAlign:"right",flexShrink:0}}>
           <div style={{fontSize:22,fontWeight:600,color:scoreColor}}>{entry.score}</div>
@@ -942,9 +998,9 @@ const RacePredictionTab=({stallions})=>{
   const [pDistance,setPDistance]=useState("MIDDLE");
   const [pCond,setPCond]=useState("GOOD");
   const [runners,setRunners]=useState([
-    {name:"",sire:"",bms:"",dam:"",age:"3"},
-    {name:"",sire:"",bms:"",dam:"",age:"3"},
-    {name:"",sire:"",bms:"",dam:"",age:"3"},
+    {name:"",sire:"",bms:"",dam:"",jockey:"",age:"3"},
+    {name:"",sire:"",bms:"",dam:"",jockey:"",age:"3"},
+    {name:"",sire:"",bms:"",dam:"",jockey:"",age:"3"},
   ]);
   const [results,setResults]=useState(null);
   const [expandedId,setExpandedId]=useState(null);
@@ -966,7 +1022,7 @@ const RacePredictionTab=({stallions})=>{
     setRunners(prev=>prev.filter((_,j)=>j!==i));
   };
   const addRunner=()=>{
-    if(runners.length<18) setRunners(prev=>[...prev,{name:"",sire:"",bms:"",dam:"",age:"3"}]);
+    if(runners.length<18) setRunners(prev=>[...prev,{name:"",sire:"",bms:"",dam:"",jockey:"",age:"3"}]);
   };
 
   // Find matching stallion in DB
@@ -1111,11 +1167,22 @@ const RacePredictionTab=({stallions})=>{
         if(matchedSire.surface===matchedDam.surface&&matchedDam.surface===pSurface) {bonus+=1.5;strengths.push("父母の馬場適性が一致");}
       }
 
+      // Jockey × Venue affinity
+      const jvs=calcJockeyVenueScore(runner.jockey, pVenue);
+      if(jvs.jockey){
+        // Jockey adds up to 5 points to total
+        const jockeyBonus=jvs.score*0.5;
+        bonus+=jockeyBonus;
+        if(jvs.score>=8) strengths.push(`騎手${runner.jockey}×${pVenueData?.name||""}は${jvs.label}`);
+        if(jvs.score<=4) weaknesses.push(`騎手${runner.jockey}は${pVenueData?.name||""}苦手`);
+      }
+
       return {
         runner,
         matchedSire,
         matchedBms,
         matchedDam,
+        jockeyVenue:jvs,
         score:Math.min(100,Math.max(0,+((score+bonus)).toFixed(1))),
         details,
         bonus:+bonus.toFixed(1),
@@ -1188,14 +1255,15 @@ const RacePredictionTab=({stallions})=>{
 
           {/* Runner list header */}
           <div style={{fontSize:13,fontWeight:500,color:"var(--color-text-primary)",marginBottom:8}}>出走馬リスト</div>
-          <div style={{display:"flex",gap:4,alignItems:"center",padding:"0 0 6px",borderBottom:"1px solid var(--color-border-tertiary)",marginBottom:2}}>
-            <span style={{width:20,fontSize:9,color:"var(--color-text-tertiary)",textAlign:"center"}}>枠</span>
-            <span style={{flex:2,fontSize:9,color:"var(--color-text-tertiary)"}}>馬名</span>
-            <span style={{flex:1.5,fontSize:9,color:"var(--color-text-tertiary)"}}>父</span>
-            <span style={{flex:1.5,fontSize:9,color:"var(--color-text-tertiary)"}}>母父(BMS)</span>
-            <span style={{flex:1.5,fontSize:9,color:"var(--color-text-tertiary)"}}>母</span>
-            <span style={{width:42,fontSize:9,color:"var(--color-text-tertiary)"}}>齢</span>
-            <span style={{width:22}}/>
+          <div style={{display:"flex",gap:3,alignItems:"center",padding:"0 0 5px",borderBottom:"1px solid var(--color-border-tertiary)",marginBottom:2}}>
+            <span style={{width:18,fontSize:8,color:"var(--color-text-tertiary)",textAlign:"center"}}>枠</span>
+            <span style={{flex:2,fontSize:8,color:"var(--color-text-tertiary)"}}>馬名</span>
+            <span style={{flex:1.3,fontSize:8,color:"var(--color-text-tertiary)"}}>父</span>
+            <span style={{flex:1.3,fontSize:8,color:"var(--color-text-tertiary)"}}>母父</span>
+            <span style={{flex:1.3,fontSize:8,color:"var(--color-text-tertiary)"}}>母</span>
+            <span style={{flex:1.2,fontSize:8,color:"var(--color-text-tertiary)"}}>騎手</span>
+            <span style={{width:36,fontSize:8,color:"var(--color-text-tertiary)"}}>齢</span>
+            <span style={{width:20}}/>
           </div>
           {runners.map((r,i)=>(
             <RunnerRow key={i} runner={r} index={i}
@@ -1261,7 +1329,7 @@ const RacePredictionTab=({stallions})=>{
           {/* Full ranking */}
           <div style={{display:"flex",flexDirection:"column"}}>
             {results.map((e,i)=>(
-              <PredictionCard key={i} entry={e} rank={i+1}
+              <PredictionCard key={i} entry={e} rank={i+1} venueKey={pVenue}
                 expanded={expandedId===i} onToggle={()=>setExpandedId(expandedId===i?null:i)}/>
             ))}
           </div>
@@ -1331,8 +1399,8 @@ export default function App(){
   return(
     <div style={{maxWidth:720,margin:"0 auto",fontFamily:"var(--font-sans)"}}>
       <div style={{marginBottom:16}}>
-        <h1 style={{fontSize:22,fontWeight:500,color:"var(--color-text-primary)",margin:"0 0 2px",letterSpacing:"-0.02em"}}>血統くん（プロトタイプ）</h1>
-        <p style={{fontSize:12,color:"var(--color-text-tertiary)",margin:0}}>サラブレッド血統分析 — {stats.total} stallions</p>
+        <h1 style={{fontSize:22,fontWeight:500,color:"var(--color-text-primary)",margin:"0 0 2px",letterSpacing:"-0.02em"}}>血統くん</h1>
+        <p style={{fontSize:12,color:"var(--color-text-tertiary)",margin:0}}>Thoroughbred bloodline analyzer — {stats.total} stallions</p>
       </div>
 
       {/* Tab navigation */}
@@ -1449,7 +1517,7 @@ export default function App(){
       {tab==="predict"&&<RacePredictionTab stallions={stallions}/>}
 
       <div style={{marginTop:20,padding:"10px 0",borderTop:"1px solid var(--color-border-tertiary)",fontSize:10,color:"var(--color-text-tertiary)",textAlign:"center"}}>
-        Phase 1〜4: 血統DB + 適性判定 + 分析 + レース予想 v4.0 (繁殖牝馬DB対応) / {stats.total}頭登録
+        Phase 1〜4: 血統DB + 適性判定 + 分析 + レース予想 v5.0 (騎手DB+印評価) / {stats.total}頭登録
       </div>
     </div>
   );
