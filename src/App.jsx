@@ -94,6 +94,28 @@ const STALLIONS=[
   {id:"67",name:"First Dude",nameEn:"First Dude",pedigree:{sire:"スティーヴンゴットイーヴン",dam:"グレイスオブフォレスト",sireOfSire:"エーピーインディ",damOfSire:"ティクティクティク",sireOfDam:"フォレストリー",damOfDam:"トリニティプレイス"},surface:"DIRT",distanceMin:"MILE",distanceMax:"MIDDLE",course:"BOTH",growth:"NORMAL",heavyTrack:7,staminaScore:7,speedScore:7,powerScore:8,notes:"米ダートG2勝ち・BCクラシック3着。エーピーインディ系。ダートのパワー型。"},
 ];
 
+/* ===== Broodmare Data (桜花賞2026) ===== */
+const BROODMARES=[
+  {name:"ミュージアムヒル",bms:"ハーツクライ",surface:"TURF",distanceMin:"MILE",distanceMax:"MIDDLE",course:"BOTH",growth:"NORMAL",heavyTrack:4,staminaScore:7,speedScore:7,powerScore:6,notes:"母父ハーツクライで中距離寄りのスタミナ。"},
+  {name:"サンティール",bms:"ハービンジャー",surface:"TURF",distanceMin:"MILE",distanceMax:"MIDDLE",course:"BOTH",growth:"LATE",heavyTrack:6,staminaScore:7,speedScore:6,powerScore:7,notes:"母父ハービンジャーでパワー型。晩成傾向。"},
+  {name:"スカイダイヤモンズ",bms:"First Dude",surface:"BOTH",distanceMin:"MILE",distanceMax:"MIDDLE",course:"BOTH",growth:"NORMAL",heavyTrack:6,staminaScore:6,speedScore:7,powerScore:7,notes:"米血統配合。ダートの下地もあり。"},
+  {name:"ネヴァーハーツ",bms:"ハーツクライ",surface:"TURF",distanceMin:"MILE",distanceMax:"LONG",course:"LEFT",growth:"LATE",heavyTrack:4,staminaScore:8,speedScore:6,powerScore:6,notes:"母父ハーツクライ。スタミナ豊富で晩成型。"},
+  {name:"レキシールー",bms:"Sligo Bay",surface:"TURF",distanceMin:"MIDDLE",distanceMax:"LONG",course:"BOTH",growth:"LATE",heavyTrack:6,staminaScore:9,speedScore:5,powerScore:7,notes:"豪州G1馬。母父サドラーズ系で重厚なスタミナ。馬格大型。"},
+  {name:"プリディカメント",bms:"ハードスパン",surface:"BOTH",distanceMin:"SPRINT",distanceMax:"MILE",course:"BOTH",growth:"EARLY",heavyTrack:6,staminaScore:5,speedScore:8,powerScore:7,notes:"母父ハードスパンで芝ダート兼用。先行力あり。"},
+  {name:"シンハライト",bms:"ディープインパクト",surface:"TURF",distanceMin:"MILE",distanceMax:"MIDDLE",course:"BOTH",growth:"NORMAL",heavyTrack:3,staminaScore:7,speedScore:8,powerScore:6,notes:"オークス馬。ディープ×シンボリクリスエスの良血。瞬発力◎。"},
+  {name:"パセンジャーシップ",bms:"ダイワメジャー",surface:"TURF",distanceMin:"SPRINT",distanceMax:"MILE",course:"BOTH",growth:"EARLY",heavyTrack:5,staminaScore:5,speedScore:8,powerScore:7,notes:"母父ダイワメジャーでマイル以下のスピード型。先行力。"},
+  {name:"ルールブリタニア",bms:"ディープインパクト",surface:"TURF",distanceMin:"MILE",distanceMax:"MIDDLE",course:"BOTH",growth:"NORMAL",heavyTrack:3,staminaScore:7,speedScore:8,powerScore:6,notes:"母父ディープ。瞬発力に優れた芝中距離血統。"},
+  {name:"ナムラリコリス",bms:"ジョーカプチーノ",surface:"TURF",distanceMin:"SPRINT",distanceMax:"MILE",course:"BOTH",growth:"EARLY",heavyTrack:4,staminaScore:4,speedScore:8,powerScore:6,notes:"母父ジョーカプチーノでスピード寄り。早熟マイル血統。"},
+  {name:"ジペッサ",bms:"City Zip",surface:"TURF",distanceMin:"SPRINT",distanceMax:"MILE",course:"BOTH",growth:"EARLY",heavyTrack:4,staminaScore:4,speedScore:9,powerScore:6,notes:"母父City Zipで米スプリント血統。快速型。"},
+  {name:"フラル",bms:"ワークフォース",surface:"TURF",distanceMin:"MILE",distanceMax:"MIDDLE",course:"BOTH",growth:"LATE",heavyTrack:5,staminaScore:8,speedScore:6,powerScore:7,notes:"母父ワークフォースで凱旋門賞馬の血。スタミナ型。"},
+  {name:"デサフィアンテ",bms:"キングカメハメハ",surface:"TURF",distanceMin:"MILE",distanceMax:"MIDDLE",course:"BOTH",growth:"NORMAL",heavyTrack:5,staminaScore:7,speedScore:7,powerScore:8,notes:"母父キングカメハメハでパワーとスピードのバランス型。"},
+  {name:"ノームコア",bms:"ハービンジャー",surface:"TURF",distanceMin:"MILE",distanceMax:"MIDDLE",course:"LEFT",growth:"LATE",heavyTrack:5,staminaScore:7,speedScore:8,powerScore:7,notes:"VM・札幌記念優勝のG1馬。左回り巧者。母としての能力◎。"},
+  {name:"エピセアローム",bms:"ダイワメジャー",surface:"TURF",distanceMin:"SPRINT",distanceMax:"MILE",course:"BOTH",growth:"EARLY",heavyTrack:4,staminaScore:5,speedScore:9,powerScore:6,notes:"秋華賞馬。母父ダイワメジャーのスピード×マイル適性。"},
+  {name:"ロシアンサモワール",bms:"American Pharoah",surface:"BOTH",distanceMin:"MILE",distanceMax:"MIDDLE",course:"BOTH",growth:"NORMAL",heavyTrack:6,staminaScore:7,speedScore:7,powerScore:8,notes:"母父アメリカンファラオで米三冠馬の血。距離万能。"},
+  {name:"ゴールドチャリス",bms:"トゥザワールド",surface:"TURF",distanceMin:"MILE",distanceMax:"MIDDLE",course:"BOTH",growth:"NORMAL",heavyTrack:5,staminaScore:7,speedScore:7,powerScore:7,notes:"母父トゥザワールドでキンカメ系のバランス型。"},
+  {name:"パネットーネ",bms:"エピファネイア",surface:"TURF",distanceMin:"MILE",distanceMax:"MIDDLE",course:"BOTH",growth:"NORMAL",heavyTrack:4,staminaScore:7,speedScore:7,powerScore:7,notes:"母父エピファネイアで芝中距離型。末脚活かす。"},
+];
+
 const STORAGE_KEY="keiba-v4";
 function load(){try{const r=localStorage.getItem(STORAGE_KEY);return r?JSON.parse(r):null}catch{return null}}
 function save(d){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(d))}catch{}}
@@ -701,24 +723,24 @@ const AnalysisTab=({stallions})=>{
 const SAMPLE_RACES = [
   { name:"🏆 第86回 桜花賞 (G1) 阪神芝1600m 4/12", venue:"hanshin", surface:"TURF", distance:"MILE", cond:"GOOD", isG1:true,
     runners:[
-      {name:"フェスティバルヒル",sire:"サートゥルナーリア",bms:"ハーツクライ",age:"3"},
-      {name:"サンアントワーヌ",sire:"ドレフォン",bms:"ハービンジャー",age:"3"},
-      {name:"ディアダイヤモンド",sire:"サートゥルナーリア",bms:"First Dude",age:"3"},
-      {name:"エレガンスアスク",sire:"ポエティックフレア",bms:"ハーツクライ",age:"3"},
-      {name:"ギャラボーグ",sire:"ロードカナロア",bms:"Sligo Bay",age:"3"},
-      {name:"アイニードユー",sire:"ファインニードル",bms:"ハードスパン",age:"3"},
-      {name:"アランカール",sire:"エピファネイア",bms:"ディープインパクト",age:"3"},
-      {name:"ロンギングセリーヌ",sire:"モーリス",bms:"ダイワメジャー",age:"3"},
-      {name:"ルールザウェイヴ",sire:"ロードカナロア",bms:"ディープインパクト",age:"3"},
-      {name:"ナムラコスモス",sire:"ダノンプレミアム",bms:"ジョーカプチーノ",age:"3"},
-      {name:"ジッピーチューン",sire:"ロードカナロア",bms:"City Zip",age:"3"},
-      {name:"スウィートハピネス",sire:"リアルインパクト",bms:"ワークフォース",age:"3"},
-      {name:"リリージョワ",sire:"シルバーステート",bms:"キングカメハメハ",age:"3"},
-      {name:"ドリームコア",sire:"キズナ",bms:"ハービンジャー",age:"3"},
-      {name:"スターアニス",sire:"ドレフォン",bms:"ダイワメジャー",age:"3"},
-      {name:"ショウナンカリス",sire:"リアルスティール",bms:"American Pharoah",age:"3"},
-      {name:"ブラックチャリス",sire:"キタサンブラック",bms:"トゥザワールド",age:"3"},
-      {name:"プレセピオ",sire:"パドトロワ",bms:"エピファネイア",age:"3"},
+      {name:"フェスティバルヒル",sire:"サートゥルナーリア",bms:"ハーツクライ",dam:"ミュージアムヒル",age:"3"},
+      {name:"サンアントワーヌ",sire:"ドレフォン",bms:"ハービンジャー",dam:"サンティール",age:"3"},
+      {name:"ディアダイヤモンド",sire:"サートゥルナーリア",bms:"First Dude",dam:"スカイダイヤモンズ",age:"3"},
+      {name:"エレガンスアスク",sire:"ポエティックフレア",bms:"ハーツクライ",dam:"ネヴァーハーツ",age:"3"},
+      {name:"ギャラボーグ",sire:"ロードカナロア",bms:"Sligo Bay",dam:"レキシールー",age:"3"},
+      {name:"アイニードユー",sire:"ファインニードル",bms:"ハードスパン",dam:"プリディカメント",age:"3"},
+      {name:"アランカール",sire:"エピファネイア",bms:"ディープインパクト",dam:"シンハライト",age:"3"},
+      {name:"ロンギングセリーヌ",sire:"モーリス",bms:"ダイワメジャー",dam:"パセンジャーシップ",age:"3"},
+      {name:"ルールザウェイヴ",sire:"ロードカナロア",bms:"ディープインパクト",dam:"ルールブリタニア",age:"3"},
+      {name:"ナムラコスモス",sire:"ダノンプレミアム",bms:"ジョーカプチーノ",dam:"ナムラリコリス",age:"3"},
+      {name:"ジッピーチューン",sire:"ロードカナロア",bms:"City Zip",dam:"ジペッサ",age:"3"},
+      {name:"スウィートハピネス",sire:"リアルインパクト",bms:"ワークフォース",dam:"フラル",age:"3"},
+      {name:"リリージョワ",sire:"シルバーステート",bms:"キングカメハメハ",dam:"デサフィアンテ",age:"3"},
+      {name:"ドリームコア",sire:"キズナ",bms:"ハービンジャー",dam:"ノームコア",age:"3"},
+      {name:"スターアニス",sire:"ドレフォン",bms:"ダイワメジャー",dam:"エピセアローム",age:"3"},
+      {name:"ショウナンカリス",sire:"リアルスティール",bms:"American Pharoah",dam:"ロシアンサモワール",age:"3"},
+      {name:"ブラックチャリス",sire:"キタサンブラック",bms:"トゥザワールド",dam:"ゴールドチャリス",age:"3"},
+      {name:"プレセピオ",sire:"パドトロワ",bms:"エピファネイア",dam:"パネットーネ",age:"3"},
     ]},
   { name:"東京11R 芝2400m (サンプル)", venue:"tokyo", surface:"TURF", distance:"MIDDLE", cond:"GOOD",
     runners:[
@@ -781,7 +803,7 @@ const PredictionCard=({entry,rank,expanded,onToggle})=>{
             <span style={{fontSize:10,padding:"1px 8px",borderRadius:10,background:recColor,color:"#fff",fontWeight:600}}>{recLabel}</span>
           </div>
           <div style={{fontSize:10,color:"var(--color-text-secondary)"}}>
-            父: {entry.runner.sire||"—"} / 母父: {entry.runner.bms||"—"}{entry.runner.age&&entry.runner.age!=="ANY"?` / ${entry.runner.age}歳`:""}
+            父: {entry.runner.sire||"—"} / 母父: {entry.runner.bms||"—"}{entry.runner.dam?` / 母: ${entry.runner.dam}`:""}{entry.runner.age&&entry.runner.age!=="ANY"?` / ${entry.runner.age}歳`:""}
           </div>
         </div>
         <div style={{textAlign:"right",flexShrink:0}}>
@@ -833,6 +855,18 @@ const PredictionCard=({entry,rank,expanded,onToggle})=>{
                 <div style={{fontSize:10,color:"var(--color-text-secondary)"}}>
                   SP:{entry.matchedBms.speedScore} / ST:{entry.matchedBms.staminaScore} / PW:{entry.matchedBms.powerScore} / 重:{entry.matchedBms.heavyTrack}
                 </div>
+              </div>
+            )}
+            {entry.matchedDam&&(
+              <div style={{marginTop:6,padding:"8px 10px",background:"var(--color-background-tertiary)",borderRadius:8,border:"1px solid #E05C97"}}>
+                <div style={{fontSize:10,fontWeight:500,color:"#E05C97",marginBottom:4}}>母 {entry.matchedDam.name} — 繁殖牝馬DB照合済</div>
+                <div style={{display:"flex",gap:4,flexWrap:"wrap",marginBottom:4}}>
+                  {surfBadge(entry.matchedDam.surface)}{courseBadge(entry.matchedDam.course)}{growthBadge(entry.matchedDam.growth)}
+                </div>
+                <div style={{fontSize:10,color:"var(--color-text-secondary)"}}>
+                  SP:{entry.matchedDam.speedScore} / ST:{entry.matchedDam.staminaScore} / PW:{entry.matchedDam.powerScore} / 重:{entry.matchedDam.heavyTrack}
+                </div>
+                {entry.matchedDam.notes&&<div style={{fontSize:9,color:"var(--color-text-tertiary)",marginTop:3}}>{entry.matchedDam.notes}</div>}
               </div>
             )}
             {/* Strengths / Weaknesses */}
@@ -938,6 +972,13 @@ const RacePredictionTab=({stallions})=>{
     return stallions.find(s=>s.name===q)||stallions.find(s=>s.nameEn?.toLowerCase()===q.toLowerCase())||null;
   };
 
+  // Find matching broodmare
+  const findBroodmare=(name)=>{
+    if(!name) return null;
+    const q=name.trim();
+    return BROODMARES.find(m=>m.name===q)||null;
+  };
+
   // Load sample race
   const loadSample=(sample)=>{
     setPVenue(sample.venue);
@@ -958,18 +999,24 @@ const RacePredictionTab=({stallions})=>{
     const scored=validRunners.map(runner=>{
       const matchedSire=findStallion(runner.sire);
       const matchedBms=findStallion(runner.bms);
+      const matchedDam=findBroodmare(runner.dam);
+      
+      // Weights: sire 55%, BMS 20%, dam 25% (when dam available)
+      // Without dam: sire 70%, BMS 30% (fallback)
+      const hasDam=!!matchedDam;
+      const wSire=hasDam?0.55:0.70;
+      const wBms=hasDam?0.20:0.30;
+      const wDam=hasDam?0.25:0;
       
       let score=0, details=[], bonus=0, strengths=[], weaknesses=[];
 
       if(matchedSire){
-        // Primary: use sire's aptitude (weighted 70%)
         const sireResult=calcAptitude(matchedSire, {...raceConfig, horseAge:runner.age});
-        const sireContrib=sireResult.score*0.70;
-        details=sireResult.details.map(d=>({...d,pts:+(d.pts*0.70).toFixed(1),max:+(d.max*0.70).toFixed(1)}));
+        const sireContrib=sireResult.score*wSire;
+        details=sireResult.details.map(d=>({...d,pts:+(d.pts*wSire).toFixed(1),max:+(d.max*wSire).toFixed(1)}));
         score+=sireContrib;
-        bonus+=sireResult.bonus*0.70;
+        bonus+=sireResult.bonus*wSire;
 
-        // Analyze strengths/weaknesses from sire
         if(matchedSire.speedScore>=9) strengths.push("父のスピード◎");
         if(matchedSire.staminaScore>=9) strengths.push("父のスタミナ◎");
         if(matchedSire.powerScore>=9) strengths.push("父のパワー◎");
@@ -978,7 +1025,6 @@ const RacePredictionTab=({stallions})=>{
         if(matchedSire.growth==="LATE"&&runner.age&&parseInt(runner.age)<=2) weaknesses.push("晩成血統×若駒");
         if(matchedSire.growth==="EARLY"&&runner.age&&parseInt(runner.age)>=5) weaknesses.push("早熟血統×高齢");
       } else if(runner.sire) {
-        // Unknown sire: give base score
         score+=40;
         details=[
           {label:"馬場",pts:7,max:17.5,note:"DB未登録"},
@@ -1001,43 +1047,71 @@ const RacePredictionTab=({stallions})=>{
       }
 
       if(matchedBms){
-        // BMS contribution (weighted 30%)
         const bmsResult=calcAptitude(matchedBms, {...raceConfig, horseAge:runner.age});
-        const bmsContrib=bmsResult.score*0.30;
-        // Add BMS contribution to existing details
+        const bmsContrib=bmsResult.score*wBms;
         details=details.map((d,i)=>{
           const bmsD=bmsResult.details[i];
           if(bmsD){
-            return {...d, pts:+(d.pts+bmsD.pts*0.30).toFixed(1), max:+(d.max+bmsD.max*0.30).toFixed(1)};
+            return {...d, pts:+(d.pts+bmsD.pts*wBms).toFixed(1), max:+(d.max+bmsD.max*wBms).toFixed(1)};
           }
           return d;
         });
         score+=bmsContrib;
-        bonus+=bmsResult.bonus*0.30;
+        bonus+=bmsResult.bonus*wBms;
 
         if(matchedBms.speedScore>=9) strengths.push("母父のスピード◎");
         if(matchedBms.staminaScore>=9) strengths.push("母父のスタミナ◎");
         if(matchedBms.powerScore>=9&&pSurface==="DIRT") strengths.push("母父パワー×ダート◎");
       } else if(!matchedSire) {
-        // Neither matched, remain at base
+        // Neither matched
       } else {
-        // Sire matched, BMS unknown: small penalty
         score*=0.95;
+      }
+
+      // Dam (broodmare) contribution
+      if(matchedDam){
+        const damApt=calcAptitude(matchedDam, {...raceConfig, horseAge:runner.age});
+        const damContrib=damApt.score*wDam;
+        details=details.map((d,i)=>{
+          const damD=damApt.details[i];
+          if(damD){
+            return {...d, pts:+(d.pts+damD.pts*wDam).toFixed(1), max:+(d.max+damD.max*wDam).toFixed(1)};
+          }
+          return d;
+        });
+        score+=damContrib;
+        bonus+=damApt.bonus*wDam;
+
+        // Dam-specific analysis
+        if(matchedDam.speedScore>=8) strengths.push("母のスピード○");
+        if(matchedDam.staminaScore>=8) strengths.push("母のスタミナ○");
+        if(matchedDam.notes&&matchedDam.notes.includes("G1")) strengths.push("母がG1級の良血");
+        if(matchedDam.growth==="EARLY"&&runner.age==="3") strengths.push("母系の仕上がり早さ○");
+        if(matchedDam.growth==="LATE"&&runner.age==="3") weaknesses.push("母系は晩成型");
       }
 
       // Sire-BMS synergy bonus
       if(matchedSire&&matchedBms){
-        // Check complementary traits
         if(matchedSire.speedScore>=8&&matchedBms.staminaScore>=8) {bonus+=3;strengths.push("スピード×スタミナの補完◎");}
         if(matchedSire.surface==="TURF"&&matchedBms.surface==="BOTH") {bonus+=1;strengths.push("芝適性を幅広くカバー");}
         if(matchedSire.surface===pSurface&&matchedBms.surface===pSurface) {bonus+=2;strengths.push("父母父ともに馬場一致");}
         if(matchedSire.surface!==pSurface&&matchedSire.surface!=="BOTH"&&matchedBms.surface!==pSurface&&matchedBms.surface!=="BOTH") weaknesses.push("父母父ともに馬場不適合");
       }
 
+      // Sire-Dam synergy bonus
+      if(matchedSire&&matchedDam){
+        const avgSpeed=(matchedSire.speedScore+matchedDam.speedScore)/2;
+        const avgStamina=(matchedSire.staminaScore+matchedDam.staminaScore)/2;
+        if(avgSpeed>=8&&pDistance==="MILE") {bonus+=2;strengths.push("父母ともにマイル適性高");}
+        if(avgStamina>=8&&(pDistance==="MIDDLE"||pDistance==="LONG")) {bonus+=2;strengths.push("父母ともにスタミナ豊富");}
+        if(matchedSire.surface===matchedDam.surface&&matchedDam.surface===pSurface) {bonus+=1.5;strengths.push("父母の馬場適性が一致");}
+      }
+
       return {
         runner,
         matchedSire,
         matchedBms,
+        matchedDam,
         score:Math.min(100,Math.max(0,+((score+bonus)).toFixed(1))),
         details,
         bonus:+bonus.toFixed(1),
@@ -1251,8 +1325,8 @@ export default function App(){
   return(
     <div style={{maxWidth:720,margin:"0 auto",fontFamily:"var(--font-sans)"}}>
       <div style={{marginBottom:16}}>
-        <h1 style={{fontSize:22,fontWeight:500,color:"var(--color-text-primary)",margin:"0 0 2px",letterSpacing:"-0.02em"}}>血統くん</h1>
-        <p style={{fontSize:12,color:"var(--color-text-tertiary)",margin:0}}>血統分析 — {stats.total} stallions</p>
+        <h1 style={{fontSize:22,fontWeight:500,color:"var(--color-text-primary)",margin:"0 0 2px",letterSpacing:"-0.02em"}}>競馬血統分析</h1>
+        <p style={{fontSize:12,color:"var(--color-text-tertiary)",margin:0}}>Thoroughbred bloodline analyzer — {stats.total} stallions</p>
       </div>
 
       {/* Tab navigation */}
@@ -1369,7 +1443,7 @@ export default function App(){
       {tab==="predict"&&<RacePredictionTab stallions={stallions}/>}
 
       <div style={{marginTop:20,padding:"10px 0",borderTop:"1px solid var(--color-border-tertiary)",fontSize:10,color:"var(--color-text-tertiary)",textAlign:"center"}}>
-        Phase 1〜4: 血統DB + 適性判定 + 分析 + レース予想 v3.3 (桜花賞BMS完全対応) / {stats.total}頭登録
+        Phase 1〜4: 血統DB + 適性判定 + 分析 + レース予想 v4.0 (繁殖牝馬DB対応) / {stats.total}頭登録
       </div>
     </div>
   );
