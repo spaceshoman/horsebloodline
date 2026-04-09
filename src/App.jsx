@@ -762,28 +762,32 @@ const SAMPLE_RACES = [
 ];
 
 /* Runner entry row */
-const RunnerRow=({runner,index,onChange,onRemove,matchedSire,matchedBms})=>{
-  const scoreColor=(s)=>s>=75?"#1D9E75":s>=55?"#378ADD":s>=35?"#EF9F27":"#A32D2D";
+const RunnerRow=({runner,index,onChange,onRemove,matchedSire,matchedBms,matchedDam})=>{
   return(
-    <div style={{display:"flex",gap:6,alignItems:"center",padding:"6px 0",borderBottom:"1px solid var(--color-border-tertiary)"}}>
-      <span style={{width:22,fontSize:12,fontWeight:500,color:"var(--color-text-tertiary)",textAlign:"center",flexShrink:0}}>{index+1}</span>
+    <div style={{display:"flex",gap:4,alignItems:"center",padding:"6px 0",borderBottom:"1px solid var(--color-border-tertiary)"}}>
+      <span style={{width:20,fontSize:12,fontWeight:500,color:"var(--color-text-tertiary)",textAlign:"center",flexShrink:0}}>{index+1}</span>
       <input value={runner.name} onChange={e=>onChange("name",e.target.value)} placeholder="馬名"
-        style={{flex:2,padding:"5px 8px",borderRadius:6,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:12,minWidth:0}}/>
-      <div style={{flex:2,position:"relative"}}>
+        style={{flex:2,padding:"5px 6px",borderRadius:6,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:11,minWidth:0}}/>
+      <div style={{flex:1.5,position:"relative"}}>
         <input value={runner.sire} onChange={e=>onChange("sire",e.target.value)} placeholder="父"
-          style={{width:"100%",padding:"5px 8px",borderRadius:6,border:`1px solid ${matchedSire?"#1D9E75":"var(--color-border-tertiary)"}`,background:matchedSire?"#E1F5EE":"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:12,boxSizing:"border-box"}}/>
-        {matchedSire&&<span style={{position:"absolute",right:4,top:6,fontSize:9,color:"#1D9E75"}}>✓DB</span>}
+          style={{width:"100%",padding:"5px 6px",borderRadius:6,border:`1px solid ${matchedSire?"#1D9E75":"var(--color-border-tertiary)"}`,background:matchedSire?"#E1F5EE":"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:11,boxSizing:"border-box"}}/>
+        {matchedSire&&<span style={{position:"absolute",right:3,top:6,fontSize:8,color:"#1D9E75"}}>✓</span>}
       </div>
-      <div style={{flex:2,position:"relative"}}>
-        <input value={runner.bms} onChange={e=>onChange("bms",e.target.value)} placeholder="母父"
-          style={{width:"100%",padding:"5px 8px",borderRadius:6,border:`1px solid ${matchedBms?"#378ADD":"var(--color-border-tertiary)"}`,background:matchedBms?"#E6F1FB":"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:12,boxSizing:"border-box"}}/>
-        {matchedBms&&<span style={{position:"absolute",right:4,top:6,fontSize:9,color:"#378ADD"}}>✓DB</span>}
+      <div style={{flex:1.5,position:"relative"}}>
+        <input value={runner.bms||""} onChange={e=>onChange("bms",e.target.value)} placeholder="母父"
+          style={{width:"100%",padding:"5px 6px",borderRadius:6,border:`1px solid ${matchedBms?"#378ADD":"var(--color-border-tertiary)"}`,background:matchedBms?"#E6F1FB":"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:11,boxSizing:"border-box"}}/>
+        {matchedBms&&<span style={{position:"absolute",right:3,top:6,fontSize:8,color:"#378ADD"}}>✓</span>}
+      </div>
+      <div style={{flex:1.5,position:"relative"}}>
+        <input value={runner.dam||""} onChange={e=>onChange("dam",e.target.value)} placeholder="母"
+          style={{width:"100%",padding:"5px 6px",borderRadius:6,border:`1px solid ${matchedDam?"#E05C97":"var(--color-border-tertiary)"}`,background:matchedDam?"#FBEAF0":"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:11,boxSizing:"border-box"}}/>
+        {matchedDam&&<span style={{position:"absolute",right:3,top:6,fontSize:8,color:"#E05C97"}}>✓</span>}
       </div>
       <select value={runner.age} onChange={e=>onChange("age",e.target.value)}
-        style={{width:52,padding:"5px 4px",borderRadius:6,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:11,flexShrink:0}}>
+        style={{width:42,padding:"5px 2px",borderRadius:6,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:10,flexShrink:0}}>
         <option value="ANY">齢</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6+</option>
       </select>
-      <button onClick={onRemove} style={{width:24,height:24,borderRadius:6,border:"none",background:"transparent",color:"var(--color-text-tertiary)",fontSize:14,cursor:"pointer",flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center"}}>×</button>
+      <button onClick={onRemove} style={{width:22,height:22,borderRadius:6,border:"none",background:"transparent",color:"var(--color-text-tertiary)",fontSize:13,cursor:"pointer",flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center"}}>×</button>
     </div>
   );
 };
@@ -938,9 +942,9 @@ const RacePredictionTab=({stallions})=>{
   const [pDistance,setPDistance]=useState("MIDDLE");
   const [pCond,setPCond]=useState("GOOD");
   const [runners,setRunners]=useState([
-    {name:"",sire:"",bms:"",age:"3"},
-    {name:"",sire:"",bms:"",age:"3"},
-    {name:"",sire:"",bms:"",age:"3"},
+    {name:"",sire:"",bms:"",dam:"",age:"3"},
+    {name:"",sire:"",bms:"",dam:"",age:"3"},
+    {name:"",sire:"",bms:"",dam:"",age:"3"},
   ]);
   const [results,setResults]=useState(null);
   const [expandedId,setExpandedId]=useState(null);
@@ -962,7 +966,7 @@ const RacePredictionTab=({stallions})=>{
     setRunners(prev=>prev.filter((_,j)=>j!==i));
   };
   const addRunner=()=>{
-    if(runners.length<18) setRunners(prev=>[...prev,{name:"",sire:"",bms:"",age:"3"}]);
+    if(runners.length<18) setRunners(prev=>[...prev,{name:"",sire:"",bms:"",dam:"",age:"3"}]);
   };
 
   // Find matching stallion in DB
@@ -1184,20 +1188,22 @@ const RacePredictionTab=({stallions})=>{
 
           {/* Runner list header */}
           <div style={{fontSize:13,fontWeight:500,color:"var(--color-text-primary)",marginBottom:8}}>出走馬リスト</div>
-          <div style={{display:"flex",gap:6,alignItems:"center",padding:"0 0 6px",borderBottom:"1px solid var(--color-border-tertiary)",marginBottom:2}}>
-            <span style={{width:22,fontSize:9,color:"var(--color-text-tertiary)",textAlign:"center"}}>枠</span>
+          <div style={{display:"flex",gap:4,alignItems:"center",padding:"0 0 6px",borderBottom:"1px solid var(--color-border-tertiary)",marginBottom:2}}>
+            <span style={{width:20,fontSize:9,color:"var(--color-text-tertiary)",textAlign:"center"}}>枠</span>
             <span style={{flex:2,fontSize:9,color:"var(--color-text-tertiary)"}}>馬名</span>
-            <span style={{flex:2,fontSize:9,color:"var(--color-text-tertiary)"}}>父</span>
-            <span style={{flex:2,fontSize:9,color:"var(--color-text-tertiary)"}}>母父(BMS)</span>
-            <span style={{width:52,fontSize:9,color:"var(--color-text-tertiary)"}}>齢</span>
-            <span style={{width:24}}/>
+            <span style={{flex:1.5,fontSize:9,color:"var(--color-text-tertiary)"}}>父</span>
+            <span style={{flex:1.5,fontSize:9,color:"var(--color-text-tertiary)"}}>母父(BMS)</span>
+            <span style={{flex:1.5,fontSize:9,color:"var(--color-text-tertiary)"}}>母</span>
+            <span style={{width:42,fontSize:9,color:"var(--color-text-tertiary)"}}>齢</span>
+            <span style={{width:22}}/>
           </div>
           {runners.map((r,i)=>(
             <RunnerRow key={i} runner={r} index={i}
               onChange={(f,v)=>updateRunner(i,f,v)}
               onRemove={()=>removeRunner(i)}
               matchedSire={!!findStallion(r.sire)}
-              matchedBms={!!findStallion(r.bms)}/>
+              matchedBms={!!findStallion(r.bms)}
+              matchedDam={!!findBroodmare(r.dam)}/>
           ))}
           <div style={{display:"flex",gap:8,marginTop:10}}>
             <button onClick={addRunner} disabled={runners.length>=18}
