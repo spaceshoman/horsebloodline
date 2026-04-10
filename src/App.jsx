@@ -116,71 +116,89 @@ const BROODMARES=[
   {name:"パネットーネ",bms:"エピファネイア",surface:"TURF",distanceMin:"MILE",distanceMax:"MIDDLE",course:"BOTH",growth:"NORMAL",heavyTrack:4,staminaScore:7,speedScore:7,powerScore:7,notes:"母父エピファネイアで芝中距離型。末脚活かす。"},
 ];
 
-const STORAGE_KEY="keiba-v4";
-function load(){try{const r=localStorage.getItem(STORAGE_KEY);return r?JSON.parse(r):null}catch{return null}}
+const STORAGE_KEY="keiba-v6";
+function load(){try{const r=localStorage.getItem(STORAGE_KEY);if(!r)return null;const d=JSON.parse(r);if(d.length<STALLIONS.length)return null;return d;}catch{return null}}
 function save(d){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(d))}catch{}}
 
-/* ===== Aptitude Engine ===== */
+/* ===== Aptitude Engine v2 — spread-oriented scoring ===== */
 function calcAptitude(stallion, race) {
   let score = 0;
   let details = [];
-  const w = race.weights || {surface:25,distance:25,course:20,track:15,growth:15};
+  // Lower base weights → more room for differentiation
+  // Max from base categories: 15+15+10+10+10 = 60
+  // Ability bonus can add up to ~15, total realistic max ~75
+  const w = race.weights || {surface:15,distance:15,course:10,track:10,growth:10};
 
+  // Surface match (max 15) — harsher mismatch
   const surfMax = w.surface;
-  if(stallion.surface==="BOTH"){score+=surfMax*0.9;details.push({label:"馬場",pts:+(surfMax*0.9).toFixed(1),max:surfMax,note:"兼用"});}
-  else if(stallion.surface===race.surface){score+=surfMax;details.push({label:"馬場",pts:surfMax,max:surfMax,note:"完全一致"});}
+  if(stallion.surface===race.surface){score+=surfMax;details.push({label:"馬場",pts:surfMax,max:surfMax,note:"完全一致"});}
+  else if(stallion.surface==="BOTH"){score+=surfMax*0.7;details.push({label:"馬場",pts:+(surfMax*0.7).toFixed(1),max:surfMax,note:"兼用"});}
   else{score+=0;details.push({label:"馬場",pts:0,max:surfMax,note:"不適合"});}
 
+  // Distance match (max 15) — center of range = full, edges penalized
   const distMax = w.distance;
   const dOrder=["SPRINT","MILE","MIDDLE","LONG"];
   const ri=dOrder.indexOf(race.distance);
   const sMin=dOrder.indexOf(stallion.distanceMin);
   const sMax=dOrder.indexOf(stallion.distanceMax);
   if(stallion.distanceMin==="VERSATILE"||stallion.distanceMax==="VERSATILE"){
-    score+=distMax*0.8;details.push({label:"距離",pts:+(distMax*0.8).toFixed(1),max:distMax,note:"万能"});
+    score+=distMax*0.6;details.push({label:"距離",pts:+(distMax*0.6).toFixed(1),max:distMax,note:"万能"});
   } else if(ri>=sMin&&ri<=sMax){
-    score+=distMax;details.push({label:"距離",pts:distMax,max:distMax,note:"適性範囲内"});
+    // In range, but reward narrow specialists more
+    const range=sMax-sMin; // 0=specialist, 3=ultra-wide
+    const specialistBonus=range===0?1.0:range===1?0.9:range===2?0.8:0.7;
+    const pts=+(distMax*specialistBonus).toFixed(1);
+    score+=pts;details.push({label:"距離",pts,max:distMax,note:range===0?"距離特化◎":"適性範囲内"});
   } else {
     const gap=ri<sMin?sMin-ri:ri-sMax;
-    const pts=Math.max(0,distMax*(1-gap*0.4));
-    score+=pts;details.push({label:"距離",pts:+pts.toFixed(1),max:distMax,note:gap===1?"やや範囲外":"大きく範囲外"});
+    const pts=Math.max(0,+(distMax*(0.3-gap*0.2)).toFixed(1));
+    score+=pts;details.push({label:"距離",pts,max:distMax,note:gap===1?"やや範囲外":"大きく範囲外"});
   }
 
+  // Course match (max 10) — mismatch = nearly 0
   const cMax = w.course;
-  if(stallion.course==="BOTH"){score+=cMax*0.85;details.push({label:"コース",pts:+(cMax*0.85).toFixed(1),max:cMax,note:"左右兼用"});}
-  else if(stallion.course===race.course){score+=cMax;details.push({label:"コース",pts:cMax,max:cMax,note:"完全一致"});}
-  else{score+=cMax*0.3;details.push({label:"コース",pts:+(cMax*0.3).toFixed(1),max:cMax,note:"逆回り"});}
+  if(stallion.course===race.course){score+=cMax;details.push({label:"コース",pts:cMax,max:cMax,note:"完全一致"});}
+  else if(stallion.course==="BOTH"){score+=cMax*0.65;details.push({label:"コース",pts:+(cMax*0.65).toFixed(1),max:cMax,note:"左右兼用"});}
+  else{score+=cMax*0.15;details.push({label:"コース",pts:+(cMax*0.15).toFixed(1),max:cMax,note:"逆回り"});}
 
+  // Track condition (max 10) — good = baseline 6, heavy = depends on heavyTrack
   const tMax = w.track;
   const condMap={GOOD:0,SLIGHTLY_HEAVY:1,HEAVY:2,BAD:3};
   const condLevel=condMap[race.trackCondition]||0;
   if(condLevel===0){
-    const pts=tMax;score+=pts;details.push({label:"馬場状態",pts,max:tMax,note:"良馬場"});
+    // Good track: moderate baseline, high heavyTrack doesn't help
+    const pts=+(tMax*0.6).toFixed(1);
+    score+=pts;details.push({label:"馬場状態",pts,max:tMax,note:"良馬場(基準)"});
   } else {
+    // Heavier: heavyTrack matters a lot
     const heavyFit=stallion.heavyTrack/10;
-    const pts=tMax*(0.3+0.7*heavyFit*(condLevel/3));
-    const realPts=Math.min(tMax,+pts.toFixed(1));
+    const pts=+(tMax*(heavyFit*0.8+0.1)).toFixed(1);
+    const realPts=Math.min(tMax,pts);
     score+=realPts;details.push({label:"馬場状態",pts:realPts,max:tMax,note:`重適性${stallion.heavyTrack}/10`});
   }
 
+  // Growth match (max 10) — sharper curve
   const gMax = w.growth;
   if(!race.horseAge||race.horseAge==="ANY"){
-    score+=gMax*0.7;details.push({label:"成長",pts:+(gMax*0.7).toFixed(1),max:gMax,note:"年齢不問"});
+    score+=gMax*0.5;details.push({label:"成長",pts:+(gMax*0.5).toFixed(1),max:gMax,note:"年齢不問"});
   } else {
     const age=parseInt(race.horseAge);
-    let fit=0.5;
-    if(stallion.growth==="EARLY") fit=age<=3?1.0:age<=4?0.7:0.4;
-    else if(stallion.growth==="NORMAL") fit=age<=2?0.6:age<=4?1.0:0.7;
-    else fit=age<=3?0.4:age<=5?0.8:1.0;
+    let fit=0.3;
+    if(stallion.growth==="EARLY") fit=age<=3?1.0:age===4?0.5:0.15;
+    else if(stallion.growth==="NORMAL") fit=age<=2?0.4:age<=4?0.9:0.5;
+    else fit=age<=3?0.2:age<=5?0.7:1.0;
     const pts=+(gMax*fit).toFixed(1);
     score+=pts;details.push({label:"成長",pts,max:gMax,note:`${GROWTH[stallion.growth]}×${age}歳`});
   }
 
+  // Ability bonus — up to ~15 points, more variance
   let bonus = 0;
-  if(race.distance==="SPRINT"||race.distance==="MILE") bonus+=stallion.speedScore*0.3;
-  if(race.distance==="LONG") bonus+=stallion.staminaScore*0.3;
-  if(race.distance==="MIDDLE") bonus+=(stallion.speedScore+stallion.staminaScore)*0.15;
-  if(race.surface==="DIRT") bonus+=stallion.powerScore*0.2;
+  if(race.distance==="SPRINT") bonus+=stallion.speedScore*0.6;
+  else if(race.distance==="MILE") bonus+=stallion.speedScore*0.4+stallion.staminaScore*0.15;
+  else if(race.distance==="MIDDLE") bonus+=stallion.speedScore*0.2+stallion.staminaScore*0.35;
+  else if(race.distance==="LONG") bonus+=stallion.staminaScore*0.6;
+  if(race.surface==="DIRT") bonus+=stallion.powerScore*0.35;
+  else bonus+=stallion.powerScore*0.1;
   score+=bonus;
 
   return {score:Math.min(100,+score.toFixed(1)),details,bonus:+bonus.toFixed(1)};
@@ -1344,10 +1362,227 @@ const RacePredictionTab=({stallions})=>{
   );
 };
 
+/* ================================================================
+   ===== BETTING CALCULATOR =====
+   ================================================================ */
+const BET_TYPES=[
+  {id:"win",name:"単勝",desc:"1着を当てる",minSelect:1,from:1,formula:(n)=>n},
+  {id:"place",name:"複勝",desc:"3着以内を当てる",minSelect:1,from:1,formula:(n)=>n},
+  {id:"exacta",name:"馬単",desc:"1-2着を順番通りに",minSelect:2,from:2,formula:(n,s)=>{if(s.mode==="box")return n*(n-1);if(s.mode==="nagashi")return(n-1)*(s.axis==="1st"?1:1)+(s.multi?n-1:0);return 1;}},
+  {id:"quinella",name:"馬連",desc:"1-2着を順不同",minSelect:2,from:2,formula:(n)=>n*(n-1)/2},
+  {id:"wide",name:"ワイド",desc:"3着以内の2頭",minSelect:2,from:2,formula:(n)=>n*(n-1)/2},
+  {id:"trio",name:"3連複",desc:"1-2-3着を順不同",minSelect:3,from:3,formula:(n)=>n*(n-1)*(n-2)/6},
+  {id:"trifecta",name:"3連単",desc:"1-2-3着を順番通り",minSelect:3,from:3,formula:(n)=>n*(n-1)*(n-2)},
+];
+
+const BettingCalculator=()=>{
+  const [betType,setBetType]=useState("quinella");
+  const [mode,setMode]=useState("box"); // box, nagashi, formation
+  const [unitPrice,setUnitPrice]=useState(100);
+  const [headCount,setHeadCount]=useState(18);
+  // Box mode
+  const [boxSelected,setBoxSelected]=useState([]);
+  // Nagashi mode
+  const [axisHorses,setAxisHorses]=useState([]);
+  const [partnerHorses,setPartnerHorses]=useState([]);
+  // Formation mode (3連単/3連複)
+  const [formA,setFormA]=useState([]); // 1着
+  const [formB,setFormB]=useState([]); // 2着
+  const [formC,setFormC]=useState([]); // 3着
+
+  const bt=BET_TYPES.find(b=>b.id===betType);
+  const isTrio=betType==="trio"||betType==="trifecta";
+  const isExacta=betType==="exacta";
+  const isPair=betType==="quinella"||betType==="wide";
+  const isSingle=betType==="win"||betType==="place";
+
+  // Calculate points
+  const calcPoints=()=>{
+    if(isSingle){
+      return boxSelected.length;
+    }
+    if(mode==="box"){
+      const n=boxSelected.length;
+      if(isPair||isExacta) return isExacta?n*(n-1):n*(n-1)/2;
+      if(isTrio) return betType==="trifecta"?n*(n-1)*(n-2):n*(n-1)*(n-2)/6;
+      return 0;
+    }
+    if(mode==="nagashi"){
+      const a=axisHorses.length;
+      const p=partnerHorses.filter(h=>!axisHorses.includes(h)).length;
+      if(isPair) return a*p;
+      if(isExacta) return a*p*2; // 軸→相手 and 相手→軸
+      if(isTrio){
+        // 軸1頭流し: 相手からの2頭組み合わせ
+        if(a===1) return betType==="trifecta"?p*(p-1):p*(p-1)/2;
+        // 軸2頭流し: 相手N頭
+        if(a===2) return betType==="trifecta"?p*2:p;
+        return 0;
+      }
+      return 0;
+    }
+    if(mode==="formation"){
+      // For trifecta/trio: unique combos from A×B×C excluding duplicates
+      if(!isTrio&&!isExacta) return 0;
+      let count=0;
+      const aa=formA, bb=formB, cc=isTrio||isExacta?formC:[];
+      if(isExacta){
+        // 馬単フォーメーション: A→B (no dups)
+        for(const a of aa) for(const b of bb) if(a!==b) count++;
+        return count;
+      }
+      // 3連単/3連複
+      for(const a of aa) for(const b of bb) for(const c of cc){
+        if(a!==b&&b!==c&&a!==c){
+          if(betType==="trifecta") count++;
+          else {
+            // 3連複: sort to avoid counting same combo twice
+            const key=[a,b,c].sort().join("-");
+            count++; // We'll deduplicate below
+          }
+        }
+      }
+      if(betType==="trio"){
+        // Deduplicate
+        const seen=new Set();
+        count=0;
+        for(const a of aa) for(const b of bb) for(const c of cc){
+          if(a!==b&&b!==c&&a!==c){
+            const key=[a,b,c].sort((x,y)=>x-y).join("-");
+            if(!seen.has(key)){seen.add(key);count++;}
+          }
+        }
+      }
+      return count;
+    }
+    return 0;
+  };
+
+  const points=calcPoints();
+  const totalCost=points*unitPrice;
+
+  const toggleInList=(list,setList,val)=>{
+    setList(prev=>prev.includes(val)?prev.filter(v=>v!==val):[...prev,val]);
+  };
+
+  const HorseGrid=({selected,onToggle,label})=>(
+    <div>
+      {label&&<div style={{fontSize:10,color:"var(--color-text-secondary)",marginBottom:4,fontWeight:500}}>{label}</div>}
+      <div style={{display:"flex",flexWrap:"wrap",gap:4}}>
+        {Array.from({length:headCount},(_,i)=>i+1).map(n=>{
+          const sel=selected.includes(n);
+          return <button key={n} onClick={()=>onToggle(n)} style={{
+            width:32,height:32,borderRadius:8,border:sel?"2px solid #1D9E75":"1px solid var(--color-border-tertiary)",
+            background:sel?"#E1F5EE":"var(--color-background-primary)",color:sel?"#1D9E75":"var(--color-text-secondary)",
+            fontSize:12,fontWeight:sel?600:400,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"
+          }}>{n}</button>;
+        })}
+      </div>
+    </div>
+  );
+
+  // Available modes per bet type
+  const availModes=isSingle?["box"]:isPair?["box","nagashi"]:isExacta?["box","nagashi","formation"]:["box","nagashi","formation"];
+
+  return(
+    <div>
+      {/* Bet type selector */}
+      <div style={{display:"flex",gap:4,flexWrap:"wrap",marginBottom:14}}>
+        {BET_TYPES.map(b=>(
+          <button key={b.id} onClick={()=>{setBetType(b.id);setBoxSelected([]);setAxisHorses([]);setPartnerHorses([]);setFormA([]);setFormB([]);setFormC([]);}}
+            style={{padding:"6px 12px",borderRadius:8,border:betType===b.id?"none":"1px solid var(--color-border-tertiary)",
+              background:betType===b.id?"#1D9E75":"var(--color-background-primary)",
+              color:betType===b.id?"#fff":"var(--color-text-secondary)",fontSize:12,fontWeight:500,cursor:"pointer"}}>
+            {b.name}
+          </button>
+        ))}
+      </div>
+      <div style={{fontSize:11,color:"var(--color-text-tertiary)",marginBottom:12}}>{bt?.desc}</div>
+
+      {/* Head count & unit price */}
+      <div style={{display:"flex",gap:12,marginBottom:14,alignItems:"center"}}>
+        <Field label="出走頭数">
+          <select value={headCount} onChange={e=>setHeadCount(Number(e.target.value))} style={{...inputStyle,width:70}}>
+            {Array.from({length:14},(_,i)=>i+5).map(n=><option key={n} value={n}>{n}頭</option>)}
+          </select>
+        </Field>
+        <Field label="1点あたり">
+          <select value={unitPrice} onChange={e=>setUnitPrice(Number(e.target.value))} style={{...inputStyle,width:90}}>
+            {[100,200,300,500,1000,2000,5000,10000].map(p=><option key={p} value={p}>{p.toLocaleString()}円</option>)}
+          </select>
+        </Field>
+      </div>
+
+      {/* Mode selector (not for single bets) */}
+      {!isSingle&&(
+        <div style={{display:"flex",gap:6,marginBottom:14}}>
+          {availModes.map(m=>(
+            <button key={m} onClick={()=>{setMode(m);setBoxSelected([]);setAxisHorses([]);setPartnerHorses([]);setFormA([]);setFormB([]);setFormC([]);}}
+              style={{padding:"5px 14px",borderRadius:20,border:mode===m?"none":"1px solid var(--color-border-tertiary)",
+                background:mode===m?"#378ADD":"transparent",color:mode===m?"#fff":"var(--color-text-secondary)",
+                fontSize:11,fontWeight:500,cursor:"pointer"}}>
+              {m==="box"?"ボックス":m==="nagashi"?"流し":"フォーメーション"}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Selection grids by mode */}
+      <div style={{background:"var(--color-background-secondary)",borderRadius:12,padding:14,marginBottom:16}}>
+        {(isSingle||mode==="box")&&(
+          <HorseGrid selected={boxSelected} onToggle={n=>toggleInList(boxSelected,setBoxSelected,n)} label={isSingle?"買い目の馬番を選択":"ボックスに入れる馬番を選択"}/>
+        )}
+        {mode==="nagashi"&&!isSingle&&(
+          <div style={{display:"flex",flexDirection:"column",gap:12}}>
+            <HorseGrid selected={axisHorses} onToggle={n=>toggleInList(axisHorses,setAxisHorses,n)} label="軸馬（1〜2頭）"/>
+            <div style={{borderTop:"1px solid var(--color-border-tertiary)",paddingTop:10}}>
+              <HorseGrid selected={partnerHorses} onToggle={n=>toggleInList(partnerHorses,setPartnerHorses,n)} label="相手馬"/>
+            </div>
+          </div>
+        )}
+        {mode==="formation"&&!isSingle&&(
+          <div style={{display:"flex",flexDirection:"column",gap:10}}>
+            <HorseGrid selected={formA} onToggle={n=>toggleInList(formA,setFormA,n)} label={isExacta?"1着候補":"1着候補"}/>
+            <div style={{borderTop:"1px solid var(--color-border-tertiary)",paddingTop:8}}>
+              <HorseGrid selected={formB} onToggle={n=>toggleInList(formB,setFormB,n)} label={isExacta?"2着候補":"2着候補"}/>
+            </div>
+            {isTrio&&(
+              <div style={{borderTop:"1px solid var(--color-border-tertiary)",paddingTop:8}}>
+                <HorseGrid selected={formC} onToggle={n=>toggleInList(formC,setFormC,n)} label="3着候補"/>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Results */}
+      <div style={{background:"var(--color-background-primary)",border:"2px solid #1D9E75",borderRadius:12,padding:16,textAlign:"center"}}>
+        <div style={{fontSize:11,color:"var(--color-text-secondary)",marginBottom:4}}>{bt?.name} {mode==="box"?"ボックス":mode==="nagashi"?"流し":"フォーメーション"}</div>
+        <div style={{display:"flex",justifyContent:"center",gap:24,alignItems:"baseline"}}>
+          <div>
+            <div style={{fontSize:32,fontWeight:700,color:"#1D9E75"}}>{points}</div>
+            <div style={{fontSize:11,color:"var(--color-text-secondary)"}}>点</div>
+          </div>
+          <div style={{fontSize:20,color:"var(--color-text-tertiary)"}}>×</div>
+          <div>
+            <div style={{fontSize:18,fontWeight:500,color:"var(--color-text-primary)"}}>{unitPrice.toLocaleString()}円</div>
+          </div>
+          <div style={{fontSize:20,color:"var(--color-text-tertiary)"}}>=</div>
+          <div>
+            <div style={{fontSize:28,fontWeight:700,color:totalCost>10000?"#D85A30":"var(--color-text-primary)"}}>{totalCost.toLocaleString()}</div>
+            <div style={{fontSize:11,color:"var(--color-text-secondary)"}}>円</div>
+          </div>
+        </div>
+        {totalCost>10000&&<div style={{fontSize:10,color:"#D85A30",marginTop:6}}>※ 1万円を超えています</div>}
+      </div>
+    </div>
+  );
+};
+
 /* ===== Main App ===== */
 export default function App(){
-  const[stallions,setStallions]=useState(()=>load()||STALLIONS);
-  const[tab,setTab]=useState("aptitude");
+  const[stallions,setStallions]=useState(()=>{const saved=load();return saved&&saved.length>0?saved:STALLIONS;});
+  const[tab,setTab]=useState("predict");
   const[dbView,setDbView]=useState("list");
   const[editing,setEditing]=useState(null);
   const[search,setSearch]=useState("");
@@ -1399,80 +1634,75 @@ export default function App(){
   return(
     <div style={{maxWidth:720,margin:"0 auto",fontFamily:"var(--font-sans)"}}>
       <div style={{marginBottom:16}}>
-        <h1 style={{fontSize:22,fontWeight:500,color:"var(--color-text-primary)",margin:"0 0 2px",letterSpacing:"-0.02em"}}>血統くん</h1>
-        <p style={{fontSize:12,color:"var(--color-text-tertiary)",margin:0}}>Thoroughbred bloodline analyzer — {stats.total} stallions</p>
+        <h1 style={{fontSize:22,fontWeight:500,color:"var(--color-text-primary)",margin:"0 0 2px",letterSpacing:"-0.02em"}}>血統くん（プロトタイプ）</h1>
+        <p style={{fontSize:12,color:"var(--color-text-tertiary)",margin:0}}>サラッブレッド特化型検索システム — {stats.total} stallions</p>
       </div>
 
       {/* Tab navigation */}
       <div style={{display:"flex",gap:6,marginBottom:20}}>
-        {tabBtn("aptitude","適性判定")}{tabBtn("database","血統DB")}{tabBtn("analysis","分析")}{tabBtn("predict","予想")}
+        {tabBtn("predict","予想")}{tabBtn("database","血統DB")}{tabBtn("betting","馬券計算")}
       </div>
 
-      {/* ===== APTITUDE TAB ===== */}
-      {tab==="aptitude"&&(
+      {/* ===== INTEGRATED PREDICTION TAB (aptitude + predict merged) ===== */}
+      {tab==="predict"&&(
         <div>
-          {/* Race condition input */}
-          <div style={{background:"var(--color-background-secondary)",borderRadius:12,padding:16,marginBottom:16}}>
-            <div style={{fontSize:13,fontWeight:500,color:"var(--color-text-primary)",marginBottom:12}}>レース条件を設定</div>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:10}}>
-              <Field label="競馬場">
-                <select value={raceVenue} onChange={e=>{setRaceVenue(e.target.value);const v=VENUES[e.target.value];if(v&&!v.surface.includes(raceSurface))setRaceSurface(v.surface[0]);}} style={inputStyle}>
-                  {Object.entries(VENUES).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}
-                </select>
-              </Field>
-              <Field label="馬場">
-                <select value={raceSurface} onChange={e=>setRaceSurface(e.target.value)} style={inputStyle}>
-                  {(venueData?.surface||["TURF","DIRT"]).map(k=><option key={k} value={k}>{SURFACE[k]}</option>)}
-                </select>
-              </Field>
-              <Field label="距離">
-                <select value={raceDistance} onChange={e=>setRaceDistance(e.target.value)} style={inputStyle}>
-                  {(venueData?.distances||Object.keys(DISTANCE)).filter(k=>k!=="VERSATILE").map(k=><option key={k} value={k}>{DISTANCE[k]}</option>)}
-                </select>
-              </Field>
+          {/* Quick aptitude ranking section */}
+          <details style={{marginBottom:16}}>
+            <summary style={{fontSize:12,fontWeight:500,color:"var(--color-text-secondary)",cursor:"pointer",padding:"8px 0",userSelect:"none"}}>📊 種牡馬適性ランキング（条件別）</summary>
+            <div style={{background:"var(--color-background-secondary)",borderRadius:12,padding:16,marginTop:8}}>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:10}}>
+                <Field label="競馬場">
+                  <select value={raceVenue} onChange={e=>{setRaceVenue(e.target.value);const v=VENUES[e.target.value];if(v&&!v.surface.includes(raceSurface))setRaceSurface(v.surface[0]);}} style={inputStyle}>
+                    {Object.entries(VENUES).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}
+                  </select>
+                </Field>
+                <Field label="馬場">
+                  <select value={raceSurface} onChange={e=>setRaceSurface(e.target.value)} style={inputStyle}>
+                    {(venueData?.surface||["TURF","DIRT"]).map(k=><option key={k} value={k}>{SURFACE[k]}</option>)}
+                  </select>
+                </Field>
+                <Field label="距離">
+                  <select value={raceDistance} onChange={e=>setRaceDistance(e.target.value)} style={inputStyle}>
+                    {(venueData?.distances||Object.keys(DISTANCE)).filter(k=>k!=="VERSATILE").map(k=><option key={k} value={k}>{DISTANCE[k]}</option>)}
+                  </select>
+                </Field>
+              </div>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10}}>
+                <Field label="馬場状態">
+                  <select value={raceCond} onChange={e=>setRaceCond(e.target.value)} style={inputStyle}>
+                    {Object.entries(TRACK_COND).map(([k,v])=><option key={k} value={k}>{v}</option>)}
+                  </select>
+                </Field>
+                <Field label="馬齢">
+                  <select value={raceAge} onChange={e=>setRaceAge(e.target.value)} style={inputStyle}>
+                    <option value="ANY">指定なし</option>
+                    {["2","3","4","5","6"].map(a=><option key={a} value={a}>{a}歳{a==="6"?"+":""}</option>)}
+                  </select>
+                </Field>
+                <Field label="表示">
+                  <select value={showTop} onChange={e=>setShowTop(Number(e.target.value))} style={inputStyle}>
+                    <option value={10}>上位10頭</option><option value={20}>上位20頭</option><option value={50}>全頭</option>
+                  </select>
+                </Field>
+              </div>
+              <div style={{marginTop:12,padding:"6px 10px",background:"var(--color-background-primary)",borderRadius:8,display:"flex",gap:6,flexWrap:"wrap",alignItems:"center"}}>
+                <span style={{fontSize:11,fontWeight:500,color:"var(--color-text-primary)"}}>{venueData?.name}</span>
+                <Badge variant={raceSurface==="TURF"?"turf":"dirt"}>{SURFACE[raceSurface]}</Badge>
+                <Badge>{DIST_SHORT[raceDistance]||raceDistance}</Badge>
+                <Badge variant={raceCourse==="RIGHT"?"right":"left"}>{COURSE[raceCourse]}</Badge>
+                <Badge>{TRACK_COND[raceCond]}</Badge>
+                {raceAge!=="ANY"&&<Badge>{raceAge}歳</Badge>}
+              </div>
+              <div style={{marginTop:10,display:"flex",flexDirection:"column",gap:4}}>
+                {aptitudeResults.slice(0,showTop).map((r,i)=>(
+                  <AptitudeCard key={r.stallion.id} stallion={r.stallion} result={r.result} rank={i+1}/>
+                ))}
+              </div>
             </div>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10}}>
-              <Field label="馬場状態">
-                <select value={raceCond} onChange={e=>setRaceCond(e.target.value)} style={inputStyle}>
-                  {Object.entries(TRACK_COND).map(([k,v])=><option key={k} value={k}>{v}</option>)}
-                </select>
-              </Field>
-              <Field label="出走馬の馬齢">
-                <select value={raceAge} onChange={e=>setRaceAge(e.target.value)} style={inputStyle}>
-                  <option value="ANY">指定なし</option>
-                  <option value="2">2歳</option>
-                  <option value="3">3歳</option>
-                  <option value="4">4歳</option>
-                  <option value="5">5歳</option>
-                  <option value="6">6歳以上</option>
-                </select>
-              </Field>
-              <Field label="表示件数">
-                <select value={showTop} onChange={e=>setShowTop(Number(e.target.value))} style={inputStyle}>
-                  <option value={10}>上位10頭</option>
-                  <option value={20}>上位20頭</option>
-                  <option value={50}>全頭表示</option>
-                </select>
-              </Field>
-            </div>
-            {/* Race summary */}
-            <div style={{marginTop:12,padding:"8px 12px",background:"var(--color-background-primary)",borderRadius:8,display:"flex",gap:8,flexWrap:"wrap",alignItems:"center"}}>
-              <span style={{fontSize:12,fontWeight:500,color:"var(--color-text-primary)"}}>{venueData?.name}</span>
-              <Badge variant={raceSurface==="TURF"?"turf":"dirt"}>{SURFACE[raceSurface]||raceSurface}</Badge>
-              <Badge>{DISTANCE[raceDistance]}</Badge>
-              <Badge variant={raceCourse==="RIGHT"?"right":"left"}>{COURSE[raceCourse]}</Badge>
-              <Badge>{TRACK_COND[raceCond]}</Badge>
-              {raceAge!=="ANY"&&<Badge>{raceAge}歳</Badge>}
-            </div>
-          </div>
+          </details>
 
-          {/* Results */}
-          <div style={{fontSize:12,fontWeight:500,color:"var(--color-text-primary)",marginBottom:8}}>適性ランキング</div>
-          <div style={{display:"flex",flexDirection:"column",gap:6}}>
-            {aptitudeResults.slice(0,showTop).map((r,i)=>(
-              <AptitudeCard key={r.stallion.id} stallion={r.stallion} result={r.result} rank={i+1}/>
-            ))}
-          </div>
+          {/* Prediction section */}
+          <RacePredictionTab stallions={stallions}/>
         </div>
       )}
 
@@ -1510,14 +1740,11 @@ export default function App(){
         </div>
       )}
 
-      {/* ===== ANALYSIS TAB (Phase 3) ===== */}
-      {tab==="analysis"&&<AnalysisTab stallions={stallions}/>}
-
-      {/* ===== PREDICTION TAB (Phase 4) ===== */}
-      {tab==="predict"&&<RacePredictionTab stallions={stallions}/>}
+      {/* ===== BETTING CALCULATOR TAB ===== */}
+      {tab==="betting"&&<BettingCalculator/>}
 
       <div style={{marginTop:20,padding:"10px 0",borderTop:"1px solid var(--color-border-tertiary)",fontSize:10,color:"var(--color-text-tertiary)",textAlign:"center"}}>
-        Phase 1〜4: 血統DB + 適性判定 + 分析 + レース予想 v5.0 (騎手DB+印評価) / {stats.total}頭登録
+        v7.0 — 血統DB({stats.total}頭) + 繁殖牝馬DB + 騎手DB + 予想 + 馬券計算
       </div>
     </div>
   );
