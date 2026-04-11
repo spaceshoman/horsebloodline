@@ -161,18 +161,25 @@ function calcAptitude(stallion, race) {
   else if(stallion.course==="BOTH"){score+=cMax*0.65;details.push({label:"コース",pts:+(cMax*0.65).toFixed(1),max:cMax,note:"左右兼用"});}
   else{score+=cMax*0.15;details.push({label:"コース",pts:+(cMax*0.15).toFixed(1),max:cMax,note:"逆回り"});}
 
-  // Track condition (max 10) — good = baseline 6, heavy = depends on heavyTrack
+  // Track condition (max 10) — good = rewards firm-ground types, heavy = rewards heavy-track types
   const tMax = w.track;
   const condMap={GOOD:0,SLIGHTLY_HEAVY:1,HEAVY:2,BAD:3};
   const condLevel=condMap[race.trackCondition]||0;
   if(condLevel===0){
-    // Good track: moderate baseline, high heavyTrack doesn't help
-    const pts=+(tMax*0.6).toFixed(1);
-    score+=pts;details.push({label:"馬場状態",pts,max:tMax,note:"良馬場(基準)"});
+    // Good track: low heavyTrack = firm-ground specialist = higher score
+    const firmFit=(10-stallion.heavyTrack)/10; // heavyTrack 1→0.9, 5→0.5, 10→0.0
+    const pts=+(tMax*(0.3+firmFit*0.7)).toFixed(1);
+    score+=pts;details.push({label:"馬場状態",pts,max:tMax,note:`良馬場適性${10-stallion.heavyTrack}/10`});
+  } else if(condLevel===1){
+    // Slightly heavy: balanced, moderate heavyTrack does best
+    const balanced=1-Math.abs(stallion.heavyTrack-5)/5;
+    const pts=+(tMax*(0.3+balanced*0.6)).toFixed(1);
+    score+=pts;details.push({label:"馬場状態",pts,max:tMax,note:`稍重適性(重${stallion.heavyTrack})`});
   } else {
-    // Heavier: heavyTrack matters a lot
+    // Heavy/Bad: high heavyTrack = big advantage
     const heavyFit=stallion.heavyTrack/10;
-    const pts=+(tMax*(heavyFit*0.8+0.1)).toFixed(1);
+    const severity=condLevel/3;
+    const pts=+(tMax*(heavyFit*severity*0.9+0.05)).toFixed(1);
     const realPts=Math.min(tMax,pts);
     score+=realPts;details.push({label:"馬場状態",pts:realPts,max:tMax,note:`重適性${stallion.heavyTrack}/10`});
   }
@@ -1363,6 +1370,134 @@ const RacePredictionTab=({stallions})=>{
 };
 
 /* ================================================================
+   ===== OUKA SHO (桜花賞) ANALYSIS PAGE =====
+   ================================================================ */
+const OukaShoGuide=()=>{
+  const [section,setSection]=useState("overview");
+  const sections=[
+    {id:"overview",label:"概要"},
+    {id:"draw",label:"枠順"},
+    {id:"style",label:"脚質"},
+    {id:"blood",label:"血統"},
+    {id:"rotation",label:"ローテ"},
+    {id:"tips",label:"今年の注目"},
+  ];
+
+  const DataRow=({label,value,highlight})=>(
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"6px 0",borderBottom:"1px solid var(--color-border-tertiary)"}}>
+      <span style={{fontSize:11,color:"var(--color-text-secondary)"}}>{label}</span>
+      <span style={{fontSize:12,fontWeight:highlight?600:400,color:highlight?"#1D9E75":"var(--color-text-primary)"}}>{value}</span>
+    </div>
+  );
+
+  return(
+    <div style={{background:"var(--color-background-primary)",border:"1px solid var(--color-border-tertiary)",borderRadius:12,padding:16,marginBottom:16}}>
+      <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
+        <span style={{fontSize:18}}>🌸</span>
+        <div>
+          <div style={{fontSize:15,fontWeight:600,color:"var(--color-text-primary)"}}>第86回 桜花賞 過去傾向データ</div>
+          <div style={{fontSize:10,color:"var(--color-text-tertiary)"}}>阪神芝1600m（外）/ 3歳牝馬 / 過去10年（2016-2025）</div>
+        </div>
+      </div>
+
+      <div style={{display:"flex",gap:4,flexWrap:"wrap",marginBottom:14}}>
+        {sections.map(s=><button key={s.id} onClick={()=>setSection(s.id)} style={{padding:"5px 12px",borderRadius:20,border:section===s.id?"none":"1px solid var(--color-border-tertiary)",background:section===s.id?"#D85A30":"transparent",color:section===s.id?"#fff":"var(--color-text-secondary)",fontSize:11,fontWeight:500,cursor:"pointer"}}>{s.label}</button>)}
+      </div>
+
+      {section==="overview"&&(<div>
+        <div style={{fontSize:11,color:"var(--color-text-secondary)",lineHeight:1.8,marginBottom:12}}>牝馬クラシック第一弾。阪神芝1600m外回りは直線が長く急坂もあり、切れ味＋持続力＋パワーが要求される。レコード 1:31.1（2021年ソダシ）。</div>
+        <div style={{fontSize:12,fontWeight:500,color:"var(--color-text-primary)",marginBottom:6}}>人気別成績</div>
+        <DataRow label="1番人気" value="【1.4.1.4】複勝率60%" />
+        <DataRow label="2番人気" value="【5.2.0.3】複勝率70%" highlight />
+        <DataRow label="3番人気" value="【3.3.2.2】複勝率80%" highlight />
+        <DataRow label="4-5番人気" value="【0.0.1.9】複勝率10%" />
+        <DataRow label="6-9番人気" value="【1.1.6.32】複勝率20%" />
+        <DataRow label="10番人気以下" value="【0.0.0.88】好走ゼロ" />
+        <div style={{marginTop:10,padding:"8px 10px",background:"#FFF3EE",borderRadius:8,fontSize:10,color:"#D85A30",lineHeight:1.6}}>💡 2番人気が最多5勝。3番人気以内が全滅した年はゼロ。10番人気以下の好走もゼロ。</div>
+      </div>)}
+
+      {section==="draw"&&(<div>
+        <div style={{fontSize:12,fontWeight:500,color:"var(--color-text-primary)",marginBottom:6}}>枠順別傾向</div>
+        <DataRow label="1-2枠" value="連対は2番人気以内のG1馬のみ" />
+        <DataRow label="3-6枠" value="勝ち馬集中ゾーン" highlight />
+        <DataRow label="7枠" value="複勝率17%でやや不利" />
+        <DataRow label="8枠" value="過去10年勝ちなし" />
+        <div style={{marginTop:10,padding:"8px 10px",background:"#FFF3EE",borderRadius:8,fontSize:10,color:"#D85A30",lineHeight:1.6}}>💡 近年は内枠有利が強まっている。3-6枠（馬番5〜12）が狙い目。8枠は枠順的に厳しい。</div>
+        <div style={{fontSize:12,fontWeight:500,color:"var(--color-text-primary)",margin:"14px 0 6px"}}>今年の枠順評価</div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:4}}>
+          {[{w:1,n:"フェスティバルヒル\nサンアントワーヌ",e:"△"},{w:2,n:"ディアダイヤモンド\nエレガンスアスク",e:"△"},{w:3,n:"ギャラボーグ\nアイニードユー",e:"◎"},{w:4,n:"アランカール\nロンギングセリーヌ",e:"◎"},{w:5,n:"ルールザウェイヴ\nナムラコスモス",e:"○"},{w:6,n:"ジッピーチューン\nスウィートハピネス",e:"◎"},{w:7,n:"リリージョワ\nドリームコア\nスターアニス",e:"○"},{w:8,n:"ショウナンカリス\nブラックチャリス\nプレセピオ",e:"✖"}].map(w=>(
+            <div key={w.w} style={{background:"var(--color-background-secondary)",borderRadius:8,padding:"6px",textAlign:"center"}}>
+              <div style={{fontSize:14,fontWeight:700,color:w.e==="◎"?"#1D9E75":w.e==="○"?"#378ADD":w.e==="✖"?"#A32D2D":"#EF9F27"}}>{w.e}</div>
+              <div style={{fontSize:10,fontWeight:600}}>{w.w}枠</div>
+              <div style={{fontSize:7,color:"var(--color-text-tertiary)",whiteSpace:"pre-line",lineHeight:1.3,marginTop:2}}>{w.n}</div>
+            </div>
+          ))}
+        </div>
+      </div>)}
+
+      {section==="style"&&(<div>
+        <div style={{fontSize:12,fontWeight:500,color:"var(--color-text-primary)",marginBottom:6}}>脚質別傾向</div>
+        <DataRow label="逃げ" value="【1.1.0.8】複勝率20%" />
+        <DataRow label="先行" value="【2.3.3.30】複勝率21%" />
+        <DataRow label="差し" value="【5.4.5.50】複勝率22%" highlight />
+        <DataRow label="追込" value="【2.2.2.48】複勝率11%" />
+        <DataRow label="上がり3F 3位以内" value="【8.6.6.19】複勝率51%" highlight />
+        <div style={{marginTop:10,padding:"8px 10px",background:"#FFF3EE",borderRadius:8,fontSize:10,color:"#D85A30",lineHeight:1.6}}>💡 4角6番手以下から好走した馬が24頭。ただし近5年は前残り増加傾向。上がり上位は半数以上が馬券圏内。</div>
+        <div style={{fontSize:12,fontWeight:500,color:"var(--color-text-primary)",margin:"12px 0 6px"}}>今年の脚質分類</div>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
+          <div style={{background:"#E6F1FB",borderRadius:8,padding:"8px"}}>
+            <div style={{fontSize:10,fontWeight:600,color:"#0C447C",marginBottom:3}}>逃げ・先行タイプ</div>
+            <div style={{fontSize:9,color:"#0C447C",lineHeight:1.5}}>ドリームコア、ロンギングセリーヌ、リリージョワ、アイニードユー、ルールザウェイヴ、プレセピオ</div>
+          </div>
+          <div style={{background:"#E1F5EE",borderRadius:8,padding:"8px"}}>
+            <div style={{fontSize:10,fontWeight:600,color:"#085041",marginBottom:3}}>差し・追込タイプ</div>
+            <div style={{fontSize:9,color:"#085041",lineHeight:1.5}}>スターアニス、アランカール、ギャラボーグ、フェスティバルヒル、スウィートハピネス、ナムラコスモス、ジッピーチューン</div>
+          </div>
+        </div>
+      </div>)}
+
+      {section==="blood"&&(<div>
+        <div style={{fontSize:12,fontWeight:500,color:"var(--color-text-primary)",marginBottom:6}}>血統傾向</div>
+        <DataRow label="キングカメハメハ系" value="近年の勝ち馬多数。父系祖父にキンカメ多し" highlight />
+        <DataRow label="ロードカナロア" value="アーモンドアイ輩出。初G1が桜花賞" highlight />
+        <DataRow label="ディープ系" value="阪神マイル得意だが桜花賞はやや不振" />
+        <DataRow label="初年度産駒" value="エピファネイア、アドマイヤマーズが過去に制覇" />
+        <div style={{marginTop:10,padding:"8px 10px",background:"#FFF3EE",borderRadius:8,fontSize:10,color:"#D85A30",lineHeight:1.6}}>💡 今年のキンカメ系: ロードカナロア3頭、サートゥルナーリア2頭。ドレフォン産駒スターアニスは阪神JF勝ち馬。</div>
+      </div>)}
+
+      {section==="rotation"&&(<div>
+        <div style={{fontSize:12,fontWeight:500,color:"var(--color-text-primary)",marginBottom:6}}>前走ローテ別</div>
+        <DataRow label="チューリップ賞" value="【4.5.3.45】複勝率21%" highlight />
+        <DataRow label="フィリーズレビュー" value="【1.1.2.33】複勝率11%" />
+        <DataRow label="阪神JF→直行" value="2番人気以内なら連対率100%" highlight />
+        <DataRow label="クイーンC" value="【1.1.1.10】複勝率23%" />
+        <DataRow label="アネモネS" value="過去10年で3着以内ゼロ" />
+        <DataRow label="前走1600m組" value="勝ち馬は全て前走3着以内" highlight />
+        <DataRow label="前走460kg以上" value="過去10年の勝ち馬は全て該当" highlight />
+        <div style={{marginTop:10,padding:"8px 10px",background:"#FFF3EE",borderRadius:8,fontSize:10,color:"#D85A30",lineHeight:1.6}}>💡 トライアル不出走馬が8連勝中。アネモネS組（ディアダイヤモンド、ルールザウェイヴ）は要注意。前走6番人気以内が必須。</div>
+      </div>)}
+
+      {section==="tips"&&(<div>
+        <div style={{fontSize:12,fontWeight:500,color:"var(--color-text-primary)",marginBottom:8}}>2026年 注目ポイント</div>
+        {[
+          {icon:"🏇",t:"馬場状態",d:"木金に雨予報だが日曜は晴れ見込み。良〜稍重の可能性。良馬場なら上がり33秒台の瞬発力勝負。稍重なら先行力・パワーが重要に。"},
+          {icon:"⭐",t:"スターアニス",d:"阪神JF勝ち馬。ドレフォン×ダイワメジャーのスピード配合。JFから直行で2番人気以内なら連対率100%の黄金ローテ。"},
+          {icon:"🎯",t:"ドリームコア",d:"クイーンC勝ち1:32.6の好時計。キズナ×ノームコア(G1馬)。先行脚質で前残り増加傾向にマッチ。ただし500kg超が急坂をこなせるか。"},
+          {icon:"🔥",t:"アランカール",d:"母シンハライト(オークス馬)。上がり最速の末脚は確か。課題はスタートと位置取り。武豊騎乗で阪神は◎。"},
+          {icon:"💰",t:"穴馬: ナムラコスモス",d:"チューリップ賞2着(8番人気)で激走。父ダノンプレミアム。人気の盲点になりやすい。"},
+          {icon:"⚠️",t:"データ的に厳しい馬",d:"アネモネS組、8枠、前走460kg未満で重賞勝ちなしの馬は過去データ的に厳しい。"},
+        ].map((tip,i)=>(
+          <div key={i} style={{background:"var(--color-background-secondary)",borderRadius:10,padding:"10px 12px",marginBottom:6}}>
+            <div style={{fontSize:12,fontWeight:600,color:"var(--color-text-primary)",marginBottom:3}}>{tip.icon} {tip.t}</div>
+            <div style={{fontSize:10,color:"var(--color-text-secondary)",lineHeight:1.7}}>{tip.d}</div>
+          </div>
+        ))}
+      </div>)}
+    </div>
+  );
+};
+
+/* ================================================================
    ===== BETTING CALCULATOR =====
    ================================================================ */
 const BET_TYPES=[
@@ -1635,8 +1770,8 @@ export default function App(){
   return(
     <div style={{maxWidth:720,margin:"0 auto",fontFamily:"var(--font-sans)"}}>
       <div style={{marginBottom:16}}>
-        <h1 style={{fontSize:22,fontWeight:500,color:"var(--color-text-primary)",margin:"0 0 2px",letterSpacing:"-0.02em"}}>血統くん（プロトタイプ）</h1>
-        <p style={{fontSize:12,color:"var(--color-text-tertiary)",margin:0}}>サラブレッド分析用 — {stats.total} stallions</p>
+        <h1 style={{fontSize:22,fontWeight:500,color:"var(--color-text-primary)",margin:"0 0 2px",letterSpacing:"-0.02em"}}>血統くん</h1>
+        <p style={{fontSize:12,color:"var(--color-text-tertiary)",margin:0}}>サラブレット分析 — {stats.total} stallions</p>
       </div>
 
       {/* Tab navigation */}
@@ -1653,8 +1788,13 @@ export default function App(){
             <button onClick={()=>setPredMode("hiraba")} style={{flex:1,padding:"10px 0",border:"none",borderLeft:"1px solid var(--color-border-tertiary)",background:predMode==="hiraba"?"#378ADD":"var(--color-background-primary)",color:predMode==="hiraba"?"#fff":"var(--color-text-secondary)",fontSize:13,fontWeight:600,cursor:"pointer"}}>📋 平場モード</button>
           </div>
 
-          {/* G1 Mode: full prediction with runners */}
-          {predMode==="g1"&&<RacePredictionTab stallions={stallions}/>}
+          {/* G1 Mode: analysis guide + full prediction with runners */}
+          {predMode==="g1"&&(
+            <div>
+              <OukaShoGuide/>
+              <RacePredictionTab stallions={stallions}/>
+            </div>
+          )}
 
           {/* 平場 Mode: condition-based stallion ranking */}
           {predMode==="hiraba"&&(
