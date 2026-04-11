@@ -1583,6 +1583,7 @@ const BettingCalculator=()=>{
 export default function App(){
   const[stallions,setStallions]=useState(()=>{const saved=load();return saved&&saved.length>0?saved:STALLIONS;});
   const[tab,setTab]=useState("predict");
+  const[predMode,setPredMode]=useState("g1");
   const[dbView,setDbView]=useState("list");
   const[editing,setEditing]=useState(null);
   const[search,setSearch]=useState("");
@@ -1635,7 +1636,7 @@ export default function App(){
     <div style={{maxWidth:720,margin:"0 auto",fontFamily:"var(--font-sans)"}}>
       <div style={{marginBottom:16}}>
         <h1 style={{fontSize:22,fontWeight:500,color:"var(--color-text-primary)",margin:"0 0 2px",letterSpacing:"-0.02em"}}>血統くん（プロトタイプ）</h1>
-        <p style={{fontSize:12,color:"var(--color-text-tertiary)",margin:0}}>サラッブレッド特化型検索システム — {stats.total} stallions</p>
+        <p style={{fontSize:12,color:"var(--color-text-tertiary)",margin:0}}>サラブレッド分析用 — {stats.total} stallions</p>
       </div>
 
       {/* Tab navigation */}
@@ -1643,66 +1644,80 @@ export default function App(){
         {tabBtn("predict","予想")}{tabBtn("database","血統DB")}{tabBtn("betting","馬券計算")}
       </div>
 
-      {/* ===== INTEGRATED PREDICTION TAB (aptitude + predict merged) ===== */}
+      {/* ===== INTEGRATED PREDICTION TAB ===== */}
       {tab==="predict"&&(
         <div>
-          {/* Quick aptitude ranking section */}
-          <details style={{marginBottom:16}}>
-            <summary style={{fontSize:12,fontWeight:500,color:"var(--color-text-secondary)",cursor:"pointer",padding:"8px 0",userSelect:"none"}}>📊 種牡馬適性ランキング（条件別）</summary>
-            <div style={{background:"var(--color-background-secondary)",borderRadius:12,padding:16,marginTop:8}}>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:10}}>
-                <Field label="競馬場">
-                  <select value={raceVenue} onChange={e=>{setRaceVenue(e.target.value);const v=VENUES[e.target.value];if(v&&!v.surface.includes(raceSurface))setRaceSurface(v.surface[0]);}} style={inputStyle}>
-                    {Object.entries(VENUES).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}
-                  </select>
-                </Field>
-                <Field label="馬場">
-                  <select value={raceSurface} onChange={e=>setRaceSurface(e.target.value)} style={inputStyle}>
-                    {(venueData?.surface||["TURF","DIRT"]).map(k=><option key={k} value={k}>{SURFACE[k]}</option>)}
-                  </select>
-                </Field>
-                <Field label="距離">
-                  <select value={raceDistance} onChange={e=>setRaceDistance(e.target.value)} style={inputStyle}>
-                    {(venueData?.distances||Object.keys(DISTANCE)).filter(k=>k!=="VERSATILE").map(k=><option key={k} value={k}>{DISTANCE[k]}</option>)}
-                  </select>
-                </Field>
+          {/* Mode switch: G1 / 平場 */}
+          <div style={{display:"flex",gap:0,marginBottom:16,borderRadius:10,overflow:"hidden",border:"1px solid var(--color-border-tertiary)"}}>
+            <button onClick={()=>setPredMode("g1")} style={{flex:1,padding:"10px 0",border:"none",background:predMode==="g1"?"#D85A30":"var(--color-background-primary)",color:predMode==="g1"?"#fff":"var(--color-text-secondary)",fontSize:13,fontWeight:600,cursor:"pointer"}}>🏆 G1モード</button>
+            <button onClick={()=>setPredMode("hiraba")} style={{flex:1,padding:"10px 0",border:"none",borderLeft:"1px solid var(--color-border-tertiary)",background:predMode==="hiraba"?"#378ADD":"var(--color-background-primary)",color:predMode==="hiraba"?"#fff":"var(--color-text-secondary)",fontSize:13,fontWeight:600,cursor:"pointer"}}>📋 平場モード</button>
+          </div>
+
+          {/* G1 Mode: full prediction with runners */}
+          {predMode==="g1"&&<RacePredictionTab stallions={stallions}/>}
+
+          {/* 平場 Mode: condition-based stallion ranking */}
+          {predMode==="hiraba"&&(
+            <div>
+              <div style={{background:"var(--color-background-secondary)",borderRadius:12,padding:16,marginBottom:16}}>
+                <div style={{fontSize:13,fontWeight:500,color:"var(--color-text-primary)",marginBottom:12}}>レース条件を設定</div>
+                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:10}}>
+                  <Field label="競馬場">
+                    <select value={raceVenue} onChange={e=>{setRaceVenue(e.target.value);const v=VENUES[e.target.value];if(v&&!v.surface.includes(raceSurface))setRaceSurface(v.surface[0]);}} style={inputStyle}>
+                      {Object.entries(VENUES).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}
+                    </select>
+                  </Field>
+                  <Field label="馬場">
+                    <select value={raceSurface} onChange={e=>setRaceSurface(e.target.value)} style={inputStyle}>
+                      {(venueData?.surface||["TURF","DIRT"]).map(k=><option key={k} value={k}>{SURFACE[k]}</option>)}
+                    </select>
+                  </Field>
+                  <Field label="距離">
+                    <select value={raceDistance} onChange={e=>setRaceDistance(e.target.value)} style={inputStyle}>
+                      {(venueData?.distances||Object.keys(DISTANCE)).filter(k=>k!=="VERSATILE").map(k=><option key={k} value={k}>{DISTANCE[k]}</option>)}
+                    </select>
+                  </Field>
+                </div>
+                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10}}>
+                  <Field label="馬場状態">
+                    <select value={raceCond} onChange={e=>setRaceCond(e.target.value)} style={inputStyle}>
+                      {Object.entries(TRACK_COND).map(([k,v])=><option key={k} value={k}>{v}</option>)}
+                    </select>
+                  </Field>
+                  <Field label="馬齢">
+                    <select value={raceAge} onChange={e=>setRaceAge(e.target.value)} style={inputStyle}>
+                      <option value="ANY">指定なし</option>
+                      {["2","3","4","5","6"].map(a=><option key={a} value={a}>{a}歳{a==="6"?"+":""}</option>)}
+                    </select>
+                  </Field>
+                  <Field label="表示">
+                    <select value={showTop} onChange={e=>setShowTop(Number(e.target.value))} style={inputStyle}>
+                      <option value={10}>上位10頭</option><option value={20}>上位20頭</option><option value={50}>全頭</option>
+                    </select>
+                  </Field>
+                </div>
+                {/* Race summary bar */}
+                <div style={{marginTop:12,padding:"8px 12px",background:"var(--color-background-primary)",borderRadius:8,display:"flex",gap:6,flexWrap:"wrap",alignItems:"center"}}>
+                  <span style={{fontSize:12,fontWeight:600,color:"var(--color-text-primary)"}}>{venueData?.name}</span>
+                  <Badge variant={raceSurface==="TURF"?"turf":"dirt"}>{SURFACE[raceSurface]}</Badge>
+                  <Badge>{DIST_SHORT[raceDistance]||raceDistance}</Badge>
+                  <Badge variant={raceCourse==="RIGHT"?"right":"left"}>{COURSE[raceCourse]}</Badge>
+                  <Badge>{TRACK_COND[raceCond]}</Badge>
+                  {raceAge!=="ANY"&&<Badge>{raceAge}歳</Badge>}
+                </div>
               </div>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10}}>
-                <Field label="馬場状態">
-                  <select value={raceCond} onChange={e=>setRaceCond(e.target.value)} style={inputStyle}>
-                    {Object.entries(TRACK_COND).map(([k,v])=><option key={k} value={k}>{v}</option>)}
-                  </select>
-                </Field>
-                <Field label="馬齢">
-                  <select value={raceAge} onChange={e=>setRaceAge(e.target.value)} style={inputStyle}>
-                    <option value="ANY">指定なし</option>
-                    {["2","3","4","5","6"].map(a=><option key={a} value={a}>{a}歳{a==="6"?"+":""}</option>)}
-                  </select>
-                </Field>
-                <Field label="表示">
-                  <select value={showTop} onChange={e=>setShowTop(Number(e.target.value))} style={inputStyle}>
-                    <option value={10}>上位10頭</option><option value={20}>上位20頭</option><option value={50}>全頭</option>
-                  </select>
-                </Field>
+
+              {/* Aptitude ranking */}
+              <div style={{fontSize:12,fontWeight:500,color:"var(--color-text-primary)",marginBottom:8}}>
+                種牡馬適性ランキング — {venueData?.name} {SURFACE[raceSurface]} {DIST_SHORT[raceDistance]}
               </div>
-              <div style={{marginTop:12,padding:"6px 10px",background:"var(--color-background-primary)",borderRadius:8,display:"flex",gap:6,flexWrap:"wrap",alignItems:"center"}}>
-                <span style={{fontSize:11,fontWeight:500,color:"var(--color-text-primary)"}}>{venueData?.name}</span>
-                <Badge variant={raceSurface==="TURF"?"turf":"dirt"}>{SURFACE[raceSurface]}</Badge>
-                <Badge>{DIST_SHORT[raceDistance]||raceDistance}</Badge>
-                <Badge variant={raceCourse==="RIGHT"?"right":"left"}>{COURSE[raceCourse]}</Badge>
-                <Badge>{TRACK_COND[raceCond]}</Badge>
-                {raceAge!=="ANY"&&<Badge>{raceAge}歳</Badge>}
-              </div>
-              <div style={{marginTop:10,display:"flex",flexDirection:"column",gap:4}}>
+              <div style={{display:"flex",flexDirection:"column",gap:5}}>
                 {aptitudeResults.slice(0,showTop).map((r,i)=>(
                   <AptitudeCard key={r.stallion.id} stallion={r.stallion} result={r.result} rank={i+1}/>
                 ))}
               </div>
             </div>
-          </details>
-
-          {/* Prediction section */}
-          <RacePredictionTab stallions={stallions}/>
+          )}
         </div>
       )}
 
