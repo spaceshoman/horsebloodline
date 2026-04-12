@@ -785,48 +785,6 @@ const calcJockeyVenueScore=(jockeyName,venueKey)=>{
   return {score:total,aff,label,jockey:j};
 };
 
-/* ===== Sample Races ===== */
-const SAMPLE_RACES = [
-  { name:"🏆 第86回 桜花賞 (G1) 阪神芝1600m 4/12", venue:"hanshin", surface:"TURF", distance:"MILE", cond:"GOOD", isG1:true,
-    runners:[
-      {name:"フェスティバルヒル",sire:"サートゥルナーリア",bms:"ハーツクライ",dam:"ミュージアムヒル",jockey:"坂井瑠星",age:"3"},
-      {name:"サンアントワーヌ",sire:"ドレフォン",bms:"ハービンジャー",dam:"サンティール",jockey:"荻野極",age:"3"},
-      {name:"ディアダイヤモンド",sire:"サートゥルナーリア",bms:"First Dude",dam:"スカイダイヤモンズ",jockey:"戸崎圭太",age:"3"},
-      {name:"エレガンスアスク",sire:"ポエティックフレア",bms:"ハーツクライ",dam:"ネヴァーハーツ",jockey:"岩田望来",age:"3"},
-      {name:"ギャラボーグ",sire:"ロードカナロア",bms:"Sligo Bay",dam:"レキシールー",jockey:"西村淳也",age:"3"},
-      {name:"アイニードユー",sire:"ファインニードル",bms:"ハードスパン",dam:"プリディカメント",jockey:"川田将雅",age:"3"},
-      {name:"アランカール",sire:"エピファネイア",bms:"ディープインパクト",dam:"シンハライト",jockey:"武豊",age:"3"},
-      {name:"ロンギングセリーヌ",sire:"モーリス",bms:"ダイワメジャー",dam:"パセンジャーシップ",jockey:"石橋脩",age:"3"},
-      {name:"ルールザウェイヴ",sire:"ロードカナロア",bms:"ディープインパクト",dam:"ルールブリタニア",jockey:"原優介",age:"3"},
-      {name:"ナムラコスモス",sire:"ダノンプレミアム",bms:"ジョーカプチーノ",dam:"ナムラリコリス",jockey:"田口貫太",age:"3"},
-      {name:"ジッピーチューン",sire:"ロードカナロア",bms:"City Zip",dam:"ジペッサ",jockey:"北村友一",age:"3"},
-      {name:"スウィートハピネス",sire:"リアルインパクト",bms:"ワークフォース",dam:"フラル",jockey:"高杉吏麒",age:"3"},
-      {name:"リリージョワ",sire:"シルバーステート",bms:"キングカメハメハ",dam:"デサフィアンテ",jockey:"浜中俊",age:"3"},
-      {name:"ドリームコア",sire:"キズナ",bms:"ハービンジャー",dam:"ノームコア",jockey:"C.ルメール",age:"3"},
-      {name:"スターアニス",sire:"ドレフォン",bms:"ダイワメジャー",dam:"エピセアローム",jockey:"松山弘平",age:"3"},
-      {name:"ショウナンカリス",sire:"リアルスティール",bms:"American Pharoah",dam:"ロシアンサモワール",jockey:"池添謙一",age:"3"},
-      {name:"ブラックチャリス",sire:"キタサンブラック",bms:"トゥザワールド",dam:"ゴールドチャリス",jockey:"津村明秀",age:"3"},
-      {name:"プレセピオ",sire:"パドトロワ",bms:"エピファネイア",dam:"パネットーネ",jockey:"富田暁",age:"3"},
-    ]},
-  { name:"東京11R 芝2400m (サンプル)", venue:"tokyo", surface:"TURF", distance:"MIDDLE", cond:"GOOD",
-    runners:[
-      {name:"ナチュラルボーン",sire:"ディープインパクト",bms:"キングカメハメハ",age:"3"},
-      {name:"スターライトレイン",sire:"キタサンブラック",bms:"ハーツクライ",age:"3"},
-      {name:"ロイヤルブレイブ",sire:"ドゥラメンテ",bms:"ディープインパクト",age:"3"},
-      {name:"ミラクルウィンド",sire:"エピファネイア",bms:"サンデーサイレンス",age:"4"},
-      {name:"ゴールデンクラウン",sire:"ロードカナロア",bms:"ステイゴールド",age:"4"},
-      {name:"サンダーボルト",sire:"オルフェーヴル",bms:"キングカメハメハ",age:"3"},
-    ]},
-  { name:"阪神10R ダ1800m (サンプル)", venue:"hanshin", surface:"DIRT", distance:"MILE", cond:"SLIGHTLY_HEAVY",
-    runners:[
-      {name:"ダートキング",sire:"ヘニーヒューズ",bms:"サンデーサイレンス",age:"4"},
-      {name:"パワーストーム",sire:"シニスターミニスター",bms:"ブライアンズタイム",age:"5"},
-      {name:"サンドブラスト",sire:"ゴールドアリュール",bms:"フレンチデピュティ",age:"4"},
-      {name:"ミッドナイトラン",sire:"パイロ",bms:"キングカメハメハ",age:"3"},
-      {name:"アイアンフィスト",sire:"クロフネ",bms:"サンデーサイレンス",age:"5"},
-    ]},
-];
-
 /* Runner entry row */
 const RunnerRow=({runner,index,onChange,onRemove,matchedSire,matchedBms,matchedDam})=>{
   const jMatch=!!findJockey(runner.jockey);
@@ -1064,16 +1022,6 @@ const RacePredictionTab=({stallions})=>{
     return BROODMARES.find(m=>m.name===q)||null;
   };
 
-  // Load sample race
-  const loadSample=(sample)=>{
-    setPVenue(sample.venue);
-    setPSurface(sample.surface);
-    setPDistance(sample.distance);
-    setPCond(sample.cond);
-    setRunners(sample.runners.map(r=>({...r})));
-    setResults(null);
-  };
-
   // Calculate predictions
   const calcPredictions=()=>{
     const validRunners=runners.filter(r=>r.name||r.sire);
@@ -1223,18 +1171,6 @@ const RacePredictionTab=({stallions})=>{
 
   return(
     <div>
-      {/* Sample race shortcuts */}
-      <div style={{marginBottom:12}}>
-        <div style={{fontSize:11,color:"var(--color-text-tertiary)",marginBottom:6}}>サンプルレースを読み込む:</div>
-        <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
-          {SAMPLE_RACES.map((sr,i)=>(
-            <button key={i} onClick={()=>loadSample(sr)} style={{padding:"5px 12px",borderRadius:8,border:sr.isG1?"2px solid #D85A30":"1px solid var(--color-border-tertiary)",background:sr.isG1?"#FFF3EE":"var(--color-background-primary)",color:sr.isG1?"#D85A30":"var(--color-text-secondary)",fontSize:11,fontWeight:sr.isG1?600:400,cursor:"pointer"}}>
-              {sr.name}
-            </button>
-          ))}
-        </div>
-      </div>
-
       {/* Toggle input/results */}
       {results&&(
         <button onClick={()=>setShowInput(!showInput)} style={{marginBottom:12,padding:"6px 14px",borderRadius:8,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-secondary)",fontSize:11,cursor:"pointer"}}>
@@ -1425,8 +1361,26 @@ const G1_RACES = {
       jockeyComment:"「混戦でしたが2歳女王として負けられない気持ちでした。直線に向く時も手応え十分で、追い出しを我慢してから最後は力強い脚を使ってくれました。一冠目、これからも楽しみです」（松山弘平騎手）",
     },
   },
-  // 次のG1はここに追加 ↓
-  // satsuki2026: { id:"satsuki2026", name:"第86回 皐月賞", date:"2026/4/19", venue:"中山", course:"芝2000m", ... },
+  // === 2026 G1 Calendar (追加はここにオブジェクトを足すだけ) ===
+  satsuki2026:{id:"satsuki2026",name:"第86回 皐月賞",date:"2026/4/19",venue:"中山",course:"芝2000m",weather:"",trackCond:"",emoji:"🏇",trends:null,result:null,review:null},
+  nhkmile2026:{id:"nhkmile2026",name:"第29回 NHKマイルC",date:"2026/5/10",venue:"東京",course:"芝1600m",weather:"",trackCond:"",emoji:"🎯",trends:null,result:null,review:null},
+  victoria2026:{id:"victoria2026",name:"第21回 ヴィクトリアマイル",date:"2026/5/17",venue:"東京",course:"芝1600m",weather:"",trackCond:"",emoji:"👑",trends:null,result:null,review:null},
+  oaks2026:{id:"oaks2026",name:"第87回 優駿牝馬（オークス）",date:"2026/5/24",venue:"東京",course:"芝2400m",weather:"",trackCond:"",emoji:"🌹",trends:null,result:null,review:null},
+  derby2026:{id:"derby2026",name:"第93回 東京優駿（日本ダービー）",date:"2026/5/31",venue:"東京",course:"芝2400m",weather:"",trackCond:"",emoji:"🏆",trends:null,result:null,review:null},
+  yasuda2026:{id:"yasuda2026",name:"第76回 安田記念",date:"2026/6/7",venue:"東京",course:"芝1600m",weather:"",trackCond:"",emoji:"⚡",trends:null,result:null,review:null},
+  takarazuka2026:{id:"takarazuka2026",name:"第67回 宝塚記念",date:"2026/6/28",venue:"阪神",course:"芝2200m",weather:"",trackCond:"",emoji:"🌟",trends:null,result:null,review:null},
+  sprinters2026:{id:"sprinters2026",name:"第60回 スプリンターズS",date:"2026/10/4",venue:"中山",course:"芝1200m",weather:"",trackCond:"",emoji:"💨",trends:null,result:null,review:null},
+  shuka2026:{id:"shuka2026",name:"第29回 秋華賞",date:"2026/10/18",venue:"京都",course:"芝2000m",weather:"",trackCond:"",emoji:"🍂",trends:null,result:null,review:null},
+  kikka2026:{id:"kikka2026",name:"第87回 菊花賞",date:"2026/10/25",venue:"京都",course:"芝3000m",weather:"",trackCond:"",emoji:"🌻",trends:null,result:null,review:null},
+  tennoshoA2026:{id:"tennoshoA2026",name:"第174回 天皇賞（秋）",date:"2026/11/1",venue:"東京",course:"芝2000m",weather:"",trackCond:"",emoji:"👑",trends:null,result:null,review:null},
+  elizabethQC2026:{id:"elizabethQC2026",name:"第51回 エリザベス女王杯",date:"2026/11/15",venue:"京都",course:"芝2200m",weather:"",trackCond:"",emoji:"💎",trends:null,result:null,review:null},
+  mileCS2026:{id:"mileCS2026",name:"第43回 マイルCS",date:"2026/11/22",venue:"京都",course:"芝1600m",weather:"",trackCond:"",emoji:"🎯",trends:null,result:null,review:null},
+  japanCup2026:{id:"japanCup2026",name:"第46回 ジャパンカップ",date:"2026/11/29",venue:"東京",course:"芝2400m",weather:"",trackCond:"",emoji:"🌍",trends:null,result:null,review:null},
+  championsCup2026:{id:"championsCup2026",name:"第23回 チャンピオンズC",date:"2026/12/6",venue:"中京",course:"ダ1800m",weather:"",trackCond:"",emoji:"🔥",trends:null,result:null,review:null},
+  hanshinJF2026:{id:"hanshinJF2026",name:"第78回 阪神JF",date:"2026/12/13",venue:"阪神",course:"芝1600m",weather:"",trackCond:"",emoji:"🌸",trends:null,result:null,review:null},
+  asahiFS2026:{id:"asahiFS2026",name:"第78回 朝日杯FS",date:"2026/12/20",venue:"阪神",course:"芝1600m",weather:"",trackCond:"",emoji:"⭐",trends:null,result:null,review:null},
+  arima2026:{id:"arima2026",name:"第71回 有馬記念",date:"2026/12/27",venue:"中山",course:"芝2500m",weather:"",trackCond:"",emoji:"🎄",trends:null,result:null,review:null},
+  hopeful2026:{id:"hopeful2026",name:"第10回 ホープフルS",date:"2026/12/28",venue:"中山",course:"芝2000m",weather:"",trackCond:"",emoji:"🌅",trends:null,result:null,review:null},
 };
 
 const G1RacePage=({raceId})=>{
@@ -1758,6 +1712,7 @@ export default function App(){
   const[stallions,setStallions]=useState(()=>{const saved=load();return saved&&saved.length>0?saved:STALLIONS;});
   const[tab,setTab]=useState("predict");
   const[predMode,setPredMode]=useState("g1");
+  const[selectedG1,setSelectedG1]=useState("ouka2026");
   const[dbView,setDbView]=useState("list");
   const[editing,setEditing]=useState(null);
   const[search,setSearch]=useState("");
@@ -1827,11 +1782,32 @@ export default function App(){
             <button onClick={()=>setPredMode("hiraba")} style={{flex:1,padding:"10px 0",border:"none",borderLeft:"1px solid var(--color-border-tertiary)",background:predMode==="hiraba"?"#378ADD":"var(--color-background-primary)",color:predMode==="hiraba"?"#fff":"var(--color-text-secondary)",fontSize:13,fontWeight:600,cursor:"pointer"}}>📋 平場モード</button>
           </div>
 
-          {/* G1 Mode: analysis guide + full prediction with runners */}
+          {/* G1 Mode: G1 selector + detail page */}
           {predMode==="g1"&&(
             <div>
-              <G1RacePage raceId="ouka2026"/>
-              <RacePredictionTab stallions={stallions}/>
+              {/* G1 Race Selector */}
+              <div style={{marginBottom:16}}>
+                <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
+                  {Object.values(G1_RACES).map(g=>{
+                    const isSel=selectedG1===g.id;
+                    const hasData=!!g.result;
+                    return(
+                      <button key={g.id} onClick={()=>setSelectedG1(g.id)} style={{
+                        padding:"6px 10px",borderRadius:8,cursor:"pointer",
+                        border:isSel?"2px solid #D85A30":"1px solid var(--color-border-tertiary)",
+                        background:isSel?"#FFF3EE":hasData?"var(--color-background-primary)":"var(--color-background-secondary)",
+                        color:isSel?"#D85A30":hasData?"var(--color-text-primary)":"var(--color-text-tertiary)",
+                        fontSize:10,fontWeight:isSel?600:400,opacity:hasData||isSel?1:0.6,
+                      }}>
+                        <span style={{marginRight:3}}>{g.emoji}</span>{g.name.replace(/第\d+回\s*/,"")}
+                        {hasData&&<span style={{fontSize:8,marginLeft:3,color:"#1D9E75"}}>✓</span>}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              {/* Selected G1 detail page */}
+              <G1RacePage raceId={selectedG1}/>
             </div>
           )}
 
