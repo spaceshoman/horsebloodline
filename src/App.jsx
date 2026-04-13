@@ -1360,6 +1360,60 @@ const G1_RACES = {
       ],
       jockeyComment:"「混戦でしたが2歳女王として負けられない気持ちでした。直線に向く時も手応え十分で、追い出しを我慢してから最後は力強い脚を使ってくれました。一冠目、これからも楽しみです」（松山弘平騎手）",
     },
+    // 血統分析 vs 実績 検証データ
+    verification: {
+      intro:"血統分析アプリの予想スコア（父55%+母父20%、母・騎手加算前）と実際の結果を照らし合わせ、分析精度を検証します。全体的にスコアが38〜43点に密集しており、差別化が課題。",
+      runners:[
+        {name:"スターアニス",num:15,predMark:"▲",predScore:40.5,actualRank:1,actualPop:1,sire:"ドレフォン",bms:"ダイワメジャー",dam:"エピセアローム",
+         predComment:"父ドレフォンは芝ダート兼用で阪神右回り◎だが、スプリント寄りの距離適性がマイルでやや減点。スコアは中位の40.5点。",
+         actualComment:"1番人気で完勝。1:31.5の好タイム。スコアが中位に留まったのは、ドレフォンの距離レンジの広さ（SPRINT〜MIDDLE）が「距離特化ボーナス」を得られなかったため。実力を過小評価。",
+         verdict:"過小評価",vColor:"#EF9F27"},
+        {name:"ギャラボーグ",num:5,predMark:"△",predScore:38.8,actualRank:2,actualPop:5,sire:"ロードカナロア",bms:"Sligo Bay",dam:"レキシールー",
+         predComment:"父ロードカナロアはスプリント〜マイル特化でスピード◎。ただし母父Sligo Bayが長距離型でマイル適性が低く、母父スコアが35.3と足を引っ張った。",
+         actualComment:"5番人気で2着。ロードカナロア産駒の桜花賞適性は血統スコア以上。母父の数値が低くても、ロードカナロアのマイルスピードが勝った。",
+         verdict:"過小評価",vColor:"#EF9F27"},
+        {name:"ジッピーチューン",num:11,predMark:"▲",predScore:42.1,actualRank:3,actualPop:12,sire:"ロードカナロア",bms:"City Zip",dam:"ジペッサ",
+         predComment:"ロードカナロア×City Zipでスピード配合。母父もマイル以下のスピード型で相性◎。スコア42.1は上位グループ。",
+         actualComment:"12番人気ながら3着激走！スコア的には上位で、血統評価は正しかった。人気の盲点だったが、スコアは実力を反映していた。",
+         verdict:"的中",vColor:"#1D9E75"},
+        {name:"アイニードユー",num:6,predMark:"▲",predScore:40.8,actualRank:4,actualPop:13,sire:"ファインニードル",bms:"ハードスパン",dam:"プリディカメント",
+         predComment:"父ファインニードルはスプリント〜マイル。母父ハードスパンは芝ダート兼用でパワー型。スコア40.8は中位。",
+         actualComment:"13番人気で4着の大激走。川田騎手の先行策が奏功。スコア的には中位で、大外れではないが穴としてピックアップできなかった。",
+         verdict:"概ね妥当",vColor:"#378ADD"},
+        {name:"アランカール",num:7,predMark:"▲",predScore:41.4,actualRank:5,actualPop:4,sire:"エピファネイア",bms:"ディープインパクト",dam:"シンハライト",
+         predComment:"エピファネイア×ディープの配合。マイル〜長距離のスタミナ型。母シンハライトはオークス馬。スコア41.4。",
+         actualComment:"4番人気で5着。上がり最速級の末脚を使ったが届かず。血統評価は妥当で、展開が向かなかっただけ。",
+         verdict:"概ね妥当",vColor:"#378ADD"},
+        {name:"ナムラコスモス",num:10,predMark:"◎",predScore:43.3,actualRank:6,actualPop:7,sire:"ダノンプレミアム",bms:"ジョーカプチーノ",dam:"ナムラリコリス",
+         predComment:"スコア最高の43.3点！ダノンプレミアム×ジョーカプチーノのマイル特化配合。距離特化ボーナスが効いた。",
+         actualComment:"7番人気で6着。スコア最高だったが馬券圏内には入れず。血統的なマイル適性は高いが、能力面で一枚足りなかった。",
+         verdict:"やや過大評価",vColor:"#EF9F27"},
+        {name:"ドリームコア",num:14,predMark:"△",predScore:39.7,actualRank:9,actualPop:2,sire:"キズナ",bms:"ハービンジャー",dam:"ノームコア",
+         predComment:"父キズナはマイル〜中距離型。母父ハービンジャーは晩成型で3歳春にはマイナス。スコア39.7は下位寄り。",
+         actualComment:"2番人気ながら9着に大敗。スコアの低評価が的中。キズナ産駒の阪神G1不振、母父ハービンジャーの晩成マイナスが出た。",
+         verdict:"的中（低評価が正解）",vColor:"#1D9E75"},
+        {name:"リリージョワ",num:13,predMark:"▲",predScore:40.8,actualRank:11,actualPop:3,sire:"シルバーステート",bms:"キングカメハメハ",dam:"デサフィアンテ",
+         predComment:"シルバーステート×キンカメで芝マイル型。スコア40.8は中位。母父キンカメがプラス。",
+         actualComment:"3番人気で11着に大敗。スコア的には中位だが、3番人気ほど推すデータではなかった。市場の過大評価を見抜けた可能性あり。",
+         verdict:"概ね妥当",vColor:"#378ADD"},
+      ],
+      summary:{
+        hitCount:2,
+        nearCount:3,
+        missCount:2,
+        overCount:1,
+        total:8,
+        accuracy:"的中2 + 妥当3 = 62.5%（8頭中5頭が妥当以上）",
+        lessons:[
+          "スコア最高のナムラコスモス(43.3)が6着、中位のスターアニス(40.5)が1着 → スコアの絶対値よりも、種牡馬ごとのG1適性実績データ（ロードカナロアの桜花賞成績など）を加味すべき。",
+          "ロードカナロア産駒は3頭出走して2着・3着・14着。スコアに関係なくキンカメ系のG1実績補正が必要。",
+          "ドリームコア(39.7)の低スコアが2番人気9着を的中。母父ハービンジャー（晩成型）×3歳の成長マイナスが正しく効いた。",
+          "全体のスコアレンジが38〜43点と5点幅に密集 → 差別化が不十分。距離特化ボーナスやG1実績補正の重みを大きくすべき。",
+          "騎手×会場の加算（松山×阪神◎、川田×阪神◎）を含めると順位は変動する。血統だけでなく騎手データの統合が重要。",
+          "12番人気ジッピーチューン(42.1)がスコア上位で3着 → 穴馬発掘にはスコアが有効だった。人気に惑わされずスコア上位を拾う戦略は正しい。",
+        ],
+      },
+    },
   },
   // === 2026 G1 Calendar (追加はここにオブジェクトを足すだけ) ===
   satsuki2026:{id:"satsuki2026",name:"第86回 皐月賞",date:"2026/4/19",venue:"中山",course:"芝2000m",weather:"",trackCond:"",emoji:"🏇",trends:null,result:null,review:null},
@@ -1388,8 +1442,10 @@ const G1RacePage=({raceId})=>{
   if(!race) return <div style={{textAlign:"center",padding:32,color:"var(--color-text-tertiary)"}}>G1データが見つかりません</div>;
   const [section,setSection]=useState(race.result?"review":"overview");
   const hasResult=!!race.result;
+  const hasVerify=!!race.verification;
   const sections=[
     ...(hasResult?[{id:"review",label:"回顧"},{id:"result",label:"結果"}]:[]),
+    ...(hasVerify?[{id:"verify",label:"検証"}]:[]),
     {id:"overview",label:"傾向"},{id:"draw",label:"枠順"},{id:"style",label:"脚質"},{id:"blood",label:"血統"},{id:"rotation",label:"ローテ"},
   ];
   const DataRow=({label,value,highlight})=>(
@@ -1462,6 +1518,73 @@ const G1RacePage=({raceId})=>{
           </div>))}
         </div>
       </div>)}
+      {/* VERIFY (検証) */}
+      {section==="verify"&&race.verification&&(()=>{
+        const v=race.verification;
+        const s=v.summary;
+        return(<div>
+          <div style={{fontSize:11,color:"var(--color-text-secondary)",lineHeight:1.6,marginBottom:12}}>{v.intro}</div>
+          {/* Accuracy summary */}
+          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:4,marginBottom:14}}>
+            {[{l:"的中",v:s.hitCount,c:"#1D9E75"},{l:"妥当",v:s.nearCount,c:"#378ADD"},{l:"過小評価",v:s.missCount,c:"#EF9F27"},{l:"過大評価",v:s.overCount,c:"#A32D2D"}].map(d=>(
+              <div key={d.l} style={{background:"var(--color-background-secondary)",borderRadius:8,padding:"8px",textAlign:"center"}}>
+                <div style={{fontSize:20,fontWeight:700,color:d.c}}>{d.v}</div>
+                <div style={{fontSize:9,color:"var(--color-text-tertiary)"}}>{d.l}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{padding:"8px 10px",background:"var(--color-background-secondary)",borderRadius:8,marginBottom:14}}>
+            <div style={{fontSize:10,color:"var(--color-text-secondary)"}}>分析精度: <span style={{fontWeight:600,color:"var(--color-text-primary)"}}>{s.accuracy}</span></div>
+          </div>
+          {/* Per-horse comparison */}
+          <div style={{fontSize:12,fontWeight:500,color:"var(--color-text-primary)",marginBottom:8}}>馬別 予想 vs 実績</div>
+          {v.runners.map((h,i)=>(
+            <div key={i} style={{border:"1px solid var(--color-border-tertiary)",borderRadius:10,marginBottom:8,overflow:"hidden"}}>
+              {/* Header */}
+              <div style={{display:"flex",alignItems:"center",gap:8,padding:"8px 12px",background:"var(--color-background-secondary)"}}>
+                <span style={{fontSize:16,fontWeight:700,color:h.vColor}}>{h.predMark}</span>
+                <div style={{flex:1}}>
+                  <div style={{display:"flex",alignItems:"baseline",gap:6}}>
+                    <span style={{fontSize:13,fontWeight:600,color:"var(--color-text-primary)"}}>{h.name}</span>
+                    <span style={{fontSize:9,color:"var(--color-text-tertiary)"}}>馬番{h.num}</span>
+                  </div>
+                  <div style={{fontSize:9,color:"var(--color-text-secondary)"}}>父:{h.sire} / 母父:{h.bms} / 母:{h.dam}</div>
+                </div>
+                <div style={{textAlign:"right"}}>
+                  <span style={{fontSize:10,padding:"2px 8px",borderRadius:10,background:h.vColor,color:"#fff",fontWeight:600}}>{h.verdict}</span>
+                </div>
+              </div>
+              {/* Comparison */}
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:0}}>
+                <div style={{padding:"8px 12px",borderRight:"1px solid var(--color-border-tertiary)"}}>
+                  <div style={{fontSize:9,fontWeight:600,color:"#378ADD",marginBottom:4}}>📊 血統分析の予想</div>
+                  <div style={{display:"flex",alignItems:"baseline",gap:6,marginBottom:4}}>
+                    <span style={{fontSize:18,fontWeight:700,color:"#378ADD"}}>{h.predMark}</span>
+                    <span style={{fontSize:12,color:"var(--color-text-secondary)"}}>スコア {h.predScore}</span>
+                  </div>
+                  <div style={{fontSize:9,color:"var(--color-text-secondary)",lineHeight:1.5}}>{h.predComment}</div>
+                </div>
+                <div style={{padding:"8px 12px"}}>
+                  <div style={{fontSize:9,fontWeight:600,color:"#D85A30",marginBottom:4}}>🏁 実際の結果</div>
+                  <div style={{display:"flex",alignItems:"baseline",gap:6,marginBottom:4}}>
+                    <span style={{fontSize:18,fontWeight:700,color:h.actualRank<=3?"#1D9E75":h.actualRank<=6?"#378ADD":"var(--color-text-tertiary)"}}>{h.actualRank}着</span>
+                    <span style={{fontSize:12,color:"var(--color-text-secondary)"}}>{h.actualPop}番人気</span>
+                  </div>
+                  <div style={{fontSize:9,color:"var(--color-text-secondary)",lineHeight:1.5}}>{h.actualComment}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+          {/* Lessons learned */}
+          <div style={{fontSize:12,fontWeight:500,color:"var(--color-text-primary)",margin:"14px 0 8px"}}>📝 今後への教訓</div>
+          {s.lessons.map((l,i)=>(
+            <div key={i} style={{display:"flex",gap:8,padding:"6px 0",borderBottom:"1px solid var(--color-border-tertiary)"}}>
+              <span style={{fontSize:12,color:"#D85A30",flexShrink:0}}>{i+1}.</span>
+              <span style={{fontSize:10,color:"var(--color-text-secondary)",lineHeight:1.6}}>{l}</span>
+            </div>
+          ))}
+        </div>);
+      })()}
       {/* TRENDS */}
       {section==="overview"&&t&&(<div>
         <div style={{fontSize:12,fontWeight:500,marginBottom:6}}>人気別成績（過去10年）</div>
@@ -1764,7 +1887,7 @@ export default function App(){
   return(
     <div style={{maxWidth:720,margin:"0 auto",fontFamily:"var(--font-sans)"}}>
       <div style={{marginBottom:16}}>
-        <h1 style={{fontSize:22,fontWeight:500,color:"var(--color-text-primary)",margin:"0 0 2px",letterSpacing:"-0.02em"}}>競馬血統分析</h1>
+        <h1 style={{fontSize:22,fontWeight:500,color:"var(--color-text-primary)",margin:"0 0 2px",letterSpacing:"-0.02em"}}>血統くん</h1>
         <p style={{fontSize:12,color:"var(--color-text-tertiary)",margin:0}}>Thoroughbred bloodline analyzer — {stats.total} stallions</p>
       </div>
 
