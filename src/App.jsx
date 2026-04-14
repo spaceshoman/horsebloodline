@@ -1726,22 +1726,32 @@ export default function App(){
   const[stallions,setStallions]=useState([]);
   const[broodmares,setBroodmares]=useState([]);
   const[dataLoading,setDataLoading]=useState(true);
+  const[loadError,setLoadError]=useState(null);
 
   // Fetch JSON data on mount
   useEffect(()=>{
     const base=import.meta.env.BASE_URL||"/";
+    const fetchJson=async(file)=>{
+      const url=base+file;
+      console.log("[血統くん] fetching:",url);
+      const res=await fetch(url);
+      if(!res.ok) throw new Error(`${file}: ${res.status} ${res.statusText} (url: ${url})`);
+      return res.json();
+    };
     Promise.all([
-      fetch(base+"stallions.json").then(r=>r.json()),
-      fetch(base+"broodmares.json").then(r=>r.json()),
-      fetch(base+"jockeys.json").then(r=>r.json()),
+      fetchJson("stallions.json"),
+      fetchJson("broodmares.json"),
+      fetchJson("jockeys.json"),
     ]).then(([sData,bData,jData])=>{
+      console.log("[血統くん] loaded:",sData.length,"stallions,",bData.length,"broodmares,",jData.length,"jockeys");
       const saved=load(sData.length);
-      setStallions(saved&&saved.length>0?saved:sData);
+      setStallions(saved&&saved.length>=sData.length?saved:sData);
       setBroodmares(bData);
       setJockeysData(jData);
       setDataLoading(false);
     }).catch(err=>{
-      console.error("Failed to load data:",err);
+      console.error("[血統くん] データ読み込み失敗:",err);
+      setLoadError(err.message);
       setDataLoading(false);
     });
   },[]);
@@ -1800,6 +1810,31 @@ export default function App(){
     <div style={{maxWidth:720,margin:"0 auto",fontFamily:"var(--font-sans)",textAlign:"center",padding:"60px 20px"}}>
       <div style={{fontSize:32,marginBottom:12}}>🐴</div>
       <div style={{fontSize:14,color:"var(--color-text-secondary)"}}>データを読み込み中...</div>
+    </div>
+  );
+
+  if(loadError) return(
+    <div style={{maxWidth:720,margin:"0 auto",fontFamily:"var(--font-sans)",textAlign:"center",padding:"60px 20px"}}>
+      <div style={{fontSize:32,marginBottom:12}}>⚠️</div>
+      <div style={{fontSize:14,color:"#A32D2D",marginBottom:8}}>データの読み込みに失敗しました</div>
+      <div style={{fontSize:11,color:"var(--color-text-tertiary)",marginBottom:16,lineHeight:1.6}}>{loadError}</div>
+      <div style={{fontSize:11,color:"var(--color-text-secondary)",lineHeight:1.8,textAlign:"left",background:"var(--color-background-secondary)",borderRadius:8,padding:16}}>
+        <div style={{fontWeight:600,marginBottom:6}}>確認してください:</div>
+        <div>1. public/ フォルダに stallions.json, broodmares.json, jockeys.json が存在するか</div>
+        <div>2. JSONファイルが正しいJSON形式か（構文エラーがないか）</div>
+        <div>3. ブラウザの開発者ツール → Console でエラーの詳細を確認</div>
+        <div>4. ブラウザの開発者ツール → Network でファイルが404になっていないか確認</div>
+      </div>
+      <button onClick={()=>window.location.reload()} style={{marginTop:16,padding:"8px 20px",borderRadius:8,border:"none",background:"#1D9E75",color:"#fff",fontSize:12,cursor:"pointer"}}>再読み込み</button>
+    </div>
+  );
+
+  if(stallions.length===0) return(
+    <div style={{maxWidth:720,margin:"0 auto",fontFamily:"var(--font-sans)",textAlign:"center",padding:"60px 20px"}}>
+      <div style={{fontSize:32,marginBottom:12}}>📂</div>
+      <div style={{fontSize:14,color:"var(--color-text-secondary)",marginBottom:8}}>データが空です</div>
+      <div style={{fontSize:11,color:"var(--color-text-tertiary)",marginBottom:16}}>stallions.json の読み込みに成功しましたが、中身が空の可能性があります。</div>
+      <button onClick={()=>{localStorage.removeItem("keiba-v6");window.location.reload();}} style={{padding:"8px 20px",borderRadius:8,border:"none",background:"#D85A30",color:"#fff",fontSize:12,cursor:"pointer"}}>キャッシュをクリアして再読み込み</button>
     </div>
   );
 
