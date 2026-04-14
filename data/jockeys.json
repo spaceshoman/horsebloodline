@@ -1,0 +1,344 @@
+[
+  {
+    "name": "坂井瑠星",
+    "nameEn": "Rusei Sakai",
+    "style": "差し・追込",
+    "venueAff": {
+      "hanshin": 8,
+      "kyoto": 7,
+      "tokyo": 7,
+      "nakayama": 6,
+      "chukyo": 7,
+      "kokura": 7,
+      "niigata": 6,
+      "sapporo": 6,
+      "hakodate": 6
+    },
+    "winRate": 0.12,
+    "g1Wins": 4,
+    "notes": "追込み一発型。阪神外回りの末脚勝負◎。"
+  },
+  {
+    "name": "荻野極",
+    "nameEn": "Kiwamu Ogino",
+    "style": "先行・差し",
+    "venueAff": {
+      "hanshin": 6,
+      "kyoto": 6,
+      "tokyo": 5,
+      "nakayama": 6,
+      "chukyo": 6,
+      "kokura": 6,
+      "niigata": 5,
+      "sapporo": 5,
+      "hakodate": 5
+    },
+    "winRate": 0.07,
+    "g1Wins": 0,
+    "notes": "若手成長株。G1実績はこれから。"
+  },
+  {
+    "name": "戸崎圭太",
+    "nameEn": "Keita Tosaki",
+    "style": "差し・好位",
+    "venueAff": {
+      "hanshin": 6,
+      "kyoto": 6,
+      "tokyo": 9,
+      "nakayama": 8,
+      "chukyo": 6,
+      "kokura": 5,
+      "niigata": 7,
+      "sapporo": 6,
+      "hakodate": 5
+    },
+    "winRate": 0.14,
+    "g1Wins": 15,
+    "notes": "関東リーディング常連。東京・中山に強い。"
+  },
+  {
+    "name": "岩田望来",
+    "nameEn": "Miraisuke Iwata",
+    "style": "先行・捲り",
+    "venueAff": {
+      "hanshin": 7,
+      "kyoto": 7,
+      "tokyo": 6,
+      "nakayama": 5,
+      "chukyo": 7,
+      "kokura": 6,
+      "niigata": 5,
+      "sapporo": 5,
+      "hakodate": 5
+    },
+    "winRate": 0.08,
+    "g1Wins": 2,
+    "notes": "父譲りの積極策。阪神・京都の内回り巧者。"
+  },
+  {
+    "name": "西村淳也",
+    "nameEn": "Junya Nishimura",
+    "style": "先行",
+    "venueAff": {
+      "hanshin": 7,
+      "kyoto": 7,
+      "tokyo": 5,
+      "nakayama": 5,
+      "chukyo": 7,
+      "kokura": 8,
+      "niigata": 6,
+      "sapporo": 7,
+      "hakodate": 7
+    },
+    "winRate": 0.1,
+    "g1Wins": 2,
+    "notes": "ローカル巧者。先行押切りが得意。小倉◎。"
+  },
+  {
+    "name": "川田将雅",
+    "nameEn": "Yuga Kawada",
+    "style": "好位・差し",
+    "venueAff": {
+      "hanshin": 9,
+      "kyoto": 9,
+      "tokyo": 8,
+      "nakayama": 7,
+      "chukyo": 8,
+      "kokura": 7,
+      "niigata": 7,
+      "sapporo": 7,
+      "hakodate": 7
+    },
+    "winRate": 0.2,
+    "g1Wins": 40,
+    "notes": "日本トップジョッキー。どの競馬場でも高水準。阪神◎。"
+  },
+  {
+    "name": "武豊",
+    "nameEn": "Yutaka Take",
+    "style": "自在",
+    "venueAff": {
+      "hanshin": 8,
+      "kyoto": 9,
+      "tokyo": 8,
+      "nakayama": 7,
+      "chukyo": 8,
+      "kokura": 7,
+      "niigata": 7,
+      "sapporo": 8,
+      "hakodate": 7
+    },
+    "winRate": 0.12,
+    "g1Wins": 80,
+    "notes": "レジェンド。京都の鬼。経験値は唯一無二。"
+  },
+  {
+    "name": "石橋脩",
+    "nameEn": "Shu Ishibashi",
+    "style": "差し・追込",
+    "venueAff": {
+      "hanshin": 5,
+      "kyoto": 5,
+      "tokyo": 7,
+      "nakayama": 7,
+      "chukyo": 5,
+      "kokura": 5,
+      "niigata": 7,
+      "sapporo": 6,
+      "hakodate": 6
+    },
+    "winRate": 0.08,
+    "g1Wins": 3,
+    "notes": "関東ベテラン。東京・中山で安定。"
+  },
+  {
+    "name": "原優介",
+    "nameEn": "Yusuke Hara",
+    "style": "先行・好位",
+    "venueAff": {
+      "hanshin": 5,
+      "kyoto": 5,
+      "tokyo": 6,
+      "nakayama": 7,
+      "chukyo": 5,
+      "kokura": 5,
+      "niigata": 6,
+      "sapporo": 5,
+      "hakodate": 5
+    },
+    "winRate": 0.06,
+    "g1Wins": 0,
+    "notes": "若手有望株。中山で好騎乗多い。"
+  },
+  {
+    "name": "田口貫太",
+    "nameEn": "Kanta Taguchi",
+    "style": "差し",
+    "venueAff": {
+      "hanshin": 6,
+      "kyoto": 7,
+      "tokyo": 5,
+      "nakayama": 5,
+      "chukyo": 6,
+      "kokura": 6,
+      "niigata": 5,
+      "sapporo": 5,
+      "hakodate": 5
+    },
+    "winRate": 0.06,
+    "g1Wins": 0,
+    "notes": "京都の穴騎手。差し脚を活かす。"
+  },
+  {
+    "name": "北村友一",
+    "nameEn": "Yuichi Kitamura",
+    "style": "好位・差し",
+    "venueAff": {
+      "hanshin": 8,
+      "kyoto": 8,
+      "tokyo": 6,
+      "nakayama": 6,
+      "chukyo": 7,
+      "kokura": 7,
+      "niigata": 5,
+      "sapporo": 6,
+      "hakodate": 6
+    },
+    "winRate": 0.1,
+    "g1Wins": 5,
+    "notes": "関西のベテラン。阪神・京都で堅実。"
+  },
+  {
+    "name": "高杉吏麒",
+    "nameEn": "Riki Takasugi",
+    "style": "差し・追込",
+    "venueAff": {
+      "hanshin": 7,
+      "kyoto": 8,
+      "tokyo": 5,
+      "nakayama": 5,
+      "chukyo": 6,
+      "kokura": 6,
+      "niigata": 5,
+      "sapporo": 5,
+      "hakodate": 5
+    },
+    "winRate": 0.07,
+    "g1Wins": 0,
+    "notes": "若手成長中。京都での追込み巧い。"
+  },
+  {
+    "name": "浜中俊",
+    "nameEn": "Suguru Hamanaka",
+    "style": "好位・差し",
+    "venueAff": {
+      "hanshin": 8,
+      "kyoto": 8,
+      "tokyo": 6,
+      "nakayama": 6,
+      "chukyo": 7,
+      "kokura": 7,
+      "niigata": 5,
+      "sapporo": 7,
+      "hakodate": 7
+    },
+    "winRate": 0.11,
+    "g1Wins": 10,
+    "notes": "関西重賞常連。阪神外回りでの手腕◎。"
+  },
+  {
+    "name": "C.ルメール",
+    "nameEn": "Christophe Lemaire",
+    "style": "自在",
+    "venueAff": {
+      "hanshin": 9,
+      "kyoto": 9,
+      "tokyo": 10,
+      "nakayama": 9,
+      "chukyo": 8,
+      "kokura": 7,
+      "niigata": 8,
+      "sapporo": 8,
+      "hakodate": 8
+    },
+    "winRate": 0.22,
+    "g1Wins": 55,
+    "notes": "リーディングジョッキー。全場トップクラス。東京は別格。"
+  },
+  {
+    "name": "松山弘平",
+    "nameEn": "Kohei Matsuyama",
+    "style": "先行・好位",
+    "venueAff": {
+      "hanshin": 8,
+      "kyoto": 8,
+      "tokyo": 7,
+      "nakayama": 6,
+      "chukyo": 8,
+      "kokura": 8,
+      "niigata": 6,
+      "sapporo": 7,
+      "hakodate": 7
+    },
+    "winRate": 0.12,
+    "g1Wins": 8,
+    "notes": "関西の実力者。先行策が冴える。阪神◎。"
+  },
+  {
+    "name": "池添謙一",
+    "nameEn": "Kenichi Ikezoe",
+    "style": "差し・追込",
+    "venueAff": {
+      "hanshin": 7,
+      "kyoto": 7,
+      "tokyo": 6,
+      "nakayama": 6,
+      "chukyo": 7,
+      "kokura": 7,
+      "niigata": 5,
+      "sapporo": 7,
+      "hakodate": 7
+    },
+    "winRate": 0.09,
+    "g1Wins": 20,
+    "notes": "大舞台の経験豊富。追込みの一撃。"
+  },
+  {
+    "name": "津村明秀",
+    "nameEn": "Akihide Tsumura",
+    "style": "先行・捲り",
+    "venueAff": {
+      "hanshin": 5,
+      "kyoto": 5,
+      "tokyo": 7,
+      "nakayama": 8,
+      "chukyo": 5,
+      "kokura": 5,
+      "niigata": 7,
+      "sapporo": 6,
+      "hakodate": 6
+    },
+    "winRate": 0.07,
+    "g1Wins": 1,
+    "notes": "中山巧者。内枠先行で味を出す。"
+  },
+  {
+    "name": "富田暁",
+    "nameEn": "Akira Tomita",
+    "style": "先行",
+    "venueAff": {
+      "hanshin": 6,
+      "kyoto": 6,
+      "tokyo": 5,
+      "nakayama": 5,
+      "chukyo": 6,
+      "kokura": 6,
+      "niigata": 5,
+      "sapporo": 5,
+      "hakodate": 5
+    },
+    "winRate": 0.05,
+    "g1Wins": 0,
+    "notes": "若手。先行粘り込みが武器。"
+  }
+]
