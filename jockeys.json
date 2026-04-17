@@ -473,5 +473,119 @@
     "winRate": 0.13,
     "g1Wins": 10,
     "notes": "若手トップジョッキー。東京・中山に強い。エフフォーリアでダービー制覇。"
+  },
+  {
+    "name": "幸英明",
+    "nameEn": "Hideaki Ko",
+    "style": "差し・追込",
+    "venueAff": {
+      "hanshin": 7,
+      "kyoto": 7,
+      "tokyo": 5,
+      "nakayama": 5,
+      "chukyo": 7,
+      "kokura": 8,
+      "niigata": 5,
+      "sapporo": 6,
+      "hakodate": 6
+    },
+    "winRate": 0.07,
+    "g1Wins": 2,
+    "notes": "ベテラン。阪神・小倉で安定した成績。"
+  },
+  {
+    "name": "角田大和",
+    "nameEn": "Yamato Tsunoda",
+    "style": "先行・好位",
+    "venueAff": {
+      "hanshin": 7,
+      "kyoto": 7,
+      "tokyo": 7,
+      "nakayama": 7,
+      "chukyo": 7,
+      "kokura": 6,
+      "niigata": 7,
+      "sapporo": 7,
+      "hakodate": 6
+    },
+    "winRate": 0.1,
+    "g1Wins": 5,
+    "notes": "若手実力者。先行策でどの競馬場でも安定した成績。"
+  },
+  {
+    "name": "太宰啓介",
+    "nameEn": "Keisuke Dazai",
+    "style": "先行",
+    "venueAff": {
+      "hanshin": 7,
+      "kyoto": 7,
+      "tokyo": 5,
+      "nakayama": 5,
+      "chukyo": 6,
+      "kokura": 7,
+      "niigata": 5,
+      "sapporo": 6,
+      "hakodate": 6
+    },
+    "winRate": 0.06,
+    "g1Wins": 0,
+    "notes": "関西のベテラン。阪神・京都で安定。先行策が持ち味。"
+  },
+  {
+    "name": "三浦皇成",
+    "nameEn": "Kosei Miura",
+    "style": "先行・差し",
+    "venueAff": {
+      "hanshin": 5,
+      "kyoto": 5,
+      "tokyo": 7,
+      "nakayama": 7,
+      "chukyo": 5,
+      "kokura": 5,
+      "niigata": 8,
+      "sapporo": 7,
+      "hakodate": 7
+    },
+    "winRate": 0.08,
+    "g1Wins": 3,
+    "notes": "関東の中堅。新潟・北海道に強い。先行〜中団の自在型。"
+  },
+  {
+    "name": "鮫島克駿",
+    "nameEn": "Katsuma Samejima",
+    "style": "差し・好位",
+    "venueAff": {
+      "hanshin": 7,
+      "kyoto": 7,
+      "tokyo": 7,
+      "nakayama": 7,
+      "chukyo": 7,
+      "kokura": 7,
+      "niigata": 6,
+      "sapporo": 7,
+      "hakodate": 7
+    },
+    "winRate": 0.09,
+    "g1Wins": 2,
+    "notes": "若手有望株。全国各地で安定した成績。"
+  },
+  {
+    "name": "古川吉洋",
+    "nameEn": "Yoshihiro Furukawa",
+    "style": "先行・好位",
+    "venueAff": {
+      "hanshin": 7,
+      "kyoto": 7,
+      "tokyo": 5,
+      "nakayama": 5,
+      "chukyo": 7,
+      "kokura": 8,
+      "niigata": 5,
+      "sapporo": 6,
+      "hakodate": 6
+    },
+    "winRate": 0.07,
+    "g1Wins": 1,
+    "notes": "関西中堅。阪神・小倉・中京での実績あり。先行押切りが得意。"
   }
 ]
