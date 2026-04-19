@@ -1603,6 +1603,23 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               if(jvs.score>=8) strengths.push("騎手×会場◎");
               if(jvs.score<=4) weaknesses.push("騎手×会場△");
             }
+            // 重賞実績ボーナス
+            let gradeBonus=0;
+            const gw=runner.gradeWins||[];
+            gw.forEach(w=>{
+              if(w.grade==="G1"){
+                if(w.place===1){gradeBonus+=8;strengths.push("G1勝ち馬");}
+                else if(w.place===2){gradeBonus+=5;strengths.push("G1連対実績");}
+                else if(w.place===3){gradeBonus+=3;strengths.push("G1好走実績");}
+              } else if(w.grade==="G2"){
+                if(w.place===1){gradeBonus+=5;strengths.push("G2勝ち馬");}
+                else if(w.place<=2){gradeBonus+=3;strengths.push("G2連対実績");}
+              } else if(w.grade==="G3"){
+                if(w.place===1){gradeBonus+=3;strengths.push("G3勝ち馬");}
+                else if(w.place<=2){gradeBonus+=2;}
+              }
+            });
+            bonus+=gradeBonus;
             const total=+(rawScore+bonus).toFixed(2);
             // Normalize: map raw scores to 50.0-80.0 display range (1 decimal)
             const normalizedPct=Math.max(0,Math.min(1,(total-28)/28)); // 28=floor, 56=ceiling
