@@ -340,5 +340,252 @@
     "winRate": 0.05,
     "g1Wins": 0,
     "notes": "若手。先行粘り込みが武器。"
+  },
+  {
+    "name": "D.レーン",
+    "nameEn": "Damian Lane",
+    "style": "差し・好位",
+    "venueAff": {
+      "hanshin": 8,
+      "kyoto": 8,
+      "tokyo": 8,
+      "nakayama": 8,
+      "chukyo": 7,
+      "kokura": 7,
+      "niigata": 7,
+      "sapporo": 7,
+      "hakodate": 7
+    },
+    "winRate": 0.18,
+    "g1Wins": 12,
+    "notes": "豪州出身。日本G1多数制覇。どの競馬場でも高水準。"
+  },
+  {
+    "name": "団野大成",
+    "nameEn": "Taisei Danno",
+    "style": "先行・好位",
+    "venueAff": {
+      "hanshin": 7,
+      "kyoto": 7,
+      "tokyo": 6,
+      "nakayama": 6,
+      "chukyo": 7,
+      "kokura": 7,
+      "niigata": 5,
+      "sapporo": 6,
+      "hakodate": 6
+    },
+    "winRate": 0.08,
+    "g1Wins": 1,
+    "notes": "関西の中堅。先行策が得意。"
+  },
+  {
+    "name": "田辺裕信",
+    "nameEn": "Hironobu Tanabe",
+    "style": "差し・追込",
+    "venueAff": {
+      "hanshin": 5,
+      "kyoto": 5,
+      "tokyo": 7,
+      "nakayama": 8,
+      "chukyo": 5,
+      "kokura": 5,
+      "niigata": 7,
+      "sapporo": 6,
+      "hakodate": 6
+    },
+    "winRate": 0.08,
+    "g1Wins": 3,
+    "notes": "関東ベテラン。中山巧者。差し追込み型。"
+  },
+  {
+    "name": "岩田康誠",
+    "nameEn": "Yasunari Iwata",
+    "style": "先行・捲り",
+    "venueAff": {
+      "hanshin": 8,
+      "kyoto": 8,
+      "tokyo": 6,
+      "nakayama": 6,
+      "chukyo": 7,
+      "kokura": 7,
+      "niigata": 5,
+      "sapporo": 6,
+      "hakodate": 6
+    },
+    "winRate": 0.09,
+    "g1Wins": 22,
+    "notes": "関西のベテラン。積極策の鬼。阪神・京都に強い。"
+  },
+  {
+    "name": "横山和生",
+    "nameEn": "Kazuo Yokoyama",
+    "style": "好位・差し",
+    "venueAff": {
+      "hanshin": 6,
+      "kyoto": 6,
+      "tokyo": 7,
+      "nakayama": 8,
+      "chukyo": 6,
+      "kokura": 6,
+      "niigata": 7,
+      "sapporo": 7,
+      "hakodate": 7
+    },
+    "winRate": 0.09,
+    "g1Wins": 3,
+    "notes": "横山一族。中山・東京で安定。好位からの競馬が得意。"
+  },
+  {
+    "name": "佐々木大輔",
+    "nameEn": "Daisuke Sasaki",
+    "style": "先行・好位",
+    "venueAff": {
+      "hanshin": 5,
+      "kyoto": 5,
+      "tokyo": 6,
+      "nakayama": 7,
+      "chukyo": 5,
+      "kokura": 5,
+      "niigata": 6,
+      "sapporo": 5,
+      "hakodate": 5
+    },
+    "winRate": 0.07,
+    "g1Wins": 0,
+    "notes": "若手有望株。中山で好騎乗が多い。"
+  },
+  {
+    "name": "横山武史",
+    "nameEn": "Takeshi Yokoyama",
+    "style": "差し・好位",
+    "venueAff": {
+      "hanshin": 7,
+      "kyoto": 7,
+      "tokyo": 9,
+      "nakayama": 9,
+      "chukyo": 7,
+      "kokura": 6,
+      "niigata": 7,
+      "sapporo": 7,
+      "hakodate": 7
+    },
+    "winRate": 0.13,
+    "g1Wins": 10,
+    "notes": "若手トップジョッキー。東京・中山に強い。エフフォーリアでダービー制覇。"
+  },
+  {
+    "name": "幸英明",
+    "nameEn": "Hideaki Ko",
+    "style": "差し・追込",
+    "venueAff": {
+      "hanshin": 7,
+      "kyoto": 7,
+      "tokyo": 5,
+      "nakayama": 5,
+      "chukyo": 7,
+      "kokura": 8,
+      "niigata": 5,
+      "sapporo": 6,
+      "hakodate": 6
+    },
+    "winRate": 0.07,
+    "g1Wins": 2,
+    "notes": "ベテラン。阪神・小倉で安定した成績。"
+  },
+  {
+    "name": "角田大和",
+    "nameEn": "Yamato Tsunoda",
+    "style": "先行・好位",
+    "venueAff": {
+      "hanshin": 7,
+      "kyoto": 7,
+      "tokyo": 7,
+      "nakayama": 7,
+      "chukyo": 7,
+      "kokura": 6,
+      "niigata": 7,
+      "sapporo": 7,
+      "hakodate": 6
+    },
+    "winRate": 0.1,
+    "g1Wins": 5,
+    "notes": "若手実力者。先行策でどの競馬場でも安定した成績。"
+  },
+  {
+    "name": "太宰啓介",
+    "nameEn": "Keisuke Dazai",
+    "style": "先行",
+    "venueAff": {
+      "hanshin": 7,
+      "kyoto": 7,
+      "tokyo": 5,
+      "nakayama": 5,
+      "chukyo": 6,
+      "kokura": 7,
+      "niigata": 5,
+      "sapporo": 6,
+      "hakodate": 6
+    },
+    "winRate": 0.06,
+    "g1Wins": 0,
+    "notes": "関西のベテラン。阪神・京都で安定。先行策が持ち味。"
+  },
+  {
+    "name": "三浦皇成",
+    "nameEn": "Kosei Miura",
+    "style": "先行・差し",
+    "venueAff": {
+      "hanshin": 5,
+      "kyoto": 5,
+      "tokyo": 7,
+      "nakayama": 7,
+      "chukyo": 5,
+      "kokura": 5,
+      "niigata": 8,
+      "sapporo": 7,
+      "hakodate": 7
+    },
+    "winRate": 0.08,
+    "g1Wins": 3,
+    "notes": "関東の中堅。新潟・北海道に強い。先行〜中団の自在型。"
+  },
+  {
+    "name": "鮫島克駿",
+    "nameEn": "Katsuma Samejima",
+    "style": "差し・好位",
+    "venueAff": {
+      "hanshin": 7,
+      "kyoto": 7,
+      "tokyo": 7,
+      "nakayama": 7,
+      "chukyo": 7,
+      "kokura": 7,
+      "niigata": 6,
+      "sapporo": 7,
+      "hakodate": 7
+    },
+    "winRate": 0.09,
+    "g1Wins": 2,
+    "notes": "若手有望株。全国各地で安定した成績。"
+  },
+  {
+    "name": "古川吉洋",
+    "nameEn": "Yoshihiro Furukawa",
+    "style": "先行・好位",
+    "venueAff": {
+      "hanshin": 7,
+      "kyoto": 7,
+      "tokyo": 5,
+      "nakayama": 5,
+      "chukyo": 7,
+      "kokura": 8,
+      "niigata": 5,
+      "sapporo": 6,
+      "hakodate": 6
+    },
+    "winRate": 0.07,
+    "g1Wins": 1,
+    "notes": "関西中堅。阪神・小倉・中京での実績あり。先行押切りが得意。"
   }
 ]
