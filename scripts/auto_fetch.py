@@ -1,19 +1,5 @@
 #!/usr/bin/env python3
-"""
-血統くん 自動取得スクリプト
-GitHub Actionsから呼ばれる。
-
-使い方:
-  python scripts/auto_fetch.py --mode entries   # 出走馬取得（木曜）
-  python scripts/auto_fetch.py --mode results   # レース結果取得（土日）
-  python scripts/auto_fetch.py --mode entries --race 202606020811 tennoshoS2026 G1 SLOW
-"""
-
-import json
-import re
-import time
-import argparse
-import sys
+import json, re, time, argparse, sys
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
@@ -28,32 +14,15 @@ REPO_ROOT = Path(__file__).parent.parent
 REVIEWS_DIR = REPO_ROOT / "public" / "reviews"
 STALLIONS_PATH = REPO_ROOT / "public" / "stallions.json"
 SCHEDULE_PATH = REPO_ROOT / "scripts" / "race_schedule.json"
-
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
 JST = timezone(timedelta(hours=9))
 
-# =====================
-# 種牡馬DB
-# =====================
-def load_stallions():
-    if STALLIONS_PATH.exists():
-        with open(STALLIONS_PATH) as f:
-            return {s["name"]: s for s in json.load(f)}
-    return {}
-
-# =====================
-# ペースタイプ推定
-# =====================
 PACE_MAP = {
-    "SLOW": [
-        "ワールドプレミア","キタサンブラック","ハービンジャー","ルーラーシップ",
-        "オルフェーヴル","ゴールドシップ","ポエティックフレア","フィエールマン",
-        "ステイゴールド","ディープインパクト","ジャスタウェイ","ダービーフィズ",
-    ],
-    "HIGH": [
-        "エピファネイア","キングカメハメハ","ヘニーヒューズ","モーリス",
-        "リアルスティール","ロードカナロア","ドゥラメンテ","ホッコータルマエ",
-    ],
+    "SLOW": ["ワールドプレミア","キタサンブラック","ハービンジャー","ルーラーシップ",
+             "オルフェーヴル","ゴールドシップ","ポエティックフレア","フィエールマン",
+             "ステイゴールド","ディープインパクト","ジャスタウェイ"],
+    "HIGH": ["エピファネイア","キングカメハメハ","ヘニーヒューズ","モーリス",
+             "リアルスティール","ロードカナロア","ドゥラメンテ","ホッコータルマエ"],
 }
 
 def get_pace_type(sire):
@@ -62,11 +31,13 @@ def get_pace_type(sire):
             return pace
     return "BOTH"
 
-# =====================
-# 重賞実績取得
-# =====================
+def load_stallions():
+    if STALLIONS_PATH.exists():
+        with open(STALLIONS_PATH) as f:
+            return {s["name"]: s for s in json.load(f)}
+    return {}
+
 def fetch_grade_wins(horse_name, horse_url):
-    """馬の詳細ページから重賞実績を取得"""
     try:
         time.sleep(1)
         res = requests.get(horse_url, headers=HEADERS, timeout=15)
@@ -79,13 +50,7 @@ def fetch_grade_wins(horse_name, horse_url):
                 continue
             race_name = cells[4].text.strip() if len(cells) > 4 else ""
             place_text = cells[11].text.strip() if len(cells) > 11 else ""
-            grade = None
-            if "G1" in race_name:
-                grade = "G1"
-            elif "G2" in race_name:
-                grade = "G2"
-            elif "G3" in race_name:
-                grade = "G3"
+            grade = "G1" if "G1" in race_name else "G2" if "G2" in race_name else "G3" if "G3" in race_name else None
             if grade:
                 try:
                     place = int(re.search(r"\d+", place_text).group())
@@ -99,11 +64,7 @@ def fetch_grade_wins(horse_name, horse_url):
         print(f"  重賞実績取得失敗 {horse_name}: {e}")
         return []
 
-# =====================
-# 出走馬取得
-# =====================
 def fetch_entries(race_id, json_id, grade="G1", expected_pace="BOTH"):
-    """netkeibaから出走馬データを取得してJSONに保存"""
     url = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
     print(f"[entries] {url}")
     res = requests.get(url, headers=HEADERS, timeout=15)
@@ -111,10 +72,8 @@ def fetch_entries(race_id, json_id, grade="G1", expected_pace="BOTH"):
     if res.status_code != 200:
         raise Exception(f"HTTP {res.status_code}")
     soup = BeautifulSoup(res.text, "html.parser")
-
     race_name_el = soup.select_one(".RaceName")
     race_name = race_name_el.text.strip() if race_name_el else "不明"
-
     runners = []
     for row in soup.select(".HorseList"):
         try:
@@ -132,76 +91,43 @@ def fetch_entries(race_id, json_id, grade="G1", expected_pace="BOTH"):
             age_el = row.select_one(".Barei")
             age_m = re.search(r"\d+", age_el.text) if age_el else None
             age = age_m.group() if age_m else "3"
-
-            # 重賞実績を取得
-            grade_wins = []
-            if horse_url:
-                print(f"  重賞実績取得中: {name}")
-                grade_wins = fetch_grade_wins(name, horse_url)
-
-            runners.append({
-                "num": num, "name": name,
-                "sire": sire, "bms": bms, "dam": dam,
-                "jockey": jockey, "age": age,
-                "gradeWins": grade_wins,
-                "paceType": get_pace_type(sire),
-                "tan": None, "pop": None,
-            })
+            grade_wins = fetch_grade_wins(name, horse_url) if horse_url else []
+            runners.append({"num":num,"name":name,"sire":sire,"bms":bms,"dam":dam,
+                "jockey":jockey,"age":age,"gradeWins":grade_wins,
+                "paceType":get_pace_type(sire),"tan":None,"pop":None})
         except Exception as e:
             print(f"  行スキップ: {e}")
-
     runners.sort(key=lambda x: x["num"])
-
-    # DB未登録チェック
     stallions = load_stallions()
-    miss_s = [r["sire"] for r in runners if r["sire"] and r["sire"] not in stallions]
-    miss_b = [r["bms"]  for r in runners if r["bms"]  and r["bms"]  not in stallions]
-    if miss_s: print(f"  ⚠️  未登録 父: {set(miss_s)}")
-    if miss_b: print(f"  ⚠️  未登録 母父: {set(miss_b)}")
-
+    miss_s = {r["sire"] for r in runners if r["sire"] and r["sire"] not in stallions}
+    miss_b = {r["bms"]  for r in runners if r["bms"]  and r["bms"]  not in stallions}
+    if miss_s: print(f"  未登録 父: {miss_s}")
+    if miss_b: print(f"  未登録 母父: {miss_b}")
     out_path = REVIEWS_DIR / f"{json_id}.json"
-
-    # 既存ファイルがあればrunnersだけ更新（result等は保持）
     existing = {}
     if out_path.exists():
         with open(out_path) as f:
             existing = json.load(f)
-
-    output = {
-        "id": json_id,
-        "race_id": race_id,
-        "race_name": race_name,
-        "expectedPace": expected_pace,
-        "runners": runners,
-        "result": existing.get("result"),
-        "review": existing.get("review"),
-        "verification": existing.get("verification"),
-    }
-
+    output = {"id":json_id,"race_id":race_id,"race_name":race_name,
+        "expectedPace":expected_pace,"runners":runners,
+        "result":existing.get("result"),"review":existing.get("review"),
+        "verification":existing.get("verification")}
     REVIEWS_DIR.mkdir(parents=True, exist_ok=True)
-    with open(out_path, "w", encoding="utf-8") as f:
-        json.dump(output, f, ensure_ascii=False, indent=2)
-    print(f"  ✅ 保存: {out_path} ({len(runners)}頭)")
+    with open(out_path,"w",encoding="utf-8") as f:
+        json.dump(output,f,ensure_ascii=False,indent=2)
+    print(f"  保存: {out_path} ({len(runners)}頭)")
     return output
 
-# =====================
-# レース結果取得
-# =====================
 def fetch_result(race_id, json_id):
-    """netkeibaからレース結果を取得してJSONに追記"""
     out_path = REVIEWS_DIR / f"{json_id}.json"
     if not out_path.exists():
         print(f"  スキップ（JSONなし）: {json_id}")
         return
-
     with open(out_path) as f:
         data = json.load(f)
-
-    # 既に結果が入っている場合はスキップ
     if data.get("result") and data["result"].get("time"):
-        print(f"  スキップ（結果取得済み）: {json_id}")
+        print(f"  スキップ（取得済み）: {json_id}")
         return
-
     url = f"https://race.netkeiba.com/race/result.html?race_id={race_id}"
     print(f"[results] {url}")
     time.sleep(2)
@@ -210,12 +136,8 @@ def fetch_result(race_id, json_id):
     if res.status_code != 200:
         print(f"  取得失敗: HTTP {res.status_code}")
         return
-
     soup = BeautifulSoup(res.text, "html.parser")
-
-    # 着順テーブル
-    top_finishers = []
-    full_order = []
+    top_finishers, full_order = [], []
     for row in soup.select(".RaceResults_Table tr")[1:]:
         cells = row.select("td")
         if len(cells) < 6:
@@ -228,87 +150,49 @@ def fetch_result(race_id, json_id):
             name = name_el.text.strip() if name_el else cells[3].text.strip()
             pop_text = cells[-1].text.strip()
             pop = int(re.search(r"\d+", pop_text).group()) if re.search(r"\d+", pop_text) else 0
-            time_text = cells[7].text.strip() if len(cells) > 7 else ""
             jockey_el = cells[6].select_one("a") if len(cells) > 6 else None
             jockey = jockey_el.text.strip() if jockey_el else ""
-
-            full_order.append({"rank": rank, "name": name, "pop": pop})
+            full_order.append({"rank":rank,"name":name,"pop":pop})
             if rank <= 5:
-                # runnerデータから血統情報を補完
-                runner_data = next((r for r in data.get("runners", []) if r["num"] == num), {})
-                top_finishers.append({
-                    "rank": rank, "num": num, "name": name,
-                    "pop": pop, "jockey": jockey,
-                    "sire": runner_data.get("sire", ""),
-                    "bms": runner_data.get("bms", ""),
-                    "margin": "", "style": "", "note": ""
-                })
+                runner_data = next((r for r in data.get("runners",[]) if r["num"]==num), {})
+                top_finishers.append({"rank":rank,"num":num,"name":name,"pop":pop,
+                    "jockey":jockey,"sire":runner_data.get("sire",""),
+                    "bms":runner_data.get("bms",""),"margin":"","style":"","note":""})
         except Exception as e:
             print(f"  行パースエラー: {e}")
-
     if not full_order:
-        print(f"  結果テーブルが空（レース前？）: {json_id}")
+        print(f"  結果テーブルが空: {json_id}")
         return
-
-    # タイム取得
-    time_el = soup.select_one(".RaceTime") or soup.select_one(".Rank_Jyuni")
-    race_time = top_finishers[0].get("time", "") if top_finishers else ""
-
-    # 払戻取得
     payouts = {}
-    payout_table = soup.select(".Payout_Detail_Table tr")
-    payout_map = {
-        "単勝": "tansho", "複勝": "fukusho", "枠連": "wakuren",
-        "馬連": "umaren", "ワイド": "wide", "馬単": "umatan",
-        "3連複": "sanrenpuku", "3連単": "sanrentan",
-    }
-    for row in payout_table:
+    payout_map = {"単勝":"tansho","複勝":"fukusho","枠連":"wakuren",
+        "馬連":"umaren","ワイド":"wide","馬単":"umatan","3連複":"sanrenpuku","3連単":"sanrentan"}
+    for row in soup.select(".Payout_Detail_Table tr"):
         th = row.select_one("th")
         tds = row.select("td")
         if th and tds:
             key = payout_map.get(th.text.strip())
             if key:
                 nums = [td.text.strip() for td in tds if td.text.strip()]
-                payouts[key] = " / ".join(nums[:2]) if len(nums) >= 2 else nums[0] if nums else ""
+                payouts[key] = " / ".join(nums[:2]) if len(nums)>=2 else nums[0] if nums else ""
+    data["result"] = {"time":"","payouts":payouts,"topFinishers":top_finishers,"fullOrder":full_order}
+    with open(out_path,"w",encoding="utf-8") as f:
+        json.dump(data,f,ensure_ascii=False,indent=2)
+    print(f"  結果更新: {out_path}")
 
-    data["result"] = {
-        "time": race_time,
-        "payouts": payouts,
-        "topFinishers": top_finishers,
-        "fullOrder": full_order,
-    }
-
-    with open(out_path, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-    print(f"  ✅ 結果更新: {out_path} ({len(full_order)}頭)")
-
-# =====================
-# レーススケジュール管理
-# =====================
 def load_schedule():
-    """scripts/race_schedule.json からスケジュールを読み込む"""
     if not SCHEDULE_PATH.exists():
         print(f"スケジュールファイルなし: {SCHEDULE_PATH}")
         return []
     with open(SCHEDULE_PATH) as f:
         return json.load(f)
 
-# =====================
-# メイン
-# =====================
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", choices=["entries", "results"], required=True)
-    # 手動実行時に特定レースを指定できる
-    parser.add_argument("--race", nargs=4, metavar=("RACE_ID", "JSON_ID", "GRADE", "PACE"),
-                        help="手動指定: race_id json_id grade pace")
+    parser.add_argument("--mode", choices=["entries","results"], required=True)
+    parser.add_argument("--race", nargs=4, metavar=("RACE_ID","JSON_ID","GRADE","PACE"))
     args = parser.parse_args()
-
     now = datetime.now(JST)
-    print(f"実行時刻 (JST): {now.strftime('%Y-%m-%d %H:%M')}")
-    print(f"モード: {args.mode}")
-
-    # 手動指定がある場合
+    print(f"実行時刻(JST): {now.strftime('%Y-%m-%d %H:%M')} / モード: {args.mode}")
     if args.race:
         race_id, json_id, grade, pace = args.race
         if args.mode == "entries":
@@ -316,23 +200,21 @@ def main():
         else:
             fetch_result(race_id, json_id)
         return
-
-    # スケジュールから自動取得
     schedule = load_schedule()
     if not schedule:
-        print("スケジュールが空です。scripts/race_schedule.json を確認してください。")
+        print("スケジュールが空です")
         return
-
     processed = 0
     for race in schedule:
         json_id  = race["json_id"]
-        race_id  = race["race_id"]
-        grade    = race.get("grade", "G1")
-        pace     = race.get("expectedPace", "BOTH")
-        race_date = race.get("date", "")  # 例: "2026/5/3"
-
+        race_id  = race.get("race_id","")
+        grade    = race.get("grade","G1")
+        pace     = race.get("expectedPace","BOTH")
+        race_date = race.get("date","")
+        if not race_id:
+            print(f"スキップ（race_id未設定）: {json_id}")
+            continue
         if args.mode == "entries":
-            # 出走馬未取得のレースを対象
             out_path = REVIEWS_DIR / f"{json_id}.json"
             has_runners = False
             if out_path.exists():
@@ -346,11 +228,9 @@ def main():
                     processed += 1
                 except Exception as e:
                     print(f"  エラー: {e}")
-
         elif args.mode == "results":
-            # 結果未取得のレースを対象（当日以前のもの）
             try:
-                race_date_dt = datetime.strptime(race_date, "%Y/%m/%d").replace(tzinfo=JST)
+                race_date_dt = datetime.strptime(race_date,"%Y/%m/%d").replace(tzinfo=JST)
             except:
                 continue
             if race_date_dt.date() <= now.date():
@@ -367,7 +247,6 @@ def main():
                         processed += 1
                     except Exception as e:
                         print(f"  エラー: {e}")
-
     print(f"\n完了: {processed}件処理")
 
 if __name__ == "__main__":

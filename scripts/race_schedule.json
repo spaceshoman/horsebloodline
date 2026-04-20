@@ -1,0 +1,47 @@
+[
+  {
+    "json_id": "tennoshoS2026",
+    "race_id": "",
+    "race_name": "第173回 天皇賞（春）",
+    "date": "2026/5/3",
+    "grade": "G1",
+    "expectedPace": "SLOW",
+    "note": "race_idをnetkeibaで確認して入力"
+  },
+  {
+    "json_id": "nhkmile2026",
+    "race_id": "",
+    "race_name": "第29回 NHKマイルC",
+    "date": "2026/5/10",
+    "grade": "G1",
+    "expectedPace": "HIGH",
+    "note": ""
+  },
+  {
+    "json_id": "victoria2026",
+    "race_id": "",
+    "race_name": "第21回 ヴィクトリアマイル",
+    "date": "2026/5/17",
+    "grade": "G1",
+    "expectedPace": "HIGH",
+    "note": ""
+  },
+  {
+    "json_id": "oaks2026",
+    "race_id": "",
+    "race_name": "第87回 オークス",
+    "date": "2026/5/24",
+    "grade": "G1",
+    "expectedPace": "SLOW",
+    "note": ""
+  },
+  {
+    "json_id": "derby2026",
+    "race_id": "",
+    "race_name": "第93回 日本ダービー",
+    "date": "2026/5/31",
+    "grade": "G1",
+    "expectedPace": "BOTH",
+    "note": ""
+  }
+]
