@@ -2171,6 +2171,20 @@ export default function App(){
 
   useEffect(()=>{save(stallions)},[stallions]);
 
+  // nextRaceをトップレベルで計算（Hooksルール遵守）
+  const nextRace=useMemo(()=>{
+    const merged=Object.values(GRADE_RACES).map(g=>({...g,...(reviews[g.id]||{})}));
+    return merged.find(g=>g.runners&&g.runners.length>0&&!g.result)||merged[0];
+  },[reviews]);
+
+  // 次の重賞が変わったら自動選択
+  useEffect(()=>{
+    if(nextRace&&nextRace.id){
+      setSelectedRace(nextRace.id);
+      setSelectedGrade(nextRace.grade||"G1");
+    }
+  },[nextRace?.id]);
+
   // Auto-set course from venue
   const venueData=VENUES[raceVenue];
   const raceCourse=venueData?.course||"RIGHT";
@@ -2257,36 +2271,23 @@ export default function App(){
       {/* ===== PREDICT TAB ===== */}
       {tab==="predict"&&predMode==="grade"&&(
         <div>
-          {/* Hero card: next race with runners */}
-          {(()=>{
-            const nextRace=(()=>{
-              const merged=Object.values(GRADE_RACES).map(g=>({...g,...(reviews[g.id]||{})}));
-              return merged.find(g=>g.runners&&g.runners.length>0&&!g.result)||merged[0];
-            })();
-            // 次の重賞が変わったら自動でそのレースを選択
-            useEffect(()=>{
-              if(nextRace&&nextRace.id&&selectedRace==="antares2026"){
-                setSelectedRace(nextRace.id);
-                setSelectedGrade(nextRace.grade||"G1");
-              }
-            },[nextRace?.id]);
-            return(
-              <div onClick={()=>{setSelectedRace(nextRace.id);setSelectedGrade(nextRace.grade||"G1");}}
-                style={{background:"#3578c4",padding:"14px 16px 14px",cursor:"pointer"}}>
-                <div style={{fontSize:9,color:"rgba(255,255,255,0.6)",letterSpacing:"2px",fontWeight:700,marginBottom:4}}>次の重賞</div>
-                <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-                  <div>
-                    <div style={{display:"flex",alignItems:"center",gap:6}}>
-                      <span style={{fontSize:9,padding:"2px 8px",borderRadius:12,background:"#f0b840",color:"#0d1f3c",fontWeight:700,letterSpacing:"1px"}}>{nextRace.grade}</span>
-                      <div style={{fontFamily:"Bebas Neue,sans-serif",fontSize:26,fontWeight:400,color:"#fff",letterSpacing:"2px"}}>{nextRace.emoji} {nextRace.name.replace(/第\d+回\s*/,"")}</div>
-                    </div>
-                    <div style={{fontSize:10,color:"rgba(255,255,255,0.65)",marginTop:3}}>{nextRace.date} · {nextRace.venue} {nextRace.course}</div>
+          {/* Hero card: next race */}
+          {nextRace&&(
+            <div onClick={()=>{setSelectedRace(nextRace.id);setSelectedGrade(nextRace.grade||"G1");}}
+              style={{background:"#3578c4",padding:"14px 16px 14px",cursor:"pointer"}}>
+              <div style={{fontSize:9,color:"rgba(255,255,255,0.6)",letterSpacing:"2px",fontWeight:700,marginBottom:4}}>次の重賞</div>
+              <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+                <div>
+                  <div style={{display:"flex",alignItems:"center",gap:6}}>
+                    <span style={{fontSize:9,padding:"2px 8px",borderRadius:12,background:"#f0b840",color:"#0d1f3c",fontWeight:700,letterSpacing:"1px"}}>{nextRace.grade}</span>
+                    <div style={{fontFamily:"Bebas Neue,sans-serif",fontSize:26,fontWeight:400,color:"#fff",letterSpacing:"2px"}}>{nextRace.emoji} {nextRace.name.replace(/第\d+回\s*/,"")}</div>
                   </div>
-                  {nextRace.runners&&<div style={{fontSize:10,color:"rgba(255,255,255,0.65)"}}>{nextRace.runners.length}頭</div>}
+                  <div style={{fontSize:10,color:"rgba(255,255,255,0.65)",marginTop:3}}>{nextRace.date} · {nextRace.venue} {nextRace.course}</div>
                 </div>
+                {nextRace.runners&&<div style={{fontSize:10,color:"rgba(255,255,255,0.65)"}}>{nextRace.runners.length}頭</div>}
               </div>
-            );
-          })()}
+            </div>
+          )}
 
           {/* Grade filter tabs */}
           <div style={{display:"flex",background:"var(--color-background-primary)",borderBottom:"0.5px solid var(--color-border-tertiary)"}}>
