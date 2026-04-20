@@ -1360,11 +1360,23 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
   const [bloodResults,setBloodResults]=useState(null);
   const [selectedCond,setSelectedCond]=useState(null);
   // sectionsはhasResult/hasVerifyが変わるたびに再計算
+  // レース前: 出走馬・傾向・脚質を強調 / レース後: 結果・回顧・検証を強調
   const sections=useMemo(()=>[
-    ...(hasResult?[{id:"review",label:"回顧",accent:"#1e5fa8"},{id:"result",label:"結果",accent:"#3578c4"}]:[]),
-    ...(hasVerify?[{id:"verify",label:"検証",accent:"#d4941a"}]:[]),
-    ...(hasRunners?[{id:"runners",label:"出走馬",accent:"#1e5fa8"}]:[]),
-    {id:"overview",label:"傾向"},{id:"draw",label:"枠順"},{id:"style",label:"脚質"},{id:"blood",label:"血統"},{id:"rotation",label:"ローテ"},
+    ...(hasResult?[
+      {id:"review",  label:"回顧", accent:"#1e5fa8", phase:"post"},
+      {id:"result",  label:"結果", accent:"#3578c4", phase:"post"},
+    ]:[]),
+    ...(hasVerify?[
+      {id:"verify",  label:"検証", accent:"#d4941a", phase:"post"},
+    ]:[]),
+    ...(hasRunners?[
+      {id:"runners", label:"出走馬", accent:"#1e5fa8", phase:"pre"},
+    ]:[]),
+    {id:"overview", label:"傾向",  accent:"#3578c4", phase:"pre"},
+    {id:"draw",     label:"枠順"},
+    {id:"style",    label:"脚質",  accent:"#4a90d9", phase:"pre"},
+    {id:"blood",    label:"血統"},
+    {id:"rotation", label:"ローテ"},
   ],[hasResult,hasVerify,hasRunners]);
   const DataRow=({label,value,highlight})=>(
     <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"5px 0",borderBottom:"1px solid var(--color-border-tertiary)"}}>
@@ -1383,16 +1395,19 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
         </div>
       </div>
       {hasResult&&<div style={{fontSize:11,color:"#1e5fa8",fontWeight:600,marginBottom:10,padding:"6px 10px",background:"#f0f6fd",borderRadius:8,borderLeft:"3px solid #1e5fa8"}}>✅ レース終了 — タイム {r.time}</div>}
+      {/* レース前バナー */}
+      {!hasResult&&hasRunners&&<div style={{fontSize:11,color:"#d4941a",fontWeight:600,marginBottom:10,padding:"6px 10px",background:"#fff9ee",borderRadius:8,borderLeft:"3px solid #d4941a"}}>🏇 レース前 — 出走馬・傾向・脚質をチェック</div>}
       <div style={{display:"flex",gap:3,flexWrap:"wrap",marginBottom:14}}>
         {sections.map(s=>{
           const isActive=section===s.id;
-          const isKey=s.id==="review"||s.id==="result"||s.id==="verify";
+          const isEmphasis=hasResult?(s.phase==="post"):(!hasResult&&s.phase==="pre");
           return(
             <button key={s.id} onClick={()=>setSection(s.id)} style={{
-              padding:"5px 11px",borderRadius:16,cursor:"pointer",fontSize:10,fontWeight:isActive||isKey?700:500,
-              border:isActive?"none":isKey?`1.5px solid ${s.accent||"#ccdcee"}`:"1px solid var(--color-border-tertiary)",
+              padding:"5px 11px",borderRadius:16,cursor:"pointer",fontSize:10,
+              fontWeight:isActive||isEmphasis?700:500,
+              border:isActive?"none":isEmphasis?`1.5px solid ${s.accent||"#ccdcee"}`:"1px solid var(--color-border-tertiary)",
               background:isActive?(s.accent||"#1e5fa8"):"transparent",
-              color:isActive?"#fff":isKey?(s.accent||"#1e5fa8"):"#7a9ab8",
+              color:isActive?"#fff":isEmphasis?(s.accent||"#1e5fa8"):"#7a9ab8",
             }}>{s.label}</button>
           );
         })}
@@ -2245,12 +2260,19 @@ export default function App(){
           {/* Hero card: next race with runners */}
           {(()=>{
             const nextRace=(()=>{
-              // reviews stateとマージした後の状態で判定
               const merged=Object.values(GRADE_RACES).map(g=>({...g,...(reviews[g.id]||{})}));
               return merged.find(g=>g.runners&&g.runners.length>0&&!g.result)||merged[0];
             })();
+            // 次の重賞が変わったら自動でそのレースを選択
+            useEffect(()=>{
+              if(nextRace&&nextRace.id&&selectedRace==="antares2026"){
+                setSelectedRace(nextRace.id);
+                setSelectedGrade(nextRace.grade||"G1");
+              }
+            },[nextRace?.id]);
             return(
-              <div style={{background:"#3578c4",padding:"14px 16px 14px"}}>
+              <div onClick={()=>{setSelectedRace(nextRace.id);setSelectedGrade(nextRace.grade||"G1");}}
+                style={{background:"#3578c4",padding:"14px 16px 14px",cursor:"pointer"}}>
                 <div style={{fontSize:9,color:"rgba(255,255,255,0.6)",letterSpacing:"2px",fontWeight:700,marginBottom:4}}>次の重賞</div>
                 <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
                   <div>
