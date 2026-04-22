@@ -77,11 +77,11 @@ def fetch_entries(race_id, json_id, grade="G1", expected_pace="BOTH"):
     runners = []
     for row in soup.select(".HorseList"):
         try:
-            num = int(row.select_one(".Umaban").text.strip())
-            name_el = row.select_one(".HorseName a")
+            row_id=row.get("id",""); num_m=re.search(r"\d+",row_id); num=int(num_m.group()) if num_m else 0; assert num>0
+            name_el = row.select_one(".HorseInfo a") or row.select_one(".HorseName a")
             name = name_el.text.strip() if name_el else ""
             horse_href = name_el["href"] if name_el and name_el.has_attr("href") else ""
-            horse_url = f"https://db.netkeiba.com{horse_href}" if horse_href else ""
+            horse_url = horse_href if horse_href else ""
             jockey_el = row.select_one(".Jockey a")
             jockey = jockey_el.text.strip() if jockey_el else ""
             peds = row.select(".Pedigree a")

@@ -1,5 +1,14 @@
 [
   {
+    "json_id": "milersCup2026",
+    "race_id": "202608030211",
+    "race_name": "第51回 読売マイラーズカップ",
+    "date": "2026/4/26",
+    "grade": "G2",
+    "expectedPace": "HIGH",
+    "note": "テスト用G2"
+  },
+  {
   "json_id": "tennoshoS2026",
   "race_id": "202608030411",
     "race_name": "第173回 天皇賞（春）",
