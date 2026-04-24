@@ -25,7 +25,14 @@
       "dam": "Rose Trail",
       "jockey": "岩田望来",
       "age": "5",
-      "gradeWins": [],
+      "gradeWins": [
+        {
+          "race": "MBSスワンS",
+          "grade": "G2",
+          "place": 1,
+          "year": 2025
+        }
+      ],
       "paceType": "BOTH",
       "tan": null,
       "pop": null
@@ -250,10 +257,10 @@
       "age": "6",
       "gradeWins": [
         {
-          "race": "マイルCS",
-          "grade": "G1",
-          "place": 5,
-          "year": 2025
+          "race": "マイラーズC",
+          "grade": "G2",
+          "place": 1,
+          "year": 2023
         }
       ],
       "paceType": "BOTH",
