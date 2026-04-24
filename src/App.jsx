@@ -1665,6 +1665,20 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               }
             });
             bonus+=gradeBonus;
+            // ペース適性補正
+            const expectedPace=race.expectedPace||"BOTH";
+            const runnerPace=runner.paceType||"BOTH";
+            let paceBonus=0;
+            if(expectedPace!=="BOTH"&&runnerPace!=="BOTH"){
+              if(runnerPace===expectedPace){
+                paceBonus=5;
+                strengths.push(expectedPace==="SLOW"?"スロー瞬発力◎":"ハイペース耐性◎");
+              } else {
+                paceBonus=-5;
+                weaknesses.push(expectedPace==="SLOW"?"スロー向き×（ハイペース型）":"ハイペース向き×（スロー型）");
+              }
+            }
+            bonus+=paceBonus;
             const total=+(rawScore+bonus).toFixed(2);
             // Normalize: map raw scores to 50.0-80.0 display range (1 decimal)
             const normalizedPct=Math.max(0,Math.min(1,(total-28)/28)); // 28=floor, 56=ceiling
@@ -1733,6 +1747,15 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
           <div style={{marginTop:14,display:"flex",gap:8,alignItems:"flex-end"}}>
             <div style={{flex:1}}>
               <div style={{fontSize:10,color:"var(--color-text-secondary)",marginBottom:4}}>馬場状態を選択して診断</div>
+              {/* ペース予想バッジ */}
+              {race.expectedPace&&race.expectedPace!=="BOTH"&&(
+                <div style={{display:"inline-flex",alignItems:"center",gap:4,marginBottom:8,padding:"3px 10px",borderRadius:12,background:race.expectedPace==="SLOW"?"#f0f6fd":"#fff9ee",border:`1px solid ${race.expectedPace==="SLOW"?"#3578c4":"#d4941a"}`}}>
+                  <span style={{fontSize:9,fontWeight:700,color:race.expectedPace==="SLOW"?"#3578c4":"#d4941a"}}>
+                    {race.expectedPace==="SLOW"?"🐢 スロー予想（瞬発力勝負）":"⚡ ハイペース予想（持続力勝負）"}
+                  </span>
+                  <span style={{fontSize:8,color:"var(--color-text-tertiary)"}}>±5pt補正あり</span>
+                </div>
+              )}
               <div style={{display:"flex",gap:4}}>
                 {Object.entries(TRACK_COND).map(([k,v])=>{
                   const baseColor=k==="GOOD"?"#1e5fa8":k==="SLIGHTLY_HEAVY"?"#3578c4":k==="HEAVY"?"#4a90d9":"#7a9ab8";
