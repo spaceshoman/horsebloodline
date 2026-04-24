@@ -1308,6 +1308,36 @@ const GRADE_RACES = {
   asahiFS2026:{id:"asahiFS2026",grade:"G1",name:"第78回 朝日杯FS",date:"2026/12/20",venue:"阪神",course:"芝1600m",weather:"",trackCond:"",emoji:"⭐",trends:null,result:null,review:null},
   arima2026:{id:"arima2026",grade:"G1",name:"第71回 有馬記念",date:"2026/12/27",venue:"中山",course:"芝2500m",weather:"",trackCond:"",emoji:"🎄",trends:null,result:null,review:null},
   hopeful2026:{id:"hopeful2026",grade:"G1",name:"第10回 ホープフルS",date:"2026/12/28",venue:"中山",course:"芝2000m",weather:"",trackCond:"",emoji:"🌅",trends:null,result:null,review:null},
+  // === G2 ===
+  milersCup2026:{id:"milersCup2026",grade:"G2",name:"第57回 読売マイラーズカップ",date:"2026/4/26",venue:"京都",course:"芝1600m",weather:"",trackCond:"",emoji:"🌸",
+    trends:{
+      popularity:[
+        {label:"1番人気",val:"【4.3.2.6】複勝率60%",hl:true},
+        {label:"2番人気",val:"【3.2.2.8】複勝率47%",hl:true},
+        {label:"3番人気",val:"【2.3.2.8】複勝率47%"},
+        {label:"4-5番人気",val:"【3.2.2.18】複勝率28%"},
+        {label:"6-9番人気",val:"【2.3.4.31】複勝率23%"},
+        {label:"10番人気以下",val:"【1.1.2.47】複勝率8%"},
+      ],
+      popularityTip:"上位人気の信頼度が高い。1〜3番人気の複勝率は50%以上で堅い決着が多い。",
+      draw:[
+        {label:"1-2枠",val:"【3.2.2.15】複勝率32%"},
+        {label:"3-4枠",val:"【4.3.3.18】複勝率36%",hl:true},
+        {label:"5-6枠",val:"【3.4.2.19】複勝率32%",hl:true},
+        {label:"7-8枠",val:"【4.4.7.30】複勝率33%"},
+      ],
+      drawTip:"外枠不利はなく、全枠均等に好走。京都外回りマイルは先行力が重要。",
+      style:[
+        {label:"逃げ",val:"【2.1.1.8】複勝率33%"},
+        {label:"先行",val:"【5.5.4.22】複勝率39%",hl:true},
+        {label:"差し",val:"【5.6.7.30】複勝率38%",hl:true},
+        {label:"追込",val:"【2.2.2.28】複勝率18%"},
+      ],
+      styleTip:"先行・差しが中心。京都外回りは直線が長く差しも届く。逃げ馬の粘り込みも警戒。",
+      bloodTip:"ロードカナロア・ダイワメジャー・ディープインパクト系が強い。マイル実績のある種牡馬産駒を重視。",
+      roteTip:"前走マイルCS・安田記念などG1組は基本的に有力。前走重賞で3着以内が理想。",
+    },
+    runners:null,result:null,review:null,verification:null},
   // === G3 ===
   antares2026:{id:"antares2026",grade:"G3",name:"第31回 アンタレスS",date:"2026/4/18",venue:"阪神",course:"ダ1800m",weather:"晴",trackCond:"良",emoji:"🏜️",
     trends:{
