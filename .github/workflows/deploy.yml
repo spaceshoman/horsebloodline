@@ -6,11 +6,8 @@ on:
       - main
   workflow_dispatch:
   schedule:
-    # 毎週木曜18:00 JST (G1出走馬確定)
     - cron: '0 9 * * 4'
-    # 毎週金曜18:00 JST (G2/G3出走馬確定)
     - cron: '0 9 * * 5'
-    # 毎週土日22:00 JST (レース結果取得)
     - cron: '0 13 * * 0,6'
 
 permissions:
@@ -34,14 +31,29 @@ jobs:
           python-version: '3.11'
 
       - name: Install Python deps
-        run: pip install requests beautifulsoup4
+        run: pip install requests beautifulsoup4 pdfplumber
 
-      - name: Fetch race entries (木金)
+      - name: Parse PDFs
+        run: |
+          for pdf in pdfs/*.pdf; do
+            [ -f "$pdf" ] || continue
+            base=$(basename "$pdf" .pdf)
+            json="public/reviews/${base}.json"
+            if [ ! -f "$json" ]; then
+              echo "PDFパース: $pdf → $json"
+              python3 scripts/parse_pdf.py "$pdf" "$base" --pace BOTH || true
+            else
+              echo "スキップ（JSON存在）: $base"
+            fi
+          done
+        continue-on-error: true
+
+      - name: Fetch race entries
         if: github.event.schedule == '0 9 * * 4' || github.event.schedule == '0 9 * * 5' || github.event_name == 'workflow_dispatch'
         run: python scripts/auto_fetch.py --mode entries
         continue-on-error: true
 
-      - name: Fetch race results (土日)
+      - name: Fetch race results
         if: github.event.schedule == '0 13 * * 0,6' || github.event_name == 'workflow_dispatch'
         run: python scripts/auto_fetch.py --mode results
         continue-on-error: true
@@ -50,8 +62,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/reviews/
-          git diff --staged --quiet || git commit -m "自動更新: レースデータ $(date '+%Y-%m-%d %H:%M')"
+          git add public/reviews/ public/stallions.json
+          git diff --staged --quiet || git commit -m "自動更新: $(date '+%Y-%m-%d %H:%M')"
           git push || true
 
       - name: Install Node deps
