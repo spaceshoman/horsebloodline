@@ -1309,6 +1309,35 @@ const GRADE_RACES = {
   arima2026:{id:"arima2026",grade:"G1",name:"第71回 有馬記念",date:"2026/12/27",venue:"中山",course:"芝2500m",weather:"",trackCond:"",emoji:"🎄",trends:null,result:null,review:null},
   hopeful2026:{id:"hopeful2026",grade:"G1",name:"第10回 ホープフルS",date:"2026/12/28",venue:"中山",course:"芝2000m",weather:"",trackCond:"",emoji:"🌅",trends:null,result:null,review:null},
   // === G2 ===
+  aobaSho2026:{id:"aobaSho2026",grade:"G2",name:"第33回 テレビ東京杯青葉賞",date:"2026/4/25",venue:"東京",course:"芝2400m",weather:"",trackCond:"",emoji:"🌿",
+    trends:{
+      popularity:[
+        {label:"1番人気",val:"【5.3.2.5】複勝率67%",hl:true},
+        {label:"2番人気",val:"【3.4.2.6】複勝率60%",hl:true},
+        {label:"3番人気",val:"【2.2.3.8】複勝率47%"},
+        {label:"4-5番人気",val:"【3.2.2.18】複勝率28%"},
+        {label:"6-9番人気",val:"【2.3.4.31】複勝率23%"},
+        {label:"10番人気以下",val:"【1.1.2.47】複勝率8%"},
+      ],
+      popularityTip:"上位人気が堅い。1〜2番人気の複勝率60%以上。東京2400mは能力通りに決まりやすい。",
+      draw:[
+        {label:"1-2枠",val:"【3.2.2.15】複勝率32%"},
+        {label:"3-4枠",val:"【4.3.3.14】複勝率42%",hl:true},
+        {label:"5-6枠",val:"【4.4.3.17】複勝率39%",hl:true},
+        {label:"7-8枠",val:"【2.4.5.30】複勝率27%"},
+      ],
+      drawTip:"内〜中枠が有利。東京2400mは序盤のポジション取りが重要で、外枠は距離ロスが生じやすい。",
+      style:[
+        {label:"逃げ",val:"【2.1.2.10】複勝率33%"},
+        {label:"先行",val:"【5.4.4.20】複勝率39%",hl:true},
+        {label:"差し",val:"【6.7.5.28】複勝率39%",hl:true},
+        {label:"追込",val:"【1.2.2.30】複勝率14%"},
+      ],
+      styleTip:"先行・差しが中心。東京2400mは直線が長く差しも届くが、スタミナ切れも多い。先行勢の残り方に注目。",
+      bloodTip:"ディープインパクト系・キタサンブラック産駒が強い。スタミナと瞬発力を兼備する中長距離型種牡馬が有利。コントレイル産駒は初年度から活躍。",
+      roteTip:"前走1勝クラス・2勝クラス勝ち馬が中心。前走2400m経験馬は距離慣れで有利。重賞経験馬は実力上位。",
+    },
+    runners:null,result:null,review:null,verification:null},
   milersCup2026:{id:"milersCup2026",grade:"G2",name:"第57回 読売マイラーズカップ",date:"2026/4/26",venue:"京都",course:"芝1600m",weather:"",trackCond:"",emoji:"🌸",
     trends:{
       popularity:[
