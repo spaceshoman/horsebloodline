@@ -1,6 +1,7 @@
 {
   "id": "aobaSho2026",
-  "race_name": "第33回 テレビ東京杯",
+  "race_id": "",
+  "race_name": "第33回 テレビ東京杯青葉賞",
   "expectedPace": "SLOW",
   "runners": [
     {
@@ -9,12 +10,10 @@
       "sire": "ゴールドアクター",
       "bms": "ハーツクライ",
       "dam": "ラプリュベル",
-      "jockey": "菅原 ⾠徳",
+      "jockey": "菅原辰徳",
       "age": "3",
       "gradeWins": [],
-      "paceType": "SLOW",
-      "tan": null,
-      "pop": null
+      "paceType": "SLOW"
     },
     {
       "num": 2,
@@ -22,12 +21,10 @@
       "sire": "コントレイル",
       "bms": "キングヘイロー",
       "dam": "スルターナ",
-      "jockey": "津村 明秀",
+      "jockey": "津村明秀",
       "age": "3",
       "gradeWins": [],
-      "paceType": "SLOW",
-      "tan": null,
-      "pop": null
+      "paceType": "SLOW"
     },
     {
       "num": 3,
@@ -35,12 +32,10 @@
       "sire": "レイデオロ",
       "bms": "スペシャルウィーク",
       "dam": "ステラリード",
-      "jockey": "吉⽥ 豊",
+      "jockey": "吉田豊",
       "age": "3",
       "gradeWins": [],
-      "paceType": "SLOW",
-      "tan": null,
-      "pop": null
+      "paceType": "SLOW"
     },
     {
       "num": 4,
@@ -48,12 +43,10 @@
       "sire": "キタサンブラック",
       "bms": "Pierro",
       "dam": "ピノ",
-      "jockey": "川⽥ 将雅",
+      "jockey": "川田将雅",
       "age": "3",
       "gradeWins": [],
-      "paceType": "SLOW",
-      "tan": null,
-      "pop": null
+      "paceType": "SLOW"
     },
     {
       "num": 5,
@@ -61,12 +54,10 @@
       "sire": "エピファネイア",
       "bms": "ディープインパクト",
       "dam": "ミッキークイーン",
-      "jockey": "⽥辺 裕信",
+      "jockey": "田辺裕信",
       "age": "3",
       "gradeWins": [],
-      "paceType": "HIGH",
-      "tan": null,
-      "pop": null
+      "paceType": "HIGH"
     },
     {
       "num": 6,
@@ -74,12 +65,10 @@
       "sire": "コントレイル",
       "bms": "ヴィクトワールピサ",
       "dam": "ミッシングリンク",
-      "jockey": "坂井 瑠星",
+      "jockey": "坂井瑠星",
       "age": "3",
       "gradeWins": [],
-      "paceType": "SLOW",
-      "tan": null,
-      "pop": null
+      "paceType": "SLOW"
     },
     {
       "num": 7,
@@ -87,12 +76,10 @@
       "sire": "モーリス",
       "bms": "マンハッタンカフェ",
       "dam": "アースライズ",
-      "jockey": "三浦 皇成",
+      "jockey": "三浦皇成",
       "age": "3",
       "gradeWins": [],
-      "paceType": "HIGH",
-      "tan": null,
-      "pop": null
+      "paceType": "HIGH"
     },
     {
       "num": 8,
@@ -100,12 +87,10 @@
       "sire": "ポエティックフレア",
       "bms": "ゼンノロブロイ",
       "dam": "スナップドラゴン",
-      "jockey": "杉原 誠⼈",
+      "jockey": "杉原誠人",
       "age": "3",
       "gradeWins": [],
-      "paceType": "SLOW",
-      "tan": null,
-      "pop": null
+      "paceType": "SLOW"
     },
     {
       "num": 9,
@@ -113,12 +98,10 @@
       "sire": "サートゥルナーリア",
       "bms": "Sightseeing",
       "dam": "ソーメニーウェイズ",
-      "jockey": "佐々⽊ ⼤輔",
+      "jockey": "佐々木大輔",
       "age": "3",
       "gradeWins": [],
-      "paceType": "BOTH",
-      "tan": null,
-      "pop": null
+      "paceType": "BOTH"
     },
     {
       "num": 10,
@@ -126,12 +109,10 @@
       "sire": "ホークビル",
       "bms": "エイシンフラッシュ",
       "dam": "シティリズム",
-      "jockey": "池添 謙⼀",
+      "jockey": "池添謙一",
       "age": "3",
       "gradeWins": [],
-      "paceType": "BOTH",
-      "tan": null,
-      "pop": null
+      "paceType": "BOTH"
     },
     {
       "num": 11,
@@ -142,9 +123,7 @@
       "jockey": "M.ディー",
       "age": "3",
       "gradeWins": [],
-      "paceType": "BOTH",
-      "tan": null,
-      "pop": null
+      "paceType": "BOTH"
     },
     {
       "num": 12,
@@ -152,12 +131,10 @@
       "sire": "コントレイル",
       "bms": "City Banker",
       "dam": "コンヴィクション2",
-      "jockey": "横⼭ 武史",
+      "jockey": "横山武史",
       "age": "3",
       "gradeWins": [],
-      "paceType": "SLOW",
-      "tan": null,
-      "pop": null
+      "paceType": "SLOW"
     },
     {
       "num": 13,
@@ -165,12 +142,10 @@
       "sire": "ダノンバラード",
       "bms": "スターリングローズ",
       "dam": "ツウローゼズ",
-      "jockey": "⽮野 貴之",
+      "jockey": "矢野貴之",
       "age": "3",
       "gradeWins": [],
-      "paceType": "SLOW",
-      "tan": null,
-      "pop": null
+      "paceType": "BOTH"
     },
     {
       "num": 14,
@@ -178,12 +153,10 @@
       "sire": "キズナ",
       "bms": "スクワートルスクワート",
       "dam": "ヨカヨカ",
-      "jockey": "岩⽥ 康誠",
+      "jockey": "岩田康誠",
       "age": "3",
       "gradeWins": [],
-      "paceType": "BOTH",
-      "tan": null,
-      "pop": null
+      "paceType": "SLOW"
     },
     {
       "num": 15,
@@ -194,9 +167,7 @@
       "jockey": "D.レーン",
       "age": "3",
       "gradeWins": [],
-      "paceType": "SLOW",
-      "tan": null,
-      "pop": null
+      "paceType": "BOTH"
     },
     {
       "num": 16,
@@ -204,12 +175,10 @@
       "sire": "コントレイル",
       "bms": "Tapit",
       "dam": "ゴーイントゥザウィンドウ",
-      "jockey": "武 豊",
+      "jockey": "武豊",
       "age": "3",
       "gradeWins": [],
-      "paceType": "SLOW",
-      "tan": null,
-      "pop": null
+      "paceType": "SLOW"
     },
     {
       "num": 17,
@@ -217,12 +186,10 @@
       "sire": "キタサンブラック",
       "bms": "ヴィクトワールピサ",
       "dam": "シャドウマリア",
-      "jockey": "北村 友⼀",
+      "jockey": "北村友一",
       "age": "3",
       "gradeWins": [],
-      "paceType": "SLOW",
-      "tan": null,
-      "pop": null
+      "paceType": "SLOW"
     },
     {
       "num": 18,
@@ -230,15 +197,292 @@
       "sire": "リアルスティール",
       "bms": "ディープスカイ",
       "dam": "エーティーロゼッタ",
-      "jockey": "⽊幡 巧也",
+      "jockey": "木幡巧也",
       "age": "3",
       "gradeWins": [],
-      "paceType": "HIGH",
-      "tan": null,
-      "pop": null
+      "paceType": "HIGH"
     }
   ],
-  "result": null,
-  "review": null,
-  "verification": null
+  "result": {
+    "time": "2:23.0",
+    "payouts": {
+      "tansho": "810円",
+      "fukusho": "220円 / 180円 / 120円",
+      "umaren": "2,350円",
+      "umatan": "5,850円",
+      "sanrenpuku": "2,280円",
+      "sanrentan": "17,700円"
+    },
+    "topFinishers": [
+      {
+        "rank": 1,
+        "num": 16,
+        "name": "ゴーイントゥスカイ",
+        "pop": 4,
+        "jockey": "武豊",
+        "sire": "コントレイル",
+        "bms": "Tapit",
+        "margin": "",
+        "style": "差し",
+        "note": "4番人気で差し切り勝ち。武豊騎手が直線で外から力強く伸びた。コントレイル産駒の長距離適性が発揮。"
+      },
+      {
+        "rank": 2,
+        "num": 7,
+        "name": "タイダルロック",
+        "pop": 3,
+        "jockey": "三浦皇成",
+        "sire": "モーリス",
+        "bms": "マンハッタンカフェ",
+        "margin": "1/2",
+        "style": "先行",
+        "note": "3番人気2着。先行して粘り込み。モーリス産駒の中距離適性は長距離でも十分通用。"
+      },
+      {
+        "rank": 3,
+        "num": 4,
+        "name": "ブラックオリンピア",
+        "pop": 1,
+        "jockey": "川田将雅",
+        "sire": "キタサンブラック",
+        "bms": "Pierro",
+        "margin": "2 1/2",
+        "style": "先行",
+        "note": "1番人気3着。先行するも末脚不足。キタサンブラック産駒の2400mはやや長い印象。"
+      },
+      {
+        "rank": 4,
+        "num": 11,
+        "name": "ノチェセラーダ",
+        "pop": 8,
+        "jockey": "M.ディー",
+        "sire": "ドレフォン",
+        "bms": "ディープインパクト",
+        "margin": "1",
+        "style": "差し",
+        "note": "8番人気4着の好走。ドレフォン×ディープの配合が東京長距離で機能。"
+      },
+      {
+        "rank": 5,
+        "num": 5,
+        "name": "ミッキーファルコン",
+        "pop": 9,
+        "jockey": "田辺裕信",
+        "sire": "エピファネイア",
+        "bms": "ディープインパクト",
+        "margin": "1/2",
+        "style": "差し",
+        "note": "9番人気5着。エピファネイア産駒は長距離でも好走。"
+      }
+    ],
+    "fullOrder": [
+      {
+        "rank": 1,
+        "name": "ゴーイントゥスカイ",
+        "pop": 4
+      },
+      {
+        "rank": 2,
+        "name": "タイダルロック",
+        "pop": 3
+      },
+      {
+        "rank": 3,
+        "name": "ブラックオリンピア",
+        "pop": 1
+      },
+      {
+        "rank": 4,
+        "name": "ノチェセラーダ",
+        "pop": 8
+      },
+      {
+        "rank": 5,
+        "name": "ミッキーファルコン",
+        "pop": 9
+      },
+      {
+        "rank": 6,
+        "name": "サガルマータ",
+        "pop": 7
+      },
+      {
+        "rank": 7,
+        "name": "アッカン",
+        "pop": 11
+      },
+      {
+        "rank": 8,
+        "name": "シャドウマスター",
+        "pop": 10
+      },
+      {
+        "rank": 9,
+        "name": "カットソロ",
+        "pop": 12
+      },
+      {
+        "rank": 10,
+        "name": "ケントン",
+        "pop": 15
+      },
+      {
+        "rank": 11,
+        "name": "ラストスマイル",
+        "pop": 5
+      },
+      {
+        "rank": 12,
+        "name": "パラディオン",
+        "pop": 14
+      },
+      {
+        "rank": 13,
+        "name": "ヒシアムルーズ",
+        "pop": 17
+      },
+      {
+        "rank": 14,
+        "name": "テルヒコウ",
+        "pop": 6
+      },
+      {
+        "rank": 15,
+        "name": "ヨカオウ",
+        "pop": 16
+      },
+      {
+        "rank": 16,
+        "name": "コスモギガンティア",
+        "pop": 13
+      },
+      {
+        "rank": 17,
+        "name": "トゥーナスタディ",
+        "pop": 18
+      }
+    ]
+  },
+  "review": {
+    "summary": "4番人気ゴーイントゥスカイ（コントレイル産駒）が差し切り勝ちで青葉賞制覇。タイム2:23.0。武豊騎手が直線外から力強く伸び、タイダルロック（モーリス産駒）、ブラックオリンピア（キタサンブラック産駒）に完勝。血統くんの◎ミッキーファルコンは5着、血統最上位のゴーイントゥスカイは6位評価で的中ゼロ。",
+    "展開": "テルヒコウが逃げスローペースに。先行したブラックオリンピア・タイダルロックが直線手前まで先頭争い。直線でゴーイントゥスカイが外から差し込んでブラックオリンピアを交わし1着。ノチェセラーダも差し込んで4着。",
+    "bloodAnalysis": [
+      {
+        "icon": "💥",
+        "t": "コントレイル産駒が1着・2着",
+        "d": "ゴーイントゥスカイ（コントレイル×Tapit）が1着。コントレイルは2020年無敗三冠馬で東京コース◎。初年度産駒が東京長距離で結果を出した。DBのスコア設定（中距離〜長距離/左右両回り）は正しかった。"
+      },
+      {
+        "icon": "❌",
+        "t": "◎ミッキーファルコン5着の誤算",
+        "d": "エピファネイア×ディープインパクトで血統1位評価も5着。エピファネイア産駒はパワー型でスローペースの瞬発力勝負では不利。ペース適性フラグHIGH×スロー予想で-5pt減点すべきだった。"
+      },
+      {
+        "icon": "⚠️",
+        "t": "タイダルロック（モーリス産駒）2着の教訓",
+        "d": "モーリス産駒は血統スコア12位の最低評価グループだったが2着。モーリスのHIGHフラグとスロー予想が合わないはずだが好走。東京長距離ではスロー→瞬発力勝負でも先行力が生きた。"
+      },
+      {
+        "icon": "💡",
+        "t": "ノチェセラーダ（ドレフォン産駒）4着",
+        "d": "ドレフォン×ディープインパクトの配合が東京長距離で機能。ドレフォンはスプリント〜マイル型のスコア設定だが、母父ディープのスタミナが長距離を補った。母父の影響をより重視すべき。"
+      }
+    ],
+    "jockeyComment": "「折り合いがつき、直線では手応え十分でした。このまま日本ダービーへ向かいたいと思います」（武豊騎手）"
+  },
+  "verification": {
+    "intro": "血統スコア（芝2400m東京左・良馬場）と実際の着順を照合。上位3頭が全て血統スコア6〜12位と中位グループで、的中ゼロ。コントレイル産駒の新種牡馬評価とペース適性の精度が課題。",
+    "runners": [
+      {
+        "name": "ゴーイントゥスカイ",
+        "num": 16,
+        "predMark": "△",
+        "predScore": 55.7,
+        "actualRank": 1,
+        "actualPop": 4,
+        "sire": "コントレイル",
+        "bms": "Tapit",
+        "dam": "ゴーイントゥザウィンドウ",
+        "predComment": "血統6位55.7pt。コントレイル産駒は新種牡馬でDB設定が暫定値。Tapitの母父スコアが低く伸び悩んだ。",
+        "actualComment": "4番人気で完勝。コントレイル産駒が東京長距離で本領発揮。武豊の完璧なエスコート。",
+        "verdict": "過小評価",
+        "vColor": "#c0392b"
+      },
+      {
+        "name": "タイダルロック",
+        "num": 7,
+        "predMark": "⭐",
+        "predScore": 50.0,
+        "actualRank": 2,
+        "actualPop": 3,
+        "sire": "モーリス",
+        "bms": "マンハッタンカフェ",
+        "dam": "アースライズ",
+        "predComment": "血統12位50pt最低グループ。モーリスのHIGHフラグ×スロー予想で-5pt減点が効いた。",
+        "actualComment": "3番人気で2着。先行力と瞬発力を兼備したモーリス産駒。スロー予想でも好走できる万能性。",
+        "verdict": "大幅過小評価",
+        "vColor": "#c0392b"
+      },
+      {
+        "name": "ブラックオリンピア",
+        "num": 4,
+        "predMark": "△",
+        "predScore": 55.5,
+        "actualRank": 3,
+        "actualPop": 1,
+        "sire": "キタサンブラック",
+        "bms": "Pierro",
+        "dam": "ピノ",
+        "predComment": "血統7位55.5pt。1番人気だが血統スコアは中位。キタサンブラックのSLOWフラグ×スロー予想で+5pt加算済み。",
+        "actualComment": "1番人気で3着。先行策が奏功したが末脚不足。血統評価は概ね妥当。",
+        "verdict": "概ね妥当",
+        "vColor": "#3578c4"
+      },
+      {
+        "name": "ミッキーファルコン",
+        "num": 5,
+        "predMark": "◎",
+        "predScore": 60.9,
+        "actualRank": 5,
+        "actualPop": 9,
+        "sire": "エピファネイア",
+        "bms": "ディープインパクト",
+        "dam": "ミッキークイーン",
+        "predComment": "血統1位60.9pt◎評価。エピファネイア×ディープのスタミナ配合を最高評価。",
+        "actualComment": "9番人気5着。スロー→瞬発力勝負でエピファネイアの持続力型が不発。◎が5着は皐月賞の再現。",
+        "verdict": "過大評価",
+        "vColor": "#d4941a"
+      },
+      {
+        "name": "ノチェセラーダ",
+        "num": 11,
+        "predMark": "⭐",
+        "predScore": 50.0,
+        "actualRank": 4,
+        "actualPop": 8,
+        "sire": "ドレフォン",
+        "bms": "ディープインパクト",
+        "dam": "ノチェブランカ",
+        "predComment": "血統最下位グループ50pt。ドレフォンはスプリンター設定で長距離に-8pt。",
+        "actualComment": "8番人気4着の好走。母父ディープのスタミナが長距離を補った。母父の長距離適性を評価できなかった。",
+        "verdict": "大幅過小評価",
+        "vColor": "#c0392b"
+      }
+    ],
+    "summary": {
+      "hitCount": 0,
+      "nearCount": 1,
+      "missCount": 3,
+      "overCount": 1,
+      "total": 5,
+      "accuracy": "的中0・妥当1 = 20%",
+      "lessons": [
+        "【最重要】コントレイル産駒（初年度）の評価が低すぎた。新種牡馬は産駒が走り始めたら随時スコアを更新する仕組みが必要。",
+        "◎エピファネイアが再びスロー展開で不発（皐月賞と同じパターン）。ペース適性フラグHIGH×レースSLOWの-5ptは正しく機能しているが、それでも◎になってしまうのは基礎スコアが高すぎる問題。",
+        "タイダルロック（モーリス産駒）2着。ペース減点-5ptで最下位グループに落としたが実際は2着。モーリスはHIGH/BOTHで再評価が必要。",
+        "ノチェセラーダ（ドレフォン×ディープ）4着。父スプリンター型でも母父の長距離適性が機能した。母父の距離適性をスコアに強く反映させる改善が必要。",
+        "上位3頭（コントレイル・モーリス・キタサンブラック産駒）は全て新種牡馬または評価更新が必要な種牡馬。種牡馬DBの継続的な更新が精度向上の鍵。"
+      ]
+    }
+  }
 }
