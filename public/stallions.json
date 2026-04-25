@@ -963,7 +963,7 @@
     "staminaScore": 7,
     "speedScore": 9,
     "powerScore": 8,
-    "notes": "安田記念・マイルCS・香港マイル・香港C制覇。ジャックドール等輩出。"
+    "notes": "安田記念・マイルCS・香港マイル・香港C制覇。ジャックドール等輩出。 ペース万能型（HIGH/SLOW両対応）。先行力あり長距離でも好走。"
   },
   {
     "id": "43",
@@ -2370,20 +2370,52 @@
   },
   {
     "name": "コントレイル",
+    "nameEn": "Contrail",
+    "surface": "TURF",
+    "distanceMin": "MIDDLE",
+    "distanceMax": "LONG",
+    "course": "LEFT",
+    "growth": "NORMAL",
+    "heavyTrack": 6,
+    "speedScore": 9,
+    "staminaScore": 8,
+    "powerScore": 8,
+    "notes": "2020年無敗三冠馬。ディープインパクト産駒。東京コース◎。初年度産駒から長距離G2勝ち。速力とスタミナを高水準で兼備。",
+    "id": "104"
+  },
+  {
+    "name": "ホークビル",
+    "nameEn": "Hawkbill",
     "surface": "TURF",
     "distanceMin": "MIDDLE",
     "distanceMax": "LONG",
     "course": "BOTH",
     "growth": "NORMAL",
     "heavyTrack": 6,
-    "speedScore": 8,
+    "speedScore": 6,
     "staminaScore": 7,
-    "powerScore": 7,
-    "notes": "2020年無敗三冠馬。中距離〜長距離万能型。",
-    "id": "104"
+    "powerScore": 6,
+    "notes": "欧州型中距離馬。Kitten's Joy系。日本産駒は芝中距離で好走傾向。",
+    "id": "105"
+  },
+  {
+    "name": "ダノンバラード",
+    "nameEn": "Danon Ballade",
+    "surface": "TURF",
+    "distanceMin": "MIDDLE",
+    "distanceMax": "LONG",
+    "course": "BOTH",
+    "growth": "NORMAL",
+    "heavyTrack": 5,
+    "speedScore": 6,
+    "staminaScore": 6,
+    "powerScore": 6,
+    "notes": "ディープインパクト産駒。中距離型。産駒は芝中長距離で安定。",
+    "id": "106"
   },
   {
     "name": "ゴールドアクター",
+    "nameEn": "Gold Actor",
     "surface": "TURF",
     "distanceMin": "MIDDLE",
     "distanceMax": "LONG",
@@ -2393,39 +2425,12 @@
     "speedScore": 5,
     "staminaScore": 8,
     "powerScore": 6,
-    "notes": "2015年有馬記念馬。スタミナ型晩成。",
-    "id": "105"
-  },
-  {
-    "name": "ホークビル",
-    "surface": "TURF",
-    "distanceMin": "MIDDLE",
-    "distanceMax": "LONG",
-    "course": "BOTH",
-    "growth": "NORMAL",
-    "heavyTrack": 6,
-    "speedScore": 6,
-    "staminaScore": 7,
-    "powerScore": 6,
-    "notes": "欧州型中距離馬。Kitten's Joy系。",
-    "id": "106"
-  },
-  {
-    "name": "ダノンバラード",
-    "surface": "TURF",
-    "distanceMin": "MIDDLE",
-    "distanceMax": "LONG",
-    "course": "BOTH",
-    "growth": "NORMAL",
-    "heavyTrack": 5,
-    "speedScore": 6,
-    "staminaScore": 6,
-    "powerScore": 6,
-    "notes": "ディープインパクト産駒。中距離型。",
+    "notes": "2015年有馬記念馬。スクリーンヒーロー産駒。スタミナ型晩成。長距離向き。",
     "id": "107"
   },
   {
     "name": "Tapit",
+    "nameEn": "Tapit",
     "surface": "TURF",
     "distanceMin": "MILE",
     "distanceMax": "MIDDLE",
@@ -2435,11 +2440,12 @@
     "speedScore": 8,
     "staminaScore": 6,
     "powerScore": 7,
-    "notes": "米国最強種牡馬の一角。スピードとパワーを兼備。",
+    "notes": "米国最強種牡馬の一角。スピードとパワーを兼備。日本でも芝中距離で実績。",
     "id": "108"
   },
   {
     "name": "ゼンノロブロイ",
+    "nameEn": "Zenno Rob Roy",
     "surface": "TURF",
     "distanceMin": "MIDDLE",
     "distanceMax": "LONG",
@@ -2449,11 +2455,12 @@
     "speedScore": 6,
     "staminaScore": 7,
     "powerScore": 6,
-    "notes": "2004年秋古馬三冠。スタミナ型中長距離馬。",
+    "notes": "2004年秋古馬三冠。スタミナ型中長距離馬。母父として安定したスタミナを供給。",
     "id": "109"
   },
   {
     "name": "ディープスカイ",
+    "nameEn": "Deep Sky",
     "surface": "TURF",
     "distanceMin": "MILE",
     "distanceMax": "MIDDLE",
@@ -2463,11 +2470,12 @@
     "speedScore": 7,
     "staminaScore": 6,
     "powerScore": 6,
-    "notes": "2008年NHKマイルC・ダービー2冠。マイル〜中距離型。",
+    "notes": "2008年NHKマイルC・ダービー2冠。アグネスタキオン系。マイル〜中距離型。",
     "id": "110"
   },
   {
     "name": "Pierro",
+    "nameEn": "Pierro",
     "surface": "TURF",
     "distanceMin": "SPRINT",
     "distanceMax": "MILE",
@@ -2477,11 +2485,12 @@
     "speedScore": 8,
     "staminaScore": 5,
     "powerScore": 6,
-    "notes": "豪州チャンピオンサイアー。スプリンター系。",
+    "notes": "豪州チャンピオンサイアー。Lonhro系スプリンター。日本では母父として機能。",
     "id": "111"
   },
   {
     "name": "スクワートルスクワート",
+    "nameEn": "Squirtle Squirt",
     "surface": "TURF",
     "distanceMin": "SPRINT",
     "distanceMax": "MILE",
@@ -2491,11 +2500,12 @@
     "speedScore": 9,
     "staminaScore": 3,
     "powerScore": 6,
-    "notes": "米国スプリント系。超スピード型。",
+    "notes": "米国スプリント系種牡馬。超スピード型。日本では母父として短距離スピードを供給。",
     "id": "112"
   },
   {
     "name": "スターリングローズ",
+    "nameEn": "Stirling Rose",
     "surface": "TURF",
     "distanceMin": "MIDDLE",
     "distanceMax": "LONG",
@@ -2505,11 +2515,12 @@
     "speedScore": 5,
     "staminaScore": 7,
     "powerScore": 5,
-    "notes": "中長距離型。",
+    "notes": "日本産中距離馬。中長距離型。",
     "id": "113"
   },
   {
     "name": "City Banker",
+    "nameEn": "City Banker",
     "surface": "TURF",
     "distanceMin": "MIDDLE",
     "distanceMax": "LONG",

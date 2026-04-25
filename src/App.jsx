@@ -1644,9 +1644,14 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
             const ms=findS(runner.sire);
             const mb=findS(runner.bms);
             let rawScore=0,bonus=0,strengths=[],weaknesses=[];
+            // ① 長距離レースでは母父の比重をアップ（父45%+母父30%）
+            const distIdx=["SPRINT","MILE","MIDDLE","LONG"].indexOf(dist);
+            const isLongDist=distIdx>=3; // LONGの場合
+            const wSire=isLongDist?0.45:0.55;
+            const wBms=isLongDist?0.30:0.20;
             if(ms){
               const sr=calcAptitude(ms,raceConfig);
-              rawScore+=sr.score*0.55;bonus+=sr.bonus*0.55;
+              rawScore+=sr.score*wSire;bonus+=sr.bonus*wSire;
               if(ms.speedScore>=9) strengths.push("父のスピード◎");
               if(ms.staminaScore>=9) strengths.push("父のスタミナ◎");
               if(ms.powerScore>=9) strengths.push("父のパワー◎");
@@ -1666,9 +1671,9 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
             } else { rawScore+=35; weaknesses.push("父DB未登録"); }
             if(mb){
               const br=calcAptitude(mb,raceConfig);
-              rawScore+=br.score*0.20;bonus+=br.bonus*0.20;
+              rawScore+=br.score*wBms;bonus+=br.bonus*wBms;
               if(mb.speedScore>=8) strengths.push("母父スピード○");
-              if(mb.staminaScore>=8) strengths.push("母父スタミナ○");
+              if(mb.staminaScore>=8) strengths.push(isLongDist?"母父スタミナ◎（長距離+）":"母父スタミナ○");
               if(mb.powerScore>=8&&surf==="DIRT") strengths.push("母父パワー×ダート○");
             }
             const jvs=calcJockeyVenueScore(runner.jockey,venueKey);
@@ -1694,16 +1699,16 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               }
             });
             bonus+=gradeBonus;
-            // ペース適性補正
+            // ② ペース適性補正（±8pt）
             const expectedPace=race.expectedPace||"BOTH";
             const runnerPace=runner.paceType||"BOTH";
             let paceBonus=0;
             if(expectedPace!=="BOTH"&&runnerPace!=="BOTH"){
               if(runnerPace===expectedPace){
-                paceBonus=5;
+                paceBonus=8;
                 strengths.push(expectedPace==="SLOW"?"スロー瞬発力◎":"ハイペース耐性◎");
               } else {
-                paceBonus=-5;
+                paceBonus=-8;
                 weaknesses.push(expectedPace==="SLOW"?"スロー向き×（ハイペース型）":"ハイペース向き×（スロー型）");
               }
             }
