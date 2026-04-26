@@ -1701,6 +1701,8 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               } else if(w.grade==="G3"){
                 if(w.place===1){base=3;strengths.push("G3勝ち馬");}
                 else if(w.place<=2){base=2;}
+              } else if(w.grade==="OP"||w.grade==="L"){
+                if(w.place===1){base=w.grade==="OP"?2:1;strengths.push(w.grade==="OP"?"OP勝ち実績":"L勝ち実績");}
               }
               gradeBonus+=base*decay;
             });
