@@ -1682,33 +1682,39 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               if(jvs.score>=8) strengths.push("騎手×会場◎");
               if(jvs.score<=4) weaknesses.push("騎手×会場△");
             }
-            // 重賞実績ボーナス
+            // 重賞実績ボーナス（年数減衰あり）
             let gradeBonus=0;
             const gw=runner.gradeWins||[];
+            const currentYear=new Date().getFullYear();
             gw.forEach(w=>{
+              // 年数減衰: 1年以内100% / 2年前70% / 3年以上40%
+              const yearsAgo=currentYear-(w.year||currentYear);
+              const decay=yearsAgo<=1?1.0:yearsAgo===2?0.7:0.4;
+              let base=0;
               if(w.grade==="G1"){
-                if(w.place===1){gradeBonus+=8;strengths.push("G1勝ち馬");}
-                else if(w.place===2){gradeBonus+=5;strengths.push("G1連対実績");}
-                else if(w.place===3){gradeBonus+=3;strengths.push("G1好走実績");}
+                if(w.place===1){base=8;strengths.push(yearsAgo<=1?"G1勝ち馬":"G1勝ち実績");}
+                else if(w.place===2){base=5;strengths.push("G1連対実績");}
+                else if(w.place===3){base=3;strengths.push("G1好走実績");}
               } else if(w.grade==="G2"){
-                if(w.place===1){gradeBonus+=5;strengths.push("G2勝ち馬");}
-                else if(w.place<=2){gradeBonus+=3;strengths.push("G2連対実績");}
+                if(w.place===1){base=5;strengths.push("G2勝ち馬");}
+                else if(w.place<=2){base=3;strengths.push("G2連対実績");}
               } else if(w.grade==="G3"){
-                if(w.place===1){gradeBonus+=3;strengths.push("G3勝ち馬");}
-                else if(w.place<=2){gradeBonus+=2;}
+                if(w.place===1){base=3;strengths.push("G3勝ち馬");}
+                else if(w.place<=2){base=2;}
               }
+              gradeBonus+=base*decay;
             });
             bonus+=gradeBonus;
-            // ② ペース適性補正（±8pt）
+            // ペース適性補正（±6pt）
             const expectedPace=race.expectedPace||"BOTH";
             const runnerPace=runner.paceType||"BOTH";
             let paceBonus=0;
             if(expectedPace!=="BOTH"&&runnerPace!=="BOTH"){
               if(runnerPace===expectedPace){
-                paceBonus=8;
+                paceBonus=6;
                 strengths.push(expectedPace==="SLOW"?"スロー瞬発力◎":"ハイペース耐性◎");
               } else {
-                paceBonus=-8;
+                paceBonus=-6;
                 weaknesses.push(expectedPace==="SLOW"?"スロー向き×（ハイペース型）":"ハイペース向き×（スロー型）");
               }
             }
