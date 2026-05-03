@@ -1682,6 +1682,16 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               if(jvs.score>=8) strengths.push("騎手×会場◎");
               if(jvs.score<=4) weaknesses.push("騎手×会場△");
             }
+            // ② 前走着順トレンド補正
+            let trendBonus=0;
+            const prevRank=runner.prevRank||null;
+            if(prevRank!==null){
+              if(prevRank===1){trendBonus=3;strengths.push("前走1着の勢い◎");}
+              else if(prevRank===2){trendBonus=2;strengths.push("前走2着好走");}
+              else if(prevRank===3){trendBonus=1;strengths.push("前走3着好走");}
+              else if(prevRank>=10){trendBonus=-3;weaknesses.push("前走大敗（10着以下）");}
+            }
+            bonus+=trendBonus;
             // 重賞実績ボーナス（年数減衰あり）
             let gradeBonus=0;
             const gw=runner.gradeWins||[];
@@ -1707,16 +1717,19 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               gradeBonus+=base*decay;
             });
             bonus+=gradeBonus;
-            // ペース適性補正（±6pt）
+            // ペース適性補正（長距離3000m以上は±4pt、それ以外は±6pt）
+            const courseMeters=parseInt((race.course||"").replace(/[^0-9]/g,""))||0;
+            const isVeryLong=courseMeters>=3000;
+            const paceRange=isVeryLong?4:6;
             const expectedPace=race.expectedPace||"BOTH";
             const runnerPace=runner.paceType||"BOTH";
             let paceBonus=0;
             if(expectedPace!=="BOTH"&&runnerPace!=="BOTH"){
               if(runnerPace===expectedPace){
-                paceBonus=6;
+                paceBonus=paceRange;
                 strengths.push(expectedPace==="SLOW"?"スロー瞬発力◎":"ハイペース耐性◎");
               } else {
-                paceBonus=-6;
+                paceBonus=-paceRange;
                 weaknesses.push(expectedPace==="SLOW"?"スロー向き×（ハイペース型）":"ハイペース向き×（スロー型）");
               }
             }
