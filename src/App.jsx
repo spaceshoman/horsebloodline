@@ -1692,7 +1692,7 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               else if(prevRank>=10){trendBonus=-3;weaknesses.push("前走大敗（10着以下）");}
             }
             bonus+=trendBonus;
-            // 重賞実績ボーナス（年数減衰あり）
+            // 重賞実績ボーナス（年数減衰＋タイム差減衰あり）
             let gradeBonus=0;
             const gw=runner.gradeWins||[];
             const currentYear=new Date().getFullYear();
@@ -1700,21 +1700,24 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               // 年数減衰: 1年以内100% / 2年前70% / 3年以上40%
               const yearsAgo=currentYear-(w.year||currentYear);
               const decay=yearsAgo<=1?1.0:yearsAgo===2?0.7:0.4;
+              // タイム差減衰: 勝利・0.5秒以内100% / 0.5〜1.0秒70% / 1.0秒以上40%
+              const margin=w.margin!=null?w.margin:0;
+              const marginDecay=w.place===1?1.0:margin<=0.5?1.0:margin<=1.0?0.7:0.4;
               let base=0;
               if(w.grade==="G1"){
                 if(w.place===1){base=8;strengths.push(yearsAgo<=1?"G1勝ち馬":"G1勝ち実績");}
-                else if(w.place===2){base=5;strengths.push("G1連対実績");}
-                else if(w.place===3){base=3;strengths.push("G1好走実績");}
+                else if(w.place===2){base=5;strengths.push(margin<=0.5?"G1接戦2着":"G1連対実績");}
+                else if(w.place===3){base=3;strengths.push(margin<=0.5?"G1接戦3着":"G1好走実績");}
               } else if(w.grade==="G2"){
                 if(w.place===1){base=5;strengths.push("G2勝ち馬");}
-                else if(w.place<=2){base=3;strengths.push("G2連対実績");}
+                else if(w.place<=2){base=3;strengths.push(margin<=0.5?"G2接戦2着":"G2連対実績");}
               } else if(w.grade==="G3"){
                 if(w.place===1){base=3;strengths.push("G3勝ち馬");}
                 else if(w.place<=2){base=2;}
               } else if(w.grade==="OP"||w.grade==="L"){
                 if(w.place===1){base=w.grade==="OP"?2:1;strengths.push(w.grade==="OP"?"OP勝ち実績":"L勝ち実績");}
               }
-              gradeBonus+=base*decay;
+              gradeBonus+=base*decay*marginDecay;
             });
             bonus+=gradeBonus;
             // ペース適性補正（長距離3000m以上は±4pt、それ以外は±6pt）

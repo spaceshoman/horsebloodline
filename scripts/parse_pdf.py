@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-血統くん PDF出馬表パーサー
+血統くん PDF出馬表パーサー（v2 - 過去5走着順対応）
 使い方:
-  python scripts/parse_pdf.py pdfs/aobaSho2026.pdf aobaSho2026 --grade G2 --pace SLOW
+  python scripts/parse_pdf.py pdfs/nhkmile2026.pdf nhkmile2026 --grade G1 --pace HIGH
 """
 import re, json, sys, argparse
 from pathlib import Path
@@ -22,7 +22,7 @@ PACE_MAP = {
              "オルフェーヴル","ゴールドシップ","ポエティックフレア","フィエールマン",
              "ステイゴールド","ディープインパクト","コントレイル","レイデオロ",
              "ゴールドアクター","ジャスタウェイ","リオンディーズ","ダノンバラード"],
-    "HIGH": ["エピファネイア","キングカメハメハ","ヘニーヒューズ","モーリス",
+    "HIGH": ["エピファネイア","キングカメハメハ","ヘニーヒューズ",
              "リアルスティール","ロードカナロア","ドゥラメンテ","ホッコータルマエ"],
 }
 
@@ -44,7 +44,6 @@ def extract_sire_jockey(line):
         return None, ""
     before_time = m.group(1).strip()
     parts = before_time.split()
-    # 外国人騎手（M.xxx D.xxx C.xxx形式）
     if len(parts) >= 2 and re.match(r'^[A-Za-z]\.[ァ-ヶー]+$', parts[-1]):
         return ' '.join(parts[:-1]), parts[-1]
     elif len(parts) >= 3:
@@ -60,9 +59,25 @@ def extract_bms(line):
         return m.group(1).strip(), m.group(2).strip()
     return None, None
 
+def extract_rank_from_cell(cell):
+    """セルから着順を抽出 例: '2026.02.14 3000芝 良\n8着 14頭' → 8"""
+    if not cell: return None
+    m = re.search(r'(\d{1,2})着', cell)
+    if m:
+        rank = int(m.group(1))
+        if 1 <= rank <= 18:
+            return rank
+    return None
+
 def parse_pdf(pdf_path):
     with pdfplumber.open(pdf_path) as pdf:
         text = "\n".join(p.extract_text() or "" for p in pdf.pages)
+        # テーブルからも過去走着順を取得
+        all_tables = []
+        for page in pdf.pages:
+            tables = page.extract_tables()
+            all_tables.extend(tables)
+
     lines = text.split("\n")
 
     # レース情報
@@ -94,10 +109,31 @@ def parse_pdf(pdf_path):
                     break
             runners_data.append((sire, bms, dam, jockey))
 
+    # テーブルから過去走着順を取得
+    past_ranks_by_name = {}
+    for table in all_tables:
+        if len(table) < 3: continue
+        for row in table[2:]:
+            if not row or len(row) < 7: continue
+            name_cell = row[3] if len(row) > 3 else None
+            if not name_cell: continue
+            name = name_cell.split('\n')[0].strip()
+            if not name or len(name) < 2: continue
+            ranks = []
+            for col in [6, 8, 10, 12]:
+                rank = extract_rank_from_cell(row[col] if col < len(row) else None)
+                ranks.append(rank)
+            # None以外の着順が1つ以上あれば記録
+            if any(r is not None for r in ranks):
+                past_ranks_by_name[name] = ranks
+
     # 馬名と組み合わせ
     runners = []
     for idx, (sire, bms, dam, jockey) in enumerate(runners_data):
         name = horse_names[idx] if idx < len(horse_names) else ""
+        past = past_ranks_by_name.get(name, [None, None, None, None])
+        # prevRank = 直近の着順（None以外の最初）
+        prev_rank = next((r for r in past if r is not None), None)
         runners.append({
             "num": idx+1,
             "name": name,
@@ -108,6 +144,8 @@ def parse_pdf(pdf_path):
             "age": "3",
             "gradeWins": [],
             "paceType": get_pace_type(sire),
+            "prevRank": prev_rank,
+            "pastRanks": past,
             "tan": None,
             "pop": None,
         })
@@ -118,7 +156,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("pdf_path")
     parser.add_argument("json_id")
-    parser.add_argument("--grade", default="G2", choices=["G1","G2","G3"])
+    parser.add_argument("--grade", default="G1", choices=["G1","G2","G3"])
     parser.add_argument("--pace", default="BOTH", choices=["SLOW","HIGH","BOTH"])
     parser.add_argument("--dry", action="store_true")
     args = parser.parse_args()
@@ -139,7 +177,7 @@ def main():
     print("\n=== パース結果 ===")
     for r in runners:
         ok = "✅" if r["sire"] in stallions else "❌"
-        print(f"  {r['num']:2} {r['name']:<16} 父:{r['sire']:<20} 母父:{r['bms']:<16} {r['jockey']} {ok}")
+        print(f"  {r['num']:2} {r['name']:<16} 父:{r['sire']:<18} 前走:{r['prevRank']} 過去:{r['pastRanks']} {ok}")
 
     if args.dry:
         print("\n[DRY RUN] 保存しません")
@@ -157,7 +195,6 @@ def main():
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
     print(f"\n✅ 保存: {out_path}")
-    print(f"  git add public/reviews/{args.json_id}.json && git commit -m '{args.json_id} 追加' && git push")
 
 if __name__ == "__main__":
     main()
