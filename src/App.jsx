@@ -2281,8 +2281,23 @@ export default function App(){
 
   // nextRaceをトップレベルで計算（Hooksルール遵守）
   const nextRace=useMemo(()=>{
+    const today=new Date();
+    today.setHours(0,0,0,0);
     const merged=Object.values(GRADE_RACES).map(g=>({...g,...(reviews[g.id]||{})}));
-    return merged.find(g=>g.runners&&g.runners.length>0&&!g.result)||merged[0];
+    // 今日以降のレースでrunnersがあるものを優先
+    const upcoming=merged.filter(g=>{
+      const d=new Date(g.date);
+      return d>=today && g.runners && g.runners.length>0 && !g.result;
+    }).sort((a,b)=>new Date(a.date)-new Date(b.date));
+    if(upcoming.length>0) return upcoming[0];
+    // なければ今日以降で一番近いレース
+    const upcomingAll=merged.filter(g=>{
+      const d=new Date(g.date);
+      return d>=today;
+    }).sort((a,b)=>new Date(a.date)-new Date(b.date));
+    if(upcomingAll.length>0) return upcomingAll[0];
+    // 全部過去なら一番最近のレース
+    return merged.sort((a,b)=>new Date(b.date)-new Date(a.date))[0];
   },[reviews]);
 
   // 次の重賞が変わったら自動選択
