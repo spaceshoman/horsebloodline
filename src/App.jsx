@@ -1738,8 +1738,8 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
             }
             bonus+=paceBonus;
             const total=+(rawScore+bonus).toFixed(2);
-            // Normalize: map raw scores to 50.0-80.0 display range (1 decimal)
-            const normalizedPct=Math.max(0,Math.min(1,(total-28)/28)); // 28=floor, 56=ceiling
+            // Normalize: 実際のスコア分布(20〜50)に合わせて50〜80pt表示
+            const normalizedPct=Math.max(0,Math.min(1,(total-20)/30));
             const displayScore=+(50+normalizedPct*30).toFixed(1); // 50.0-80.0
 
             // 3-gauge breakdown (each 0-100)
