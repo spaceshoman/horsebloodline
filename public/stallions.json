@@ -2664,7 +2664,7 @@
     "speedScore": 8,
     "staminaScore": 6,
     "powerScore": 7,
-    "notes": "仏G1馬。シンエンペラーの父。",
+    "notes": "仏G1馬。Pivotal系。シンエンペラーの父。欧州型マイル〜中距離。重馬場適性高い。",
     "id": "123"
   },
   {
@@ -2678,7 +2678,7 @@
     "speedScore": 8,
     "staminaScore": 5,
     "powerScore": 7,
-    "notes": "米国Into Mischief系。プレシャスデイの父。",
+    "notes": "米国Into Mischief系スプリンター。プレシャスデイの父。ダート向きだが芝でも走る。",
     "id": "124"
   },
   {
@@ -2692,7 +2692,7 @@
     "speedScore": 6,
     "staminaScore": 7,
     "powerScore": 6,
-    "notes": "タガノデュードの父。",
+    "notes": "2016年金鯱賞勝ち馬。キングカメハメハ系中距離型。タガノデュードの父。",
     "id": "125"
   },
   {
@@ -2706,7 +2706,7 @@
     "speedScore": 7,
     "staminaScore": 9,
     "powerScore": 7,
-    "notes": "欧州最強種牡馬。シンエンペラーの母父。",
+    "notes": "欧州最強種牡馬。Sadler's Wells系。スタミナ型長距離。母父として日本でも長距離スタミナを供給。",
     "id": "126"
   },
   {
@@ -2720,7 +2720,7 @@
     "speedScore": 9,
     "staminaScore": 4,
     "powerScore": 7,
-    "notes": "サンライズソレイユの母父。",
+    "notes": "米国スプリンター。Into Mischief父。サンライズソレイユの母父。スピード型。",
     "id": "127"
   },
   {
@@ -2734,7 +2734,7 @@
     "speedScore": 6,
     "staminaScore": 8,
     "powerScore": 6,
-    "notes": "ミステリーウェイの母父。",
+    "notes": "凱旋門賞馬。Sadler's Wells系長距離型。ミステリーウェイの母父。重馬場◎。",
     "id": "128"
   },
   {
@@ -2748,7 +2748,7 @@
     "speedScore": 6,
     "staminaScore": 8,
     "powerScore": 7,
-    "notes": "ヴェルミセルの母父。",
+    "notes": "英G1キングジョージ勝ち馬。Danehill系長距離型。ヴェルミセルの母父。晩成スタミナ型。",
     "id": "129"
   },
   {
@@ -2762,7 +2762,7 @@
     "speedScore": 7,
     "staminaScore": 6,
     "powerScore": 6,
-    "notes": "マイネルカンパーナの母父。",
+    "notes": "仏G1馬。欧州マイラー系。マイネルカンパーナの母父。",
     "id": "130"
   },
   {
@@ -2776,7 +2776,7 @@
     "speedScore": 8,
     "staminaScore": 6,
     "powerScore": 7,
-    "notes": "クロワデュノールの母父。",
+    "notes": "欧州マイル〜中距離。Sea The Stars父。クロワデュノールの母父。",
     "id": "131"
   },
   {
@@ -2790,7 +2790,175 @@
     "speedScore": 8,
     "staminaScore": 5,
     "powerScore": 7,
-    "notes": "ヴェルテンベルクの母父。",
+    "notes": "Deputy Minister系スピード型。日本で人気の母父種牡馬。マイル〜中距離のスピードを供給。",
     "id": "132"
+  },
+  {
+    "name": "モズアスコット",
+    "surface": "TURF",
+    "distanceMin": "SPRINT",
+    "distanceMax": "MILE",
+    "course": "BOTH",
+    "growth": "EARLY",
+    "heavyTrack": 6,
+    "speedScore": 9,
+    "staminaScore": 4,
+    "powerScore": 7,
+    "notes": "2018年安田記念馬。フランケル系スプリンター。エコロアルバの父。",
+    "id": "133"
+  },
+  {
+    "name": "ブリックスアンドモルタル",
+    "surface": "TURF",
+    "distanceMin": "MILE",
+    "distanceMax": "MIDDLE",
+    "course": "BOTH",
+    "growth": "NORMAL",
+    "heavyTrack": 6,
+    "speedScore": 8,
+    "staminaScore": 6,
+    "powerScore": 7,
+    "notes": "米国芝G1馬。Giant's Causeway系。ダイヤモンドノットの父。マイル〜中距離型。",
+    "id": "134"
+  },
+  {
+    "name": "Bated Breath",
+    "surface": "TURF",
+    "distanceMin": "SPRINT",
+    "distanceMax": "MILE",
+    "course": "BOTH",
+    "growth": "EARLY",
+    "heavyTrack": 6,
+    "speedScore": 9,
+    "staminaScore": 4,
+    "powerScore": 6,
+    "notes": "欧州スプリンター。Dansili系。アスクイキゴミの母父。",
+    "id": "135"
+  },
+  {
+    "name": "Hinchinbrook",
+    "surface": "TURF",
+    "distanceMin": "SPRINT",
+    "distanceMax": "MILE",
+    "course": "BOTH",
+    "growth": "EARLY",
+    "heavyTrack": 6,
+    "speedScore": 9,
+    "staminaScore": 4,
+    "powerScore": 7,
+    "notes": "豪州スプリンター。サンダーストラックの母父。",
+    "id": "136"
+  },
+  {
+    "name": "Frankel",
+    "surface": "TURF",
+    "distanceMin": "MILE",
+    "distanceMax": "MIDDLE",
+    "course": "BOTH",
+    "growth": "NORMAL",
+    "heavyTrack": 7,
+    "speedScore": 9,
+    "staminaScore": 7,
+    "powerScore": 8,
+    "notes": "欧州最強マイラー。Galileo系。スピード・スタミナ兼備。リゾートアイランドの母父。",
+    "id": "137"
+  },
+  {
+    "name": "Into Mischief",
+    "surface": "BOTH",
+    "distanceMin": "SPRINT",
+    "distanceMax": "MILE",
+    "course": "BOTH",
+    "growth": "EARLY",
+    "heavyTrack": 6,
+    "speedScore": 9,
+    "staminaScore": 5,
+    "powerScore": 7,
+    "notes": "米国No.1サイアー。スプリント〜マイル型。ジーネキングの母父。",
+    "id": "138"
+  },
+  {
+    "name": "Medaglia d'Oro",
+    "surface": "BOTH",
+    "distanceMin": "MILE",
+    "distanceMax": "MIDDLE",
+    "course": "BOTH",
+    "growth": "NORMAL",
+    "heavyTrack": 6,
+    "speedScore": 8,
+    "staminaScore": 6,
+    "powerScore": 8,
+    "notes": "米国G1馬。El Prado系。パワー型中距離。ユウファラオの母父。",
+    "id": "139"
+  },
+  {
+    "name": "Lizard Island",
+    "surface": "TURF",
+    "distanceMin": "SPRINT",
+    "distanceMax": "MILE",
+    "course": "BOTH",
+    "growth": "EARLY",
+    "heavyTrack": 6,
+    "speedScore": 8,
+    "staminaScore": 5,
+    "powerScore": 6,
+    "notes": "豪州スプリンター。バルセシートの母父。",
+    "id": "140"
+  },
+  {
+    "name": "スニッツェル",
+    "surface": "TURF",
+    "distanceMin": "SPRINT",
+    "distanceMax": "MILE",
+    "course": "BOTH",
+    "growth": "EARLY",
+    "heavyTrack": 6,
+    "speedScore": 9,
+    "staminaScore": 4,
+    "powerScore": 7,
+    "notes": "豪州最強スプリンター。Redoute's Choice系。ロデオドライブの母父。",
+    "id": "141"
+  },
+  {
+    "name": "Thewayyouare",
+    "surface": "TURF",
+    "distanceMin": "MILE",
+    "distanceMax": "MIDDLE",
+    "course": "BOTH",
+    "growth": "NORMAL",
+    "heavyTrack": 6,
+    "speedScore": 7,
+    "staminaScore": 6,
+    "powerScore": 6,
+    "notes": "欧州G1馬。Kingmambo系。フクチャンショウの母父。",
+    "id": "142"
+  },
+  {
+    "name": "スウェプトオーヴァーボード",
+    "surface": "BOTH",
+    "distanceMin": "SPRINT",
+    "distanceMax": "MILE",
+    "course": "BOTH",
+    "growth": "EARLY",
+    "heavyTrack": 6,
+    "speedScore": 9,
+    "staminaScore": 4,
+    "powerScore": 7,
+    "notes": "米国スプリンター。ハッピーエンジェルの母父。",
+    "id": "143"
+  },
+  {
+    "name": "Not For Sale",
+    "surface": "TURF",
+    "distanceMin": "MILE",
+    "distanceMax": "MIDDLE",
+    "course": "BOTH",
+    "growth": "NORMAL",
+    "heavyTrack": 6,
+    "speedScore": 7,
+    "staminaScore": 6,
+    "powerScore": 6,
+    "notes": "欧州中距離馬。オルネーロの母父。",
+    "id": "144"
   }
 ]
