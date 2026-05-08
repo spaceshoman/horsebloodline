@@ -3,6 +3,38 @@
   "race_id": "",
   "race_name": "第31回 NHKマイルカップ",
   "expectedPace": "HIGH",
+  "trends": {
+    "popularity": [
+      { "label": "1番人気", "val": "過去10年【2.1.1.6】複勝率40%。信頼度は標準以下" },
+      { "label": "2番人気", "val": "【4.1.0.5】勝率40%・複勝率50%と最も信頼できる人気帯", "hl": true },
+      { "label": "3番人気", "val": "【1.3.2.4】複勝率60%と高水準", "hl": true },
+      { "label": "4-5番人気", "val": "【2.2.2.14】複勝率30%。中穴狙い目" },
+      { "label": "6-9番人気", "val": "【1.3.5.31】複勝率23%。荒れる年の主役" },
+      { "label": "10番人気以下", "val": "【0.0.0.88】好走例ほぼなし" }
+    ],
+    "popTip": "1番人気の信頼度が低く荒れやすい。2〜3番人気が堅め。昨年は3連単150万円超の大波乱。4年連続で9番人気以下が入線しており波乱は必須と心得たい。",
+    "draw": [
+      { "label": "1枠", "val": "【0-1-0-19】複勝率5%。歴史的に最も不振" },
+      { "label": "2枠", "val": "【1-2-1-16】複勝率20%" },
+      { "label": "3枠", "val": "【0-1-3-16】複勝率20%" },
+      { "label": "4枠", "val": "【0-0-1-19】複勝率5%。内枠全般で不振" },
+      { "label": "5枠", "val": "【0-3-3-14】複勝率30%", "hl": true },
+      { "label": "6枠", "val": "【4-0-0-15】勝率21%！最多勝利枠", "hl": true },
+      { "label": "7枠", "val": "【1-2-0-27】複勝率10%" },
+      { "label": "8枠", "val": "【4-1-2-23】勝率13.3%・複勝率23.3%。外枠有利の代表", "hl": true }
+    ],
+    "drawTip": "外枠（5〜8枠）が圧倒的有利。過去10年で9勝が5〜8枠から。1〜4枠の内枠は勝率1.3%・複勝率12.5%と苦戦。6枠と8枠は特に注目。今年の注目枠→ 6枠(カヴァレリッツォ)・8枠(レザベーション・ロデオドライブ・ローベルクランツ)。",
+    "style": [
+      { "label": "逃げ", "val": "複勝率15%前後。有力馬が被ると失速しやすい" },
+      { "label": "先行(2〜4番手)", "val": "複勝率25%。外枠先行が理想的なポジション", "hl": true },
+      { "label": "中団差し", "val": "複勝率27%。東京1600mは差しが届く", "hl": true },
+      { "label": "追込", "val": "複勝率12%。直線入り口での位置が重要" },
+      { "label": "上がり3F上位3頭", "val": "複勝率55%以上。瞬発力勝負になりやすい", "hl": true }
+    ],
+    "styleTip": "ペース次第だが例年ハイペース(expectedPace:HIGH)になりやすく、上がり上位馬が強い。先行〜中団のポジションから上がりを使える馬が理想。追込一手は届かないケースが多い。今年はaスクイキゴミ・ユウファラオが逃げ争いを演じる可能性あり。",
+    "bloodTip": "父ミスプロ系（キングマンボ系・ロードカナロア系・サートゥルナーリア・American Pharoah等）が過去4連勝中。過去3年1〜3着9頭中6頭がミスプロ系。北米スピード血統がカギ。今年の該当馬: アスクイキゴミ(ロードカナロア)・カヴァレリッツォ(サートゥルナーリア)・アンドゥーリル(サートゥルナーリア)・ロデオドライブ(サートゥルナーリア)・サンダーストラック(ロードカナロア)・ユウファラオ(American Pharoah)・ダイヤモンドノット(ブリックスアンドモルタル)。ディープ系・サンデー系は苦戦気味だが、コントレイル産駒(ジーネキング)・サトノダイヤモンド産駒(オルネーロ・ローベルクランツ)の動向にも注目。",
+    "roteTip": "前走1着馬は不振(特にファルコンS・NZT組は【0-0-0-9】と全滅)。チャーチルダウンズC(旧アーリントンC)1着は例外的に好走例あり。前走2〜5着が最も好走確率が高く(複勝率45%超)、当日2番人気は勝率67%。前走6着以下でも皐月賞・桜花賞組は要注意(過去5頭中4頭が好走)。馬体重は480kg以上が好走の目安。前走距離は1400〜1600mの馬が中心。今年の注目ローテ: カヴァレリッツォ(皐月賞13着→朝日杯FS勝ち実績)・アドマイヤクワッズ(皐月賞15着→朝日杯FS3着実績)はデータ的に要注目。"
+  },
   "runners": [
     {
       "num": 1,
@@ -15,12 +47,7 @@
       "gradeWins": [],
       "paceType": "HIGH",
       "prevRank": 1,
-      "pastRanks": [
-        1,
-        1,
-        null,
-        null
-      ]
+      "pastRanks": [1, 1, null, null]
     },
     {
       "num": 2,
@@ -31,22 +58,11 @@
       "jockey": "坂井瑠星",
       "age": "3",
       "gradeWins": [
-        {
-          "race": "朝日杯FS",
-          "grade": "G1",
-          "place": 3,
-          "year": 2025,
-          "margin": 0.3
-        }
+        { "race": "朝日杯FS", "grade": "G1", "place": 3, "year": 2025, "margin": 0.3 }
       ],
       "paceType": "HIGH",
       "prevRank": 15,
-      "pastRanks": [
-        15,
-        3,
-        3,
-        1
-      ]
+      "pastRanks": [15, 3, 3, 1]
     },
     {
       "num": 3,
@@ -59,12 +75,7 @@
       "gradeWins": [],
       "paceType": "HIGH",
       "prevRank": 8,
-      "pastRanks": [
-        8,
-        7,
-        1,
-        1
-      ]
+      "pastRanks": [8, 7, 1, 1]
     },
     {
       "num": 4,
@@ -77,12 +88,7 @@
       "gradeWins": [],
       "paceType": "HIGH",
       "prevRank": 4,
-      "pastRanks": [
-        4,
-        1,
-        1,
-        null
-      ]
+      "pastRanks": [4, 1, 1, null]
     },
     {
       "num": 5,
@@ -95,12 +101,7 @@
       "gradeWins": [],
       "paceType": "SLOW",
       "prevRank": 1,
-      "pastRanks": [
-        1,
-        5,
-        1,
-        null
-      ]
+      "pastRanks": [1, 5, 1, null]
     },
     {
       "num": 6,
@@ -111,22 +112,11 @@
       "jockey": "西村淳也",
       "age": "3",
       "gradeWins": [
-        {
-          "race": "朝日杯FS",
-          "grade": "G1",
-          "place": 1,
-          "year": 2025,
-          "margin": 0.0
-        }
+        { "race": "朝日杯FS", "grade": "G1", "place": 1, "year": 2025, "margin": 0.0 }
       ],
       "paceType": "HIGH",
       "prevRank": 13,
-      "pastRanks": [
-        13,
-        1,
-        2,
-        1
-      ]
+      "pastRanks": [13, 1, 2, 1]
     },
     {
       "num": 7,
@@ -139,12 +129,7 @@
       "gradeWins": [],
       "paceType": "HIGH",
       "prevRank": 1,
-      "pastRanks": [
-        1,
-        13,
-        1,
-        null
-      ]
+      "pastRanks": [1, 13, 1, null]
     },
     {
       "num": 8,
@@ -157,12 +142,7 @@
       "gradeWins": [],
       "paceType": "HIGH",
       "prevRank": 12,
-      "pastRanks": [
-        12,
-        1,
-        5,
-        1
-      ]
+      "pastRanks": [12, 1, 5, 1]
     },
     {
       "num": 9,
@@ -175,12 +155,7 @@
       "gradeWins": [],
       "paceType": "SLOW",
       "prevRank": 3,
-      "pastRanks": [
-        3,
-        12,
-        10,
-        12
-      ]
+      "pastRanks": [3, 12, 10, 12]
     },
     {
       "num": 10,
@@ -191,29 +166,12 @@
       "jockey": "川田将雅",
       "age": "3",
       "gradeWins": [
-        {
-          "race": "朝日杯FS",
-          "grade": "G1",
-          "place": 2,
-          "year": 2025,
-          "margin": 0.1
-        },
-        {
-          "race": "京王杯2歳S",
-          "grade": "G2",
-          "place": 1,
-          "year": 2025,
-          "margin": 0.0
-        }
+        { "race": "朝日杯FS", "grade": "G1", "place": 2, "year": 2025, "margin": 0.1 },
+        { "race": "京王杯2歳S", "grade": "G2", "place": 1, "year": 2025, "margin": 0.0 }
       ],
       "paceType": "HIGH",
       "prevRank": 1,
-      "pastRanks": [
-        1,
-        2,
-        1,
-        2
-      ]
+      "pastRanks": [1, 2, 1, 2]
     },
     {
       "num": 11,
@@ -226,12 +184,7 @@
       "gradeWins": [],
       "paceType": "BOTH",
       "prevRank": 9,
-      "pastRanks": [
-        9,
-        2,
-        6,
-        4
-      ]
+      "pastRanks": [9, 2, 6, 4]
     },
     {
       "num": 12,
@@ -244,12 +197,7 @@
       "gradeWins": [],
       "paceType": "BOTH",
       "prevRank": 3,
-      "pastRanks": [
-        3,
-        2,
-        4,
-        7
-      ]
+      "pastRanks": [3, 2, 4, 7]
     },
     {
       "num": 13,
@@ -262,12 +210,7 @@
       "gradeWins": [],
       "paceType": "BOTH",
       "prevRank": 3,
-      "pastRanks": [
-        3,
-        3,
-        2,
-        1
-      ]
+      "pastRanks": [3, 3, 2, 1]
     },
     {
       "num": 14,
@@ -280,12 +223,7 @@
       "gradeWins": [],
       "paceType": "HIGH",
       "prevRank": 2,
-      "pastRanks": [
-        2,
-        8,
-        12,
-        6
-      ]
+      "pastRanks": [2, 8, 12, 6]
     },
     {
       "num": 15,
@@ -298,12 +236,7 @@
       "gradeWins": [],
       "paceType": "BOTH",
       "prevRank": 9,
-      "pastRanks": [
-        9,
-        1,
-        2,
-        1
-      ]
+      "pastRanks": [9, 1, 2, 1]
     },
     {
       "num": 16,
@@ -316,12 +249,7 @@
       "gradeWins": [],
       "paceType": "SLOW",
       "prevRank": 1,
-      "pastRanks": [
-        1,
-        1,
-        2,
-        6
-      ]
+      "pastRanks": [1, 1, 2, 6]
     },
     {
       "num": 17,
@@ -334,12 +262,7 @@
       "gradeWins": [],
       "paceType": "HIGH",
       "prevRank": 2,
-      "pastRanks": [
-        2,
-        1,
-        1,
-        null
-      ]
+      "pastRanks": [2, 1, 1, null]
     },
     {
       "num": 18,
@@ -352,12 +275,7 @@
       "gradeWins": [],
       "paceType": "SLOW",
       "prevRank": 2,
-      "pastRanks": [
-        2,
-        7,
-        8,
-        1
-      ]
+      "pastRanks": [2, 7, 8, 1]
     }
   ],
   "result": null,
