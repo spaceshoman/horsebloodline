@@ -1,27 +1,57 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 
+const HORSE_SVG=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="48" height="48">
+  <g fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M38 8 C36 6 32 6 30 8 C28 10 28 13 30 14 L32 15" />
+    <path d="M32 15 C30 16 28 18 27 21 C26 24 27 28 29 30" />
+    <path d="M29 30 C26 32 22 34 20 38 C18 42 19 48 22 50" />
+    <path d="M22 50 L20 58 M22 50 L24 58" />
+    <path d="M29 30 C32 32 36 33 39 32 C42 31 44 28 44 25" />
+    <path d="M44 25 C46 22 47 18 45 15 C43 12 40 11 38 12" />
+    <path d="M38 12 L38 8" />
+    <path d="M44 25 C46 27 48 30 48 34 C48 38 46 42 44 44" />
+    <path d="M44 44 L46 56 M44 44 L42 56" />
+    <path d="M36 8 C37 5 40 4 42 5" />
+    <path d="M36 8 C35 5 33 4 31 5" />
+    <circle cx="35" cy="10" r="1" fill="#c8a84b" stroke="none"/>
+  </g>
+</svg>`;
+
 const PC_STYLES=`
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @media(min-width:768px){
   .kb-app{max-width:100%!important;padding-bottom:0!important}
   .kb-header{padding:10px 24px 8px!important}
-  .kb-header-logo{font-size:24px!important}
-  .kb-next{padding:12px 24px!important}
-  .kb-body{display:grid!important;grid-template-columns:260px 1fr!important;align-items:start}
-  .kb-sidebar{display:block!important;position:sticky;top:53px;height:calc(100vh - 53px);overflow-y:auto;background:#fff;border-right:1px solid #e0e6ed}
+  .kb-header-logo{font-size:28px!important}
+  .kb-header-sub{font-size:10px!important}
+  .kb-header-meta{font-size:11px!important}
+  .kb-next{padding:14px 24px!important}
+  .kb-next-name{font-size:32px!important}
+  .kb-next-info{font-size:11px!important}
+  .kb-body{display:grid!important;grid-template-columns:280px 1fr!important;align-items:start}
+  .kb-sidebar{display:block!important;position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto;background:#fff;border-right:1px solid #e0e6ed}
   .kb-sidebar-inner{padding:0}
   .kb-grade-tabs{display:flex;background:#0d1f3c}
-  .kb-grade-tab{flex:1;padding:9px 0;text-align:center;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;color:rgba(255,255,255,0.4)}
+  .kb-grade-tab{flex:1;padding:10px 0;text-align:center;font-size:13px;font-weight:700;letter-spacing:2px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;color:rgba(255,255,255,0.4)}
   .kb-grade-tab.active{color:#c8a84b;border-bottom:2px solid #c8a84b}
   .kb-race-list-mobile{display:none!important}
   .kb-race-list-pc{display:block!important}
-  .kb-race-item{padding:8px 14px;cursor:pointer;border-left:3px solid transparent;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid #f0f4f8}
+  .kb-race-item{padding:9px 16px;cursor:pointer;border-left:3px solid transparent;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid #f0f4f8}
   .kb-race-item:hover{background:#f8f9fb}
   .kb-race-item.active{background:#f0f6fd;border-left:3px solid #1e5fa8}
-  .kb-race-sec-label{font-size:8px;font-weight:700;color:#8897a8;letter-spacing:2px;padding:8px 14px 4px;border-bottom:0.5px solid #e0e6ed;background:#f8f9fb}
-  .kb-main{padding:16px;min-height:calc(100vh - 100px)}
+  .kb-race-item.done{opacity:0.7}
+  .kb-race-item-name{font-size:13px!important;font-weight:500}
+  .kb-race-item-meta{font-size:11px!important;color:#8897a8;margin-top:2px}
+  .kb-race-sec-label{font-size:10px;font-weight:700;color:#8897a8;letter-spacing:2px;padding:8px 16px 4px;border-bottom:0.5px solid #e0e6ed;background:#f8f9fb}
+  .kb-main{padding:20px;min-height:calc(100vh - 100px)}
+  .kb-main .kb-race-name{font-size:28px!important}
+  .kb-main .kb-race-meta{font-size:12px!important}
+  .kb-main .kb-runner-name{font-size:15px!important}
+  .kb-main .kb-runner-blood{font-size:11px!important}
+  .kb-main .kb-score-num{font-size:36px!important}
   .kb-bottom-nav{display:none!important}
   .kb-pc-topnav{display:flex!important}
+  .kb-horse-icon{display:inline-block!important}
 }
 @media(max-width:767px){
   .kb-sidebar{display:none}
@@ -30,6 +60,7 @@ const PC_STYLES=`
   .kb-pc-topnav{display:none!important}
   .kb-bottom-nav{display:flex!important}
   .kb-main{padding:0}
+  .kb-horse-icon{display:none!important}
 }
 `;
 
@@ -1324,7 +1355,7 @@ const GRADE_RACES = {
     runners:null,result:null,review:null,verification:null},
   tennoshoS2026:{id:"tennoshoS2026",grade:"G1",name:"第173回 天皇賞（春）",date:"2026/5/3",venue:"京都",course:"芝3200m",weather:"",trackCond:"",emoji:"👑",trends:null,result:null,review:null},
   nhkmile2026:{id:"nhkmile2026",grade:"G1",name:"第29回 NHKマイルC",date:"2026/5/10",venue:"東京",course:"芝1600m",weather:"",trackCond:"",emoji:"🎯",trends:null,result:null,review:null},
-  victoria2026:{id:"victoria2026",grade:"G1",name:"第21回 ヴィクトリアマイル",date:"2026/5/17",venue:"東京",course:"芝1600m",weather:"",trackCond:"",emoji:"👑",trends:null,result:null,review:null},
+  victoria2026:{id:"victoria2026",grade:"G1",name:"第21回 ヴィクトリアマイル",date:"2026/5/17",venue:"東京",course:"芝1600m",weather:"",trackCond:"",emoji:"🌺",trends:null,result:null,review:null},
   oaks2026:{id:"oaks2026",grade:"G1",name:"第87回 優駿牝馬（オークス）",date:"2026/5/24",venue:"東京",course:"芝2400m",weather:"",trackCond:"",emoji:"🌹",trends:null,result:null,review:null},
   derby2026:{id:"derby2026",grade:"G1",name:"第93回 東京優駿（日本ダービー）",date:"2026/5/31",venue:"東京",course:"芝2400m",weather:"",trackCond:"",emoji:"🏆",trends:null,result:null,review:null},
   yasuda2026:{id:"yasuda2026",grade:"G1",name:"第76回 安田記念",date:"2026/6/7",venue:"東京",course:"芝1600m",weather:"",trackCond:"",emoji:"⚡",trends:null,result:null,review:null},
@@ -2434,11 +2465,14 @@ export default function App(){
       {/* ===== TOP HEADER ===== */}
       <div className="kb-header" style={{background:"#0d1f3c",padding:"10px 16px 8px",position:"sticky",top:0,zIndex:10,borderBottom:"3px solid #c8a84b"}}>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-          <div>
-            <div className="kb-header-logo" style={{fontFamily:"Bebas Neue, sans-serif",fontSize:20,fontWeight:400,color:"#fff",letterSpacing:"3px"}}>血統くん
-              <span style={{fontFamily:"var(--font-sans)",fontSize:8,color:"#c8a84b",letterSpacing:"3px",marginLeft:8,fontWeight:700}}>BLOODLINE PREDICTOR</span>
+          <div style={{display:"flex",alignItems:"center",gap:8}}>
+            <div className="kb-horse-icon" style={{display:"none"}} dangerouslySetInnerHTML={{__html:HORSE_SVG}}/>
+            <div>
+              <div className="kb-header-logo" style={{fontFamily:"Bebas Neue, sans-serif",fontSize:20,fontWeight:400,color:"#fff",letterSpacing:"3px"}}>血統くん
+                <span className="kb-header-sub" style={{fontFamily:"var(--font-sans)",fontSize:8,color:"#c8a84b",letterSpacing:"3px",marginLeft:8,fontWeight:700}}>BLOODLINE PREDICTOR</span>
+              </div>
+              <div className="kb-header-meta" style={{fontSize:9,color:"rgba(255,255,255,0.45)",letterSpacing:"1px"}}>種牡馬{stats.total}頭 · 騎手{_jockeysData.length}名 · G1 21レース</div>
             </div>
-            <div style={{fontSize:9,color:"rgba(255,255,255,0.45)",letterSpacing:"1px"}}>種牡馬{stats.total}頭 · 騎手{_jockeysData.length}名 · G1 21レース</div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:8}}>
             {/* PC用ナビ */}
