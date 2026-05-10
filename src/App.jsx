@@ -1,5 +1,38 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 
+const PC_STYLES=`
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@media(min-width:768px){
+  .kb-app{max-width:100%!important;padding-bottom:0!important}
+  .kb-header{padding:10px 24px 8px!important}
+  .kb-header-logo{font-size:24px!important}
+  .kb-next{padding:12px 24px!important}
+  .kb-body{display:grid!important;grid-template-columns:260px 1fr!important;align-items:start}
+  .kb-sidebar{display:block!important;position:sticky;top:53px;height:calc(100vh - 53px);overflow-y:auto;background:#fff;border-right:1px solid #e0e6ed}
+  .kb-sidebar-inner{padding:0}
+  .kb-grade-tabs{display:flex;background:#0d1f3c}
+  .kb-grade-tab{flex:1;padding:9px 0;text-align:center;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;color:rgba(255,255,255,0.4)}
+  .kb-grade-tab.active{color:#c8a84b;border-bottom:2px solid #c8a84b}
+  .kb-race-list-mobile{display:none!important}
+  .kb-race-list-pc{display:block!important}
+  .kb-race-item{padding:8px 14px;cursor:pointer;border-left:3px solid transparent;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid #f0f4f8}
+  .kb-race-item:hover{background:#f8f9fb}
+  .kb-race-item.active{background:#f0f6fd;border-left:3px solid #1e5fa8}
+  .kb-race-sec-label{font-size:8px;font-weight:700;color:#8897a8;letter-spacing:2px;padding:8px 14px 4px;border-bottom:0.5px solid #e0e6ed;background:#f8f9fb}
+  .kb-main{padding:16px;min-height:calc(100vh - 100px)}
+  .kb-bottom-nav{display:none!important}
+  .kb-pc-topnav{display:flex!important}
+}
+@media(max-width:767px){
+  .kb-sidebar{display:none}
+  .kb-race-list-pc{display:none!important}
+  .kb-race-list-mobile{display:block!important}
+  .kb-pc-topnav{display:none!important}
+  .kb-bottom-nav{display:flex!important}
+  .kb-main{padding:0}
+}
+`;
+
 /* ===== Sky Blue Theme ===== */
 const SKY_CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700&display=swap');
@@ -2395,89 +2428,147 @@ export default function App(){
   
 
   return(
-    <div style={{maxWidth:480,margin:"0 auto",fontFamily:"var(--font-sans)",paddingBottom:68,minHeight:"100vh",background:"#f0f6fd"}}>
+    <div className="kb-app" style={{maxWidth:480,margin:"0 auto",fontFamily:"var(--font-sans)",paddingBottom:68,minHeight:"100vh",background:"#f0f6fd"}}>
+      <style>{PC_STYLES}</style>
 
       {/* ===== TOP HEADER ===== */}
-      <div style={{background:"#1e5fa8",padding:"12px 16px 10px",position:"sticky",top:0,zIndex:10}}>
+      <div className="kb-header" style={{background:"#0d1f3c",padding:"10px 16px 8px",position:"sticky",top:0,zIndex:10,borderBottom:"3px solid #c8a84b"}}>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
           <div>
-            <div style={{fontFamily:"Bebas Neue, sans-serif",fontSize:20,fontWeight:400,color:"#fff",letterSpacing:"3px"}}>血統くん</div>
-            <div style={{fontSize:9,color:"rgba(255,255,255,0.55)",letterSpacing:"1px"}}>種牡馬{stats.total}頭 · 騎手{_jockeysData.length}名 · G1 21レース</div>
-          </div>
-          {tab==="predict"&&(
-            <div style={{display:"flex",display:"flex",background:"rgba(255,255,255,0.12)",borderRadius:20,padding:"2px"}}>
-              <button onClick={()=>setPredMode("grade")} style={{padding:"5px 12px",border:"none",background:predMode==="grade"?"#fff":"transparent",color:predMode==="grade"?"#1e5fa8":"rgba(255,255,255,0.55)",fontSize:10,fontWeight:700,cursor:"pointer",borderRadius:16,padding:"4px 10px",border:"none"}}>重賞</button>
-              <button onClick={()=>setPredMode("hiraba")} style={{padding:"5px 12px",border:"none",background:predMode==="hiraba"?"#fff":"transparent",color:predMode==="hiraba"?"#1e5fa8":"rgba(255,255,255,0.55)",fontSize:10,fontWeight:700,cursor:"pointer",borderRadius:16,padding:"4px 10px",border:"none"}}>平場</button>
+            <div className="kb-header-logo" style={{fontFamily:"Bebas Neue, sans-serif",fontSize:20,fontWeight:400,color:"#fff",letterSpacing:"3px"}}>血統くん
+              <span style={{fontFamily:"var(--font-sans)",fontSize:8,color:"#c8a84b",letterSpacing:"3px",marginLeft:8,fontWeight:700}}>BLOODLINE PREDICTOR</span>
             </div>
-          )}
+            <div style={{fontSize:9,color:"rgba(255,255,255,0.45)",letterSpacing:"1px"}}>種牡馬{stats.total}頭 · 騎手{_jockeysData.length}名 · G1 21レース</div>
+          </div>
+          <div style={{display:"flex",alignItems:"center",gap:8}}>
+            {/* PC用ナビ */}
+            <div className="kb-pc-topnav" style={{display:"none",gap:4}}>
+              {["predict","db","keisan"].map((t,i)=>(
+                <button key={t} onClick={()=>setTab(t)} style={{
+                  padding:"5px 14px",border:"none",background:tab===t?"#c8a84b":"rgba(255,255,255,0.1)",
+                  color:tab===t?"#0d1f3c":"rgba(255,255,255,0.6)",fontSize:10,fontWeight:700,cursor:"pointer",letterSpacing:"1px"
+                }}>{["予想","血統DB","馬券計算"][i]}</button>
+              ))}
+            </div>
+            {tab==="predict"&&(
+              <div style={{display:"flex",background:"rgba(255,255,255,0.12)",borderRadius:20,padding:"2px"}}>
+                <button onClick={()=>setPredMode("grade")} style={{padding:"4px 10px",border:"none",background:predMode==="grade"?"#fff":"transparent",color:predMode==="grade"?"#1e5fa8":"rgba(255,255,255,0.55)",fontSize:10,fontWeight:700,cursor:"pointer",borderRadius:16}}>重賞</button>
+                <button onClick={()=>setPredMode("hiraba")} style={{padding:"4px 10px",border:"none",background:predMode==="hiraba"?"#fff":"transparent",color:predMode==="hiraba"?"#1e5fa8":"rgba(255,255,255,0.55)",fontSize:10,fontWeight:700,cursor:"pointer",borderRadius:16}}>平場</button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
       {/* ===== PREDICT TAB ===== */}
       {tab==="predict"&&predMode==="grade"&&(
         <div>
-          {/* Hero card: next race */}
+          {/* Next Race Hero */}
           {nextRace&&(
-            <div onClick={()=>{setSelectedRace(nextRace.id);setSelectedGrade(nextRace.grade||"G1");}}
-              style={{background:"#3578c4",padding:"14px 16px 14px",cursor:"pointer"}}>
-              <div style={{fontSize:9,color:"rgba(255,255,255,0.6)",letterSpacing:"2px",fontWeight:700,marginBottom:4}}>次の重賞</div>
-              <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-                <div>
-                  <div style={{display:"flex",alignItems:"center",gap:6}}>
-                    <span style={{fontSize:9,padding:"2px 8px",borderRadius:12,background:"#f0b840",color:"#0d1f3c",fontWeight:700,letterSpacing:"1px"}}>{nextRace.grade}</span>
-                    <div style={{fontFamily:"Bebas Neue,sans-serif",fontSize:26,fontWeight:400,color:"#fff",letterSpacing:"2px"}}>{nextRace.emoji} {nextRace.name.replace(/第\d+回\s*/,"")}</div>
-                  </div>
-                  <div style={{fontSize:10,color:"rgba(255,255,255,0.65)",marginTop:3}}>{nextRace.date} · {nextRace.venue} {nextRace.course}</div>
+            <div className="kb-next" onClick={()=>{setSelectedRace(nextRace.id);setSelectedGrade(nextRace.grade||"G1");}}
+              style={{background:"#0d1f3c",borderLeft:"4px solid #c8a84b",padding:"12px 16px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+              <div>
+                <div style={{fontSize:8,color:"#c8a84b",letterSpacing:"3px",fontWeight:700,marginBottom:5}}>NEXT RACE</div>
+                <div style={{display:"flex",alignItems:"center",gap:6}}>
+                  <span style={{fontSize:8,padding:"2px 7px",background:"#c8a84b",color:"#0d1f3c",fontWeight:700,letterSpacing:"1px"}}>{nextRace.grade}</span>
+                  <div style={{fontFamily:"Bebas Neue,sans-serif",fontSize:26,fontWeight:400,color:"#fff",letterSpacing:"2px"}}>{nextRace.emoji} {nextRace.name.replace(/第\d+回\s*/,"")}</div>
                 </div>
-                {nextRace.runners&&<div style={{fontSize:10,color:"rgba(255,255,255,0.65)"}}>{nextRace.runners.length}頭</div>}
+                <div style={{fontSize:9,color:"rgba(255,255,255,0.5)",marginTop:3,letterSpacing:"1px"}}>{nextRace.date} · {nextRace.venue} {nextRace.course}{nextRace.runners&&` · ${nextRace.runners.length}頭`}</div>
               </div>
+              <div style={{color:"#c8a84b",fontSize:16}}>▶</div>
             </div>
           )}
 
-          {/* Grade filter tabs */}
-          <div style={{display:"flex",background:"var(--color-background-primary)",borderBottom:"0.5px solid var(--color-border-tertiary)"}}>
-            {[{g:"G1",c:"#1e5fa8"},{g:"G2",c:"#1e5fa8"},{g:"G3",c:"#1e5fa8"}].map(({g,c})=>(
-              <button key={g} onClick={()=>setSelectedGrade(g)} style={{
-                flex:1,padding:"10px 0",border:"none",cursor:"pointer",
-                background:"transparent",
-                borderBottom:selectedGrade===g?"3px solid #1e5fa8":"3px solid transparent",
-                color:selectedGrade===g?"#1e5fa8":"#7a9ab8",
-                fontSize:13,fontWeight:selectedGrade===g?600:400,
-                transition:"all 0.15s",
-              }}>{g}</button>
-            ))}
-          </div>
-
-          {/* Race selector filtered by grade */}
-          <div style={{padding:"10px 12px",background:"var(--color-background-primary)",borderBottom:"0.5px solid var(--color-border-tertiary)"}}>
-            <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
-              {Object.values(GRADE_RACES).filter(g=>g.grade===selectedGrade).map(g=>{
-                const isSel=selectedRace===g.id;
-                const hasData=!!g.result;
-                const hasRunners=!!g.runners;
-                return(
-                  <button key={g.id} onClick={()=>setSelectedRace(g.id)} style={{
-                    padding:"5px 8px",borderRadius:8,cursor:"pointer",fontSize:9,fontWeight:isSel?600:400,
-                    border:isSel?"2px solid #1e5fa8":"0.5px solid var(--color-border-tertiary)",
-                    background:isSel?"#f0f6fd":hasData?"var(--color-background-primary)":"var(--color-background-secondary)",
-                    color:isSel?"#1e5fa8":hasData?"var(--color-text-primary)":"var(--color-text-tertiary)",
-                    opacity:hasData||hasRunners||isSel?1:0.5,
-                  }}>
-                    {g.emoji}{g.name.replace(/第\d+回\s*/,"").slice(0,10)}
-                    {hasData&&<span style={{marginLeft:2,color:"#1e5fa8",fontSize:7}}>✓</span>}
-                    {hasRunners&&!hasData&&<span style={{marginLeft:2,color:"#d4941a",fontSize:7}}>▶</span>}
-                  </button>
-                );
-              })}
-              {Object.values(GRADE_RACES).filter(g=>g.grade===selectedGrade).length===0&&(
-                <div style={{fontSize:11,color:"var(--color-text-tertiary)",padding:"8px 4px"}}>登録レースなし（今後追加予定）</div>
-              )}
+          {/* 2カラムボディ */}
+          <div className="kb-body">
+            {/* PC サイドバー */}
+            <div className="kb-sidebar">
+              <div className="kb-sidebar-inner">
+                <div className="kb-grade-tabs">
+                  {["G1","G2","G3"].map(g=>(
+                    <button key={g} className={`kb-grade-tab${selectedGrade===g?" active":""}`} onClick={()=>setSelectedGrade(g)}>{g}</button>
+                  ))}
+                </div>
+                {/* レースリスト（PC用縦並び） */}
+                <div className="kb-race-list-pc">
+                  {(()=>{
+                    const today=new Date();today.setHours(0,0,0,0);
+                    const races=Object.values(GRADE_RACES).filter(g=>g.grade===selectedGrade);
+                    const merged=races.map(g=>({...g,...(reviews[g.id]||{})}));
+                    const done=merged.filter(g=>g.result);
+                    const live=merged.filter(g=>!g.result&&g.runners&&g.runners.length>0);
+                    const upcoming=merged.filter(g=>!g.result&&(!g.runners||g.runners.length===0));
+                    const RaceItem=({g})=>{
+                      const isSel=selectedRace===g.id;
+                      return(
+                        <div className={`kb-race-item${isSel?" active":""}`} onClick={()=>setSelectedRace(g.id)}>
+                          <div>
+                            <div style={{fontSize:11,fontWeight:500,color:"#0d1f3c"}}>{g.emoji}{g.name.replace(/第\d+回\s*/,"")}</div>
+                            <div style={{fontSize:9,color:"#8897a8",marginTop:1}}>{g.date} · {g.venue} {g.course}</div>
+                          </div>
+                          {g.result?<span style={{fontSize:8,background:"#e8f0f8",color:"#1e5fa8",padding:"1px 5px",fontWeight:700}}>✓</span>
+                          :g.runners?<span style={{fontSize:8,background:"#fff8e8",color:"#8b6000",padding:"1px 5px",fontWeight:700}}>▶</span>
+                          :<span style={{fontSize:8,background:"#0d1f3c",color:"#c8a84b",padding:"1px 5px",fontWeight:700}}>{g.grade}</span>}
+                        </div>
+                      );
+                    };
+                    return(<>
+                      {done.length>0&&<><div className="kb-race-sec-label">終了</div>{done.map(g=><RaceItem key={g.id} g={g}/>)}</>}
+                      {live.length>0&&<><div className="kb-race-sec-label">出走馬確定</div>{live.map(g=><RaceItem key={g.id} g={g}/>)}</>}
+                      {upcoming.length>0&&<><div className="kb-race-sec-label">今後</div>{upcoming.map(g=><RaceItem key={g.id} g={g}/>)}</>}
+                      {races.length===0&&<div style={{fontSize:11,color:"#8897a8",padding:"12px 14px"}}>登録レースなし</div>}
+                    </>);
+                  })()}
+                </div>
+              </div>
             </div>
-          </div>
 
-          {/* Race detail page */}
-          <div style={{padding:"0 0 12px"}}>
-            <GradeRacePage raceId={selectedRace} stallions={stallions} reviews={reviews}/>
+            {/* メインコンテンツ */}
+            <div className="kb-main">
+              {/* スマホ用グレードタブ */}
+              <div className="kb-race-list-mobile">
+                <div style={{display:"flex",background:"var(--color-background-primary)",borderBottom:"0.5px solid var(--color-border-tertiary)"}}>
+                  {["G1","G2","G3"].map(g=>(
+                    <button key={g} onClick={()=>setSelectedGrade(g)} style={{
+                      flex:1,padding:"10px 0",border:"none",cursor:"pointer",background:"transparent",
+                      borderBottom:selectedGrade===g?"3px solid #1e5fa8":"3px solid transparent",
+                      color:selectedGrade===g?"#1e5fa8":"#7a9ab8",fontSize:13,fontWeight:selectedGrade===g?600:400,
+                    }}>{g}</button>
+                  ))}
+                </div>
+                <div style={{padding:"10px 12px",background:"var(--color-background-primary)",borderBottom:"0.5px solid var(--color-border-tertiary)"}}>
+                  <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
+                    {Object.values(GRADE_RACES).filter(g=>g.grade===selectedGrade).map(g=>{
+                      const isSel=selectedRace===g.id;
+                      const rv=reviews[g.id]||{};
+                      const hasData=!!rv.result;
+                      const hasRunners=!!(rv.runners&&rv.runners.length>0)||(g.runners&&g.runners.length>0);
+                      return(
+                        <button key={g.id} onClick={()=>setSelectedRace(g.id)} style={{
+                          padding:"5px 8px",borderRadius:8,cursor:"pointer",fontSize:9,fontWeight:isSel?600:400,
+                          border:isSel?"2px solid #1e5fa8":"0.5px solid var(--color-border-tertiary)",
+                          background:isSel?"#f0f6fd":hasData?"var(--color-background-primary)":"var(--color-background-secondary)",
+                          color:isSel?"#1e5fa8":hasData?"var(--color-text-primary)":"var(--color-text-tertiary)",
+                          opacity:hasData||hasRunners||isSel?1:0.5,
+                        }}>
+                          {g.emoji}{g.name.replace(/第\d+回\s*/,"").slice(0,10)}
+                          {hasData&&<span style={{marginLeft:2,color:"#1e5fa8",fontSize:7}}>✓</span>}
+                          {hasRunners&&!hasData&&<span style={{marginLeft:2,color:"#d4941a",fontSize:7}}>▶</span>}
+                        </button>
+                      );
+                    })}
+                    {Object.values(GRADE_RACES).filter(g=>g.grade===selectedGrade).length===0&&(
+                      <div style={{fontSize:11,color:"var(--color-text-tertiary)",padding:"8px 4px"}}>登録レースなし（今後追加予定）</div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* レース詳細 */}
+              <div style={{padding:"0 0 12px"}}>
+                <GradeRacePage raceId={selectedRace} stallions={stallions} reviews={reviews}/>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -2581,7 +2672,7 @@ export default function App(){
       )}
 
       {/* ===== BOTTOM NAVIGATION ===== */}
-      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,background:"var(--color-background-primary)",borderTop:"0.5px solid var(--color-border-tertiary)",display:"flex",zIndex:20,paddingBottom:"env(safe-area-inset-bottom)"}}>
+      <div className="kb-bottom-nav" style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,background:"#0d1f3c",borderTop:"2px solid #c8a84b",display:"flex",zIndex:20,paddingBottom:"env(safe-area-inset-bottom)"}}>
         {[
           {id:"predict",emoji:"🏇",label:"予想"},
           {id:"database",emoji:"📚",label:"血統DB"},
