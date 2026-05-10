@@ -1682,16 +1682,34 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               if(jvs.score>=8) strengths.push("騎手×会場◎");
               if(jvs.score<=4) weaknesses.push("騎手×会場△");
             }
-            // ② 前走着順トレンド補正
+            // ② 前走着順トレンド補正（条件付きペナルティあり）
             let trendBonus=0;
             const prevRank=runner.prevRank||null;
+            const prevRaceGrade=runner.prevRaceGrade||null; // "G1","G2","G3","OP","L"
+            const prevRaceDist=runner.prevRaceDist||null;   // 例: 1400
+            const prevRaceName=runner.prevRaceName||"";     // 例: "ファルコンS"
             if(prevRank!==null){
-              if(prevRank===1){trendBonus=3;strengths.push("前走1着の勢い◎");}
+              if(prevRank===1){
+                // 前走1着でも短距離重賞勝ちはペナルティ
+                const shortGradeWin=prevRaceDist&&prevRaceDist<=1400&&(prevRaceGrade==="G2"||prevRaceGrade==="G3");
+                const shortSprintWin=["NZT","ファルコンS","チャーチルダウンズC","フィリーズレビュー"].some(n=>prevRaceName.includes(n));
+                if(shortSprintWin){trendBonus=-5;weaknesses.push("前走短距離重賞→距離延長×");}
+                else if(shortGradeWin){trendBonus=-3;weaknesses.push("前走短距離重賞→適性疑問");}
+                else{trendBonus=3;strengths.push("前走1着の勢い◎");}
+              }
               else if(prevRank===2){trendBonus=2;strengths.push("前走2着好走");}
               else if(prevRank===3){trendBonus=1;strengths.push("前走3着好走");}
               else if(prevRank>=10){trendBonus=-3;weaknesses.push("前走大敗（10着以下）");}
             }
             bonus+=trendBonus;
+            // ③ 枠順補正（東京マイル限定）
+            const frame=runner.frame||null;
+            const isTokyo=race.venue==="東京";
+            const isMile=courseMeters===1600;
+            if(frame&&isTokyo&&isMile){
+              if(frame<=4){bonus-=4;weaknesses.push("内枠不利（東京マイル）");}
+              else if(frame>=7){bonus+=5;strengths.push("外枠有利（東京マイル）");}
+            }
             // 重賞実績ボーナス（年数減衰＋タイム差減衰あり）
             let gradeBonus=0;
             const gw=runner.gradeWins||[];
@@ -1732,7 +1750,8 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
                 paceBonus=paceRange;
                 strengths.push(expectedPace==="SLOW"?"スロー瞬発力◎":"ハイペース耐性◎");
               } else {
-                paceBonus=-paceRange;
+                // SLOW型×HIGH予想 or HIGH型×SLOW予想は強めにペナルティ
+                paceBonus=isVeryLong?-4:-8;
                 weaknesses.push(expectedPace==="SLOW"?"スロー向き×（ハイペース型）":"ハイペース向き×（スロー型）");
               }
             }
