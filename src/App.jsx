@@ -18,8 +18,86 @@ const HORSE_SVG=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" wid
 </svg>`;
 
 const PC_STYLES=`
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Serif+JP:wght@700;900&display=swap');
+
+/* === スマホ専用: 漆黒×ゴールドテーマ === */
+@media(max-width:767px){
+  body{background:#0a0a0a!important}
+  .kb-app{background:#0a0a0a!important;color:#fff!important}
+
+  /* ヘッダー */
+  .kb-header{background:#0a0a0a!important;border-bottom:1px solid rgba(200,168,75,0.15)!important}
+  .kb-header-logo{font-family:'Noto Serif JP',serif!important;background:linear-gradient(135deg,#f5d77a,#c8a84b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;color:transparent!important;letter-spacing:1px!important}
+  .kb-header-sub{color:#8a7530!important}
+  .kb-header-meta{color:rgba(255,255,255,0.4)!important}
+
+  /* 次の重賞ヒーロー */
+  .kb-next{background:radial-gradient(ellipse at top right,rgba(200,168,75,0.25),transparent 60%),linear-gradient(180deg,#1a1408 0%,#0e0a04 100%)!important;border:1px solid rgba(200,168,75,0.35)!important;border-left:4px solid #c8a84b!important;margin:14px 14px 0!important;border-radius:18px!important;padding:18px!important}
+  .kb-next .kb-next-label{color:#c8a84b!important}
+  .kb-next .kb-next-name{font-family:'Noto Serif JP',serif!important;font-weight:900!important;color:#fff!important;font-size:28px!important;letter-spacing:1px!important}
+
+  /* ボトムナビ */
+  .kb-bottom-nav{background:rgba(10,10,10,0.95)!important;backdrop-filter:blur(10px);border-top:1px solid rgba(200,168,75,0.15)!important;border-bottom:none!important}
+
+  /* カード全般を暗色化 */
+  .kb-app [style*="background: var(--color-background-primary)"],
+  .kb-app [style*="background:var(--color-background-primary)"],
+  .kb-app [style*="background: rgb(255, 255, 255)"],
+  .kb-app [style*="background:#fff"],
+  .kb-app [style*="background: #fff"]{background:#141414!important;color:#fff!important}
+
+  /* 入力フィールド */
+  .kb-app input,.kb-app select,.kb-app textarea{background:#1a1a1a!important;color:#fff!important;border-color:rgba(200,168,75,0.2)!important}
+
+  /* テキスト全般 */
+  .kb-app{--color-text-primary:#fff;--color-text-secondary:rgba(255,255,255,0.7);--color-text-tertiary:rgba(255,255,255,0.4);--color-background-primary:#141414;--color-background-secondary:#0a0a0a;--color-border-tertiary:rgba(200,168,75,0.12)}
+}
+
+/* === PC: 既存のままsa === */
 @media(min-width:768px){
+  .kb-app{max-width:100%!important;padding-bottom:0!important}
+  .kb-header{padding:10px 24px 8px!important}
+  .kb-header-logo{font-size:28px!important}
+  .kb-header-sub{font-size:10px!important}
+  .kb-header-meta{font-size:11px!important}
+  .kb-next{padding:14px 24px!important}
+  .kb-next-name{font-size:32px!important}
+  .kb-next-info{font-size:11px!important}
+  .kb-body{display:grid!important;grid-template-columns:280px 1fr!important;align-items:start}
+  .kb-sidebar{display:block!important;position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto;background:#fff;border-right:1px solid #e0e6ed}
+  .kb-sidebar-inner{padding:0}
+  .kb-grade-tabs{display:flex;background:#0d1f3c}
+  .kb-grade-tab{flex:1;padding:10px 0;text-align:center;font-size:13px;font-weight:700;letter-spacing:2px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;color:rgba(255,255,255,0.4)}
+  .kb-grade-tab.active{color:#c8a84b;border-bottom:2px solid #c8a84b}
+  .kb-race-list-mobile{display:none!important}
+  .kb-race-list-pc{display:block!important}
+  .kb-race-item{padding:9px 16px;cursor:pointer;border-left:3px solid transparent;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid #f0f4f8}
+  .kb-race-item:hover{background:#f8f9fb}
+  .kb-race-item.active{background:#f0f6fd;border-left:3px solid #1e5fa8}
+  .kb-race-item.done{opacity:0.7}
+  .kb-race-item-name{font-size:13px!important;font-weight:500}
+  .kb-race-item-meta{font-size:11px!important;color:#8897a8;margin-top:2px}
+  .kb-race-sec-label{font-size:10px;font-weight:700;color:#8897a8;letter-spacing:2px;padding:8px 16px 4px;border-bottom:0.5px solid #e0e6ed;background:#f8f9fb}
+  .kb-main{padding:20px;min-height:calc(100vh - 100px)}
+  .kb-main .kb-race-name{font-size:28px!important}
+  .kb-main .kb-race-meta{font-size:12px!important}
+  .kb-main .kb-runner-name{font-size:15px!important}
+  .kb-main .kb-runner-blood{font-size:11px!important}
+  .kb-main .kb-score-num{font-size:36px!important}
+  .kb-bottom-nav{display:none!important}
+  .kb-pc-topnav{display:flex!important}
+  .kb-horse-icon{display:inline-block!important}
+}
+@media(max-width:767px){
+  .kb-sidebar{display:none}
+  .kb-race-list-pc{display:none!important}
+  .kb-race-list-mobile{display:block!important}
+  .kb-pc-topnav{display:none!important}
+  .kb-bottom-nav{display:flex!important}
+  .kb-main{padding:0}
+  .kb-horse-icon{display:none!important}
+}
+`;
   .kb-app{max-width:100%!important;padding-bottom:0!important}
   .kb-header{padding:10px 24px 8px!important}
   .kb-header-logo{font-size:28px!important}
@@ -2502,12 +2580,12 @@ export default function App(){
             <div className="kb-next" onClick={()=>{setSelectedRace(nextRace.id);setSelectedGrade(nextRace.grade||"G1");}}
               style={{background:"#0d1f3c",borderLeft:"4px solid #c8a84b",padding:"12px 16px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
               <div>
-                <div style={{fontSize:8,color:"#c8a84b",letterSpacing:"3px",fontWeight:700,marginBottom:5}}>NEXT RACE</div>
+                <div className="kb-next-label" style={{fontSize:8,color:"#c8a84b",letterSpacing:"3px",fontWeight:700,marginBottom:5}}>NEXT RACE</div>
                 <div style={{display:"flex",alignItems:"center",gap:6}}>
                   <span style={{fontSize:8,padding:"2px 7px",background:"#c8a84b",color:"#0d1f3c",fontWeight:700,letterSpacing:"1px"}}>{nextRace.grade}</span>
-                  <div style={{fontFamily:"Bebas Neue,sans-serif",fontSize:26,fontWeight:400,color:"#fff",letterSpacing:"2px"}}>{nextRace.emoji} {nextRace.name.replace(/第\d+回\s*/,"")}</div>
+                  <div className="kb-next-name" style={{fontFamily:"Bebas Neue,sans-serif",fontSize:26,fontWeight:400,color:"#fff",letterSpacing:"2px"}}>{nextRace.emoji} {nextRace.name.replace(/第\d+回\s*/,"")}</div>
                 </div>
-                <div style={{fontSize:9,color:"rgba(255,255,255,0.5)",marginTop:3,letterSpacing:"1px"}}>{nextRace.date} · {nextRace.venue} {nextRace.course}{nextRace.runners&&` · ${nextRace.runners.length}頭`}</div>
+                <div className="kb-next-info" style={{fontSize:9,color:"rgba(255,255,255,0.5)",marginTop:3,letterSpacing:"1px"}}>{nextRace.date} · {nextRace.venue} {nextRace.course}{nextRace.runners&&` · ${nextRace.runners.length}頭`}</div>
               </div>
               <div style={{color:"#c8a84b",fontSize:16}}>▶</div>
             </div>
