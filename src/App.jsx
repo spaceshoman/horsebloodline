@@ -1517,6 +1517,7 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
   },[raceId,hasResult,hasRunners]);
   const [bloodResults,setBloodResults]=useState(null);
   const [selectedCond,setSelectedCond]=useState(null);
+  const [diagView,setDiagView]=useState("list"); // "list" or "diag"
   // sectionsはhasResult/hasVerifyが変わるたびに再計算
   // レース前: 出走馬・傾向・脚質を強調 / レース後: 結果・回顧・検証を強調
   const sections=useMemo(()=>[
@@ -1899,6 +1900,20 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
           setBloodResults(scored);
         };
         return(<div>
+          {/* 出馬表 / AI血統診断 切り替えタブ */}
+          <div style={{display:"flex",marginBottom:12,background:"var(--color-background-secondary)",borderRadius:12,padding:3}}>
+            <button onClick={()=>setDiagView("list")} style={{flex:1,padding:"10px 0",border:"none",borderRadius:10,cursor:"pointer",fontSize:13,fontWeight:700,
+              background:diagView==="list"?"var(--color-background-primary)":"transparent",
+              color:diagView==="list"?"var(--color-text-primary)":"var(--color-text-tertiary)",
+              boxShadow:diagView==="list"?"0 1px 4px rgba(0,0,0,0.1)":"none"}}>出馬表</button>
+            <button onClick={()=>{setDiagView("diag");if(!bloodResults&&selectedCond)runAnalysis(selectedCond);else if(!bloodResults)runAnalysis("GOOD");}} style={{flex:1,padding:"10px 0",border:"none",borderRadius:10,cursor:"pointer",fontSize:13,fontWeight:700,
+              background:diagView==="diag"?"linear-gradient(135deg,#c8a84b,#a8873a)":"transparent",
+              color:diagView==="diag"?"#0a0a0a":"var(--color-text-tertiary)",
+              boxShadow:diagView==="diag"?"0 1px 4px rgba(200,168,75,0.3)":"none"}}>AI血統診断</button>
+          </div>
+
+          {/* === 出馬表ビュー === */}
+          {diagView==="list"&&(<>
           <div style={{fontSize:12,fontWeight:500,color:"var(--color-text-primary)",marginBottom:8}}>出走馬一覧（{race.runners.length}頭）</div>
           {race.runners.map((r,i)=>{
             const sireMatch=stallions.some(s=>s.name===r.sire);
@@ -1929,7 +1944,7 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
                   <span style={{fontSize:9,fontWeight:700,color:race.expectedPace==="SLOW"?"#3578c4":"#d4941a"}}>
                     {race.expectedPace==="SLOW"?"🐢 スロー予想（瞬発力勝負）":"⚡ ハイペース予想（持続力勝負）"}
                   </span>
-                  <span style={{fontSize:8,color:"var(--color-text-tertiary)"}}>±5pt補正あり</span>
+                  <span style={{fontSize:8,color:"var(--color-text-tertiary)"}}>±6pt補正あり</span>
                 </div>
               )}
               <div style={{display:"flex",gap:4}}>
@@ -1950,10 +1965,31 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               </div>
             </div>
           </div>
-          {bloodResults&&(
-            <div style={{marginTop:14}}>
-              <div style={{fontSize:12,fontWeight:500,color:"var(--color-text-primary)",marginBottom:4}}>血統診断結果</div>
-              <div style={{fontSize:9,color:"var(--color-text-tertiary)",marginBottom:10}}>{race.venue} {race.course} / 馬場: <span style={{fontWeight:600,color:selectedCond==="GOOD"?"#1e5fa8":selectedCond==="SLIGHTLY_HEAVY"?"#3578c4":selectedCond==="HEAVY"?"#4a90d9":"#A32D2D"}}>{TRACK_COND[selectedCond]||"未選択"}</span></div>
+          </>)}
+
+          {/* === AI血統診断ビュー === */}
+          {diagView==="diag"&&(<>
+            <div style={{padding:"10px 14px",borderRadius:12,background:"linear-gradient(90deg,rgba(200,168,75,0.1),transparent)",border:"1px solid rgba(200,168,75,0.2)",marginBottom:12,display:"flex",alignItems:"center",gap:8}}>
+              <span style={{fontSize:16}}>✨</span>
+              <span style={{fontSize:12,fontWeight:600,color:"var(--color-text-primary)"}}>AI診断結果</span>
+              <span style={{fontSize:10,color:"var(--color-text-tertiary)"}}>・{race.venue}{race.course} / 馬場: {TRACK_COND[selectedCond]||"良"}</span>
+            </div>
+            {/* 馬場状態切り替え */}
+            <div style={{display:"flex",gap:4,marginBottom:14}}>
+              {Object.entries(TRACK_COND).map(([k,v])=>{
+                const isSelected=selectedCond===k;
+                return(
+                  <button key={k} onClick={()=>runAnalysis(k)} style={{
+                    flex:1,padding:"8px 0",borderRadius:8,cursor:"pointer",fontSize:11,fontWeight:600,
+                    border:isSelected?"2px solid #c8a84b":"1px solid var(--color-border-tertiary)",
+                    background:isSelected?"rgba(200,168,75,0.15)":"var(--color-background-secondary)",
+                    color:isSelected?"#c8a84b":"var(--color-text-tertiary)",
+                  }}>🏇 {v}</button>
+                );
+              })}
+            </div>
+          {bloodResults&&diagView==="diag"&&(
+            <div style={{marginTop:0}}>
               {bloodResults.map((r,i)=>{
                 const sc=r.mark==="◎"?"#d4941a":r.mark==="○"?"#1e5fa8":r.mark==="▲"?"#3578c4":r.mark==="✖"?"#4a90d9":"#7a9ab8";
                 const mc=sc;
@@ -2079,6 +2115,13 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               })()}
             </div>
           )}
+          {!bloodResults&&diagView==="diag"&&(
+            <div style={{textAlign:"center",padding:"40px 0",color:"var(--color-text-tertiary)"}}>
+              <div style={{fontSize:32,marginBottom:8}}>🏇</div>
+              <div style={{fontSize:12}}>馬場状態を選択すると診断が始まります</div>
+            </div>
+          )}
+          </>)}
         </div>);
       })()}
       {/* TRENDS */}
