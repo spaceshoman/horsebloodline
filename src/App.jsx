@@ -98,6 +98,49 @@ const PC_STYLES=`
   .kb-horse-icon{display:none!important}
 }
 `;
+  .kb-app{max-width:100%!important;padding-bottom:0!important}
+  .kb-header{padding:10px 24px 8px!important}
+  .kb-header-logo{font-size:28px!important}
+  .kb-header-sub{font-size:10px!important}
+  .kb-header-meta{font-size:11px!important}
+  .kb-next{padding:14px 24px!important}
+  .kb-next-name{font-size:32px!important}
+  .kb-next-info{font-size:11px!important}
+  .kb-body{display:grid!important;grid-template-columns:280px 1fr!important;align-items:start}
+  .kb-sidebar{display:block!important;position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto;background:#fff;border-right:1px solid #e0e6ed}
+  .kb-sidebar-inner{padding:0}
+  .kb-grade-tabs{display:flex;background:#0d1f3c}
+  .kb-grade-tab{flex:1;padding:10px 0;text-align:center;font-size:13px;font-weight:700;letter-spacing:2px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;color:rgba(255,255,255,0.4)}
+  .kb-grade-tab.active{color:#c8a84b;border-bottom:2px solid #c8a84b}
+  .kb-race-list-mobile{display:none!important}
+  .kb-race-list-pc{display:block!important}
+  .kb-race-item{padding:9px 16px;cursor:pointer;border-left:3px solid transparent;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid #f0f4f8}
+  .kb-race-item:hover{background:#f8f9fb}
+  .kb-race-item.active{background:#f0f6fd;border-left:3px solid #1e5fa8}
+  .kb-race-item.done{opacity:0.7}
+  .kb-race-item-name{font-size:13px!important;font-weight:500}
+  .kb-race-item-meta{font-size:11px!important;color:#8897a8;margin-top:2px}
+  .kb-race-sec-label{font-size:10px;font-weight:700;color:#8897a8;letter-spacing:2px;padding:8px 16px 4px;border-bottom:0.5px solid #e0e6ed;background:#f8f9fb}
+  .kb-main{padding:20px;min-height:calc(100vh - 100px)}
+  .kb-main .kb-race-name{font-size:28px!important}
+  .kb-main .kb-race-meta{font-size:12px!important}
+  .kb-main .kb-runner-name{font-size:15px!important}
+  .kb-main .kb-runner-blood{font-size:11px!important}
+  .kb-main .kb-score-num{font-size:36px!important}
+  .kb-bottom-nav{display:none!important}
+  .kb-pc-topnav{display:flex!important}
+  .kb-horse-icon{display:inline-block!important}
+}
+@media(max-width:767px){
+  .kb-sidebar{display:none}
+  .kb-race-list-pc{display:none!important}
+  .kb-race-list-mobile{display:block!important}
+  .kb-pc-topnav{display:none!important}
+  .kb-bottom-nav{display:flex!important}
+  .kb-main{padding:0}
+  .kb-horse-icon{display:none!important}
+}
+`;
 
 /* ===== Sky Blue Theme ===== */
 const SKY_CSS = `
@@ -1782,6 +1825,8 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               if(jvs.score>=8) strengths.push("騎手×会場◎");
               if(jvs.score<=4) weaknesses.push("騎手×会場△");
             }
+            // コース距離をメートルで取得（枠順補正・ペース補正で使用）
+            const courseMeters=parseInt((race.course||"").replace(/[^0-9]/g,""))||0;
             // ② 前走着順トレンド補正（条件付きペナルティあり）
             let trendBonus=0;
             const prevRank=runner.prevRank||null;
@@ -1839,7 +1884,6 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
             });
             bonus+=gradeBonus;
             // ペース適性補正（長距離3000m以上は±4pt、それ以外は±6pt）
-            const courseMeters=parseInt((race.course||"").replace(/[^0-9]/g,""))||0;
             const isVeryLong=courseMeters>=3000;
             const paceRange=isVeryLong?4:6;
             const expectedPace=race.expectedPace||"BOTH";
@@ -1934,37 +1978,6 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               </div>
             );
           })}
-          {/* Track condition selector + run button */}
-          <div style={{marginTop:14,display:"flex",gap:8,alignItems:"flex-end"}}>
-            <div style={{flex:1}}>
-              <div style={{fontSize:10,color:"var(--color-text-secondary)",marginBottom:4}}>馬場状態を選択して診断</div>
-              {/* ペース予想バッジ */}
-              {race.expectedPace&&race.expectedPace!=="BOTH"&&(
-                <div style={{display:"inline-flex",alignItems:"center",gap:4,marginBottom:8,padding:"3px 10px",borderRadius:12,background:race.expectedPace==="SLOW"?"#f0f6fd":"#fff9ee",border:`1px solid ${race.expectedPace==="SLOW"?"#3578c4":"#d4941a"}`}}>
-                  <span style={{fontSize:9,fontWeight:700,color:race.expectedPace==="SLOW"?"#3578c4":"#d4941a"}}>
-                    {race.expectedPace==="SLOW"?"🐢 スロー予想（瞬発力勝負）":"⚡ ハイペース予想（持続力勝負）"}
-                  </span>
-                  <span style={{fontSize:8,color:"var(--color-text-tertiary)"}}>±6pt補正あり</span>
-                </div>
-              )}
-              <div style={{display:"flex",gap:4}}>
-                {Object.entries(TRACK_COND).map(([k,v])=>{
-                  const baseColor=k==="GOOD"?"#1e5fa8":k==="SLIGHTLY_HEAVY"?"#3578c4":k==="HEAVY"?"#4a90d9":"#7a9ab8";
-                  const isSelected=selectedCond===k;
-                  return(
-                    <button key={k} onClick={()=>runAnalysis(k)} style={{
-                      flex:1,padding:"10px 0",borderRadius:8,cursor:"pointer",fontSize:12,fontWeight:600,
-                      border:isSelected?"3px solid "+baseColor:"2px solid transparent",
-                      background:isSelected?baseColor:"var(--color-background-secondary)",
-                      color:isSelected?"#fff":baseColor,
-                      boxShadow:isSelected?"0 2px 8px "+baseColor+"44":"none",
-                      transition:"all 0.2s",
-                    }}>🏇 {v}</button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
           </>)}
 
           {/* === AI血統診断ビュー === */}
