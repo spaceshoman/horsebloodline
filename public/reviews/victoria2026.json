@@ -1,0 +1,610 @@
+{
+  "id": "victoria2026",
+  "race_id": "",
+  "race_name": "第21回 ヴィクトリアマイル",
+  "expectedPace": "SLOW",
+  "trends": {
+    "popularity": [
+      {
+        "label": "1番人気",
+        "val": "勝率30%・連対率50%",
+        "hl": true
+      },
+      {
+        "label": "2〜3番人気",
+        "val": "連対率40%",
+        "hl": true
+      },
+      {
+        "label": "6〜9番人気",
+        "val": "複勝率25%（穴注意）",
+        "hl": false
+      },
+      {
+        "label": "10番人気以下",
+        "val": "3着内5頭（波乱含み）",
+        "hl": false
+      }
+    ],
+    "popTip": "前走1着馬が不振。前走6着以下からの巻き返しが多い波乱G1。阪神牝馬S組が中心。",
+    "draw": [
+      {
+        "label": "1〜2枠",
+        "val": "複勝率35%（A→Bコース替わり内枠有利）",
+        "hl": true
+      },
+      {
+        "label": "3〜4枠",
+        "val": "複勝率25%",
+        "hl": true
+      },
+      {
+        "label": "5〜6枠",
+        "val": "複勝率20%",
+        "hl": false
+      },
+      {
+        "label": "7〜8枠",
+        "val": "複勝率15%（外枠不利）",
+        "hl": false
+      }
+    ],
+    "drawTip": "A→Bコース替わりで内枠有利。1〜3枠が好走例多い。",
+    "style": [
+      {
+        "label": "逃げ",
+        "val": "勝率10%",
+        "hl": false
+      },
+      {
+        "label": "先行",
+        "val": "勝率35%（最強）",
+        "hl": true
+      },
+      {
+        "label": "差し",
+        "val": "勝率40%",
+        "hl": true
+      },
+      {
+        "label": "追込",
+        "val": "勝率15%",
+        "hl": false
+      }
+    ],
+    "styleTip": "牝馬限定でペースが落ち着きやすく先行有利。ただし差し馬も好走。",
+    "bloodTip": "ダイワメジャー産駒が東京マイル適性◎。欧州血統（Sadler's Wells系）が波乱を起こしやすい。",
+    "rotationTip": "阪神牝馬S組が最多好走。前走重賞が必須条件。前走1着馬は不振で、負けて人気を落とした馬の巻き返しに注意。"
+  },
+  "runners": [
+    {
+      "num": 1,
+      "frame": 1,
+      "name": "カピリナ",
+      "sire": "ダンカーク",
+      "bms": "マンハッタンカフェ",
+      "dam": "ライトリーチューン",
+      "jockey": "横山典弘",
+      "age": "5",
+      "pop": 15,
+      "tan": 61.9,
+      "gradeWins": [],
+      "paceType": "SLOW",
+      "prevRank": 9,
+      "pastRanks": [
+        9,
+        1,
+        6,
+        16
+      ],
+      "prevRaceName": "阪神牝馬S",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1600
+    },
+    {
+      "num": 2,
+      "frame": 1,
+      "name": "ワイドラトゥール",
+      "sire": "カリフォルニアクローム",
+      "bms": "アグネスタキオン",
+      "dam": "ワイドサファイア",
+      "jockey": "横山武史",
+      "age": "5",
+      "pop": 18,
+      "tan": 128.0,
+      "gradeWins": [],
+      "paceType": "BOTH",
+      "prevRank": 7,
+      "pastRanks": [
+        7,
+        4,
+        17,
+        2
+      ],
+      "prevRaceName": "京王杯SC",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1400
+    },
+    {
+      "num": 3,
+      "frame": 2,
+      "name": "マピュース",
+      "sire": "マインドユアビスケッツ",
+      "bms": "シンボリクリスエス",
+      "dam": "フィルムフランセ",
+      "jockey": "F.ゴンサルベス",
+      "age": "4",
+      "pop": 14,
+      "tan": 49.0,
+      "gradeWins": [],
+      "paceType": "BOTH",
+      "prevRank": 6,
+      "pastRanks": [
+        6,
+        5,
+        9,
+        10
+      ],
+      "prevRaceName": "愛知杯",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 1400
+    },
+    {
+      "num": 4,
+      "frame": 2,
+      "name": "エリカエクスプレス",
+      "sire": "エピファネイア",
+      "bms": "Galileo",
+      "dam": "エンタイスド",
+      "jockey": "武豊",
+      "age": "4",
+      "pop": 7,
+      "tan": 24.1,
+      "gradeWins": [
+        {
+          "race": "秋華賞",
+          "grade": "G1",
+          "place": 2,
+          "year": 2025,
+          "margin": 0.1
+        }
+      ],
+      "paceType": "HIGH",
+      "prevRank": 4,
+      "pastRanks": [
+        4,
+        12,
+        2,
+        11
+      ],
+      "prevRaceName": "中山牝馬S",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1800
+    },
+    {
+      "num": 5,
+      "frame": 3,
+      "name": "ケリフレッドアスク",
+      "sire": "ドゥラメンテ",
+      "bms": "ディープインパクト",
+      "dam": "ディープインアスク",
+      "jockey": "M.ディー",
+      "age": "4",
+      "pop": 17,
+      "tan": 66.2,
+      "gradeWins": [],
+      "paceType": "HIGH",
+      "prevRank": 4,
+      "pastRanks": [
+        4,
+        8,
+        14,
+        11
+      ],
+      "prevRaceName": "福島牝馬S",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 1800
+    },
+    {
+      "num": 6,
+      "frame": 3,
+      "name": "ラヴァンダ",
+      "sire": "シルバーステート",
+      "bms": "ベーカバド",
+      "dam": "ゴッドパイレーツ",
+      "jockey": "岩田望来",
+      "age": "5",
+      "pop": 8,
+      "tan": 26.4,
+      "gradeWins": [],
+      "paceType": "BOTH",
+      "prevRank": 8,
+      "pastRanks": [
+        8,
+        2,
+        16,
+        1
+      ],
+      "prevRaceName": "阪神牝馬S",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1600
+    },
+    {
+      "num": 7,
+      "frame": 4,
+      "name": "クイーンズウォーク",
+      "sire": "キズナ",
+      "bms": "Harlington",
+      "dam": "ウェイヴェルアベニュー",
+      "jockey": "西村淳也",
+      "age": "5",
+      "pop": 3,
+      "tan": 7.7,
+      "gradeWins": [
+        {
+          "race": "ヴィクトリアマイル",
+          "grade": "G1",
+          "place": 2,
+          "year": 2025,
+          "margin": 0.0
+        }
+      ],
+      "paceType": "BOTH",
+      "prevRank": 3,
+      "pastRanks": [
+        3,
+        9,
+        null,
+        2
+      ],
+      "prevRaceName": "金鯱賞",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 8,
+      "frame": 4,
+      "name": "カムニャック",
+      "sire": "ブラックタイド",
+      "bms": "サクラバクシンオー",
+      "dam": "ダンスアミーガ",
+      "jockey": "川田将雅",
+      "age": "4",
+      "pop": 2,
+      "tan": 5.2,
+      "gradeWins": [
+        {
+          "race": "オークス",
+          "grade": "G1",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.0
+        },
+        {
+          "race": "ローズS",
+          "grade": "G2",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.0
+        }
+      ],
+      "paceType": "SLOW",
+      "prevRank": 2,
+      "pastRanks": [
+        2,
+        16,
+        1,
+        1
+      ],
+      "prevRaceName": "阪神牝馬S",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1600
+    },
+    {
+      "num": 9,
+      "frame": 5,
+      "name": "ココナッツブラウン",
+      "sire": "キタサンブラック",
+      "bms": "キングカメハメハ",
+      "dam": "ルアーズストリート",
+      "jockey": "北村友一",
+      "age": "6",
+      "pop": 10,
+      "tan": 30.0,
+      "gradeWins": [],
+      "paceType": "SLOW",
+      "prevRank": 3,
+      "pastRanks": [
+        3,
+        5,
+        2,
+        2
+      ],
+      "prevRaceName": "小倉牝馬S",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 10,
+      "frame": 5,
+      "name": "ドロップオブライト",
+      "sire": "トーセンラー",
+      "bms": "フレンチデピュティ",
+      "dam": "プレシャスドロップ",
+      "jockey": "松若風馬",
+      "age": "7",
+      "pop": 16,
+      "tan": 63.4,
+      "gradeWins": [
+        {
+          "race": "ターコイズS",
+          "grade": "G3",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.0
+        }
+      ],
+      "paceType": "BOTH",
+      "prevRank": 10,
+      "pastRanks": [
+        10,
+        3,
+        1,
+        14
+      ],
+      "prevRaceName": "愛知杯",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 1400
+    },
+    {
+      "num": 11,
+      "frame": 6,
+      "name": "ボンドガール",
+      "sire": "ダイワメジャー",
+      "bms": "Tizway",
+      "dam": "コーステッド",
+      "jockey": "丹内祐次",
+      "age": "5",
+      "pop": 9,
+      "tan": 29.0,
+      "gradeWins": [],
+      "paceType": "BOTH",
+      "prevRank": 10,
+      "pastRanks": [
+        10,
+        2,
+        11,
+        11
+      ],
+      "prevRaceName": "中山牝馬S",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1800
+    },
+    {
+      "num": 12,
+      "frame": 6,
+      "name": "エンブロイダリー",
+      "sire": "アドマイヤマーズ",
+      "bms": "クロフネ",
+      "dam": "ロッテンマイヤー",
+      "jockey": "C.ルメール",
+      "age": "4",
+      "pop": 1,
+      "tan": 2.3,
+      "gradeWins": [
+        {
+          "race": "秋華賞",
+          "grade": "G1",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.0
+        },
+        {
+          "race": "阪神牝馬S",
+          "grade": "G2",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0
+        }
+      ],
+      "paceType": "BOTH",
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        11,
+        1,
+        9
+      ],
+      "prevRaceName": "阪神牝馬S",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1600
+    },
+    {
+      "num": 13,
+      "frame": 7,
+      "name": "カナテープ",
+      "sire": "ロードカナロア",
+      "bms": "Royal Applause",
+      "dam": "ティッカーテープ",
+      "jockey": "松山弘平",
+      "age": "7",
+      "pop": 13,
+      "tan": 35.2,
+      "gradeWins": [
+        {
+          "race": "関屋記念",
+          "grade": "G3",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.0
+        }
+      ],
+      "paceType": "BOTH",
+      "prevRank": 6,
+      "pastRanks": [
+        6,
+        15,
+        3,
+        1
+      ],
+      "prevRaceName": "阪神牝馬S",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1600
+    },
+    {
+      "num": 14,
+      "frame": 7,
+      "name": "ジョスラン",
+      "sire": "エピファネイア",
+      "bms": "ハーツクライ",
+      "dam": "ケイティーズハート",
+      "jockey": "戸崎圭太",
+      "age": "4",
+      "pop": 6,
+      "tan": 23.9,
+      "gradeWins": [
+        {
+          "race": "小倉牝馬S",
+          "grade": "G3",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0
+        }
+      ],
+      "paceType": "HIGH",
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        4,
+        2,
+        1
+      ],
+      "prevRaceName": "小倉牝馬S",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 15,
+      "frame": 7,
+      "name": "アイサンサン",
+      "sire": "キズナ",
+      "bms": "シンボリクリスエス",
+      "dam": "ウアジェト",
+      "jockey": "幸英明",
+      "age": "4",
+      "pop": 11,
+      "tan": 32.5,
+      "gradeWins": [
+        {
+          "race": "愛知杯",
+          "grade": "G3",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0
+        }
+      ],
+      "paceType": "BOTH",
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        1,
+        6,
+        10
+      ],
+      "prevRaceName": "愛知杯",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 1400
+    },
+    {
+      "num": 16,
+      "frame": 8,
+      "name": "ニシノティアモ",
+      "sire": "ドゥラメンテ",
+      "bms": "コンデュイット",
+      "dam": "ニシノアモーレ",
+      "jockey": "津村明秀",
+      "age": "5",
+      "pop": 4,
+      "tan": 8.9,
+      "gradeWins": [
+        {
+          "race": "福島記念",
+          "grade": "G3",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.0
+        }
+      ],
+      "paceType": "HIGH",
+      "prevRank": 5,
+      "pastRanks": [
+        5,
+        1,
+        1,
+        1
+      ],
+      "prevRaceName": "中山牝馬S",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1800
+    },
+    {
+      "num": 17,
+      "frame": 8,
+      "name": "パラディレーヌ",
+      "sire": "キズナ",
+      "bms": "Closing Argument",
+      "dam": "パラダイスガーデン",
+      "jockey": "坂井瑠星",
+      "age": "4",
+      "pop": 12,
+      "tan": 34.4,
+      "gradeWins": [
+        {
+          "race": "エリザベス女王杯",
+          "grade": "G1",
+          "place": 2,
+          "year": 2025,
+          "margin": 0.3
+        }
+      ],
+      "paceType": "SLOW",
+      "prevRank": 8,
+      "pastRanks": [
+        8,
+        3,
+        2,
+        3
+      ],
+      "prevRaceName": "福島牝馬S",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 1800
+    },
+    {
+      "num": 18,
+      "frame": 8,
+      "name": "チェルヴィニア",
+      "sire": "ハービンジャー",
+      "bms": "キングカメハメハ",
+      "dam": "チェッキーノ",
+      "jockey": "D.レーン",
+      "age": "5",
+      "pop": 5,
+      "tan": 23.5,
+      "gradeWins": [],
+      "paceType": "SLOW",
+      "prevRank": 5,
+      "pastRanks": [
+        5,
+        10,
+        7,
+        2
+      ],
+      "prevRaceName": "中山記念",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1800
+    }
+  ],
+  "result": null,
+  "review": null,
+  "verification": null
+}
