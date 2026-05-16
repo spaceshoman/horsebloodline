@@ -2,7 +2,7 @@
   "id": "victoria2026",
   "race_id": "",
   "race_name": "第21回 ヴィクトリアマイル",
-  "expectedPace": "SLOW",
+  "expectedPace": "HIGH",
   "trends": {
     "popularity": [
       {
@@ -717,5 +717,6 @@
   ],
   "result": null,
   "review": null,
-  "verification": null
+  "verification": null,
+  "trackCondNote": "時計が速い高速馬場。差しも届くが33秒台前半の上がり必須。パワー型より軽い芝巧者向き。瞬発力重視。"
 }
