@@ -2786,6 +2786,3 @@ export default function App(){
     </div>
   );
 }
-# ローテタブ修正（古い1行表示を新しい詳細表示に置換）
-# まずsedで該当行を確認
-grep -n "roteTip\|rotationTip\|section.*rotation" src/App.jsx
