@@ -1859,7 +1859,7 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
             bonus+=paceBonus;
             const total=+(rawScore+bonus).toFixed(2);
             // Normalize: 実際のスコア分布(20〜50)に合わせて50〜85pt表示
-            const normalizedPct=Math.max(0,Math.min(1,(total-20)/30));
+            const normalizedPct=Math.max(0,Math.min(1,(total-20)/35));
             const displayScore=+(50+normalizedPct*35).toFixed(1); // 50.0-85.0
 
             // 3-gauge breakdown (each 0-100)
