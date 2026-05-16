@@ -98,6 +98,49 @@ const PC_STYLES=`
   .kb-horse-icon{display:none!important}
 }
 `;
+  .kb-app{max-width:100%!important;padding-bottom:0!important}
+  .kb-header{padding:10px 24px 8px!important}
+  .kb-header-logo{font-size:28px!important}
+  .kb-header-sub{font-size:10px!important}
+  .kb-header-meta{font-size:11px!important}
+  .kb-next{padding:14px 24px!important}
+  .kb-next-name{font-size:32px!important}
+  .kb-next-info{font-size:11px!important}
+  .kb-body{display:grid!important;grid-template-columns:280px 1fr!important;align-items:start}
+  .kb-sidebar{display:block!important;position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto;background:#fff;border-right:1px solid #e0e6ed}
+  .kb-sidebar-inner{padding:0}
+  .kb-grade-tabs{display:flex;background:#0d1f3c}
+  .kb-grade-tab{flex:1;padding:10px 0;text-align:center;font-size:13px;font-weight:700;letter-spacing:2px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;color:rgba(255,255,255,0.4)}
+  .kb-grade-tab.active{color:#c8a84b;border-bottom:2px solid #c8a84b}
+  .kb-race-list-mobile{display:none!important}
+  .kb-race-list-pc{display:block!important}
+  .kb-race-item{padding:9px 16px;cursor:pointer;border-left:3px solid transparent;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid #f0f4f8}
+  .kb-race-item:hover{background:#f8f9fb}
+  .kb-race-item.active{background:#f0f6fd;border-left:3px solid #1e5fa8}
+  .kb-race-item.done{opacity:0.7}
+  .kb-race-item-name{font-size:13px!important;font-weight:500}
+  .kb-race-item-meta{font-size:11px!important;color:#8897a8;margin-top:2px}
+  .kb-race-sec-label{font-size:10px;font-weight:700;color:#8897a8;letter-spacing:2px;padding:8px 16px 4px;border-bottom:0.5px solid #e0e6ed;background:#f8f9fb}
+  .kb-main{padding:20px;min-height:calc(100vh - 100px)}
+  .kb-main .kb-race-name{font-size:28px!important}
+  .kb-main .kb-race-meta{font-size:12px!important}
+  .kb-main .kb-runner-name{font-size:15px!important}
+  .kb-main .kb-runner-blood{font-size:11px!important}
+  .kb-main .kb-score-num{font-size:36px!important}
+  .kb-bottom-nav{display:none!important}
+  .kb-pc-topnav{display:flex!important}
+  .kb-horse-icon{display:inline-block!important}
+}
+@media(max-width:767px){
+  .kb-sidebar{display:none}
+  .kb-race-list-pc{display:none!important}
+  .kb-race-list-mobile{display:block!important}
+  .kb-pc-topnav{display:none!important}
+  .kb-bottom-nav{display:flex!important}
+  .kb-main{padding:0}
+  .kb-horse-icon{display:none!important}
+}
+`;
 
 /* ===== Sky Blue Theme ===== */
 const SKY_CSS = `
@@ -1858,9 +1901,9 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
             }
             bonus+=paceBonus;
             const total=+(rawScore+bonus).toFixed(2);
-            // Normalize: 実際のスコア分布(20〜50)に合わせて50〜80pt表示
+            // Normalize: 実際のスコア分布(20〜50)に合わせて50〜85pt表示
             const normalizedPct=Math.max(0,Math.min(1,(total-20)/30));
-            const displayScore=+(50+normalizedPct*30).toFixed(1); // 50.0-80.0
+            const displayScore=+(50+normalizedPct*35).toFixed(1); // 50.0-85.0
 
             // 3-gauge breakdown (each 0-100)
             // 期待度: overall blood aptitude (sire + bms combined)
@@ -2030,33 +2073,33 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
                 const oomono=bloodResults.find((r,i)=>i>=6);
                 const darkHorse=bloodResults.find((r,i)=>i>=4&&i<=8);
                 return(
-                  <div style={{marginTop:16,background:"var(--color-background-primary)",border:"2px solid #1e5fa8",borderRadius:12,padding:14}}>
-                    <div style={{fontFamily:"Bebas Neue,sans-serif",fontSize:17,fontWeight:400,color:"#1e5fa8",letterSpacing:"2px",marginBottom:8}}>馬券プラン</div>
-                    <div style={{fontSize:9,color:"var(--color-text-tertiary)",marginBottom:12}}>血統スコア・馬場適性・オッズを総合した自動提案</div>
+                  <div style={{marginTop:16,background:"rgba(30,95,168,0.05)",border:"2px solid rgba(200,168,75,0.3)",borderRadius:12,padding:14}}>
+                    <div style={{fontFamily:"Bebas Neue,sans-serif",fontSize:17,fontWeight:400,color:"#c8a84b",letterSpacing:"2px",marginBottom:8}}>馬券プラン</div>
+                    <div style={{fontSize:9,color:"rgba(200,168,75,0.6)",marginBottom:12}}>血統スコア・馬場適性・オッズを総合した自動提案</div>
 
                     {/* Plan A */}
-                    <div style={{marginBottom:10,padding:"10px 12px",background:"#fff9ee",borderLeft:"3px solid #d4941a",borderRadius:8}}>
+                    <div style={{marginBottom:10,padding:"10px 12px",background:"rgba(212,148,26,0.1)",borderLeft:"3px solid #d4941a",borderRadius:8}}>
                       <div style={{fontSize:12,fontWeight:700,color:"#d4941a",marginBottom:4}}>A — 堅実馬連！</div>
-                      <div style={{fontSize:10,color:"var(--color-text-secondary)",lineHeight:1.8}}>
-                        <div>◎ <span style={{fontWeight:700,color:"#1e5fa8"}}>({honmei.num}){honmei.name}</span>{honmei.tan?` (${honmei.tan}倍)`:""} を軸に上位5頭へ馬連流し</div>
-                        <div style={{fontSize:9,color:"var(--color-text-tertiary)"}}>相手: {bloodResults.slice(1,6).map(r=>`(${r.num})${r.name}`+(r.tan?`(${r.tan}倍)`:"")).join("、")}</div>
+                      <div style={{fontSize:10,color:"#d4941a",lineHeight:1.8}}>
+                        <div>◎ <span style={{fontWeight:700,color:"#d4941a"}}>({honmei.num}){honmei.name}</span>{honmei.tan?` (${honmei.tan}倍)`:""} を軸に上位5頭へ馬連流し</div>
+                        <div style={{fontSize:9,color:"rgba(212,148,26,0.7)"}}>相手: {bloodResults.slice(1,6).map(r=>`(${r.num})${r.name}`+(r.tan?`(${r.tan}倍)`:"")).join("、")}</div>
                         <div style={{marginTop:4,fontSize:11,fontWeight:600,color:"#d4941a"}}>→ 馬連5点 × 200円 = 1,000円</div>
                       </div>
                     </div>
 
                     {/* Plan B */}
-                    <div style={{marginBottom:10,padding:"10px 12px",background:"#f0f6fd",borderLeft:"3px solid #1e5fa8",borderRadius:8}}>
-                      <div style={{fontSize:12,fontWeight:700,color:"#1e5fa8",marginBottom:4}}>B — 3連複BOX！</div>
-                      <div style={{fontSize:10,color:"var(--color-text-secondary)",lineHeight:1.8}}>
+                    <div style={{marginBottom:10,padding:"10px 12px",background:"rgba(30,95,168,0.1)",borderLeft:"3px solid #1e5fa8",borderRadius:8}}>
+                      <div style={{fontSize:12,fontWeight:700,color:"#4a90d9",marginBottom:4}}>B — 3連複BOX！</div>
+                      <div style={{fontSize:10,color:"#4a90d9",lineHeight:1.8}}>
                         <div>上位5頭BOX → {top5.map(r=>`(${r.num})${r.name}`+(r.tan?`(${r.tan}倍)`:"")).join("、")}</div>
-                        <div style={{marginTop:4,fontSize:11,fontWeight:600,color:"#1e5fa8"}}>→ 3連複5頭BOX = 10点 × 100円 = 1,000円</div>
+                        <div style={{marginTop:4,fontSize:11,fontWeight:600,color:"#4a90d9"}}>→ 3連複5頭BOX = 10点 × 100円 = 1,000円</div>
                       </div>
                     </div>
 
                     {/* Plan C: 一撃三連単 */}
-                    <div style={{marginBottom:10,padding:"10px 12px",background:"#fdf0ee",borderLeft:"3px solid #c0392b",borderRadius:8}}>
-                      <div style={{fontSize:12,fontWeight:700,color:"#c0392b",marginBottom:4}}>C — 一撃！三連単！</div>
-                      <div style={{fontSize:10,color:"var(--color-text-secondary)",lineHeight:1.8}}>
+                    <div style={{marginBottom:10,padding:"10px 12px",background:"rgba(192,57,43,0.1)",borderLeft:"3px solid #c0392b",borderRadius:8}}>
+                      <div style={{fontSize:12,fontWeight:700,color:"#e74c3c",marginBottom:4}}>C — 一撃！三連単！</div>
+                      <div style={{fontSize:10,color:"#e74c3c",lineHeight:1.8}}>
                         <div>1着: ◎○ → <span style={{fontWeight:600}}>{honmei.num} {honmei.name}、{taiko.num} {taiko.name}</span></div>
                         <div>2着: 上位5頭 → <span style={{fontWeight:600}}>{top5.map(r=>`${r.num}`).join("・")}</span></div>
                         <div>3着: 上位8頭 → <span style={{fontWeight:600}}>{bloodResults.slice(0,8).map(r=>`${r.num}`).join("・")}</span></div>
@@ -2069,11 +2112,11 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
                       const anaUma=bloodResults.filter((r,idx)=>r.tan&&r.pop&&(r.pop-idx-1)>=4).slice(0,2);
                       if(!anaUma.length) return null;
                       return(
-                        <div style={{padding:"10px 12px",background:"#fff3f0",borderLeft:"3px solid #d4941a",borderRadius:8}}>
+                        <div style={{padding:"10px 12px",background:"rgba(212,148,26,0.1)",borderLeft:"3px solid #d4941a",borderRadius:8}}>
                           <div style={{fontSize:12,fontWeight:700,color:"#d4941a",marginBottom:4}}>D — 穴候補ワイド！</div>
-                          <div style={{fontSize:10,color:"var(--color-text-secondary)",lineHeight:1.8}}>
+                          <div style={{fontSize:10,color:"#d4941a",lineHeight:1.8}}>
                             <div>★穴候補: {anaUma.map(r=>`(${r.num})${r.name}(${r.tan}倍・${r.pop}人気)`).join("、")}</div>
-                            <div style={{fontSize:9,color:"var(--color-text-tertiary)"}}>血統評価高×人気薄の乖離馬。ワイドで少額勝負</div>
+                            <div style={{fontSize:9,color:"rgba(212,148,26,0.7)"}}>血統評価高×人気薄の乖離馬。ワイドで少額勝負</div>
                             <div style={{marginTop:4,fontSize:11,fontWeight:600,color:"#d4941a"}}>→ ◎軸ワイド流し {anaUma.length+1}点 × 500円</div>
                           </div>
                         </div>
