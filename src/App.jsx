@@ -98,6 +98,49 @@ const PC_STYLES=`
   .kb-horse-icon{display:none!important}
 }
 `;
+  .kb-app{max-width:100%!important;padding-bottom:0!important}
+  .kb-header{padding:10px 24px 8px!important}
+  .kb-header-logo{font-size:28px!important}
+  .kb-header-sub{font-size:10px!important}
+  .kb-header-meta{font-size:11px!important}
+  .kb-next{padding:14px 24px!important}
+  .kb-next-name{font-size:32px!important}
+  .kb-next-info{font-size:11px!important}
+  .kb-body{display:grid!important;grid-template-columns:280px 1fr!important;align-items:start}
+  .kb-sidebar{display:block!important;position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto;background:#fff;border-right:1px solid #e0e6ed}
+  .kb-sidebar-inner{padding:0}
+  .kb-grade-tabs{display:flex;background:#0d1f3c}
+  .kb-grade-tab{flex:1;padding:10px 0;text-align:center;font-size:13px;font-weight:700;letter-spacing:2px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;color:rgba(255,255,255,0.4)}
+  .kb-grade-tab.active{color:#c8a84b;border-bottom:2px solid #c8a84b}
+  .kb-race-list-mobile{display:none!important}
+  .kb-race-list-pc{display:block!important}
+  .kb-race-item{padding:9px 16px;cursor:pointer;border-left:3px solid transparent;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid #f0f4f8}
+  .kb-race-item:hover{background:#f8f9fb}
+  .kb-race-item.active{background:#f0f6fd;border-left:3px solid #1e5fa8}
+  .kb-race-item.done{opacity:0.7}
+  .kb-race-item-name{font-size:13px!important;font-weight:500}
+  .kb-race-item-meta{font-size:11px!important;color:#8897a8;margin-top:2px}
+  .kb-race-sec-label{font-size:10px;font-weight:700;color:#8897a8;letter-spacing:2px;padding:8px 16px 4px;border-bottom:0.5px solid #e0e6ed;background:#f8f9fb}
+  .kb-main{padding:20px;min-height:calc(100vh - 100px)}
+  .kb-main .kb-race-name{font-size:28px!important}
+  .kb-main .kb-race-meta{font-size:12px!important}
+  .kb-main .kb-runner-name{font-size:15px!important}
+  .kb-main .kb-runner-blood{font-size:11px!important}
+  .kb-main .kb-score-num{font-size:36px!important}
+  .kb-bottom-nav{display:none!important}
+  .kb-pc-topnav{display:flex!important}
+  .kb-horse-icon{display:inline-block!important}
+}
+@media(max-width:767px){
+  .kb-sidebar{display:none}
+  .kb-race-list-pc{display:none!important}
+  .kb-race-list-mobile{display:block!important}
+  .kb-pc-topnav{display:none!important}
+  .kb-bottom-nav{display:flex!important}
+  .kb-main{padding:0}
+  .kb-horse-icon{display:none!important}
+}
+`;
 
 /* ===== Sky Blue Theme ===== */
 const SKY_CSS = `
@@ -1859,7 +1902,7 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
             bonus+=paceBonus;
             const total=+(rawScore+bonus).toFixed(2);
             // Normalize: 実際のスコア分布(20〜50)に合わせて50〜85pt表示
-            const normalizedPct=Math.max(0,Math.min(1,(total-15)/45));
+            const normalizedPct=Math.max(0,Math.min(1,(total-20)/35));
             const displayScore=+(50+normalizedPct*35).toFixed(1); // 50.0-85.0
 
             // 3-gauge breakdown (each 0-100)
@@ -2112,11 +2155,22 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
       </div>)}
       {section==="blood"&&t&&(<div>
         <div style={{fontSize:12,fontWeight:500,marginBottom:6}}>血統傾向</div>
-        <div style={{fontSize:10,color:"var(--color-text-secondary)",lineHeight:1.7}}>{t.bloodTip}</div>
+        {t.blood&&t.blood.map((d,i)=><DataRow key={i} label={d.label} value={d.val} highlight={d.hl}/>)}
+        {t.bloodTip&&<div style={{marginTop:8,padding:"8px 10px",background:"#f0f6fd",borderRadius:8,fontSize:10,color:"#d4941a",lineHeight:1.6}}>💡 {t.bloodTip}</div>}
       </div>)}
       {section==="rotation"&&t&&(<div>
         <div style={{fontSize:12,fontWeight:500,marginBottom:6}}>前走ローテ傾向</div>
-        <div style={{fontSize:10,color:"var(--color-text-secondary)",lineHeight:1.7}}>{t.roteTip}</div>
+        {t.rotation&&t.rotation.map((d,i)=><DataRow key={i} label={d.label} value={d.val} highlight={d.hl}/>)}
+        {t.rotationTip&&<div style={{marginTop:8,padding:"8px 10px",background:"#f0f6fd",borderRadius:8,fontSize:10,color:"#d4941a",lineHeight:1.6}}>💡 {t.rotationTip}</div>}
+        {t.rotationHorses&&(<div style={{marginTop:12}}>
+          <div style={{fontSize:11,fontWeight:600,marginBottom:6,color:"var(--color-text-primary)"}}>📋 今年の出走馬ローテ別一覧</div>
+          {t.rotationHorses.map((g,i)=>(
+            <div key={i} style={{marginBottom:6,padding:"6px 10px",background:"var(--color-background-secondary)",borderRadius:6,borderLeft:"3px solid #1e5fa8"}}>
+              <div style={{fontSize:10,fontWeight:700,color:"#1e5fa8",marginBottom:2}}>{g.label}</div>
+              <div style={{fontSize:10,color:"var(--color-text-secondary)",lineHeight:1.5}}>{g.horses}</div>
+            </div>
+          ))}
+        </div>)}
       </div>)}
     </div>
   );
@@ -2775,3 +2829,6 @@ export default function App(){
     </div>
   );
 }
+# ローテタブ修正（古い1行表示を新しい詳細表示に置換）
+# まずsedで該当行を確認
+grep -n "roteTip\|rotationTip\|section.*rotation" src/App.jsx
