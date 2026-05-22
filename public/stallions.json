@@ -3086,5 +3086,61 @@
     "powerScore": 7,
     "notes": "米国中距離馬。パラディレーヌの母父。",
     "id": "153"
+  },
+  {
+    "name": "アルアイン",
+    "surface": "TURF",
+    "distanceMin": "MILE",
+    "distanceMax": "MIDDLE",
+    "course": "BOTH",
+    "growth": "NORMAL",
+    "heavyTrack": 5,
+    "speedScore": 8,
+    "staminaScore": 7,
+    "powerScore": 7,
+    "notes": "皐月賞・大阪杯勝ち馬。ディープインパクト系。ラフターラインズの父。マイル〜中距離。",
+    "id": "154"
+  },
+  {
+    "name": "ホワイトマズル",
+    "surface": "TURF",
+    "distanceMin": "MIDDLE",
+    "distanceMax": "LONG",
+    "course": "BOTH",
+    "growth": "LATE",
+    "heavyTrack": 7,
+    "speedScore": 6,
+    "staminaScore": 8,
+    "powerScore": 7,
+    "notes": "欧州長距離馬。レイクラシックの母父。スタミナ型。",
+    "id": "155"
+  },
+  {
+    "name": "Global Hunter",
+    "surface": "TURF",
+    "distanceMin": "MIDDLE",
+    "distanceMax": "LONG",
+    "course": "BOTH",
+    "growth": "NORMAL",
+    "heavyTrack": 6,
+    "speedScore": 6,
+    "staminaScore": 7,
+    "powerScore": 6,
+    "notes": "ロングトールサリーの母父。",
+    "id": "156"
+  },
+  {
+    "name": "Footstepsinthesand",
+    "surface": "TURF",
+    "distanceMin": "MILE",
+    "distanceMax": "MIDDLE",
+    "course": "BOTH",
+    "growth": "EARLY",
+    "heavyTrack": 6,
+    "speedScore": 8,
+    "staminaScore": 5,
+    "powerScore": 6,
+    "notes": "欧州2000ギニー勝ち馬。ソルパッサーレの母父。",
+    "id": "157"
   }
 ]

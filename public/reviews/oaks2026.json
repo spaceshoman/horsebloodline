@@ -1,0 +1,699 @@
+{
+  "id": "oaks2026",
+  "race_id": "",
+  "race_name": "第87回 優駿牝馬（オークス）",
+  "expectedPace": "SLOW",
+  "trends": {
+    "popularity": [
+      {
+        "label": "1番人気",
+        "val": "【6-1-0-3】勝率60%・複勝率70%。優勝馬は全て4番人気以内",
+        "hl": true
+      },
+      {
+        "label": "2番人気",
+        "val": "【1-4-3-2】複勝率80%！1番人気を上回る安定感",
+        "hl": true
+      },
+      {
+        "label": "3番人気",
+        "val": "【2-0-1-7】複勝率30%",
+        "hl": false
+      },
+      {
+        "label": "4番人気",
+        "val": "【1-1-1-7】複勝率30%",
+        "hl": false
+      },
+      {
+        "label": "5番人気",
+        "val": "【0-0-1-9】複勝率10%",
+        "hl": false
+      },
+      {
+        "label": "6-7番人気",
+        "val": "各【0-1-0-9/0-1-0-9】複勝率10%",
+        "hl": false
+      },
+      {
+        "label": "8-9番人気",
+        "val": "【0-0-0-20】複勝率0%",
+        "hl": false
+      },
+      {
+        "label": "10番人気以下",
+        "val": "【0-2-4-82】複勝率6.8%。2〜3着の紛れあり",
+        "hl": false
+      }
+    ],
+    "popTip": "1〜2番人気の信頼度が非常に高い。優勝馬10頭は全て4番人気以内。ただし3連単は10万円以上が4回あり紛れもある。",
+    "draw": [
+      {
+        "label": "1枠",
+        "val": "【1-3-2-14】複勝率30.0%",
+        "hl": true
+      },
+      {
+        "label": "2枠",
+        "val": "【2-0-0-16】複勝率11.1%",
+        "hl": false
+      },
+      {
+        "label": "3枠",
+        "val": "【1-0-0-18】複勝率5.3%（最も不振）",
+        "hl": false
+      },
+      {
+        "label": "4枠",
+        "val": "【0-2-3-15】複勝率25.0%",
+        "hl": true
+      },
+      {
+        "label": "5枠",
+        "val": "【2-1-0-17】複勝率15.0%",
+        "hl": false
+      },
+      {
+        "label": "6枠",
+        "val": "【1-1-0-18】複勝率10.0%",
+        "hl": false
+      },
+      {
+        "label": "7枠",
+        "val": "【2-2-3-23】複勝率23.3%",
+        "hl": true
+      },
+      {
+        "label": "8枠",
+        "val": "【1-1-2-26】複勝率13.3%",
+        "hl": false
+      }
+    ],
+    "drawTip": "極端な内外の有利不利はなし。1枠（30%）と7枠（23.3%）が好成績。3枠は複勝率5.3%と歴史的に不振。近年は外めの差し馬が走りやすい傾向。",
+    "style": [
+      {
+        "label": "逃げ",
+        "val": "【0-0-0-10】複勝率0%（消し）",
+        "hl": false
+      },
+      {
+        "label": "先行",
+        "val": "【1-5-1-29】複勝率19.4%",
+        "hl": false
+      },
+      {
+        "label": "中団（差し）",
+        "val": "【7-4-7-64】複勝率22.0%（最強）",
+        "hl": true
+      },
+      {
+        "label": "後方",
+        "val": "【2-1-2-44】複勝率10.2%",
+        "hl": false
+      },
+      {
+        "label": "桜花賞中団→オークス",
+        "val": "【5-5-3-22】複勝率37.1%（最注目）",
+        "hl": true
+      },
+      {
+        "label": "桜花賞4着以内×中団",
+        "val": "【4-5-1-5】複勝率66.7%（鉄板）",
+        "hl": true
+      }
+    ],
+    "styleTip": "逃げは過去10年で0勝0連対0複勝。中団から差す競馬がベスト。桜花賞を中団で4着以内に走った馬は複勝率66.7%の鉄板データ。今年の該当馬：スターアニス（桜花賞1着・中団9番手）。",
+    "blood": [
+      {
+        "label": "ドゥラメンテ産駒",
+        "val": "【2-0-1-4】複勝率42.9%",
+        "hl": true
+      },
+      {
+        "label": "エピファネイア産駒",
+        "val": "【1-1-0-3】複勝率40.0%",
+        "hl": true
+      },
+      {
+        "label": "ゴールドシップ産駒",
+        "val": "【1-0-1-3】複勝率40.0%",
+        "hl": true
+      },
+      {
+        "label": "ハービンジャー産駒",
+        "val": "【1-1-1-8】複勝率27.3%",
+        "hl": false
+      },
+      {
+        "label": "ディープインパクト産駒",
+        "val": "【3-2-2-28】複勝率20.0%",
+        "hl": false
+      },
+      {
+        "label": "キタサンブラック産駒",
+        "val": "注目（ノーザンテースト系×キングカメハメハ系）",
+        "hl": true
+      }
+    ],
+    "bloodTip": "スタミナ型種牡馬が強い。ドゥラメンテ・エピファネイア産駒が複勝率40%超。キタサンブラック産駒は近年の注目血統。今年→エピファネイア産駒：アランカール・スマートプリエール、キタサンブラック産駒：レイクラシック・ロングトールサリー・アメティスタ・アンジュドジョワ。",
+    "rotation": [
+      {
+        "label": "桜花賞組",
+        "val": "【7-5-6-57】複勝率24.0%（最多好走）。4着以内馬は信頼度◎。5〜9着は【0-0-0-22】全滅。10着以下は4頭好走（2走前重賞1番人気が条件）",
+        "hl": true
+      },
+      {
+        "label": "フローラS組",
+        "val": "【2-3-1-35】複勝率14.6%。前走1着or2番人気以内×5着以内が条件",
+        "hl": true
+      },
+      {
+        "label": "忘れな草賞組",
+        "val": "【1-0-1-11】複勝率15.4%。勝ち馬を出している",
+        "hl": false
+      },
+      {
+        "label": "矢車賞組",
+        "val": "【0-0-2-5】複勝率28.6%。近5年【0-0-2-0】複勝率100%！穴党必見",
+        "hl": true
+      },
+      {
+        "label": "フラワーC組",
+        "val": "【0-1-0-11】複勝率8.3%",
+        "hl": false
+      },
+      {
+        "label": "スイートピーS組",
+        "val": "【0-1-0-11】複勝率8.3%",
+        "hl": false
+      }
+    ],
+    "rotationTip": "【最重要】桜花賞組が中心。桜花賞を中団から4着以内なら鉄板（複勝率66.7%）。今年の該当はスターアニス（1着・中団）のみ。別路線では矢車賞組が近5年複勝率100%（トリニティ・レイクラシック該当）。フローラS1着ラフターラインズ、忘れな草賞1着ジュウリョクピエロも注目。桜花賞13着スウィートハピネスは2走前エルフィンS1番人気1着で穴候補。",
+    "rotationHorses": [
+      {
+        "label": "桜花賞組",
+        "horses": "スターアニス(1着・中団)、アランカール(5着)、ドリームコア(9着)、スウィートハピネス(13着)、ロンギングセリーヌ(18着)"
+      },
+      {
+        "label": "フローラS組",
+        "horses": "ラフターラインズ(1着・1番人気)、エンネ(2着)、リアライズルミナス(3着)、スタニングレディ(9着)"
+      },
+      {
+        "label": "忘れな草賞組",
+        "horses": "ジュウリョクピエロ(1着)、ソルパッサーレ(10着)"
+      },
+      {
+        "label": "矢車賞組",
+        "horses": "トリニティ(1着)、レイクラシック(2着)、ロングトールサリー(7着)"
+      },
+      {
+        "label": "その他",
+        "horses": "スマートプリエール(フラワーC1着)、アメティスタ(フラワーC4着)、アンジュドジョワ(君子蘭賞1着)、ミツカネベネラ(スイートピーS6着)"
+      }
+    ]
+  },
+  "runners": [
+    {
+      "num": 1,
+      "frame": 1,
+      "name": "ミツカネベネラ",
+      "sire": "モーリス",
+      "bms": "ダイワメジャー",
+      "dam": "ナスカザン",
+      "jockey": "横山和生",
+      "age": "3",
+      "pop": 18,
+      "tan": 515.1,
+      "gradeWins": [],
+      "paceType": "BOTH",
+      "prevRank": 6,
+      "pastRanks": [
+        6,
+        14,
+        12,
+        2
+      ],
+      "prevRaceName": "スイートピーS",
+      "prevRaceGrade": "OP",
+      "prevRaceDist": 1800
+    },
+    {
+      "num": 2,
+      "frame": 1,
+      "name": "レイクラシック",
+      "sire": "キタサンブラック",
+      "bms": "ホワイトマズル",
+      "dam": "メジロジェニファー",
+      "jockey": "M.ディー",
+      "age": "3",
+      "pop": 13,
+      "tan": 122.3,
+      "gradeWins": [],
+      "paceType": "SLOW",
+      "prevRank": 2,
+      "pastRanks": [
+        2,
+        1,
+        8,
+        2
+      ],
+      "prevRaceName": "矢車賞",
+      "prevRaceGrade": "OP",
+      "prevRaceDist": 2200
+    },
+    {
+      "num": 3,
+      "frame": 2,
+      "name": "アランカール",
+      "sire": "エピファネイア",
+      "bms": "ディープインパクト",
+      "dam": "シンハライト",
+      "jockey": "武豊",
+      "age": "3",
+      "pop": 5,
+      "tan": 7.7,
+      "gradeWins": [
+        {
+          "race": "桜花賞",
+          "grade": "G1",
+          "place": 5,
+          "year": 2026,
+          "margin": 0.6
+        }
+      ],
+      "paceType": "HIGH",
+      "prevRank": 5,
+      "pastRanks": [
+        5,
+        3,
+        5,
+        1
+      ],
+      "prevRaceName": "桜花賞",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 1600
+    },
+    {
+      "num": 4,
+      "frame": 2,
+      "name": "ロングトールサリー",
+      "sire": "キタサンブラック",
+      "bms": "Global Hunter",
+      "dam": "グローバルビューティ",
+      "jockey": "戸崎圭太",
+      "age": "3",
+      "pop": 14,
+      "tan": 154.0,
+      "gradeWins": [],
+      "paceType": "SLOW",
+      "prevRank": 7,
+      "pastRanks": [
+        7,
+        null,
+        1,
+        2
+      ],
+      "prevRaceName": "矢車賞",
+      "prevRaceGrade": "OP",
+      "prevRaceDist": 2200
+    },
+    {
+      "num": 5,
+      "frame": 3,
+      "name": "リアライズルミナス",
+      "sire": "シルバーステート",
+      "bms": "ルーラーシップ",
+      "dam": "ジュルビアン",
+      "jockey": "津村明秀",
+      "age": "3",
+      "pop": 15,
+      "tan": 166.6,
+      "gradeWins": [],
+      "paceType": "BOTH",
+      "prevRank": 3,
+      "pastRanks": [
+        3,
+        1,
+        4,
+        2
+      ],
+      "prevRaceName": "フローラS",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 6,
+      "frame": 3,
+      "name": "ロンギングセリーヌ",
+      "sire": "モーリス",
+      "bms": "ダイワメジャー",
+      "dam": "パセンジャーシップ",
+      "jockey": "石橋脩",
+      "age": "3",
+      "pop": 11,
+      "tan": 75.8,
+      "gradeWins": [],
+      "paceType": "BOTH",
+      "prevRank": 18,
+      "pastRanks": [
+        18,
+        2,
+        3,
+        1
+      ],
+      "prevRaceName": "桜花賞",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 1600
+    },
+    {
+      "num": 7,
+      "frame": 4,
+      "name": "スタニングレディ",
+      "sire": "ベンバトル",
+      "bms": "ディープインパクト",
+      "dam": "フォクシーレディ",
+      "jockey": "三浦皇成",
+      "age": "3",
+      "pop": 16,
+      "tan": 258.8,
+      "gradeWins": [],
+      "paceType": "BOTH",
+      "prevRank": 9,
+      "pastRanks": [
+        9,
+        3,
+        8,
+        11
+      ],
+      "prevRaceName": "フローラS",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 8,
+      "frame": 4,
+      "name": "スマートプリエール",
+      "sire": "エピファネイア",
+      "bms": "ディープインパクト",
+      "dam": "スマートレイアー",
+      "jockey": "原優介",
+      "age": "3",
+      "pop": 8,
+      "tan": 39.2,
+      "gradeWins": [
+        {
+          "race": "フラワーC",
+          "grade": "G3",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0
+        }
+      ],
+      "paceType": "HIGH",
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        6,
+        3,
+        4
+      ],
+      "prevRaceName": "フラワーC",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 1800
+    },
+    {
+      "num": 9,
+      "frame": 5,
+      "name": "トリニティ",
+      "sire": "サートゥルナーリア",
+      "bms": "ハーツクライ",
+      "dam": "ヌーヴォレコルト",
+      "jockey": "西村淳也",
+      "age": "3",
+      "pop": 9,
+      "tan": 67.3,
+      "gradeWins": [],
+      "paceType": "BOTH",
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        3,
+        1,
+        null
+      ],
+      "prevRaceName": "矢車賞",
+      "prevRaceGrade": "OP",
+      "prevRaceDist": 2200
+    },
+    {
+      "num": 10,
+      "frame": 5,
+      "name": "スターアニス",
+      "sire": "ドレフォン",
+      "bms": "ダイワメジャー",
+      "dam": "エピセアローム",
+      "jockey": "松山弘平",
+      "age": "3",
+      "pop": 2,
+      "tan": 4.0,
+      "gradeWins": [
+        {
+          "race": "桜花賞",
+          "grade": "G1",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0
+        },
+        {
+          "race": "阪神JF",
+          "grade": "G1",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.0
+        }
+      ],
+      "paceType": "HIGH",
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        1,
+        2,
+        1
+      ],
+      "prevRaceName": "桜花賞",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 1600
+    },
+    {
+      "num": 11,
+      "frame": 6,
+      "name": "アメティスタ",
+      "sire": "キタサンブラック",
+      "bms": "キングカメハメハ",
+      "dam": "ティアーモ",
+      "jockey": "横山武史",
+      "age": "3",
+      "pop": 10,
+      "tan": 71.1,
+      "gradeWins": [],
+      "paceType": "SLOW",
+      "prevRank": 4,
+      "pastRanks": [
+        4,
+        1,
+        1,
+        2
+      ],
+      "prevRaceName": "フラワーC",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 1800
+    },
+    {
+      "num": 12,
+      "frame": 6,
+      "name": "ドリームコア",
+      "sire": "キズナ",
+      "bms": "ハービンジャー",
+      "dam": "ノームコア",
+      "jockey": "C.ルメール",
+      "age": "3",
+      "pop": 6,
+      "tan": 9.6,
+      "gradeWins": [],
+      "paceType": "BOTH",
+      "prevRank": 9,
+      "pastRanks": [
+        9,
+        1,
+        1,
+        3
+      ],
+      "prevRaceName": "桜花賞",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 1600
+    },
+    {
+      "num": 13,
+      "frame": 7,
+      "name": "エンネ",
+      "sire": "キズナ",
+      "bms": "Medaglia d'Oro",
+      "dam": "ルパン2",
+      "jockey": "坂井瑠星",
+      "age": "3",
+      "pop": 4,
+      "tan": 7.6,
+      "gradeWins": [],
+      "paceType": "BOTH",
+      "prevRank": 2,
+      "pastRanks": [
+        2,
+        1,
+        null,
+        null
+      ],
+      "prevRaceName": "フローラS",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 14,
+      "frame": 7,
+      "name": "ソルパッサーレ",
+      "sire": "キズナ",
+      "bms": "Footstepsinthesand",
+      "dam": "ベアフットレディ",
+      "jockey": "浜中俊",
+      "age": "3",
+      "pop": 17,
+      "tan": 281.7,
+      "gradeWins": [],
+      "paceType": "BOTH",
+      "prevRank": 10,
+      "pastRanks": [
+        10,
+        12,
+        1,
+        1
+      ],
+      "prevRaceName": "忘れな草賞",
+      "prevRaceGrade": "OP",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 15,
+      "frame": 7,
+      "name": "アンジュドジョワ",
+      "sire": "キタサンブラック",
+      "bms": "Dark Angel",
+      "dam": "ピースエンジェル",
+      "jockey": "岩田望来",
+      "age": "3",
+      "pop": 7,
+      "tan": 37.8,
+      "gradeWins": [],
+      "paceType": "SLOW",
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        1,
+        null,
+        null
+      ],
+      "prevRaceName": "君子蘭賞",
+      "prevRaceGrade": "OP",
+      "prevRaceDist": 1800
+    },
+    {
+      "num": 16,
+      "frame": 8,
+      "name": "ジュウリョクピエロ",
+      "sire": "オルフェーヴル",
+      "bms": "ゼンノロブロイ",
+      "dam": "ハッピーヴァリュー",
+      "jockey": "今村聖奈",
+      "age": "3",
+      "pop": 3,
+      "tan": 4.3,
+      "gradeWins": [
+        {
+          "race": "忘れな草賞",
+          "grade": "OP",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0
+        }
+      ],
+      "paceType": "SLOW",
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        1,
+        7,
+        7
+      ],
+      "prevRaceName": "忘れな草賞",
+      "prevRaceGrade": "OP",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 17,
+      "frame": 8,
+      "name": "スウィートハピネス",
+      "sire": "リアルインパクト",
+      "bms": "ワークフォース",
+      "dam": "フラル",
+      "jockey": "高杉吏麒",
+      "age": "3",
+      "pop": 12,
+      "tan": 111.6,
+      "gradeWins": [],
+      "paceType": "BOTH",
+      "prevRank": 13,
+      "pastRanks": [
+        13,
+        1,
+        4,
+        2
+      ],
+      "prevRaceName": "桜花賞",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 1600
+    },
+    {
+      "num": 18,
+      "frame": 8,
+      "name": "ラフターラインズ",
+      "sire": "アルアイン",
+      "bms": "キングカメハメハ",
+      "dam": "バンゴール",
+      "jockey": "D.レーン",
+      "age": "3",
+      "pop": 1,
+      "tan": 3.6,
+      "gradeWins": [
+        {
+          "race": "フローラS",
+          "grade": "G2",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0
+        }
+      ],
+      "paceType": "BOTH",
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        3,
+        3,
+        1
+      ],
+      "prevRaceName": "フローラS",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 2000
+    }
+  ],
+  "result": null,
+  "review": null,
+  "verification": null
+}
