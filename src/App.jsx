@@ -98,49 +98,6 @@ const PC_STYLES=`
   .kb-horse-icon{display:none!important}
 }
 `;
-  .kb-app{max-width:100%!important;padding-bottom:0!important}
-  .kb-header{padding:10px 24px 8px!important}
-  .kb-header-logo{font-size:28px!important}
-  .kb-header-sub{font-size:10px!important}
-  .kb-header-meta{font-size:11px!important}
-  .kb-next{padding:14px 24px!important}
-  .kb-next-name{font-size:32px!important}
-  .kb-next-info{font-size:11px!important}
-  .kb-body{display:grid!important;grid-template-columns:280px 1fr!important;align-items:start}
-  .kb-sidebar{display:block!important;position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto;background:#fff;border-right:1px solid #e0e6ed}
-  .kb-sidebar-inner{padding:0}
-  .kb-grade-tabs{display:flex;background:#0d1f3c}
-  .kb-grade-tab{flex:1;padding:10px 0;text-align:center;font-size:13px;font-weight:700;letter-spacing:2px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;color:rgba(255,255,255,0.4)}
-  .kb-grade-tab.active{color:#c8a84b;border-bottom:2px solid #c8a84b}
-  .kb-race-list-mobile{display:none!important}
-  .kb-race-list-pc{display:block!important}
-  .kb-race-item{padding:9px 16px;cursor:pointer;border-left:3px solid transparent;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid #f0f4f8}
-  .kb-race-item:hover{background:#f8f9fb}
-  .kb-race-item.active{background:#f0f6fd;border-left:3px solid #1e5fa8}
-  .kb-race-item.done{opacity:0.7}
-  .kb-race-item-name{font-size:13px!important;font-weight:500}
-  .kb-race-item-meta{font-size:11px!important;color:#8897a8;margin-top:2px}
-  .kb-race-sec-label{font-size:10px;font-weight:700;color:#8897a8;letter-spacing:2px;padding:8px 16px 4px;border-bottom:0.5px solid #e0e6ed;background:#f8f9fb}
-  .kb-main{padding:20px;min-height:calc(100vh - 100px)}
-  .kb-main .kb-race-name{font-size:28px!important}
-  .kb-main .kb-race-meta{font-size:12px!important}
-  .kb-main .kb-runner-name{font-size:15px!important}
-  .kb-main .kb-runner-blood{font-size:11px!important}
-  .kb-main .kb-score-num{font-size:36px!important}
-  .kb-bottom-nav{display:none!important}
-  .kb-pc-topnav{display:flex!important}
-  .kb-horse-icon{display:inline-block!important}
-}
-@media(max-width:767px){
-  .kb-sidebar{display:none}
-  .kb-race-list-pc{display:none!important}
-  .kb-race-list-mobile{display:block!important}
-  .kb-pc-topnav{display:none!important}
-  .kb-bottom-nav{display:flex!important}
-  .kb-main{padding:0}
-  .kb-horse-icon{display:none!important}
-}
-`;
 
 /* ===== Sky Blue Theme ===== */
 const SKY_CSS = `
