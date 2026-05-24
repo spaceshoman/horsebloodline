@@ -1782,6 +1782,40 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               if(jvs.score>=8) strengths.push("騎手×会場◎");
               if(jvs.score<=4) weaknesses.push("騎手×会場△");
             }
+            // 距離適性外ペナルティ（父の距離レンジとレース距離の乖離）
+            if(ms){
+              const dOrder2=["SPRINT","MILE","MIDDLE","LONG"];
+              const sireMax2=dOrder2.indexOf(ms.distanceMax||"MIDDLE");
+              const raceIdx2=dOrder2.indexOf(dist);
+              if(raceIdx2>sireMax2){
+                const gap2=raceIdx2-sireMax2;
+                if(gap2>=2){bonus-=15;weaknesses.push("父の距離適性大幅外（-15pt）");}
+                else if(gap2===1){bonus-=6;weaknesses.push("父の距離やや長い（-6pt）");}
+              }
+              const sireMin2=dOrder2.indexOf(ms.distanceMin||"MIDDLE");
+              if(raceIdx2<sireMin2){
+                const gap2=sireMin2-raceIdx2;
+                if(gap2>=2){bonus-=15;weaknesses.push("父の距離適性大幅外（-15pt）");}
+                else if(gap2===1){bonus-=6;weaknesses.push("父の距離やや短い（-6pt）");}
+              }
+            }
+            // 距離適性外ペナルティ（父の距離レンジとレース距離の乖離）
+            if(ms){
+              const dOrder2=["SPRINT","MILE","MIDDLE","LONG"];
+              const sireMax2=dOrder2.indexOf(ms.distanceMax||"MIDDLE");
+              const raceIdx2=dOrder2.indexOf(dist);
+              if(raceIdx2>sireMax2){
+                const gap2=raceIdx2-sireMax2;
+                if(gap2>=2){bonus-=15;weaknesses.push("父の距離適性大幅外（-15pt）");}
+                else if(gap2===1){bonus-=6;weaknesses.push("父の距離やや長い（-6pt）");}
+              }
+              const sireMin2=dOrder2.indexOf(ms.distanceMin||"MIDDLE");
+              if(raceIdx2<sireMin2){
+                const gap2=sireMin2-raceIdx2;
+                if(gap2>=2){bonus-=15;weaknesses.push("父の距離適性大幅外（-15pt）");}
+                else if(gap2===1){bonus-=6;weaknesses.push("父の距離やや短い（-6pt）");}
+              }
+            }
             // コース距離をメートルで取得（枠順補正・ペース補正で使用）
             const courseMeters=parseInt((race.course||"").replace(/[^0-9]/g,""))||0;
             // ② 前走着順トレンド補正（条件付きペナルティあり）
@@ -1852,7 +1886,7 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
                 strengths.push(expectedPace==="SLOW"?"スロー瞬発力◎":"ハイペース耐性◎");
               } else {
                 // SLOW型×HIGH予想 or HIGH型×SLOW予想は強めにペナルティ
-                paceBonus=isVeryLong?-4:-8;
+                paceBonus=isVeryLong?-4:-5;
                 weaknesses.push(expectedPace==="SLOW"?"スロー向き×（ハイペース型）":"ハイペース向き×（スロー型）");
               }
             }
