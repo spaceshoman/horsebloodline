@@ -98,49 +98,6 @@ const PC_STYLES=`
   .kb-horse-icon{display:none!important}
 }
 `;
-
-/* ===== Sky Blue Theme ===== */
-const SKY_CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700&display=swap');
-  :root {
-    --sky: #4a90d9;
-    --sky-deep: #1e5fa8;
-    --sky-mid: #3578c4;
-    --sky-light: #c8e0f8;
-    --sky-pale: #f0f6fd;
-    --gold: #d4941a;
-    --gold-light: #f0b840;
-    --red-acc: #c0392b;
-    --ink: #0d1f3c;
-    --text-main: #0d1f3c;
-    --text-sub: #3a5272;
-    --text-hint: #7a9ab8;
-    --border-sky: #ccdcee;
-    --font-display: 'Bebas Neue', sans-serif;
-    --font-body: 'Noto Sans JP', sans-serif;
-  }
-  body { font-family: var(--font-body); background: #f0f6fd; }
-`;
-if(typeof document!=="undefined"){
-  const existing=document.getElementById("keibakun-theme");
-  if(!existing){const s=document.createElement("style");s.id="keibakun-theme";s.textContent=SKY_CSS;document.head.appendChild(s);}
-}
-
-/* ===== Constants ===== */
-const SURFACE = { TURF:"芝", DIRT:"ダート", BOTH:"芝・ダート兼用" };
-const DISTANCE = { SPRINT:"短距離 (~1400m)", MILE:"マイル (1400~1800m)", MIDDLE:"中距離 (1800~2400m)", LONG:"長距離 (2400m~)", VERSATILE:"万能" };
-const DIST_SHORT = { SPRINT:"短距離", MILE:"マイル", MIDDLE:"中距離", LONG:"長距離" };
-const COURSE = { RIGHT:"右回り", LEFT:"左回り", BOTH:"左右兼用" };
-const GROWTH = { EARLY:"早熟", NORMAL:"普通", LATE:"晩成" };
-const TRACK_COND = { GOOD:"良", SLIGHTLY_HEAVY:"稍重", HEAVY:"重", BAD:"不良" };
-const VENUES = {
-  tokyo:{name:"東京",course:"LEFT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE","LONG"]},
-  nakayama:{name:"中山",course:"RIGHT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE","LONG"]},
-  hanshin:{name:"阪神",course:"RIGHT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE","LONG"]},
-  kyoto:{name:"京都",course:"RIGHT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE","LONG"]},
-  chukyo:{name:"中京",course:"LEFT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE"]},
-  kokura:{name:"小倉",course:"RIGHT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE"]},
-  niigata:{name:"新潟",course:"LEFT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE"]},
   sapporo:{name:"札幌",course:"RIGHT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE"]},
   hakodate:{name:"函館",course:"RIGHT",surface:["TURF","DIRT"],distances:["SPRINT","MILE"]},
   ooi:{name:"大井",course:"RIGHT",surface:["DIRT"],distances:["SPRINT","MILE","MIDDLE"]},

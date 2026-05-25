@@ -178,10 +178,10 @@
     "course": "BOTH",
     "growth": "NORMAL",
     "heavyTrack": 5,
-    "staminaScore": 7,
+    "staminaScore": 8,
     "speedScore": 8,
     "powerScore": 7,
-    "notes": "ダービー馬。ディープ後継。ソングライン等輩出。"
+    "notes": "ダービー馬。ディープ後継。ソングライン等輩出。ドリームコア(2026オークス2着)で東京芝2400m適性を実証。左回り中距離での持続力に定評。"
   },
   {
     "id": "9",
@@ -204,7 +204,7 @@
     "staminaScore": 9,
     "speedScore": 8,
     "powerScore": 8,
-    "notes": "三冠馬。凱旋門賞2着2回。ラッキーライラック等輩出。"
+    "notes": "三冠馬。凱旋門賞2着2回。ラッキーライラック等輩出。ジュウリョクピエロ(2026オークス勝利)で東京芝2400m長距離適性を再実証。左回り・長距離でのスタミナ勝負に強い。"
   },
   {
     "id": "10",
@@ -1186,14 +1186,14 @@
     },
     "surface": "BOTH",
     "distanceMin": "SPRINT",
-    "distanceMax": "MIDDLE",
+    "distanceMax": "MILE",
     "course": "RIGHT",
     "growth": "EARLY",
     "heavyTrack": 7,
     "staminaScore": 6,
     "speedScore": 9,
     "powerScore": 9,
-    "notes": "BCスプリント優勝。ストームキャット系。ジオグリフ(皐月賞)等輩出。芝ダート兼用でパワー型。"
+    "notes": "BCスプリント優勝。ストームキャット系。スターアニス(桜花賞)等輩出。芝ダート兼用でパワー型。気性の前向きさが強く2400m以上は大幅距離不安（スターアニス2026オークス12着で実証）。"
   },
   {
     "id": "53",
