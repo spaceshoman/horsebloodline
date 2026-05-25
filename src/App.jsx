@@ -1902,6 +1902,31 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               }
             }
             bonus+=paceBonus;
+
+            // ④ 上がり3F実績補正（lastF3フィールドがある場合）
+            const lastF3=runner.lastF3||null; // 直近の上がり3Fタイム（秒）
+            if(lastF3){
+              if(lastF3<=33.0){bonus+=4;strengths.push(`上がり${lastF3}秒◎（瞬発力最上位）`);}
+              else if(lastF3<=33.5){bonus+=3;strengths.push(`上がり${lastF3}秒○（高い末脚）`);}
+              else if(lastF3<=34.0){bonus+=1;strengths.push(`上がり${lastF3}秒△（標準末脚）`);}
+              else if(lastF3>=35.0){bonus-=2;weaknesses.push(`上がり${lastF3}秒×（末脚不足）`);}
+            }
+
+            // ⑤ 距離延長時の母父スタミナ加点（オークスの教訓）
+            // 前走より400m以上長い場合、母父のstaminaScoreを加算
+            if(prevRaceDist&&courseMeters&&courseMeters-prevRaceDist>=400&&mb){
+              const staminaAdd=+(mb.staminaScore*0.4).toFixed(1);
+              bonus+=staminaAdd;
+              if(mb.staminaScore>=8) strengths.push(`距離延長×母父スタミナ◎(+${staminaAdd}pt)`);
+              else if(mb.staminaScore>=6) strengths.push(`距離延長×母父スタミナ○(+${staminaAdd}pt)`);
+            }
+            // 前走より400m以上短い場合は距離短縮補正（母父スピード重視）
+            if(prevRaceDist&&courseMeters&&prevRaceDist-courseMeters>=400&&mb){
+              const speedAdd=+(mb.speedScore*0.2).toFixed(1);
+              bonus+=speedAdd;
+              if(mb.speedScore>=8) strengths.push(`距離短縮×母父スピード◎(+${speedAdd}pt)`);
+            }
+
             const total=+(rawScore+bonus).toFixed(2);
             // Normalize: 実際のスコア分布(20〜50)に合わせて50〜85pt表示
             const normalizedPct=Math.max(0,Math.min(1,(total-20)/35));
