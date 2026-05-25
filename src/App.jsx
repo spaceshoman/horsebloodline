@@ -1821,25 +1821,53 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               else if(prevRank>=10){trendBonus=-3;weaknesses.push("前走大敗（10着以下）");}
             }
             bonus+=trendBonus;
-            // ③ 枠順補正（東京マイル限定）
+            // ③ 枠順補正（レースJSONのframeBonusフィールドで個別設定、なければデフォルト）
             const frame=runner.frame||null;
             const isTokyo=race.venue==="東京";
             const isMile=courseMeters===1600;
-            if(frame&&isTokyo&&isMile){
-              if(frame<=4){bonus-=4;weaknesses.push("内枠不利（東京マイル）");}
-              else if(frame>=7){bonus+=5;strengths.push("外枠有利（東京マイル）");}
+            const frameCfg=race.frameBonus||null; // {inner:[1,4],-4}, {outer:[7,8],+5} 形式
+            if(frame){
+              if(frameCfg){
+                // JSONで個別設定がある場合はそちらを優先
+                if(frameCfg.innerRange&&frame>=frameCfg.innerRange[0]&&frame<=frameCfg.innerRange[1]){
+                  bonus+=frameCfg.innerPts;
+                  if(frameCfg.innerPts<0) weaknesses.push(`内枠${frameCfg.innerPts}pt（${race.name}傾向）`);
+                  else strengths.push(`内枠+${frameCfg.innerPts}pt（${race.name}傾向）`);
+                }
+                if(frameCfg.outerRange&&frame>=frameCfg.outerRange[0]&&frame<=frameCfg.outerRange[1]){
+                  bonus+=frameCfg.outerPts;
+                  if(frameCfg.outerPts<0) weaknesses.push(`外枠${frameCfg.outerPts}pt（${race.name}傾向）`);
+                  else strengths.push(`外枠+${frameCfg.outerPts}pt（${race.name}傾向）`);
+                }
+              } else if(isTokyo&&isMile){
+                // デフォルト: 東京マイルのみ
+                if(frame<=4){bonus-=4;weaknesses.push("内枠不利（東京マイル）");}
+                else if(frame>=7){bonus+=5;strengths.push("外枠有利（東京マイル）");}
+              }
             }
             // 重賞実績ボーナス（年数減衰＋タイム差減衰あり）
             let gradeBonus=0;
             const gw=runner.gradeWins||[];
             const currentYear=new Date().getFullYear();
+            const dOrderGrade=["SPRINT","MILE","MIDDLE","LONG"];
+            const raceDistCat=dist; // 現在のレース距離カテゴリ
             gw.forEach(w=>{
               // 年数減衰: 1年以内100% / 2年前70% / 3年以上40%
               const yearsAgo=currentYear-(w.year||currentYear);
               const decay=yearsAgo<=1?1.0:yearsAgo===2?0.7:0.4;
-              // タイム差減衰: 勝利・0.5秒以内100% / 0.5〜1.0秒70% / 1.0秒以上40%
+              // タイム差減衰
               const margin=w.margin!=null?w.margin:0;
               const marginDecay=w.place===1?1.0:margin<=0.5?1.0:margin<=1.0?0.7:0.4;
+              // 距離乖離減衰: 実績距離と今走距離の差が大きいほど減衰
+              let distDecay=1.0;
+              if(w.dist){
+                const winDistCat=w.dist<=1400?"SPRINT":w.dist<=1800?"MILE":w.dist<=2200?"MIDDLE":"LONG";
+                const winIdx=dOrderGrade.indexOf(winDistCat);
+                const raceIdx=dOrderGrade.indexOf(raceDistCat);
+                const distGap=Math.abs(winIdx-raceIdx);
+                if(distGap===1) distDecay=0.7;
+                else if(distGap>=2) distDecay=0.4;
+              }
               let base=0;
               if(w.grade==="G1"){
                 if(w.place===1){base=8;strengths.push(yearsAgo<=1?"G1勝ち馬":"G1勝ち実績");}
@@ -1854,7 +1882,7 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               } else if(w.grade==="OP"||w.grade==="L"){
                 if(w.place===1){base=w.grade==="OP"?2:1;strengths.push(w.grade==="OP"?"OP勝ち実績":"L勝ち実績");}
               }
-              gradeBonus+=base*decay*marginDecay;
+              gradeBonus+=base*decay*marginDecay*distDecay;
             });
             bonus+=gradeBonus;
             // ペース適性補正（長距離3000m以上は±4pt、それ以外は±6pt）
