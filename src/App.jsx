@@ -1987,7 +1987,95 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
             </div>
           {bloodResults&&diagView==="diag"&&(
             <div style={{marginTop:0}}>
-              {bloodResults.map((r,i)=>{
+              {/* ダウンロードボタン */}
+              <button onClick={()=>{
+                const t=race;
+                const rs=bloodResults.slice(0,7);
+                const html=`<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>血統くん診断レポート - ${t.name}</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Serif JP',serif,sans-serif;font-size:10px;color:#111;background:#fff;padding:12px}
+.header{border-top:3px solid #c8a84b;border-bottom:1px solid #111;padding:4px 0;display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:6px}
+.header-title{font-size:18px;font-weight:700;letter-spacing:2px}
+.header-sub{font-size:8px;color:#555;text-align:right;line-height:1.6}
+.race-info{background:#f5f0e8;border:1px solid #c8a84b;padding:4px 8px;display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.grade-badge{background:#0a0a0a;color:#c8a84b;font-size:8px;font-weight:700;padding:2px 6px;white-space:nowrap}
+.race-name{font-size:13px;font-weight:700}
+.race-meta{font-size:8px;color:#555;line-height:1.8}
+.sec{font-size:8px;font-weight:700;letter-spacing:2px;border-bottom:1px solid #111;padding-bottom:2px;margin:8px 0 4px;color:#555}
+table{width:100%;border-collapse:collapse;margin-bottom:8px}
+th{font-size:7px;text-align:center;border-bottom:1px solid #111;padding:2px;background:#f5f0e8;font-weight:700}
+td{font-size:8px;text-align:center;padding:2px 3px;border-bottom:0.5px solid #ddd;vertical-align:middle}
+tr:nth-child(even){background:#fafafa}
+.bar-wrap{width:40px;height:5px;background:#e0e0e0;border-radius:2px;display:inline-block;vertical-align:middle}
+.bar{height:5px;background:#c8a84b;border-radius:2px}
+.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.tr{display:flex;justify-content:space-between;font-size:7px;padding:2px 0;border-bottom:0.5px solid #eee}
+.hl{font-weight:700;color:#c8a84b}
+.ng{color:#8b1a1a}
+.rote{font-size:7px;padding:2px 0;border-bottom:0.5px solid #eee;line-height:1.6}
+.rote-hl{background:#fff8e8;border-left:2px solid #c8a84b;padding-left:4px}
+.tkt{border:1px solid #c8a84b;padding:5px 6px;background:#fffdf5;margin-bottom:4px}
+.tkt-plan{font-size:8px;font-weight:700;margin-bottom:2px}
+.tkt-nums{font-size:9px;font-weight:700;letter-spacing:1px}
+.tkt-detail{font-size:7px;color:#555}
+.footer{border-top:1px solid #111;margin-top:6px;padding-top:4px;display:flex;justify-content:space-between;font-size:7px;color:#888}
+@media print{body{padding:0}button{display:none}}
+</style></head><body>
+<div class="header">
+  <div><div class="header-title">血統くん</div><div style="font-size:7px;color:#888">BLOODLINE PREDICTOR · AI血統診断レポート</div></div>
+  <div class="header-sub">${t.name}<br>${t.date} ${t.venue} ${t.course}<br>印刷日: ${new Date().toLocaleDateString('ja-JP')}</div>
+</div>
+<div class="race-info">
+  <span class="grade-badge">${t.grade||'G1'}</span>
+  <div class="race-name">${t.name}</div>
+  <div class="race-meta">${t.venue} ${t.course}　馬場: ${t.trackCond||'良'}　出走: ${t.runners?.length||'-'}頭　予想ペース: ${t.expectedPace==='SLOW'?'スロー':t.expectedPace==='HIGH'?'ハイペース':'標準'}</div>
+</div>
+<div class="sec">◆ AI血統診断結果（馬場: ${t.trackCond||'良'}）</div>
+<table>
+<tr><th>順</th><th>印</th><th>馬番</th><th>馬名</th><th>父 / 母父</th><th>騎手</th><th>スコア</th><th>バー</th><th>強み・弱み</th></tr>
+${rs.map((r,i)=>{
+  const marks=['◎','○','▲','△','△','△','△'];
+  const mk=marks[i]||'';
+  const pct=Math.round(((r.score-50)/35)*100);
+  const pos=r.strengths?.slice(0,2).map(s=>`<span style="color:#1a6b3a">✓${s}</span>`).join(' ')||'';
+  const neg=r.weaknesses?.slice(0,1).map(s=>`<span style="color:#8b1a1a">✗${s}</span>`).join(' ')||'';
+  return `<tr><td style="font-weight:700;font-size:${i===0?'13':'10'}px;color:${i===0?'#c8a84b':'#111'}">${i+1}</td><td><span style="border:1px solid ${i===0?'#c8a84b':'#111'};border-radius:50%;display:inline-block;width:14px;height:14px;font-size:7px;line-height:14px;text-align:center;background:${i===0?'#c8a84b':'transparent'};color:${i===0?'#fff':'#111'}">${mk}</span></td><td><b>${r.num}</b></td><td style="text-align:left;font-weight:${i<3?'700':'400'}">${r.name}</td><td style="text-align:left;font-size:7px">${r.sire||''}/${r.bms||''}</td><td style="font-size:7px">${r.jockey||''}</td><td><b>${r.score}</b></td><td><div class="bar-wrap"><div class="bar" style="width:${Math.max(5,pct)}%"></div></div></td><td style="text-align:left;font-size:6px;line-height:1.5">${pos}${neg}</td></tr>`;
+}).join('')}
+</table>
+<div class="three">
+<div>
+<div class="sec">◆ レース傾向</div>
+${(t.trends?.popularity||[]).slice(0,5).map(d=>`<div class="tr"><span>${d.label}</span><span class="${d.hl?'hl':''}">${d.val.slice(0,15)}</span></div>`).join('')}
+<div style="margin-top:3px;font-size:7px;color:#555;background:#fff8e8;padding:3px;border-left:2px solid #c8a84b">${(t.trends?.popTip||'').slice(0,80)}...</div>
+</div>
+<div>
+<div class="sec">◆ 前走ローテ</div>
+${(t.trends?.rotation||[]).slice(0,4).map(d=>`<div class="rote ${d.hl?'rote-hl':''}"><b>${d.label}</b><br><span style="color:#555;font-size:6px">${d.val.slice(0,50)}...</span></div>`).join('')}
+${t.trends?.rotationHorses?`<div style="margin-top:3px;font-size:6px;color:#c8a84b;font-weight:700">今年の注目馬:<br><span style="color:#555">${t.trends.rotationHorses[0]?.horses?.slice(0,60)||''}</span></div>`:''}
+</div>
+<div>
+<div class="sec">◆ 馬券プラン</div>
+${bloodResults.length>=3?`
+<div class="tkt"><div class="tkt-plan">A — 堅実 馬連</div><div class="tkt-nums">◎${bloodResults[0].num} → ${bloodResults.slice(1,5).map(r=>r.num).join('-')}</div><div class="tkt-detail">馬連4点×500円=2,000円</div></div>
+<div class="tkt"><div class="tkt-plan">B — 3連複BOX</div><div class="tkt-nums">${bloodResults.slice(0,5).map(r=>r.num).join('-')} BOX</div><div class="tkt-detail">3連複10点×200円=2,000円</div></div>
+<div class="tkt"><div class="tkt-plan">C — 3連単</div><div class="tkt-nums">◎${bloodResults[0].num}→○${bloodResults[1].num}→▲${bloodResults[2].num}</div><div class="tkt-detail">3連単×300円=300円</div></div>`:''}
+</div>
+</div>
+<div class="footer"><span>血統くん AI診断レポート｜https://spaceshoman.github.io/horsebloodline/</span><span>※本レポートは参考情報です。馬券購入は自己責任でお願いします。</span></div>
+<script>window.onload=()=>{window.print()}</script>
+</body></html>`;
+                const w=window.open('','_blank');
+                if(w){w.document.write(html);w.document.close();}
+              }} style={{
+                display:"flex",alignItems:"center",gap:6,width:"100%",padding:"10px 14px",
+                background:"linear-gradient(135deg,#c8a84b,#a8873a)",border:"none",borderRadius:10,
+                color:"#0a0a0a",fontSize:13,fontWeight:700,cursor:"pointer",marginBottom:12,
+                justifyContent:"center",letterSpacing:"1px",
+              }}>
+                📄 診断レポートをPDF保存
+              </button>
+              {bloodResults.map((r,i)=>{ if(i>=7) return null;
                 const sc=r.mark==="◎"?"#d4941a":r.mark==="○"?"#1e5fa8":r.mark==="▲"?"#3578c4":r.mark==="✖"?"#4a90d9":"#7a9ab8";
                 const mc=sc;
                 return(
