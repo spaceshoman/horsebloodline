@@ -98,45 +98,6 @@ const PC_STYLES=`
   .kb-horse-icon{display:none!important}
 }
 `;
-
-const Field=({label,children})=>(<div style={{display:"flex",flexDirection:"column",gap:3}}><label style={{fontSize:11,color:"var(--color-text-secondary)",fontWeight:500}}>{label}</label>{children}</div>);
-const inputStyle={padding:"6px 8px",borderRadius:8,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:12};
-
-/* ===== DB Card ===== */
-const StallionCard=({stallion,onEdit,onDelete})=>{
-  const[expanded,setExpanded]=useState(false);
-  return(
-    <div style={{background:"var(--color-background-primary)",border:"1px solid var(--color-border-tertiary)",borderRadius:12,overflow:"hidden"}}>
-      <div onClick={()=>setExpanded(!expanded)} style={{padding:"12px 16px",cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
-        <div style={{flex:1}}>
-          <div style={{display:"flex",alignItems:"baseline",gap:8,marginBottom:4}}>
-            <span style={{fontSize:15,fontWeight:500,color:"var(--color-text-primary)"}}>{stallion.name}</span>
-            <span style={{fontSize:11,color:"var(--color-text-tertiary)"}}>{stallion.nameEn}</span>
-          </div>
-          <div style={{fontSize:11,color:"var(--color-text-secondary)",marginBottom:6}}>父: {stallion.pedigree?.sire||"—"} / 母父: {stallion.pedigree?.sireOfDam||"—"}</div>
-          <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>{surfBadge(stallion.surface)}{courseBadge(stallion.course)}{growthBadge(stallion.growth)}</div>
-        </div>
-        <span style={{fontSize:16,color:"var(--color-text-tertiary)",transform:expanded?"rotate(180deg)":"none",transition:"transform 0.2s",marginTop:4}}>▾</span>
-      </div>
-      {expanded&&(<div style={{padding:"0 16px 16px",borderTop:"1px solid var(--color-border-tertiary)"}}><div style={{paddingTop:12}}>
-        <PedigreeTable pedigree={stallion.pedigree}/>
-        <div style={{fontSize:11,color:"var(--color-text-secondary)",marginBottom:8}}>適性距離: {DISTANCE[stallion.distanceMin]} 〜 {DISTANCE[stallion.distanceMax]}</div>
-        <StatBar label="スピード" value={stallion.speedScore} color="#1e5fa8"/>
-        <StatBar label="スタミナ" value={stallion.staminaScore} color="#3578c4"/>
-        <StatBar label="パワー" value={stallion.powerScore} color="#d4941a"/>
-        <StatBar label="重馬場" value={stallion.heavyTrack} color="#4a90d9"/>
-      </div>
-      {stallion.notes&&<div style={{fontSize:11,color:"var(--color-text-secondary)",lineHeight:1.6,padding:"8px 10px",background:"#f0f6fd",borderRadius:8,margin:"8px 0"}}>{stallion.notes}</div>}
-      <div style={{display:"flex",gap:8,justifyContent:"flex-end"}}>
-        <button onClick={e=>{e.stopPropagation();onEdit(stallion)}} style={{padding:"5px 12px",borderRadius:6,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-secondary)",fontSize:11,cursor:"pointer"}}>編集</button>
-        <button onClick={e=>{e.stopPropagation();onDelete(stallion.id)}} style={{padding:"5px 12px",borderRadius:6,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"#A32D2D",fontSize:11,cursor:"pointer"}}>削除</button>
-      </div></div>)}
-    </div>
-  );
-};
-
-/* ===== DB Form ===== */
-const StallionForm=({stallion,onSave,onCancel})=>{
   const[f,setF]=useState({...stallion,pedigree:{...stallion.pedigree}});
   const s=(k,v)=>setF(p=>({...p,[k]:v}));
   const sp=(k,v)=>setF(p=>({...p,pedigree:{...p.pedigree,[k]:v}}));
