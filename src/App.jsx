@@ -1,4 +1,17 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
+const save=(data)=>{try{localStorage.setItem("kb_stallions",JSON.stringify(data))}catch(e){}};
+const load=(len)=>{try{const d=JSON.parse(localStorage.getItem("kb_stallions"));return Array.isArray(d)?d:null}catch(e){return null}};
+const VENUES={
+  tokyo:{name:"東京",course:"LEFT",surface:["TURF","DIRT"]},
+  nakayama:{name:"中山",course:"RIGHT",surface:["TURF","DIRT"]},
+  kyoto:{name:"京都",course:"RIGHT",surface:["TURF","DIRT"]},
+  hanshin:{name:"阪神",course:"RIGHT",surface:["TURF","DIRT"]},
+  chukyo:{name:"中京",course:"LEFT",surface:["TURF","DIRT"]},
+  kokura:{name:"小倉",course:"RIGHT",surface:["TURF","DIRT"]},
+  niigata:{name:"新潟",course:"LEFT",surface:["TURF","DIRT"]},
+  sapporo:{name:"札幌",course:"RIGHT",surface:["TURF","DIRT"]},
+  hakodate:{name:"函館",course:"RIGHT",surface:["TURF","DIRT"]},
+};
 
 const HORSE_SVG=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="48" height="48">
   <g fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -98,6 +111,49 @@ const PC_STYLES=`
   .kb-horse-icon{display:none!important}
 }
 `;
+/* ===== Aptitude Result Card ===== */
+const AptitudeCard=({stallion,result,rank})=>{
+  const[open,setOpen]=useState(false);
+  const scoreColor=result.score>=80?"#1e5fa8":result.score>=60?"#3578c4":result.score>=40?"#4a90d9":"#7a9ab8";
+  return(
+    <div style={{background:"var(--color-background-primary)",border:"1px solid var(--color-border-tertiary)",borderRadius:12,overflow:"hidden"}}>
+      <div onClick={()=>setOpen(!open)} style={{padding:"10px 16px",cursor:"pointer",display:"flex",alignItems:"center",gap:12}}>
+        <div style={{width:32,height:32,borderRadius:8,background:scoreColor,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:500,fontSize:13,flexShrink:0}}>{rank}</div>
+        <div style={{flex:1,minWidth:0}}>
+          <div style={{display:"flex",alignItems:"baseline",gap:6}}>
+            <span style={{fontSize:14,fontWeight:500,color:"var(--color-text-primary)"}}>{stallion.name}</span>
+            <span style={{fontSize:10,color:"var(--color-text-tertiary)"}}>{stallion.nameEn}</span>
+          </div>
+          <div style={{fontSize:10,color:"var(--color-text-secondary)",marginTop:2}}>父: {stallion.pedigree?.sire} / 母父: {stallion.pedigree?.sireOfDam}</div>
+        </div>
+        <div style={{textAlign:"right",flexShrink:0}}>
+          <div style={{fontSize:20,fontWeight:500,color:scoreColor}}>{result.score}</div>
+          <div style={{fontSize:9,color:"var(--color-text-tertiary)"}}>/ 100</div>
+        </div>
+        <span style={{fontSize:14,color:"var(--color-text-tertiary)",transform:open?"rotate(180deg)":"none",transition:"transform 0.2s"}}>▾</span>
+      </div>
+      {open&&(
+        <div style={{padding:"0 16px 14px",borderTop:"1px solid var(--color-border-tertiary)"}}>
+          <div style={{paddingTop:10}}>
+            <div style={{fontSize:11,fontWeight:500,color:"var(--color-text-secondary)",marginBottom:8}}>適性スコア内訳</div>
+            {result.details.map((d,i)=>(
+              <div key={i} style={{display:"flex",alignItems:"center",gap:8,marginBottom:4}}>
+                <span style={{width:60,fontSize:11,color:"var(--color-text-secondary)",textAlign:"right"}}>{d.label}</span>
+                <div style={{flex:1,height:8,borderRadius:4,background:"#f0f6fd",overflow:"hidden"}}>
+                  <div style={{width:`${(d.pts/d.max)*100}%`,height:"100%",borderRadius:4,background:d.pts>=d.max*0.8?"#1e5fa8":d.pts>=d.max*0.5?"#3578c4":"#f0b840",transition:"width 0.3s"}}/>
+                </div>
+                <span style={{width:50,fontSize:10,color:"var(--color-text-secondary)",textAlign:"right"}}>{d.pts}/{d.max}</span>
+                <span style={{fontSize:10,color:"var(--color-text-tertiary)",width:80}}>{d.note}</span>
+              </div>
+            ))}
+            <div style={{display:"flex",alignItems:"center",gap:8,marginTop:2,marginBottom:8}}>
+              <span style={{width:60,fontSize:11,color:"var(--color-text-secondary)",textAlign:"right"}}>能力補正</span>
+              <span style={{fontSize:11,fontWeight:500,color:"#4a90d9"}}>+{result.bonus}</span>
+            </div>
+            <div style={{display:"flex",gap:4,flexWrap:"wrap",marginBottom:8}}>
+              {surfBadge(stallion.surface)}{courseBadge(stallion.course)}{growthBadge(stallion.growth)}
+            </div>
+            <PedigreeTable pedigree={stallion.pedigree}/>
             {stallion.notes&&<div style={{fontSize:10,color:"var(--color-text-secondary)",lineHeight:1.5,padding:"6px 10px",background:"#f0f6fd",borderRadius:8}}>{stallion.notes}</div>}
           </div>
         </div>
