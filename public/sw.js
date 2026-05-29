@@ -1,4 +1,4 @@
-const CACHE_NAME = 'keibakun-v1';
+const CACHE_NAME = 'keibakun-v2';
 const BASE = '/horsebloodline';
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll([`${BASE}/`, `${BASE}/index.html`])));
@@ -10,7 +10,7 @@ self.addEventListener('activate', (e) => {
 });
 self.addEventListener('fetch', (e) => {
   if (e.request.url.includes('/reviews/') || e.request.url.includes('.json')) {
-    e.respondWith(fetch(e.request).then(r => { caches.open(CACHE_NAME).then(c => c.put(e.request, r.clone())); return r; }).catch(() => caches.match(e.request)));
+    e.respondWith(fetch(e.request).then(r => { const clone = r.clone(); caches.open(CACHE_NAME).then(c => c.put(e.request, clone)); return r; }).catch(() => caches.match(e.request)));
     return;
   }
   e.respondWith(caches.match(e.request).then(c => c || fetch(e.request)));
