@@ -111,6 +111,11 @@ const PC_STYLES=`
   .kb-horse-icon{display:none!important}
 }
 `;
+const SURFACE = { TURF:"芝", DIRT:"ダート", BOTH:"芝・ダート兼用" };
+const DISTANCE = { SPRINT:"短距離 (~1400m)", MILE:"マイル (1400~1800m)", MIDDLE:"中距離 (1800~2400m)", LONG:"長距離 (2400m~)", VERSATILE:"万能" };
+const DIST_SHORT = { SPRINT:"短距離", MILE:"マイル", MIDDLE:"中距離", LONG:"長距離" };
+const COURSE = { RIGHT:"右回り", LEFT:"左回り", BOTH:"左右兼用" };
+const TRACK_COND = { GOOD:"良", SLIGHTLY_HEAVY:"稍重", HEAVY:"重", BAD:"不良" };
 const GROWTH={EARLY:"早熟",NORMAL:"普通",LATE:"晩成"};
 function calcAptitude(stallion, race) {
   let score = 0;
