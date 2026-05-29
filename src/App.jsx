@@ -111,6 +111,7 @@ const PC_STYLES=`
   .kb-horse-icon{display:none!important}
 }
 `;
+const GROWTH={EARLY:"早熟",NORMAL:"普通",LATE:"晩成"};
 function calcAptitude(stallion, race) {
   let score = 0;
   let details = [];
