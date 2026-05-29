@@ -1,0 +1,752 @@
+{
+  "id": "derby2026",
+  "race_id": "",
+  "race_name": "第93回 東京優駿（日本ダービー）",
+  "expectedPace": "HIGH",
+  "trends": {
+    "popularity": [
+      {
+        "label": "1番人気",
+        "val": "過去10年【2-3-2-3】複勝率70%。クロワデュノール(25年)ら2勝。",
+        "hl": true
+      },
+      {
+        "label": "2番人気",
+        "val": "【1-3-1-5】複勝率50%。レイデオロ(17年)優勝",
+        "hl": true
+      },
+      {
+        "label": "3番人気",
+        "val": "【2-3-0-5】連対率50%・複勝率50%。ドウデュース(22年)ら2勝。1番人気と連対率で並ぶ",
+        "hl": true
+      },
+      {
+        "label": "1〜3番人気計",
+        "val": "【5-9-3-13】好走17頭中16頭が前走皐月賞組。複勝回収率84%",
+        "hl": true
+      },
+      {
+        "label": "4番人気",
+        "val": "【2-1-0-7】複勝率30%。タスティエーラ(23年)ら2勝。単勝回収値200と高配当実績あり"
+      },
+      {
+        "label": "5番人気",
+        "val": "【1-0-0-9】単勝回収値125。大穴優勝の実績あり"
+      },
+      {
+        "label": "6〜7番人気",
+        "val": "【0-0-2-16】複勝率20%。3着荒れに警戒"
+      },
+      {
+        "label": "8番人気以下",
+        "val": "【2-0-3-103】3着には低人気が過半数の7頭。波乱要素あり"
+      }
+    ],
+    "popTip": "上位3番人気が強力で複勝率56.7%。なかでも前走皐月賞組（1〜3番人気）は複勝回収率108%と馬券的にも優秀。2着は4番人気以内に収まるが3着は6番人気以下が過半数で荒れ要素あり。",
+    "draw": [
+      {
+        "label": "1〜2枠",
+        "val": "複勝率20%。内枠は揉まれるリスクあり"
+      },
+      {
+        "label": "3〜4枠",
+        "val": "複勝率28%。やや有利",
+        "hl": true
+      },
+      {
+        "label": "5〜6枠",
+        "val": "複勝率25%。標準"
+      },
+      {
+        "label": "7〜8枠",
+        "val": "複勝率22%。外枠は距離ロスに注意"
+      }
+    ],
+    "drawTip": "極端な内外有利なし。東京2400mは直線が長く差し・追込が生きやすい。枠より脚質・血統適性を優先して評価。",
+    "style": [
+      {
+        "label": "逃げ",
+        "val": "ロブチェンが再度逃げを打つ可能性。コースレコード1:56.5の持久力は本物"
+      },
+      {
+        "label": "先行",
+        "val": "コース替わりの恩恵大。皐月賞で先行して好走した馬は東京でも安定",
+        "hl": true
+      },
+      {
+        "label": "差し（最強）",
+        "val": "今年は前半58秒9のペースを経験した持続力型が有利。東京の直線で逆転狙い",
+        "hl": true
+      },
+      {
+        "label": "追込",
+        "val": "フォルテアンジェロのような後方一気型に注目。上がり最速馬が圧倒的に有利"
+      }
+    ],
+    "styleTip": "今年の皐月賞は前半58秒9・後半57秒6の持続力勝負。今回も持久力を生かす展開になりやすく、ペース耐性のある差し〜追込型が東京で逆転を狙う。",
+    "blood": [
+      {
+        "label": "皐月賞組（前走）",
+        "val": "過去10年【5-9-2-6/22】連対率63.6%・複勝率72.7%・複勝回収率108%。1〜3番人気の本命路線",
+        "hl": true
+      },
+      {
+        "label": "皐月賞1着馬",
+        "val": "【1-4-1-4】2冠はコントレイル(20年)のみ。1着馬が崩れるケースも多い"
+      },
+      {
+        "label": "皐月賞0.1〜0.2秒差",
+        "val": "【2-2-0-1/5】連対率80%・複勝率80%。今年はリアライズシリウス(0.2秒差)が該当。4頭の連対馬はすべて2着",
+        "hl": true
+      },
+      {
+        "label": "皐月賞0.3〜0.5秒差",
+        "val": "【3-3-3-15/24】複勝率37.5%。ライヒスアドラー・フォルテアンジェロが該当",
+        "hl": true
+      },
+      {
+        "label": "皐月賞0.6秒差以上",
+        "val": "【1-0-1-49】複勝率4%以下。着差が広がると一気に信頼落ちる"
+      },
+      {
+        "label": "他路線（前走連対必須）",
+        "val": "【3-0-4-54】前走連対馬のみ好走。非連対馬は好走例なし。6番人気以下からの伏兵5頭が好走"
+      }
+    ],
+    "bloodTip": "皐月賞組の中でも0.5秒差以内、特に0.1〜0.2秒差の馬が連対率80%と最優秀。中山適性の差で僅差負けした総合力の高い馬が東京で逆転するロジック。",
+    "rotation": [
+      {
+        "label": "前走皐月賞（主流）",
+        "val": "【5-9-2-6/22】複勝率72.7%。ダービーへの王道",
+        "hl": true
+      },
+      {
+        "label": "前走青葉賞",
+        "val": "【0-0-1-1/2】アドミラブル(17年3着)のみ。前走1着が条件"
+      },
+      {
+        "label": "前走毎日杯・スプリングS",
+        "val": "前走連対が必須条件。それ以外は好走例なし"
+      },
+      {
+        "label": "前走プリンシパルS",
+        "val": "コズミックフォース(18年3着)の例あり。前走1着が条件"
+      },
+      {
+        "label": "キャリア4戦",
+        "val": "最多5勝。コントレイル(20年)ら。勝率・複勝率ともにトップ",
+        "hl": true
+      },
+      {
+        "label": "キャリア5戦以内",
+        "val": "連対馬すべてキャリア5戦以内。6戦以上の連対はゼロ",
+        "hl": true
+      },
+      {
+        "label": "継続騎乗×3番人気以内",
+        "val": "【5-8-3-7/23】連対率56.5%・複勝率69.6%・複勝回収率102%。最も信頼できる条件",
+        "hl": true
+      },
+      {
+        "label": "乗替わり",
+        "val": "【2-1-2-59/64】複勝率7.8%。継続騎乗より大幅に落ちる"
+      }
+    ],
+    "rotationTip": "継続騎乗×前走皐月賞×3番人気以内が最強条件。乗替わり馬は成績大幅落ち。キャリア6戦以上の連対はゼロ。",
+    "rotationHorses": [
+      {
+        "label": "皐月賞組",
+        "horses": "ロブチェン(1着)、リアライズシリウス(2着)、ライヒスアドラー(3着)、アスクエジンバラ(4着)、フォルテアンジェロ(5着)、グリーンエナジー(7着)、マテンロウゲイル(10着)、パントルナイーフ(14着)、バステール(11着)、アルトラムス(18着)"
+      },
+      {
+        "label": "青葉賞組",
+        "horses": "ゴーイントゥスカイ(1着)"
+      },
+      {
+        "label": "京都新聞杯組",
+        "horses": "コンジェスタス(1着)、エムズビギン(7着)"
+      },
+      {
+        "label": "別路線組",
+        "horses": "アウダーシア(スプリングS1着)、メイショウハチコウ(プリンシパルS1着)、ショウナンガルフ(きさらぎ賞1着)、ジャスティンビスタ(ホープフルS8着)、ケントン(青葉賞10着)"
+      }
+    ],
+    "pickup": {
+      "title": "JRA-VANデータ的注目馬",
+      "horses": [
+        {
+          "name": "リアライズシリウス",
+          "tag": "◎本命",
+          "reason": "皐月賞2着・0.2秒差（連対率80%ゾーン）、推定3番人気以内、キャリア5戦、津村騎手継続騎乗。東京コース替わりはプラス。4条件すべてが該当する最有力"
+        },
+        {
+          "name": "フォルテアンジェロ",
+          "tag": "○穴",
+          "reason": "皐月賞5着・0.5秒差以内。スタート出遅れがすべての敗因で後方からメンバー中上がり最速。ホープフルS2着の地力あり。キャリア4戦、荻野極騎手継続騎乗予定"
+        },
+        {
+          "name": "メイショウハチコウ",
+          "tag": "△大穴",
+          "reason": "キャリア5戦、プリンシパルS勝利で2連勝中。M.ディー騎手継続騎乗予定。他路線組は前走連対が必須条件で該当。6番人気以下からの好走が目立つ年多数"
+        },
+        {
+          "name": "ロブチェン",
+          "tag": "▲対抗",
+          "reason": "皐月賞1着（1:56.5コースレコード）。持久力を生かすレースで有力。ただし皐月賞1着→ダービー2冠はコントレイル(20年)のみで、1着馬が崩れるケースも多い"
+        }
+      ]
+    }
+  },
+  "runners": [
+    {
+      "num": 1,
+      "frame": 1,
+      "name": "ライヒスアドラー",
+      "sire": "シスキン",
+      "bms": "ハーツクライ",
+      "dam": "クライリング",
+      "jockey": "佐々木大輔",
+      "age": "3",
+      "pop": 0,
+      "tan": 0,
+      "gradeWins": [],
+      "paceType": "HIGH",
+      "prevRank": 3,
+      "pastRanks": [
+        3,
+        2,
+        3,
+        1
+      ],
+      "prevRaceName": "皐月賞",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 2,
+      "frame": 1,
+      "name": "マテンロウゲイル",
+      "sire": "エピファネイア",
+      "bms": "Candy Ride",
+      "dam": "デザートライド",
+      "jockey": "横山和生",
+      "age": "3",
+      "pop": 0,
+      "tan": 0,
+      "gradeWins": [],
+      "paceType": "SLOW",
+      "prevRank": 10,
+      "pastRanks": [
+        10,
+        1,
+        2,
+        1
+      ],
+      "prevRaceName": "皐月賞",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 3,
+      "frame": 2,
+      "name": "ケントン",
+      "sire": "リアルスティール",
+      "bms": "ディープスカイ",
+      "dam": "エーティーロゼッタ",
+      "jockey": "丹内祐次",
+      "age": "3",
+      "pop": 0,
+      "tan": 0,
+      "gradeWins": [],
+      "paceType": "BOTH",
+      "prevRank": 10,
+      "pastRanks": [
+        10,
+        1,
+        12,
+        4
+      ],
+      "prevRaceName": "青葉賞",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 2400
+    },
+    {
+      "num": 4,
+      "frame": 2,
+      "name": "アルトラムス",
+      "sire": "イスラボニータ",
+      "bms": "スクリーンヒーロー",
+      "dam": "デジマノハナ",
+      "jockey": "横山武史",
+      "age": "3",
+      "pop": 0,
+      "tan": 0,
+      "gradeWins": [],
+      "paceType": "BOTH",
+      "prevRank": 18,
+      "pastRanks": [
+        18,
+        1,
+        3,
+        1
+      ],
+      "prevRaceName": "皐月賞",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 5,
+      "frame": 3,
+      "name": "バステール",
+      "sire": "キタサンブラック",
+      "bms": "Aldebaran",
+      "dam": "マンビア",
+      "jockey": "川田将雅",
+      "age": "3",
+      "pop": 0,
+      "tan": 0,
+      "gradeWins": [
+        {
+          "race": "ディープ記念",
+          "grade": "G3",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0,
+          "dist": 2000
+        }
+      ],
+      "paceType": "SLOW",
+      "prevRank": 11,
+      "pastRanks": [
+        11,
+        1,
+        1,
+        2
+      ],
+      "prevRaceName": "皐月賞",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 6,
+      "frame": 3,
+      "name": "コンジェスタス",
+      "sire": "コントレイル",
+      "bms": "Alamosa",
+      "dam": "キラモサ",
+      "jockey": "西村淳也",
+      "age": "3",
+      "pop": 0,
+      "tan": 0,
+      "gradeWins": [
+        {
+          "race": "京都新聞杯",
+          "grade": "G2",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0,
+          "dist": 2200
+        }
+      ],
+      "paceType": "SLOW",
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        1,
+        1,
+        null
+      ],
+      "prevRaceName": "京都新聞杯",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 2200
+    },
+    {
+      "num": 7,
+      "frame": 4,
+      "name": "メイショウハチコウ",
+      "sire": "ロジャーバローズ",
+      "bms": "アグネスデジタル",
+      "dam": "アモーレヴォレ",
+      "jockey": "M.ディー",
+      "age": "3",
+      "pop": 0,
+      "tan": 0,
+      "gradeWins": [],
+      "paceType": "BOTH",
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        1,
+        4,
+        16
+      ],
+      "prevRaceName": "プリンシパルS",
+      "prevRaceGrade": "OP",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 8,
+      "frame": 4,
+      "name": "ショウナンガルフ",
+      "sire": "ハービンジャー",
+      "bms": "ハーツクライ",
+      "dam": "ミカリーニョ",
+      "jockey": "浜中俊",
+      "age": "3",
+      "pop": 0,
+      "tan": 0,
+      "gradeWins": [],
+      "paceType": "SLOW",
+      "prevRank": 9,
+      "pastRanks": [
+        9,
+        14,
+        1,
+        1
+      ],
+      "prevRaceName": "きさらぎ賞",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 1800
+    },
+    {
+      "num": 9,
+      "frame": 5,
+      "name": "アウダーシア",
+      "sire": "キズナ",
+      "bms": "ルーラーシップ",
+      "dam": "リリーノーブル",
+      "jockey": "D.レーン",
+      "age": "3",
+      "pop": 0,
+      "tan": 0,
+      "gradeWins": [
+        {
+          "race": "スプリングS",
+          "grade": "G2",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0,
+          "dist": 1800
+        }
+      ],
+      "paceType": "SLOW",
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "prevRaceName": "スプリングS",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1800
+    },
+    {
+      "num": 10,
+      "frame": 5,
+      "name": "ジャスティンビスタ",
+      "sire": "サートゥルナーリア",
+      "bms": "ディープインパクト",
+      "dam": "ペブルガーデン",
+      "jockey": "坂井瑠星",
+      "age": "3",
+      "pop": 0,
+      "tan": 0,
+      "gradeWins": [
+        {
+          "race": "京都2歳S",
+          "grade": "G3",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.0,
+          "dist": 2000
+        }
+      ],
+      "paceType": "BOTH",
+      "prevRank": 8,
+      "pastRanks": [
+        8,
+        1,
+        1,
+        null
+      ],
+      "prevRaceName": "ホープフルS",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 11,
+      "frame": 6,
+      "name": "リアライズシリウス",
+      "sire": "ポエティックフレア",
+      "bms": "ステイゴールド",
+      "dam": "レッドミラベル",
+      "jockey": "津村明秀",
+      "age": "3",
+      "pop": 0,
+      "tan": 0,
+      "gradeWins": [
+        {
+          "race": "皐月賞",
+          "grade": "G1",
+          "place": 2,
+          "year": 2026,
+          "margin": 0.2,
+          "dist": 2000
+        },
+        {
+          "race": "共同通信杯",
+          "grade": "G3",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0,
+          "dist": 1800
+        }
+      ],
+      "paceType": "HIGH",
+      "prevRank": 2,
+      "pastRanks": [
+        2,
+        1,
+        5,
+        1
+      ],
+      "prevRaceName": "皐月賞",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 12,
+      "frame": 6,
+      "name": "アスクエジンバラ",
+      "sire": "リオンディーズ",
+      "bms": "マンハッタンカフェ",
+      "dam": "ハニートリップ",
+      "jockey": "岩田康誠",
+      "age": "3",
+      "pop": 0,
+      "tan": 0,
+      "gradeWins": [
+        {
+          "race": "皐月賞",
+          "grade": "G1",
+          "place": 4,
+          "year": 2026,
+          "margin": 0.3,
+          "dist": 2000
+        },
+        {
+          "race": "ホープフルS",
+          "grade": "G1",
+          "place": 3,
+          "year": 2025,
+          "margin": 0.2,
+          "dist": 2000
+        }
+      ],
+      "paceType": "HIGH",
+      "prevRank": 4,
+      "pastRanks": [
+        4,
+        2,
+        3,
+        2
+      ],
+      "prevRaceName": "皐月賞",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 13,
+      "frame": 7,
+      "name": "パントルナイーフ",
+      "sire": "キズナ",
+      "bms": "Makfi",
+      "dam": "アールブリュット",
+      "jockey": "C.ルメール",
+      "age": "3",
+      "pop": 0,
+      "tan": 0,
+      "gradeWins": [],
+      "paceType": "BOTH",
+      "prevRank": 14,
+      "pastRanks": [
+        14,
+        1,
+        1,
+        2
+      ],
+      "prevRaceName": "皐月賞",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 14,
+      "frame": 7,
+      "name": "ゴーイントゥスカイ",
+      "sire": "コントレイル",
+      "bms": "Tapit",
+      "dam": "ゴーイントゥザウィンドウ",
+      "jockey": "武豊",
+      "age": "3",
+      "pop": 0,
+      "tan": 0,
+      "gradeWins": [
+        {
+          "race": "青葉賞",
+          "grade": "G2",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0,
+          "dist": 2400
+        }
+      ],
+      "paceType": "SLOW",
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        6,
+        3,
+        1
+      ],
+      "prevRaceName": "青葉賞",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 2400
+    },
+    {
+      "num": 15,
+      "frame": 7,
+      "name": "フォルテアンジェロ",
+      "sire": "フィエールマン",
+      "bms": "Dark Angel",
+      "dam": "レディアンジェラ",
+      "jockey": "荻野極",
+      "age": "3",
+      "pop": 0,
+      "tan": 0,
+      "gradeWins": [
+        {
+          "race": "ホープフルS",
+          "grade": "G1",
+          "place": 2,
+          "year": 2025,
+          "margin": 0.1,
+          "dist": 2000
+        }
+      ],
+      "paceType": "SLOW",
+      "prevRank": 5,
+      "pastRanks": [
+        5,
+        2,
+        2,
+        1
+      ],
+      "prevRaceName": "皐月賞",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 16,
+      "frame": 8,
+      "name": "グリーンエナジー",
+      "sire": "スワーヴリチャード",
+      "bms": "Singspiel",
+      "dam": "シンバル2",
+      "jockey": "戸崎圭太",
+      "age": "3",
+      "pop": 0,
+      "tan": 0,
+      "gradeWins": [
+        {
+          "race": "京成杯",
+          "grade": "G3",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0,
+          "dist": 2000
+        }
+      ],
+      "paceType": "BOTH",
+      "prevRank": 7,
+      "pastRanks": [
+        7,
+        1,
+        1,
+        3
+      ],
+      "prevRaceName": "皐月賞",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 17,
+      "frame": 8,
+      "name": "ロブチェン",
+      "sire": "ワールドプレミア",
+      "bms": "Giant's Causeway",
+      "dam": "ソングライティング",
+      "jockey": "松山弘平",
+      "age": "3",
+      "pop": 0,
+      "tan": 0,
+      "gradeWins": [
+        {
+          "race": "皐月賞",
+          "grade": "G1",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0,
+          "dist": 2000
+        },
+        {
+          "race": "ホープフルS",
+          "grade": "G1",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.0,
+          "dist": 2000
+        }
+      ],
+      "paceType": "HIGH",
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        3,
+        1,
+        1
+      ],
+      "prevRaceName": "皐月賞",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 2000
+    },
+    {
+      "num": 18,
+      "frame": 8,
+      "name": "エムズビギン",
+      "sire": "キタサンブラック",
+      "bms": "Galileo",
+      "dam": "デルフィニア2",
+      "jockey": "F.ゴンサルベス",
+      "age": "3",
+      "pop": 0,
+      "tan": 0,
+      "gradeWins": [],
+      "paceType": "SLOW",
+      "prevRank": 7,
+      "pastRanks": [
+        7,
+        2,
+        1,
+        2
+      ],
+      "prevRaceName": "京都新聞杯",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 2200
+    }
+  ],
+  "result": null,
+  "review": null,
+  "verification": null,
+  "frameBonus": null
+}
