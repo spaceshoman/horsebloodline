@@ -98,6 +98,42 @@ const PC_STYLES=`
   .kb-horse-icon{display:none!important}
 }
 `;
+  } else {
+    // Heavy/Bad: high heavyTrack = big advantage
+    const heavyFit=stallion.heavyTrack/10;
+    const severity=condLevel/3;
+    const pts=+(tMax*(heavyFit*severity*0.9+0.05)).toFixed(1);
+    const realPts=Math.min(tMax,pts);
+    score+=realPts;details.push({label:"馬場状態",pts:realPts,max:tMax,note:`重適性${stallion.heavyTrack}/10`});
+  }
+
+  // Growth match (max 10) — sharper curve
+  const gMax = w.growth;
+  if(!race.horseAge||race.horseAge==="ANY"){
+    score+=gMax*0.5;details.push({label:"成長",pts:+(gMax*0.5).toFixed(1),max:gMax,note:"年齢不問"});
+  } else {
+    const age=parseInt(race.horseAge);
+    let fit=0.3;
+    if(stallion.growth==="EARLY") fit=age<=3?1.0:age===4?0.5:0.15;
+    else if(stallion.growth==="NORMAL") fit=age<=2?0.4:age<=4?0.9:0.5;
+    else fit=age<=3?0.2:age<=5?0.7:1.0;
+    const pts=+(gMax*fit).toFixed(1);
+    score+=pts;details.push({label:"成長",pts,max:gMax,note:`${GROWTH[stallion.growth]}×${age}歳`});
+  }
+
+  // Ability bonus — up to ~15 points, more variance
+  let bonus = 0;
+  if(race.distance==="SPRINT") bonus+=stallion.speedScore*0.6;
+  else if(race.distance==="MILE") bonus+=stallion.speedScore*0.4+stallion.staminaScore*0.15;
+  else if(race.distance==="MIDDLE") bonus+=stallion.speedScore*0.2+stallion.staminaScore*0.35;
+  else if(race.distance==="LONG") bonus+=stallion.staminaScore*0.6;
+  if(race.surface==="DIRT") bonus+=stallion.powerScore*0.35;
+  else bonus+=stallion.powerScore*0.1;
+  score+=bonus;
+
+  return {score:Math.min(100,+score.toFixed(1)),details,bonus:+bonus.toFixed(1)};
+}
+
 /* ===== Aptitude Result Card ===== */
 const AptitudeCard=({stallion,result,rank})=>{
   const[open,setOpen]=useState(false);
