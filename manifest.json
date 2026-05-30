@@ -1,0 +1,16 @@
+{
+  "name": "血統くん - 競馬血統予想",
+  "short_name": "血統くん",
+  "description": "AI血統診断で競馬予想をサポート。種牡馬144頭・G1 21レース対応。",
+  "start_url": "/horsebloodline/",
+  "scope": "/horsebloodline/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0a0a",
+  "theme_color": "#c8a84b",
+  "lang": "ja",
+  "icons": [
+    {"src": "/horsebloodline/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "/horsebloodline/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}
