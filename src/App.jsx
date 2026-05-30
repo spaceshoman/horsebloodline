@@ -1,5 +1,14 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 
+const save=(data)=>{try{localStorage.setItem("kb_stallions",JSON.stringify(data))}catch(e){}};
+const load=(len)=>{try{const d=JSON.parse(localStorage.getItem("kb_stallions"));return Array.isArray(d)?d:null}catch(e){return null}};
+
+/* ===== Constants ===== */
+const SURFACE = { TURF:"芝", DIRT:"ダート", BOTH:"芝・ダート兼用" };
+const DISTANCE = { SPRINT:"短距離 (~1400m)", MILE:"マイル (1400~1800m)", MIDDLE:"中距離 (1800~2400m)", LONG:"長距離 (2400m~)", VERSATILE:"万能" };
+const DIST_SHORT = { SPRINT:"短距離", MILE:"マイル", MIDDLE:"中距離", LONG:"長距離" };
+const COURSE = { RIGHT:"右回り", LEFT:"左回り", BOTH:"左右兼用" };
+
 const HORSE_SVG=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="48" height="48">
   <g fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d="M38 8 C36 6 32 6 30 8 C28 10 28 13 30 14 L32 15" />
@@ -100,6 +109,244 @@ const VENUES = {
   chukyo:{name:"中京",course:"LEFT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE"]},
   kokura:{name:"小倉",course:"RIGHT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE"]},
 };
+
+function calcAptitude(stallion, race) {
+  let score = 0;
+  let details = [];
+  // Lower base weights → more room for differentiation
+  // Max from base categories: 15+15+10+10+10 = 60
+  // Ability bonus can add up to ~15, total realistic max ~75
+  const w = race.weights || {surface:15,distance:15,course:10,track:10,growth:10};
+
+  // Surface match (max 15) — harsher mismatch
+  const surfMax = w.surface;
+  if(stallion.surface===race.surface){score+=surfMax;details.push({label:"馬場",pts:surfMax,max:surfMax,note:"完全一致"});}
+  else if(stallion.surface==="BOTH"){score+=surfMax*0.7;details.push({label:"馬場",pts:+(surfMax*0.7).toFixed(1),max:surfMax,note:"兼用"});}
+  else{score+=0;details.push({label:"馬場",pts:0,max:surfMax,note:"不適合"});}
+
+  // Distance match (max 15) — center-fit model
+  // Core idea: if race distance is within range, score is high.
+  // Bonus when race distance = center of stallion's range.
+  // Wide-range stallions are NOT penalized — they just get slightly less center-fit bonus.
+  const distMax = w.distance;
+  const dOrder=["SPRINT","MILE","MIDDLE","LONG"];
+  const ri=dOrder.indexOf(race.distance);
+  const sMin=dOrder.indexOf(stallion.distanceMin);
+  const sMax=dOrder.indexOf(stallion.distanceMax);
+  if(stallion.distanceMin==="VERSATILE"||stallion.distanceMax==="VERSATILE"){
+    score+=distMax*0.7;details.push({label:"距離",pts:+(distMax*0.7).toFixed(1),max:distMax,note:"万能"});
+  } else if(ri>=sMin&&ri<=sMax){
+    // In range — base 85% + center-fit bonus up to 15%
+    const center=(sMin+sMax)/2; // e.g. SPRINT(0)-MIDDLE(2) → center=1.0 (MILE)
+    const distFromCenter=Math.abs(ri-center);
+    const range=sMax-sMin;
+    const maxDistFromCenter=range/2||0.5;
+    const centerFit=1-distFromCenter/maxDistFromCenter; // 1.0=perfect center, 0.0=edge
+    const pts=+(distMax*(0.85+centerFit*0.15)).toFixed(1);
+    const note=centerFit>=0.8?"距離ど真ん中◎":centerFit>=0.4?"距離適性内○":"適性範囲の端";
+    score+=pts;details.push({label:"距離",pts,max:distMax,note});
+  } else {
+    const gap=ri<sMin?sMin-ri:ri-sMax;
+    const pts=Math.max(0,+(distMax*(0.25-gap*0.15)).toFixed(1));
+    score+=pts;details.push({label:"距離",pts,max:distMax,note:gap===1?"やや範囲外":"大きく範囲外"});
+  }
+
+  // Course match (max 10) — mismatch = nearly 0
+  const cMax = w.course;
+  if(stallion.course===race.course){score+=cMax;details.push({label:"コース",pts:cMax,max:cMax,note:"完全一致"});}
+  else if(stallion.course==="BOTH"){score+=cMax*0.65;details.push({label:"コース",pts:+(cMax*0.65).toFixed(1),max:cMax,note:"左右兼用"});}
+  else{score+=cMax*0.15;details.push({label:"コース",pts:+(cMax*0.15).toFixed(1),max:cMax,note:"逆回り"});}
+
+  // Track condition (max 10) — good = rewards firm-ground types, heavy = rewards heavy-track types
+  const tMax = w.track;
+  const condMap={GOOD:0,SLIGHTLY_HEAVY:1,HEAVY:2,BAD:3};
+  const condLevel=condMap[race.trackCondition]||0;
+  if(condLevel===0){
+    // Good track: low heavyTrack = firm-ground specialist = higher score
+    const firmFit=(10-stallion.heavyTrack)/10; // heavyTrack 1→0.9, 5→0.5, 10→0.0
+    const pts=+(tMax*(0.3+firmFit*0.7)).toFixed(1);
+    score+=pts;details.push({label:"馬場状態",pts,max:tMax,note:`良馬場適性${10-stallion.heavyTrack}/10`});
+  } else if(condLevel===1){
+    // Slightly heavy: balanced, moderate heavyTrack does best
+    const balanced=1-Math.abs(stallion.heavyTrack-5)/5;
+    const pts=+(tMax*(0.3+balanced*0.6)).toFixed(1);
+    score+=pts;details.push({label:"馬場状態",pts,max:tMax,note:`稍重適性(重${stallion.heavyTrack})`});
+  } else {
+    // Heavy/Bad: high heavyTrack = big advantage
+    const heavyFit=stallion.heavyTrack/10;
+    const severity=condLevel/3;
+    const pts=+(tMax*(heavyFit*severity*0.9+0.05)).toFixed(1);
+    const realPts=Math.min(tMax,pts);
+    score+=realPts;details.push({label:"馬場状態",pts:realPts,max:tMax,note:`重適性${stallion.heavyTrack}/10`});
+  }
+
+  // Growth match (max 10) — sharper curve
+  const gMax = w.growth;
+  if(!race.horseAge||race.horseAge==="ANY"){
+    score+=gMax*0.5;details.push({label:"成長",pts:+(gMax*0.5).toFixed(1),max:gMax,note:"年齢不問"});
+  } else {
+    const age=parseInt(race.horseAge);
+    let fit=0.3;
+    if(stallion.growth==="EARLY") fit=age<=3?1.0:age===4?0.5:0.15;
+    else if(stallion.growth==="NORMAL") fit=age<=2?0.4:age<=4?0.9:0.5;
+    else fit=age<=3?0.2:age<=5?0.7:1.0;
+    const pts=+(gMax*fit).toFixed(1);
+    score+=pts;details.push({label:"成長",pts,max:gMax,note:`${GROWTH[stallion.growth]}×${age}歳`});
+  }
+
+  // Ability bonus — up to ~15 points, more variance
+  let bonus = 0;
+  if(race.distance==="SPRINT") bonus+=stallion.speedScore*0.6;
+  else if(race.distance==="MILE") bonus+=stallion.speedScore*0.4+stallion.staminaScore*0.15;
+  else if(race.distance==="MIDDLE") bonus+=stallion.speedScore*0.2+stallion.staminaScore*0.35;
+  else if(race.distance==="LONG") bonus+=stallion.staminaScore*0.6;
+  if(race.surface==="DIRT") bonus+=stallion.powerScore*0.35;
+  else bonus+=stallion.powerScore*0.1;
+  score+=bonus;
+
+  return {score:Math.min(100,+score.toFixed(1)),details,bonus:+bonus.toFixed(1)};
+}
+
+/* ===== Shared UI Components ===== */
+const Badge=({children,variant="default"})=>{
+  const C={turf:{bg:"#E1F5EE",text:"#085041",b:"#5DCAA5"},dirt:{bg:"#FAEEDA",text:"#633806",b:"#EF9F27"},both:{bg:"#EEEDFE",text:"#3C3489",b:"#AFA9EC"},right:{bg:"#FAECE7",text:"#712B13",b:"#F0997B"},left:{bg:"#E6F1FB",text:"#0C447C",b:"#85B7EB"},bothC:{bg:"#F1EFE8",text:"#444441",b:"#B4B2A9"},early:{bg:"#FCEBEB",text:"#791F1F",b:"#F09595"},normal:{bg:"#EAF3DE",text:"#27500A",b:"#97C459"},late:{bg:"#FBEAF0",text:"#72243E",b:"#ED93B1"},default:{bg:"var(--color-background-secondary)",text:"var(--color-text-secondary)",b:"var(--color-border-tertiary)"}};
+  const c=C[variant]||C.default;
+  return <span style={{display:"inline-block",padding:"2px 10px",borderRadius:20,fontSize:11,fontWeight:500,background:c.bg,color:c.text,border:`1px solid ${c.b}`,whiteSpace:"nowrap"}}>{children}</span>;
+};
+const surfBadge=k=><Badge variant={k==="TURF"?"turf":k==="DIRT"?"dirt":"both"}>{SURFACE[k]}</Badge>;
+const courseBadge=k=><Badge variant={k==="RIGHT"?"right":k==="LEFT"?"left":"bothC"}>{COURSE[k]}</Badge>;
+const growthBadge=k=><Badge variant={k==="EARLY"?"early":k==="LATE"?"late":"normal"}>{GROWTH[k]}</Badge>;
+
+const Field=({label,children})=>(<div style={{display:"flex",flexDirection:"column",gap:3}}><label style={{fontSize:11,color:"var(--color-text-secondary)",fontWeight:500}}>{label}</label>{children}</div>);
+const inputStyle={padding:"6px 8px",borderRadius:8,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:12};
+
+/* ===== DB Card ===== */
+const StallionCard=({stallion,onEdit,onDelete})=>{
+  const[expanded,setExpanded]=useState(false);
+  return(
+    <div style={{background:"var(--color-background-primary)",border:"1px solid var(--color-border-tertiary)",borderRadius:12,overflow:"hidden"}}>
+      <div onClick={()=>setExpanded(!expanded)} style={{padding:"12px 16px",cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+        <div style={{flex:1}}>
+          <div style={{display:"flex",alignItems:"baseline",gap:8,marginBottom:4}}>
+            <span style={{fontSize:15,fontWeight:500,color:"var(--color-text-primary)"}}>{stallion.name}</span>
+            <span style={{fontSize:11,color:"var(--color-text-tertiary)"}}>{stallion.nameEn}</span>
+          </div>
+          <div style={{fontSize:11,color:"var(--color-text-secondary)",marginBottom:6}}>父: {stallion.pedigree?.sire||"—"} / 母父: {stallion.pedigree?.sireOfDam||"—"}</div>
+          <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>{surfBadge(stallion.surface)}{courseBadge(stallion.course)}{growthBadge(stallion.growth)}</div>
+        </div>
+        <span style={{fontSize:16,color:"var(--color-text-tertiary)",transform:expanded?"rotate(180deg)":"none",transition:"transform 0.2s",marginTop:4}}>▾</span>
+      </div>
+      {expanded&&(<div style={{padding:"0 16px 16px",borderTop:"1px solid var(--color-border-tertiary)"}}><div style={{paddingTop:12}}>
+        <PedigreeTable pedigree={stallion.pedigree}/>
+        <div style={{fontSize:11,color:"var(--color-text-secondary)",marginBottom:8}}>適性距離: {DISTANCE[stallion.distanceMin]} 〜 {DISTANCE[stallion.distanceMax]}</div>
+        <StatBar label="スピード" value={stallion.speedScore} color="#1D9E75"/>
+        <StatBar label="スタミナ" value={stallion.staminaScore} color="#378ADD"/>
+        <StatBar label="パワー" value={stallion.powerScore} color="#D85A30"/>
+        <StatBar label="重馬場" value={stallion.heavyTrack} color="#7F77DD"/>
+      </div>
+      {stallion.notes&&<div style={{fontSize:11,color:"var(--color-text-secondary)",lineHeight:1.6,padding:"8px 10px",background:"var(--color-background-tertiary)",borderRadius:8,margin:"8px 0"}}>{stallion.notes}</div>}
+      <div style={{display:"flex",gap:8,justifyContent:"flex-end"}}>
+        <button onClick={e=>{e.stopPropagation();onEdit(stallion)}} style={{padding:"5px 12px",borderRadius:6,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-secondary)",fontSize:11,cursor:"pointer"}}>編集</button>
+        <button onClick={e=>{e.stopPropagation();onDelete(stallion.id)}} style={{padding:"5px 12px",borderRadius:6,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"#A32D2D",fontSize:11,cursor:"pointer"}}>削除</button>
+      </div></div>)}
+    </div>
+  );
+};
+
+/* ===== DB Form ===== */
+const StallionForm=({stallion,onSave,onCancel})=>{
+  const[f,setF]=useState({...stallion,pedigree:{...stallion.pedigree}});
+  const s=(k,v)=>setF(p=>({...p,[k]:v}));
+  const sp=(k,v)=>setF(p=>({...p,pedigree:{...p.pedigree,[k]:v}}));
+  return(
+    <div style={{background:"var(--color-background-primary)",border:"1px solid var(--color-border-tertiary)",borderRadius:12,padding:20,marginBottom:12}}>
+      <h3 style={{fontSize:15,fontWeight:500,color:"var(--color-text-primary)",margin:"0 0 14px"}}>{stallion.name?"編集":"新規登録"}</h3>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:14}}>
+        <Field label="馬名"><input value={f.name} onChange={e=>s("name",e.target.value)} style={inputStyle}/></Field>
+        <Field label="英名"><input value={f.nameEn} onChange={e=>s("nameEn",e.target.value)} style={inputStyle}/></Field>
+      </div>
+      <div style={{fontSize:11,fontWeight:500,color:"var(--color-text-secondary)",marginBottom:6}}>3代血統</div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:14}}>
+        <Field label="父"><input value={f.pedigree?.sire||""} onChange={e=>sp("sire",e.target.value)} style={inputStyle}/></Field>
+        <Field label="母"><input value={f.pedigree?.dam||""} onChange={e=>sp("dam",e.target.value)} style={inputStyle}/></Field>
+        <Field label="父の父"><input value={f.pedigree?.sireOfSire||""} onChange={e=>sp("sireOfSire",e.target.value)} style={inputStyle}/></Field>
+        <Field label="父の母"><input value={f.pedigree?.damOfSire||""} onChange={e=>sp("damOfSire",e.target.value)} style={inputStyle}/></Field>
+        <Field label="母の父"><input value={f.pedigree?.sireOfDam||""} onChange={e=>sp("sireOfDam",e.target.value)} style={inputStyle}/></Field>
+        <Field label="母の母"><input value={f.pedigree?.damOfDam||""} onChange={e=>sp("damOfDam",e.target.value)} style={inputStyle}/></Field>
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:14}}>
+        <Field label="馬場"><select value={f.surface} onChange={e=>s("surface",e.target.value)} style={inputStyle}>{Object.entries(SURFACE).map(([k,v])=><option key={k} value={k}>{v}</option>)}</select></Field>
+        <Field label="コース"><select value={f.course} onChange={e=>s("course",e.target.value)} style={inputStyle}>{Object.entries(COURSE).map(([k,v])=><option key={k} value={k}>{v}</option>)}</select></Field>
+        <Field label="成長型"><select value={f.growth} onChange={e=>s("growth",e.target.value)} style={inputStyle}>{Object.entries(GROWTH).map(([k,v])=><option key={k} value={k}>{v}</option>)}</select></Field>
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:14}}>
+        <Field label="距離(下限)"><select value={f.distanceMin} onChange={e=>s("distanceMin",e.target.value)} style={inputStyle}>{Object.entries(DISTANCE).map(([k,v])=><option key={k} value={k}>{v}</option>)}</select></Field>
+        <Field label="距離(上限)"><select value={f.distanceMax} onChange={e=>s("distanceMax",e.target.value)} style={inputStyle}>{Object.entries(DISTANCE).map(([k,v])=><option key={k} value={k}>{v}</option>)}</select></Field>
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:14}}>
+        {[["speedScore","スピード"],["staminaScore","スタミナ"],["powerScore","パワー"],["heavyTrack","重馬場"]].map(([k,l])=>(
+          <Field key={k} label={`${l}: ${f[k]}`}><input type="range" min={1} max={10} value={f[k]} onChange={e=>s(k,Number(e.target.value))} style={{width:"100%"}}/></Field>
+        ))}
+      </div>
+      <Field label="メモ"><textarea value={f.notes} onChange={e=>s("notes",e.target.value)} rows={2} style={{...inputStyle,resize:"vertical"}}/></Field>
+      <div style={{display:"flex",gap:8,justifyContent:"flex-end",marginTop:14}}>
+        <button onClick={onCancel} style={{padding:"7px 14px",borderRadius:8,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-secondary)",fontSize:12,cursor:"pointer"}}>キャンセル</button>
+        <button onClick={()=>onSave(f)} disabled={!f.name} style={{padding:"7px 14px",borderRadius:8,border:"none",background:f.name?"#1D9E75":"var(--color-border-tertiary)",color:"#fff",fontSize:12,fontWeight:500,cursor:f.name?"pointer":"default",opacity:f.name?1:0.5}}>保存</button>
+      </div>
+    </div>
+  );
+};
+
+const AptitudeCard=({stallion,result,rank})=>{
+  const[open,setOpen]=useState(false);
+  const scoreColor=result.score>=80?"#1D9E75":result.score>=60?"#378ADD":result.score>=40?"#EF9F27":"#A32D2D";
+  return(
+    <div style={{background:"var(--color-background-primary)",border:"1px solid var(--color-border-tertiary)",borderRadius:12,overflow:"hidden"}}>
+      <div onClick={()=>setOpen(!open)} style={{padding:"10px 16px",cursor:"pointer",display:"flex",alignItems:"center",gap:12}}>
+        <div style={{width:32,height:32,borderRadius:8,background:scoreColor,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:500,fontSize:13,flexShrink:0}}>{rank}</div>
+        <div style={{flex:1,minWidth:0}}>
+          <div style={{display:"flex",alignItems:"baseline",gap:6}}>
+            <span style={{fontSize:14,fontWeight:500,color:"var(--color-text-primary)"}}>{stallion.name}</span>
+            <span style={{fontSize:10,color:"var(--color-text-tertiary)"}}>{stallion.nameEn}</span>
+          </div>
+          <div style={{fontSize:10,color:"var(--color-text-secondary)",marginTop:2}}>父: {stallion.pedigree?.sire} / 母父: {stallion.pedigree?.sireOfDam}</div>
+        </div>
+        <div style={{textAlign:"right",flexShrink:0}}>
+          <div style={{fontSize:20,fontWeight:500,color:scoreColor}}>{result.score}</div>
+          <div style={{fontSize:9,color:"var(--color-text-tertiary)"}}>/ 100</div>
+        </div>
+        <span style={{fontSize:14,color:"var(--color-text-tertiary)",transform:open?"rotate(180deg)":"none",transition:"transform 0.2s"}}>▾</span>
+      </div>
+      {open&&(
+        <div style={{padding:"0 16px 14px",borderTop:"1px solid var(--color-border-tertiary)"}}>
+          <div style={{paddingTop:10}}>
+            <div style={{fontSize:11,fontWeight:500,color:"var(--color-text-secondary)",marginBottom:8}}>適性スコア内訳</div>
+            {result.details.map((d,i)=>(
+              <div key={i} style={{display:"flex",alignItems:"center",gap:8,marginBottom:4}}>
+                <span style={{width:60,fontSize:11,color:"var(--color-text-secondary)",textAlign:"right"}}>{d.label}</span>
+                <div style={{flex:1,height:8,borderRadius:4,background:"var(--color-background-tertiary)",overflow:"hidden"}}>
+                  <div style={{width:`${(d.pts/d.max)*100}%`,height:"100%",borderRadius:4,background:d.pts>=d.max*0.8?"#1D9E75":d.pts>=d.max*0.5?"#378ADD":"#EF9F27",transition:"width 0.3s"}}/>
+                </div>
+                <span style={{width:50,fontSize:10,color:"var(--color-text-secondary)",textAlign:"right"}}>{d.pts}/{d.max}</span>
+                <span style={{fontSize:10,color:"var(--color-text-tertiary)",width:80}}>{d.note}</span>
+              </div>
+            ))}
+            <div style={{display:"flex",alignItems:"center",gap:8,marginTop:2,marginBottom:8}}>
+              <span style={{width:60,fontSize:11,color:"var(--color-text-secondary)",textAlign:"right"}}>能力補正</span>
+              <span style={{fontSize:11,fontWeight:500,color:"#7F77DD"}}>+{result.bonus}</span>
+            </div>
+            <div style={{display:"flex",gap:4,flexWrap:"wrap",marginBottom:8}}>
+              {surfBadge(stallion.surface)}{courseBadge(stallion.course)}{growthBadge(stallion.growth)}
+            </div>
+            <PedigreeTable pedigree={stallion.pedigree}/>
+            {stallion.notes&&<div style={{fontSize:10,color:"var(--color-text-secondary)",lineHeight:1.5,padding:"6px 10px",background:"var(--color-background-tertiary)",borderRadius:8}}>{stallion.notes}</div>}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 
 /* ================================================================
    ===== PHASE 3: ANALYSIS COMPONENTS =====
