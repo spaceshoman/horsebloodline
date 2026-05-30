@@ -1936,34 +1936,6 @@ ${bloodResults.length>=3?`
                         </div>
                       );
                     })()}
-                    {/* Owner Pick */}
-                    {race.ownerPick&&(()=>{
-                      const op=race.ownerPick;
-                      return(
-                        <div style={{marginTop:12,padding:"10px 12px",background:"rgba(200,168,75,0.08)",border:"2px solid rgba(200,168,75,0.5)",borderRadius:8}}>
-                          <div style={{fontSize:12,fontWeight:700,color:"#c8a84b",marginBottom:6}}>🏇 作成者の馬券</div>
-                          <div style={{fontSize:10,color:"#c8a84b",marginBottom:8,fontStyle:"italic"}}>「{op.comment}」</div>
-                          {op.tickets.map((t,i)=>{
-                            const numStr=t.nums.join(" - ");
-                            return(
-                              <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"5px 0",borderBottom:"0.5px solid rgba(200,168,75,0.2)"}}>
-                                <div style={{fontSize:10,color:"var(--color-text-primary)"}}>
-                                  <span style={{fontWeight:700,color:"#c8a84b"}}>{t.type}</span>
-                                  <span style={{marginLeft:6}}>{numStr}</span>
-                                </div>
-                                <div style={{fontSize:10,color:"var(--color-text-secondary)",textAlign:"right"}}>
-                                  <span style={{fontWeight:600}}>{t.unit.toLocaleString()}円</span>
-                                </div>
-                              </div>
-                            );
-                          })}
-                          <div style={{display:"flex",justifyContent:"space-between",marginTop:6,fontSize:11,fontWeight:700,color:"#c8a84b"}}>
-                            <span>合計</span>
-                            <span>{op.totalBet.toLocaleString()}円</span>
-                          </div>
-                        </div>
-                      );
-                    })()}
                     <div style={{fontSize:8,color:"var(--color-text-tertiary)",textAlign:"center",marginTop:10}}>※ 血統スコア・馬場適性・オッズ乖離に基づく参考プランです。投票の最終判断はご自身でお願いします。</div>
                   </div>
                 );
