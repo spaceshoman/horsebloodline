@@ -38,6 +38,7 @@ const PC_STYLES=`
 
   .kb-race-list-pc{display:none!important}
   .kb-race-list-mobile{display:block!important}
+  .kb-sidebar{display:none!important}
   .kb-bottom-nav{display:flex!important}
   /* ボトムナビ */
   .kb-bottom-nav{background:rgba(10,10,10,0.95)!important;backdrop-filter:blur(10px);border-top:1px solid rgba(200,168,75,0.15)!important;border-bottom:none!important}
@@ -98,13 +99,6 @@ const VENUES = {
   kyoto:{name:"京都",course:"RIGHT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE","LONG"]},
   chukyo:{name:"中京",course:"LEFT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE"]},
   kokura:{name:"小倉",course:"RIGHT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE"]},
-            <PedigreeTable pedigree={stallion.pedigree}/>
-            {stallion.notes&&<div style={{fontSize:10,color:"var(--color-text-secondary)",lineHeight:1.5,padding:"6px 10px",background:"#f0f6fd",borderRadius:8}}>{stallion.notes}</div>}
-          </div>
-        </div>
-      )}
-    </div>
-  );
 };
 
 /* ================================================================
@@ -1910,6 +1904,34 @@ ${bloodResults.length>=3?`
                             <div>★穴候補: {anaUma.map(r=>`(${r.num})${r.name}(${r.tan}倍・${r.pop}人気)`).join("、")}</div>
                             <div style={{fontSize:9,color:"rgba(212,148,26,0.7)"}}>血統評価高×人気薄の乖離馬。ワイドで少額勝負</div>
                             <div style={{marginTop:4,fontSize:11,fontWeight:600,color:"#d4941a"}}>→ ◎軸ワイド流し {anaUma.length+1}点 × 500円</div>
+                          </div>
+                        </div>
+                      );
+                    })()}
+                    {/* Owner Pick */}
+                    {race.ownerPick&&(()=>{
+                      const op=race.ownerPick;
+                      return(
+                        <div style={{marginTop:12,padding:"10px 12px",background:"rgba(200,168,75,0.08)",border:"2px solid rgba(200,168,75,0.5)",borderRadius:8}}>
+                          <div style={{fontSize:12,fontWeight:700,color:"#c8a84b",marginBottom:6}}>🏇 作成者の馬券</div>
+                          <div style={{fontSize:10,color:"#c8a84b",marginBottom:8,fontStyle:"italic"}}>「{op.comment}」</div>
+                          {op.tickets.map((t,i)=>{
+                            const numStr=t.nums.join(" - ");
+                            return(
+                              <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"5px 0",borderBottom:"0.5px solid rgba(200,168,75,0.2)"}}>
+                                <div style={{fontSize:10,color:"var(--color-text-primary)"}}>
+                                  <span style={{fontWeight:700,color:"#c8a84b"}}>{t.type}</span>
+                                  <span style={{marginLeft:6}}>{numStr}</span>
+                                </div>
+                                <div style={{fontSize:10,color:"var(--color-text-secondary)",textAlign:"right"}}>
+                                  <span style={{fontWeight:600}}>{t.unit.toLocaleString()}円</span>
+                                </div>
+                              </div>
+                            );
+                          })}
+                          <div style={{display:"flex",justifyContent:"space-between",marginTop:6,fontSize:11,fontWeight:700,color:"#c8a84b"}}>
+                            <span>合計</span>
+                            <span>{op.totalBet.toLocaleString()}円</span>
                           </div>
                         </div>
                       );
