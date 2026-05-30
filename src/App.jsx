@@ -98,117 +98,6 @@ const VENUES = {
   kyoto:{name:"京都",course:"RIGHT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE","LONG"]},
   chukyo:{name:"中京",course:"LEFT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE"]},
   kokura:{name:"小倉",course:"RIGHT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE"]},
-    const distFromCenter=Math.abs(ri-center);
-    const range=sMax-sMin;
-    const maxDistFromCenter=range/2||0.5;
-    const centerFit=1-distFromCenter/maxDistFromCenter; // 1.0=perfect center, 0.0=edge
-    const pts=+(distMax*(0.85+centerFit*0.15)).toFixed(1);
-    const note=centerFit>=0.8?"距離ど真ん中◎":centerFit>=0.4?"距離適性内○":"適性範囲の端";
-    score+=pts;details.push({label:"距離",pts,max:distMax,note});
-  } else {
-    const gap=ri<sMin?sMin-ri:ri-sMax;
-    const pts=Math.max(0,+(distMax*(0.25-gap*0.15)).toFixed(1));
-    score+=pts;details.push({label:"距離",pts,max:distMax,note:gap===1?"やや範囲外":"大きく範囲外"});
-  }
-
-  // Course match (max 10) — mismatch = nearly 0
-  const cMax = w.course;
-  if(stallion.course===race.course){score+=cMax;details.push({label:"コース",pts:cMax,max:cMax,note:"完全一致"});}
-  else if(stallion.course==="BOTH"){score+=cMax*0.65;details.push({label:"コース",pts:+(cMax*0.65).toFixed(1),max:cMax,note:"左右兼用"});}
-  else{score+=cMax*0.15;details.push({label:"コース",pts:+(cMax*0.15).toFixed(1),max:cMax,note:"逆回り"});}
-
-  // Track condition (max 10) — good = rewards firm-ground types, heavy = rewards heavy-track types
-  const tMax = w.track;
-  const condMap={GOOD:0,SLIGHTLY_HEAVY:1,HEAVY:2,BAD:3};
-  const condLevel=condMap[race.trackCondition]||0;
-  if(condLevel===0){
-    // Good track: low heavyTrack = firm-ground specialist = higher score
-    const firmFit=(10-stallion.heavyTrack)/10; // heavyTrack 1→0.9, 5→0.5, 10→0.0
-    const pts=+(tMax*(0.3+firmFit*0.7)).toFixed(1);
-    score+=pts;details.push({label:"馬場状態",pts,max:tMax,note:`良馬場適性${10-stallion.heavyTrack}/10`});
-  } else if(condLevel===1){
-    // Slightly heavy: balanced, moderate heavyTrack does best
-    const balanced=1-Math.abs(stallion.heavyTrack-5)/5;
-    const pts=+(tMax*(0.3+balanced*0.6)).toFixed(1);
-    score+=pts;details.push({label:"馬場状態",pts,max:tMax,note:`稍重適性(重${stallion.heavyTrack})`});
-  } else {
-    // Heavy/Bad: high heavyTrack = big advantage
-    const heavyFit=stallion.heavyTrack/10;
-    const severity=condLevel/3;
-    const pts=+(tMax*(heavyFit*severity*0.9+0.05)).toFixed(1);
-    const realPts=Math.min(tMax,pts);
-    score+=realPts;details.push({label:"馬場状態",pts:realPts,max:tMax,note:`重適性${stallion.heavyTrack}/10`});
-  }
-
-  // Growth match (max 10) — sharper curve
-  const gMax = w.growth;
-  if(!race.horseAge||race.horseAge==="ANY"){
-    score+=gMax*0.5;details.push({label:"成長",pts:+(gMax*0.5).toFixed(1),max:gMax,note:"年齢不問"});
-  } else {
-    const age=parseInt(race.horseAge);
-    let fit=0.3;
-    if(stallion.growth==="EARLY") fit=age<=3?1.0:age===4?0.5:0.15;
-    else if(stallion.growth==="NORMAL") fit=age<=2?0.4:age<=4?0.9:0.5;
-    else fit=age<=3?0.2:age<=5?0.7:1.0;
-    const pts=+(gMax*fit).toFixed(1);
-    score+=pts;details.push({label:"成長",pts,max:gMax,note:`${GROWTH[stallion.growth]}×${age}歳`});
-  }
-
-  // Ability bonus — up to ~15 points, more variance
-  let bonus = 0;
-  if(race.distance==="SPRINT") bonus+=stallion.speedScore*0.6;
-  else if(race.distance==="MILE") bonus+=stallion.speedScore*0.4+stallion.staminaScore*0.15;
-  else if(race.distance==="MIDDLE") bonus+=stallion.speedScore*0.2+stallion.staminaScore*0.35;
-  else if(race.distance==="LONG") bonus+=stallion.staminaScore*0.6;
-  if(race.surface==="DIRT") bonus+=stallion.powerScore*0.35;
-  else bonus+=stallion.powerScore*0.1;
-  score+=bonus;
-
-  return {score:Math.min(100,+score.toFixed(1)),details,bonus:+bonus.toFixed(1)};
-}
-
-/* ===== Aptitude Result Card ===== */
-const AptitudeCard=({stallion,result,rank})=>{
-  const[open,setOpen]=useState(false);
-  const scoreColor=result.score>=80?"#1e5fa8":result.score>=60?"#3578c4":result.score>=40?"#4a90d9":"#7a9ab8";
-  return(
-    <div style={{background:"var(--color-background-primary)",border:"1px solid var(--color-border-tertiary)",borderRadius:12,overflow:"hidden"}}>
-      <div onClick={()=>setOpen(!open)} style={{padding:"10px 16px",cursor:"pointer",display:"flex",alignItems:"center",gap:12}}>
-        <div style={{width:32,height:32,borderRadius:8,background:scoreColor,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:500,fontSize:13,flexShrink:0}}>{rank}</div>
-        <div style={{flex:1,minWidth:0}}>
-          <div style={{display:"flex",alignItems:"baseline",gap:6}}>
-            <span style={{fontSize:14,fontWeight:500,color:"var(--color-text-primary)"}}>{stallion.name}</span>
-            <span style={{fontSize:10,color:"var(--color-text-tertiary)"}}>{stallion.nameEn}</span>
-          </div>
-          <div style={{fontSize:10,color:"var(--color-text-secondary)",marginTop:2}}>父: {stallion.pedigree?.sire} / 母父: {stallion.pedigree?.sireOfDam}</div>
-        </div>
-        <div style={{textAlign:"right",flexShrink:0}}>
-          <div style={{fontSize:20,fontWeight:500,color:scoreColor}}>{result.score}</div>
-          <div style={{fontSize:9,color:"var(--color-text-tertiary)"}}>/ 100</div>
-        </div>
-        <span style={{fontSize:14,color:"var(--color-text-tertiary)",transform:open?"rotate(180deg)":"none",transition:"transform 0.2s"}}>▾</span>
-      </div>
-      {open&&(
-        <div style={{padding:"0 16px 14px",borderTop:"1px solid var(--color-border-tertiary)"}}>
-          <div style={{paddingTop:10}}>
-            <div style={{fontSize:11,fontWeight:500,color:"var(--color-text-secondary)",marginBottom:8}}>適性スコア内訳</div>
-            {result.details.map((d,i)=>(
-              <div key={i} style={{display:"flex",alignItems:"center",gap:8,marginBottom:4}}>
-                <span style={{width:60,fontSize:11,color:"var(--color-text-secondary)",textAlign:"right"}}>{d.label}</span>
-                <div style={{flex:1,height:8,borderRadius:4,background:"#f0f6fd",overflow:"hidden"}}>
-                  <div style={{width:`${(d.pts/d.max)*100}%`,height:"100%",borderRadius:4,background:d.pts>=d.max*0.8?"#1e5fa8":d.pts>=d.max*0.5?"#3578c4":"#f0b840",transition:"width 0.3s"}}/>
-                </div>
-                <span style={{width:50,fontSize:10,color:"var(--color-text-secondary)",textAlign:"right"}}>{d.pts}/{d.max}</span>
-                <span style={{fontSize:10,color:"var(--color-text-tertiary)",width:80}}>{d.note}</span>
-              </div>
-            ))}
-            <div style={{display:"flex",alignItems:"center",gap:8,marginTop:2,marginBottom:8}}>
-              <span style={{width:60,fontSize:11,color:"var(--color-text-secondary)",textAlign:"right"}}>能力補正</span>
-              <span style={{fontSize:11,fontWeight:500,color:"#4a90d9"}}>+{result.bonus}</span>
-            </div>
-            <div style={{display:"flex",gap:4,flexWrap:"wrap",marginBottom:8}}>
-              {surfBadge(stallion.surface)}{courseBadge(stallion.course)}{growthBadge(stallion.growth)}
-            </div>
             <PedigreeTable pedigree={stallion.pedigree}/>
             {stallion.notes&&<div style={{fontSize:10,color:"var(--color-text-secondary)",lineHeight:1.5,padding:"6px 10px",background:"#f0f6fd",borderRadius:8}}>{stallion.notes}</div>}
           </div>
@@ -2021,6 +1910,34 @@ ${bloodResults.length>=3?`
                             <div>★穴候補: {anaUma.map(r=>`(${r.num})${r.name}(${r.tan}倍・${r.pop}人気)`).join("、")}</div>
                             <div style={{fontSize:9,color:"rgba(212,148,26,0.7)"}}>血統評価高×人気薄の乖離馬。ワイドで少額勝負</div>
                             <div style={{marginTop:4,fontSize:11,fontWeight:600,color:"#d4941a"}}>→ ◎軸ワイド流し {anaUma.length+1}点 × 500円</div>
+                          </div>
+                        </div>
+                      );
+                    })()}
+                    {/* Owner Pick */}
+                    {race.ownerPick&&(()=>{
+                      const op=race.ownerPick;
+                      return(
+                        <div style={{marginTop:12,padding:"10px 12px",background:"rgba(200,168,75,0.08)",border:"2px solid rgba(200,168,75,0.5)",borderRadius:8}}>
+                          <div style={{fontSize:12,fontWeight:700,color:"#c8a84b",marginBottom:6}}>🏇 作成者の馬券</div>
+                          <div style={{fontSize:10,color:"#c8a84b",marginBottom:8,fontStyle:"italic"}}>「{op.comment}」</div>
+                          {op.tickets.map((t,i)=>{
+                            const numStr=t.nums.join(" - ");
+                            return(
+                              <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"5px 0",borderBottom:"0.5px solid rgba(200,168,75,0.2)"}}>
+                                <div style={{fontSize:10,color:"var(--color-text-primary)"}}>
+                                  <span style={{fontWeight:700,color:"#c8a84b"}}>{t.type}</span>
+                                  <span style={{marginLeft:6}}>{numStr}</span>
+                                </div>
+                                <div style={{fontSize:10,color:"var(--color-text-secondary)",textAlign:"right"}}>
+                                  <span style={{fontWeight:600}}>{t.unit.toLocaleString()}円</span>
+                                </div>
+                              </div>
+                            );
+                          })}
+                          <div style={{display:"flex",justifyContent:"space-between",marginTop:6,fontSize:11,fontWeight:700,color:"#c8a84b"}}>
+                            <span>合計</span>
+                            <span>{op.totalBet.toLocaleString()}円</span>
                           </div>
                         </div>
                       );
