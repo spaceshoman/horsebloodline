@@ -1,17 +1,4 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
-const save=(data)=>{try{localStorage.setItem("kb_stallions",JSON.stringify(data))}catch(e){}};
-const load=(len)=>{try{const d=JSON.parse(localStorage.getItem("kb_stallions"));return Array.isArray(d)?d:null}catch(e){return null}};
-const VENUES={
-  tokyo:{name:"東京",course:"LEFT",surface:["TURF","DIRT"]},
-  nakayama:{name:"中山",course:"RIGHT",surface:["TURF","DIRT"]},
-  kyoto:{name:"京都",course:"RIGHT",surface:["TURF","DIRT"]},
-  hanshin:{name:"阪神",course:"RIGHT",surface:["TURF","DIRT"]},
-  chukyo:{name:"中京",course:"LEFT",surface:["TURF","DIRT"]},
-  kokura:{name:"小倉",course:"RIGHT",surface:["TURF","DIRT"]},
-  niigata:{name:"新潟",course:"LEFT",surface:["TURF","DIRT"]},
-  sapporo:{name:"札幌",course:"RIGHT",surface:["TURF","DIRT"]},
-  hakodate:{name:"函館",course:"RIGHT",surface:["TURF","DIRT"]},
-};
 
 const HORSE_SVG=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="48" height="48">
   <g fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -98,6 +85,7 @@ const PC_STYLES=`
   .kb-main .kb-runner-blood{font-size:11px!important}
   .kb-main .kb-score-num{font-size:36px!important}
   .kb-bottom-nav{display:none!important}
+`;
 const GROWTH = { EARLY:"早熟", NORMAL:"普通", LATE:"晩成" };
 const TRACK_COND = { GOOD:"良", SLIGHTLY_HEAVY:"稍重", HEAVY:"重", BAD:"不良" };
 const VENUES = {
@@ -219,7 +207,6 @@ function calcAptitude(stallion, race) {
   return {score:Math.min(100,+score.toFixed(1)),details,bonus:+bonus.toFixed(1)};
 }
 
-`;
 /* ===== Aptitude Result Card ===== */
 const AptitudeCard=({stallion,result,rank})=>{
   const[open,setOpen]=useState(false);
