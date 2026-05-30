@@ -98,49 +98,6 @@ const VENUES = {
   kyoto:{name:"京都",course:"RIGHT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE","LONG"]},
   chukyo:{name:"中京",course:"LEFT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE"]},
   kokura:{name:"小倉",course:"RIGHT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE"]},
-  niigata:{name:"新潟",course:"LEFT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE"]},
-  sapporo:{name:"札幌",course:"RIGHT",surface:["TURF","DIRT"],distances:["SPRINT","MILE","MIDDLE"]},
-  hakodate:{name:"函館",course:"RIGHT",surface:["TURF","DIRT"],distances:["SPRINT","MILE"]},
-  ooi:{name:"大井",course:"RIGHT",surface:["DIRT"],distances:["SPRINT","MILE","MIDDLE"]},
-  funabashi:{name:"船橋",course:"LEFT",surface:["DIRT"],distances:["SPRINT","MILE","MIDDLE"]},
-  kawasaki:{name:"川崎",course:"LEFT",surface:["DIRT"],distances:["SPRINT","MILE"]},
-  monbetsu:{name:"門別",course:"RIGHT",surface:["DIRT"],distances:["SPRINT","MILE","MIDDLE"]},
-};
-
-/* Data loaded via fetch */
-const STORAGE_KEY="keiba-v6";
-function load(minLen=0){try{const r=localStorage.getItem(STORAGE_KEY);if(!r)return null;const d=JSON.parse(r);if(minLen>0&&d.length<minLen)return null;return d;}catch{return null}}
-function save(d){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(d))}catch{}}
-
-/* ===== Aptitude Engine v2 ===== */
-function calcAptitude(stallion, race) {
-  let score = 0;
-  let details = [];
-  // Lower base weights → more room for differentiation
-  // Max from base categories: 15+15+10+10+10 = 60
-  // Ability bonus can add up to ~15, total realistic max ~75
-  const w = race.weights || {surface:15,distance:15,course:10,track:10,growth:10};
-
-  // Surface match (max 15) — harsher mismatch
-  const surfMax = w.surface;
-  if(stallion.surface===race.surface){score+=surfMax;details.push({label:"馬場",pts:surfMax,max:surfMax,note:"完全一致"});}
-  else if(stallion.surface==="BOTH"){score+=surfMax*0.7;details.push({label:"馬場",pts:+(surfMax*0.7).toFixed(1),max:surfMax,note:"兼用"});}
-  else{score+=0;details.push({label:"馬場",pts:0,max:surfMax,note:"不適合"});}
-
-  // Distance match (max 15) — center-fit model
-  // Core idea: if race distance is within range, score is high.
-  // Bonus when race distance = center of stallion's range.
-  // Wide-range stallions are NOT penalized — they just get slightly less center-fit bonus.
-  const distMax = w.distance;
-  const dOrder=["SPRINT","MILE","MIDDLE","LONG"];
-  const ri=dOrder.indexOf(race.distance);
-  const sMin=dOrder.indexOf(stallion.distanceMin);
-  const sMax=dOrder.indexOf(stallion.distanceMax);
-  if(stallion.distanceMin==="VERSATILE"||stallion.distanceMax==="VERSATILE"){
-    score+=distMax*0.7;details.push({label:"距離",pts:+(distMax*0.7).toFixed(1),max:distMax,note:"万能"});
-  } else if(ri>=sMin&&ri<=sMax){
-    // In range — base 85% + center-fit bonus up to 15%
-    const center=(sMin+sMax)/2; // e.g. SPRINT(0)-MIDDLE(2) → center=1.0 (MILE)
     const distFromCenter=Math.abs(ri-center);
     const range=sMax-sMin;
     const maxDistFromCenter=range/2||0.5;
