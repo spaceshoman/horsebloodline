@@ -36,6 +36,9 @@ const PC_STYLES=`
   .kb-next .kb-next-label{color:#c8a84b!important}
   .kb-next .kb-next-name{font-family:'Noto Serif JP',serif!important;font-weight:900!important;color:#fff!important;font-size:28px!important;letter-spacing:1px!important}
 
+  .kb-race-list-pc{display:none!important}
+  .kb-race-list-mobile{display:block!important}
+  .kb-bottom-nav{display:flex!important}
   /* ボトムナビ */
   .kb-bottom-nav{background:rgba(10,10,10,0.95)!important;backdrop-filter:blur(10px);border-top:1px solid rgba(200,168,75,0.15)!important;border-bottom:none!important}
 
