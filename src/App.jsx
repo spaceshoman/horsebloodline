@@ -98,24 +98,7 @@ const PC_STYLES=`
   .kb-main .kb-runner-blood{font-size:11px!important}
   .kb-main .kb-score-num{font-size:36px!important}
   .kb-bottom-nav{display:none!important}
-    if(stallion.growth==="EARLY") fit=age<=3?1.0:age===4?0.5:0.15;
-    else if(stallion.growth==="NORMAL") fit=age<=2?0.4:age<=4?0.9:0.5;
-    else fit=age<=3?0.2:age<=5?0.7:1.0;
-    const pts=+(gMax*fit).toFixed(1);
-    score+=pts;details.push({label:"成長",pts,max:gMax,note:`${GROWTH[stallion.growth]}×${age}歳`});
-  }
-
-  // Ability bonus
-  let bonus = 0;
-  if(race.distance==="SPRINT") bonus+=stallion.speedScore*0.6;
-  else if(race.distance==="MILE") bonus+=stallion.speedScore*0.4+stallion.staminaScore*0.15;
-  else if(race.distance==="MIDDLE") bonus+=stallion.speedScore*0.2+stallion.staminaScore*0.35;
-  else if(race.distance==="LONG") bonus+=stallion.staminaScore*0.6;
-  if(race.surface==="DIRT") bonus+=stallion.powerScore*0.35;
-  else bonus+=stallion.powerScore*0.1;
-  score+=bonus;
-  return {score:Math.min(100,+score.toFixed(1)),details,bonus:+bonus.toFixed(1)};
-}
+`;
 /* ===== Aptitude Result Card ===== */
 const AptitudeCard=({stallion,result,rank})=>{
   const[open,setOpen]=useState(false);
