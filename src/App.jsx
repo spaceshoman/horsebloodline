@@ -2158,27 +2158,101 @@ ${bloodResults.length>=3?`
                     {/* Owner Pick */}
                     {race.ownerPick&&(()=>{
                       const op=race.ownerPick;
+                      // 後方互換: 旧tickets形式と新mainBet/supportBet形式の両対応
+                      const mainTickets=op.mainBet?.tickets||op.tickets||[];
+                      const supportTickets=op.supportBet?.tickets||[];
+                      const mainTotal=op.mainBet?.totalBet||op.totalBet||0;
+                      const supportTotal=op.supportBet?.totalBet||0;
+                      const grandTotal=mainTotal+supportTotal;
+                      // 軸馬の人気を取得（axisNumがあれば判定、なければ全券種の共通馬番から推定）
+                      let axisPop=null;
+                      let axisName="";
+                      if(op.axisNum&&race.runners){
+                        const ax=race.runners.find(r=>r.num===op.axisNum);
+                        if(ax){axisPop=ax.pop;axisName=ax.name;}
+                      } else if(mainTickets.length>=2){
+                        // 全券種に共通する馬番を軸とみなす
+                        const common=mainTickets[0].nums.filter(n=>mainTickets.every(t=>t.nums.includes(n)));
+                        if(common.length===1&&race.runners){
+                          const ax=race.runners.find(r=>r.num===common[0]);
+                          if(ax){axisPop=ax.pop;axisName=ax.name;}
+                        }
+                      }
+                      // 人気度別の推奨買い方
+                      let axisGuide=null;
+                      if(axisPop){
+                        if(axisPop<=2) axisGuide={level:"safe",  label:"鉄板級",   color:"#1e5fa8", advice:"1〜2人気軸は信頼度高。1点固定の流し馬券でOK。"};
+                        else if(axisPop<=5) axisGuide={level:"caution",label:"要注意", color:"#d4941a", advice:"3〜5人気軸は崩壊リスクあり。2頭軸フォーメーション推奨。"};
+                        else axisGuide={level:"risky",label:"穴狙い",   color:"#A32D2D", advice:"6人気以下軸は崩壊リスク大。BOX買いまたは軸変更検討を。"};
+                      }
                       return(
                         <div style={{marginTop:12,padding:"10px 12px",background:"rgba(200,168,75,0.08)",border:"2px solid rgba(200,168,75,0.5)",borderRadius:8}}>
                           <div style={{fontSize:12,fontWeight:700,color:"#c8a84b",marginBottom:6}}>🏇 作成者の馬券</div>
-                          <div style={{fontSize:10,color:"#c8a84b",marginBottom:8,fontStyle:"italic"}}>「{op.comment}」</div>
-                          {op.tickets.map((t,i)=>{
-                            const numStr=t.nums.join(" - ");
-                            return(
-                              <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"5px 0",borderBottom:"0.5px solid rgba(200,168,75,0.2)"}}>
-                                <div style={{fontSize:10,color:"var(--color-text-primary)"}}>
-                                  <span style={{fontWeight:700,color:"#c8a84b"}}>{t.type}</span>
-                                  <span style={{marginLeft:6}}>{numStr}</span>
-                                </div>
-                                <div style={{fontSize:10,color:"var(--color-text-secondary)",textAlign:"right"}}>
-                                  <span style={{fontWeight:600}}>{t.unit.toLocaleString()}円</span>
-                                </div>
+                          {op.comment&&<div style={{fontSize:10,color:"#c8a84b",marginBottom:8,fontStyle:"italic"}}>「{op.comment}」</div>}
+                          {/* 軸馬ガイド */}
+                          {axisGuide&&(
+                            <div style={{padding:"6px 10px",background:"rgba(0,0,0,0.2)",borderRadius:6,marginBottom:10,borderLeft:`3px solid ${axisGuide.color}`}}>
+                              <div style={{fontSize:9,color:"var(--color-text-tertiary)",marginBottom:2}}>
+                                軸: {axisName&&<span style={{color:"var(--color-text-primary)",fontWeight:600}}>{axisName}</span>} <span style={{fontWeight:700,color:axisGuide.color}}>{axisPop}番人気</span>
+                                <span style={{marginLeft:6,padding:"1px 6px",borderRadius:8,background:axisGuide.color,color:"#fff",fontSize:8,fontWeight:700}}>{axisGuide.label}</span>
                               </div>
-                            );
-                          })}
-                          <div style={{display:"flex",justifyContent:"space-between",marginTop:6,fontSize:11,fontWeight:700,color:"#c8a84b"}}>
+                              <div style={{fontSize:9,color:"var(--color-text-secondary)",lineHeight:1.5}}>💡 {axisGuide.advice}</div>
+                            </div>
+                          )}
+                          {/* メイン馬券（血統スコア軸） */}
+                          {mainTickets.length>0&&(
+                            <div style={{marginBottom:supportTickets.length>0?12:0}}>
+                              {op.mainBet&&<div style={{fontSize:10,fontWeight:700,color:"#c8a84b",marginBottom:4,display:"flex",alignItems:"center",gap:4}}>📊 メイン馬券（血統スコア軸）</div>}
+                              {mainTickets.map((t,i)=>{
+                                const numStr=t.nums.join(" - ");
+                                return(
+                                  <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"5px 0",borderBottom:"0.5px solid rgba(200,168,75,0.2)"}}>
+                                    <div style={{fontSize:10,color:"var(--color-text-primary)"}}>
+                                      <span style={{fontWeight:700,color:"#c8a84b"}}>{t.type}</span>
+                                      <span style={{marginLeft:6}}>{numStr}</span>
+                                    </div>
+                                    <div style={{fontSize:10,color:"var(--color-text-secondary)",textAlign:"right"}}>
+                                      <span style={{fontWeight:600}}>{t.unit.toLocaleString()}円</span>
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                              {op.mainBet&&(
+                                <div style={{display:"flex",justifyContent:"space-between",marginTop:4,fontSize:10,color:"#c8a84b"}}>
+                                  <span>小計</span>
+                                  <span style={{fontWeight:600}}>{mainTotal.toLocaleString()}円</span>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                          {/* 応援馬券 */}
+                          {supportTickets.length>0&&(
+                            <div style={{padding:"6px 8px",background:"rgba(255,255,255,0.04)",borderRadius:6,marginBottom:8}}>
+                              <div style={{fontSize:10,fontWeight:700,color:"#F09595",marginBottom:4,display:"flex",alignItems:"center",gap:4}}>💖 応援馬券</div>
+                              {op.supportBet?.comment&&<div style={{fontSize:9,color:"#F09595",marginBottom:4,fontStyle:"italic"}}>「{op.supportBet.comment}」</div>}
+                              {supportTickets.map((t,i)=>{
+                                const numStr=t.nums.join(" - ");
+                                return(
+                                  <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"4px 0",borderBottom:"0.5px solid rgba(240,149,149,0.2)"}}>
+                                    <div style={{fontSize:10,color:"var(--color-text-primary)"}}>
+                                      <span style={{fontWeight:700,color:"#F09595"}}>{t.type}</span>
+                                      <span style={{marginLeft:6}}>{numStr}</span>
+                                    </div>
+                                    <div style={{fontSize:10,color:"var(--color-text-secondary)",textAlign:"right"}}>
+                                      <span style={{fontWeight:600}}>{t.unit.toLocaleString()}円</span>
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                              <div style={{display:"flex",justifyContent:"space-between",marginTop:4,fontSize:10,color:"#F09595"}}>
+                                <span>小計</span>
+                                <span style={{fontWeight:600}}>{supportTotal.toLocaleString()}円</span>
+                              </div>
+                            </div>
+                          )}
+                          <div style={{display:"flex",justifyContent:"space-between",marginTop:6,fontSize:11,fontWeight:700,color:"#c8a84b",paddingTop:6,borderTop:"1px solid rgba(200,168,75,0.3)"}}>
                             <span>合計</span>
-                            <span>{op.totalBet.toLocaleString()}円</span>
+                            <span>{grandTotal.toLocaleString()}円</span>
                           </div>
                         </div>
                       );
