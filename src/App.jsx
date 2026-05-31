@@ -1821,6 +1821,48 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
             }
             bonus+=paceBonus;
 
+            // ⑤a コース×脚質ペナルティ（ダービー2026の教訓）
+            // 東京2400m逃げ馬の近10年複勝率0%、東京1600mも逃げ・追込は不利
+            // runner.style があればそれを優先（"逃げ","先行","差し","追込"）
+            // styleが未指定で paceType=HIGH の場合は「先行寄り」とみなす（逃げ判定はしない）
+            const runnerStyle=runner.style||null;
+            // 東京2400m: 逃げ・追込は強いペナルティ
+            if(isTokyo&&courseMeters===2400){
+              if(runnerStyle==="逃げ"){
+                bonus-=10;weaknesses.push("東京2400m逃げ脚質×（複勝率0%データ）");
+              } else if(runnerStyle==="追込"){
+                bonus-=5;weaknesses.push("東京2400m追込×（届かないパターン）");
+              }
+            }
+            // 東京1600m（安田記念・NHKマイル）: 4角5番手以内が圧倒的有利
+            if(isTokyo&&courseMeters===1600){
+              if(runnerStyle==="逃げ"){bonus-=4;weaknesses.push("東京1600m逃げ×（差し優位コース）");}
+              else if(runnerStyle==="先行"){bonus+=3;strengths.push("東京1600m先行○（4角5番手以内有利）");}
+              else if(runnerStyle==="差し"){bonus+=2;strengths.push("東京1600m差し○");}
+              else if(runnerStyle==="追込"){bonus-=3;weaknesses.push("東京1600m追込×（届きにくい）");}
+            }
+            // 中山2500m（有馬記念）: 内枠先行が有利、外枠差しは厳しい
+            if(race.venue==="中山"&&courseMeters===2500){
+              if(runnerStyle==="逃げ"||runnerStyle==="先行"){bonus+=2;strengths.push("中山2500m前々○");}
+              else if(runnerStyle==="追込"){bonus-=3;weaknesses.push("中山2500m追込×");}
+            }
+
+            // ⑤b ペース×脚質3次元評価（脚質specified時に追加加点）
+            // 既存のpaceBonus（paceType基準）に加えて、明示的なstyle指定時はさらに精密評価
+            if(runnerStyle&&expectedPace!=="BOTH"){
+              if(expectedPace==="SLOW"){
+                // スロー予想時: 先行有利、追込不利
+                if(runnerStyle==="先行"){bonus+=3;strengths.push("スロー×先行◎（前残り想定）");}
+                else if(runnerStyle==="逃げ"){bonus+=2;strengths.push("スロー×逃げ○");}
+                else if(runnerStyle==="追込"){bonus-=3;weaknesses.push("スロー×追込×（届かない）");}
+              } else if(expectedPace==="HIGH"){
+                // ハイペース予想時: 差し・追込有利、逃げ不利
+                if(runnerStyle==="追込"){bonus+=3;strengths.push("ハイペース×追込◎");}
+                else if(runnerStyle==="差し"){bonus+=2;strengths.push("ハイペース×差し○");}
+                else if(runnerStyle==="逃げ"){bonus-=4;weaknesses.push("ハイペース×逃げ×（垂れる）");}
+              }
+            }
+
             // ④ 上がり3F実績補正（lastF3フィールドがある場合）
             const lastF3=runner.lastF3||null; // 直近の上がり3Fタイム（秒）
             if(lastF3){
