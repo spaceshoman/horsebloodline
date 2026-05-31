@@ -2143,60 +2143,157 @@ ${bloodResults.length>=3?`
                 const honmei=bloodResults[0];
                 const taiko=bloodResults[1];
                 const anaume=bloodResults[2];
-                const top5=bloodResults.slice(0,5);
                 const top3=bloodResults.slice(0,3);
-                const oomono=bloodResults.find((r,i)=>i>=6);
-                const darkHorse=bloodResults.find((r,i)=>i>=4&&i<=8);
+                const top5=bloodResults.slice(0,5);
+                // 結果データから的中判定
+                const resultData=race.result;
+                const fin=resultData?.fullOrder||resultData?.topFinishers||null;
+                const get=(rank)=>fin?fin.find(f=>f.rank===rank):null;
+                const win=get(1), nd=get(2), rd=get(3);
+                // 払戻データを数値化（"270円" → 270, "1,460円" → 1460）
+                const parsePayout=(s)=>{
+                  if(!s) return 0;
+                  const m=String(s).match(/[\d,]+/g);
+                  return m?parseInt(m[0].replace(/,/g,"")):0;
+                };
+                const p=resultData?.payouts||{};
+                const tanPayout=parsePayout(p.tansho);
+                const umarenPayout=parsePayout(p.umaren);
+                const sanpukuPayout=parsePayout(p.sanrenpuku);
+                // プラン定義
+                const planTan={
+                  num:honmei.num, name:honmei.name, tan:honmei.tan,
+                  unit:1000, points:1, cost:1000,
+                  hit:!!(win&&win.num===honmei.num),
+                  payoutPer100:tanPayout
+                };
+                const umarenPairs=top3.slice(1).map(r=>[honmei.num,r.num].sort((a,b)=>a-b));
+                const planUmaren={
+                  pairs:umarenPairs, axis:honmei,
+                  unit:500, points:umarenPairs.length, cost:500*umarenPairs.length,
+                  hit:!!(win&&nd&&umarenPairs.some(pr=>{
+                    const ws=[win.num,nd.num].sort((a,b)=>a-b);
+                    return pr[0]===ws[0]&&pr[1]===ws[1];
+                  })),
+                  payoutPer100:umarenPayout
+                };
+                // 3連複: 1〜5位のBOX 10点
+                const sanpukuCombos=[];
+                for(let i=0;i<top5.length;i++)for(let j=i+1;j<top5.length;j++)for(let k=j+1;k<top5.length;k++){
+                  sanpukuCombos.push([top5[i].num,top5[j].num,top5[k].num].sort((a,b)=>a-b));
+                }
+                const planSanpuku={
+                  combos:sanpukuCombos, top5,
+                  unit:200, points:sanpukuCombos.length, cost:200*sanpukuCombos.length,
+                  hit:!!(win&&nd&&rd&&sanpukuCombos.some(c=>{
+                    const ws=[win.num,nd.num,rd.num].sort((a,b)=>a-b);
+                    return c[0]===ws[0]&&c[1]===ws[1]&&c[2]===ws[2];
+                  })),
+                  payoutPer100:sanpukuPayout
+                };
+                // 払戻計算
+                const calcReturn=(plan,perPointPayout)=>{
+                  if(!plan.hit) return 0;
+                  return Math.floor(plan.unit/100)*perPointPayout;
+                };
+                const tanReturn=calcReturn(planTan, tanPayout);
+                const umarenReturn=calcReturn(planUmaren, umarenPayout);
+                const sanpukuReturn=calcReturn(planSanpuku, sanpukuPayout);
+                const totalCost=planTan.cost+planUmaren.cost+planSanpuku.cost;
+                const totalReturn=tanReturn+umarenReturn+sanpukuReturn;
+                const recoveryRate=totalCost>0?Math.round(totalReturn/totalCost*100):0;
+                const PlanRow=({plan,returnAmt,label,color,bg})=>(
+                  <div style={{marginBottom:10,padding:"10px 12px",background:bg,borderLeft:`3px solid ${color}`,borderRadius:8}}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
+                      <div style={{fontSize:12,fontWeight:700,color}}>{label}</div>
+                      {resultData&&(
+                        <span style={{fontSize:9,padding:"2px 8px",borderRadius:10,background:plan.hit?"#1e5fa8":"#777",color:"#fff",fontWeight:700}}>{plan.hit?"🎯 的中":"✗ 不的中"}</span>
+                      )}
+                    </div>
+                    {plan.children}
+                    <div style={{marginTop:4,display:"flex",justifyContent:"space-between",alignItems:"baseline",fontSize:11,fontWeight:600,color}}>
+                      <span>{plan.points}点 × {plan.unit}円</span>
+                      <span>= {plan.cost.toLocaleString()}円</span>
+                    </div>
+                    {resultData&&plan.hit&&(
+                      <div style={{marginTop:4,padding:"4px 8px",background:"rgba(30,95,168,0.15)",borderRadius:4,display:"flex",justifyContent:"space-between",fontSize:10,color:"#1e5fa8",fontWeight:700}}>
+                        <span>💰 払戻 ({plan.payoutPer100}円×{Math.floor(plan.unit/100)}口)</span>
+                        <span>+{returnAmt.toLocaleString()}円</span>
+                      </div>
+                    )}
+                  </div>
+                );
                 return(
                   <div style={{marginTop:16,background:"rgba(30,95,168,0.05)",border:"2px solid rgba(200,168,75,0.3)",borderRadius:12,padding:14}}>
                     <div style={{fontFamily:"Bebas Neue,sans-serif",fontSize:17,fontWeight:400,color:"#c8a84b",letterSpacing:"2px",marginBottom:8}}>馬券プラン</div>
-                    <div style={{fontSize:9,color:"rgba(200,168,75,0.6)",marginBottom:12}}>血統スコア・馬場適性・オッズを総合した自動提案</div>
+                    <div style={{fontSize:9,color:"rgba(200,168,75,0.6)",marginBottom:12}}>単勝・馬連・3連複の3点セット（合計{totalCost.toLocaleString()}円）</div>
 
-                    {/* Plan A */}
-                    <div style={{marginBottom:10,padding:"10px 12px",background:"rgba(212,148,26,0.1)",borderLeft:"3px solid #d4941a",borderRadius:8}}>
-                      <div style={{fontSize:12,fontWeight:700,color:"#d4941a",marginBottom:4}}>A — 堅実馬連！</div>
-                      <div style={{fontSize:10,color:"#d4941a",lineHeight:1.8}}>
-                        <div>◎ <span style={{fontWeight:700,color:"#d4941a"}}>({honmei.num}){honmei.name}</span>{honmei.tan?` (${honmei.tan}倍)`:""} を軸に上位5頭へ馬連流し</div>
-                        <div style={{fontSize:9,color:"rgba(212,148,26,0.7)"}}>相手: {bloodResults.slice(1,6).map(r=>`(${r.num})${r.name}`+(r.tan?`(${r.tan}倍)`:"")).join("、")}</div>
-                        <div style={{marginTop:4,fontSize:11,fontWeight:600,color:"#d4941a"}}>→ 馬連5点 × 200円 = 1,000円</div>
-                      </div>
-                    </div>
-
-                    {/* Plan B */}
-                    <div style={{marginBottom:10,padding:"10px 12px",background:"rgba(30,95,168,0.1)",borderLeft:"3px solid #1e5fa8",borderRadius:8}}>
-                      <div style={{fontSize:12,fontWeight:700,color:"#4a90d9",marginBottom:4}}>B — 3連複BOX！</div>
-                      <div style={{fontSize:10,color:"#4a90d9",lineHeight:1.8}}>
-                        <div>上位5頭BOX → {top5.map(r=>`(${r.num})${r.name}`+(r.tan?`(${r.tan}倍)`:"")).join("、")}</div>
-                        <div style={{marginTop:4,fontSize:11,fontWeight:600,color:"#4a90d9"}}>→ 3連複5頭BOX = 10点 × 100円 = 1,000円</div>
-                      </div>
-                    </div>
-
-                    {/* Plan C: 一撃三連単 */}
-                    <div style={{marginBottom:10,padding:"10px 12px",background:"rgba(192,57,43,0.1)",borderLeft:"3px solid #c0392b",borderRadius:8}}>
-                      <div style={{fontSize:12,fontWeight:700,color:"#e74c3c",marginBottom:4}}>C — 一撃！三連単！</div>
-                      <div style={{fontSize:10,color:"#e74c3c",lineHeight:1.8}}>
-                        <div>1着: ◎○ → <span style={{fontWeight:600}}>{honmei.num} {honmei.name}、{taiko.num} {taiko.name}</span></div>
-                        <div>2着: 上位5頭 → <span style={{fontWeight:600}}>{top5.map(r=>`${r.num}`).join("・")}</span></div>
-                        <div>3着: 上位8頭 → <span style={{fontWeight:600}}>{bloodResults.slice(0,8).map(r=>`${r.num}`).join("・")}</span></div>
-                        <div style={{marginTop:4,fontSize:11,fontWeight:600,color:"#c0392b"}}>→ フォーメーション約50点 × 100円 = 5,000円</div>
-                      </div>
-                    </div>
-
-                    {/* Plan D: 穴狙い（オッズ乖離候補） */}
-                    {(()=>{
-                      const anaUma=bloodResults.filter((r,idx)=>r.tan&&r.pop&&(r.pop-idx-1)>=4).slice(0,2);
-                      if(!anaUma.length) return null;
-                      return(
-                        <div style={{padding:"10px 12px",background:"rgba(212,148,26,0.1)",borderLeft:"3px solid #d4941a",borderRadius:8}}>
-                          <div style={{fontSize:12,fontWeight:700,color:"#d4941a",marginBottom:4}}>D — 穴候補ワイド！</div>
-                          <div style={{fontSize:10,color:"#d4941a",lineHeight:1.8}}>
-                            <div>★穴候補: {anaUma.map(r=>`(${r.num})${r.name}(${r.tan}倍・${r.pop}人気)`).join("、")}</div>
-                            <div style={{fontSize:9,color:"rgba(212,148,26,0.7)"}}>血統評価高×人気薄の乖離馬。ワイドで少額勝負</div>
-                            <div style={{marginTop:4,fontSize:11,fontWeight:600,color:"#d4941a"}}>→ ◎軸ワイド流し {anaUma.length+1}点 × 500円</div>
-                          </div>
+                    {/* Plan 単勝 */}
+                    {PlanRow({
+                      plan:{...planTan,
+                        children:<div style={{fontSize:10,color:"#1e5fa8",lineHeight:1.6}}>
+                          <div>◎ <span style={{fontWeight:700}}>({honmei.num}){honmei.name}</span>{honmei.tan?` (${honmei.tan}倍)`:""}</div>
+                          <div style={{fontSize:9,color:"rgba(30,95,168,0.7)"}}>血統スコア1位への単勝1点勝負</div>
                         </div>
-                      );
-                    })()}
+                      },
+                      returnAmt:tanReturn,
+                      label:"① 単勝",
+                      color:"#1e5fa8",
+                      bg:"rgba(30,95,168,0.1)"
+                    })}
+
+                    {/* Plan 馬連 */}
+                    {PlanRow({
+                      plan:{...planUmaren,
+                        children:<div style={{fontSize:10,color:"#d4941a",lineHeight:1.6}}>
+                          <div>◎ <span style={{fontWeight:700}}>({honmei.num}){honmei.name}</span> ⇔ 2〜3位</div>
+                          <div style={{fontSize:9,color:"rgba(212,148,26,0.7)"}}>相手: {top3.slice(1).map(r=>`(${r.num})${r.name}`).join("、")}</div>
+                        </div>
+                      },
+                      returnAmt:umarenReturn,
+                      label:"② 馬連流し",
+                      color:"#d4941a",
+                      bg:"rgba(212,148,26,0.1)"
+                    })}
+
+                    {/* Plan 3連複 */}
+                    {PlanRow({
+                      plan:{...planSanpuku,
+                        children:<div style={{fontSize:10,color:"#A32D2D",lineHeight:1.6}}>
+                          <div>上位5頭BOX</div>
+                          <div style={{fontSize:9,color:"rgba(163,45,45,0.7)"}}>{top5.map(r=>`(${r.num})${r.name}`).join("、")}</div>
+                        </div>
+                      },
+                      returnAmt:sanpukuReturn,
+                      label:"③ 3連複BOX",
+                      color:"#A32D2D",
+                      bg:"rgba(163,45,45,0.1)"
+                    })}
+
+                    {/* 合計 + 回収率（結果がある場合のみ） */}
+                    {resultData&&(
+                      <div style={{marginTop:12,padding:"12px 14px",background:"linear-gradient(135deg,rgba(200,168,75,0.15),rgba(200,168,75,0.05))",borderRadius:10,border:"1px solid rgba(200,168,75,0.4)"}}>
+                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
+                          <span style={{fontSize:11,fontWeight:700,color:"#c8a84b"}}>💼 収支</span>
+                          <span style={{fontSize:9,color:"var(--color-text-tertiary)"}}>投資{totalCost.toLocaleString()}円</span>
+                        </div>
+                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:4}}>
+                          <span style={{fontSize:10,color:"var(--color-text-secondary)"}}>払戻合計</span>
+                          <span style={{fontSize:14,fontWeight:700,color:totalReturn>0?"#1e5fa8":"#777"}}>{totalReturn.toLocaleString()}円</span>
+                        </div>
+                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:6}}>
+                          <span style={{fontSize:10,color:"var(--color-text-secondary)"}}>収支</span>
+                          <span style={{fontSize:14,fontWeight:700,color:totalReturn-totalCost>=0?"#1e5fa8":"#A32D2D"}}>{totalReturn-totalCost>=0?"+":""}{(totalReturn-totalCost).toLocaleString()}円</span>
+                        </div>
+                        <div style={{height:8,borderRadius:4,background:"rgba(255,255,255,0.1)",overflow:"hidden",marginBottom:4}}>
+                          <div style={{width:`${Math.min(200,recoveryRate)/2}%`,height:"100%",background:recoveryRate>=100?"linear-gradient(90deg,#1e5fa8,#4a90d9)":recoveryRate>=50?"linear-gradient(90deg,#d4941a,#f0b840)":"linear-gradient(90deg,#A32D2D,#c0392b)",borderRadius:4,transition:"width 0.5s"}}/>
+                        </div>
+                        <div style={{display:"flex",justifyContent:"space-between",fontSize:9,color:"var(--color-text-tertiary)"}}>
+                          <span>回収率</span>
+                          <span style={{fontSize:16,fontWeight:700,color:recoveryRate>=100?"#1e5fa8":recoveryRate>=50?"#d4941a":"#A32D2D"}}>{recoveryRate}%</span>
+                        </div>
+                      </div>
+                    )}
                     {/* Owner Pick */}
                     {race.ownerPick&&(()=>{
                       const op=race.ownerPick;
@@ -2791,6 +2888,52 @@ export default function App(){
               <div style={{color:"#c8a84b",fontSize:16}}>▶</div>
             </div>
           )}
+
+          {/* 累積回収率バナー */}
+          {(()=>{
+            // 全レビューから bettingResults を集計
+            const allRaces=Object.values(reviews||{}).filter(r=>r&&r.bettingResults);
+            if(allRaces.length===0) return null;
+            const totals=allRaces.reduce((acc,r)=>{
+              const b=r.bettingResults;
+              acc.cost+=(b.totalCost||0);
+              acc.return+=(b.totalReturn||0);
+              acc.races+=1;
+              acc.hits+=(b.hits||0);
+              return acc;
+            },{cost:0,return:0,races:0,hits:0});
+            const rate=totals.cost>0?Math.round(totals.return/totals.cost*100):0;
+            const profit=totals.return-totals.cost;
+            return(
+              <div style={{background:"linear-gradient(135deg,#1a2845,#0d1f3c)",padding:"10px 16px",borderBottom:"1px solid rgba(200,168,75,0.2)"}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
+                  <span style={{fontSize:9,color:"#c8a84b",letterSpacing:"2px",fontWeight:700}}>📊 累積回収率（{totals.races}レース）</span>
+                  <span style={{fontSize:9,color:"rgba(255,255,255,0.5)"}}>的中{totals.hits}/{totals.races*3}点</span>
+                </div>
+                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8,marginBottom:6}}>
+                  <div>
+                    <div style={{fontSize:8,color:"rgba(255,255,255,0.4)"}}>投資</div>
+                    <div style={{fontSize:12,fontWeight:600,color:"#fff"}}>{totals.cost.toLocaleString()}円</div>
+                  </div>
+                  <div>
+                    <div style={{fontSize:8,color:"rgba(255,255,255,0.4)"}}>払戻</div>
+                    <div style={{fontSize:12,fontWeight:600,color:"#fff"}}>{totals.return.toLocaleString()}円</div>
+                  </div>
+                  <div>
+                    <div style={{fontSize:8,color:"rgba(255,255,255,0.4)"}}>収支</div>
+                    <div style={{fontSize:12,fontWeight:700,color:profit>=0?"#7cd97c":"#ff7c7c"}}>{profit>=0?"+":""}{profit.toLocaleString()}円</div>
+                  </div>
+                </div>
+                <div style={{height:6,borderRadius:3,background:"rgba(255,255,255,0.1)",overflow:"hidden",marginBottom:3}}>
+                  <div style={{width:`${Math.min(200,rate)/2}%`,height:"100%",background:rate>=100?"linear-gradient(90deg,#1e5fa8,#7cd97c)":rate>=50?"linear-gradient(90deg,#d4941a,#f0b840)":"linear-gradient(90deg,#A32D2D,#c0392b)",transition:"width 0.5s"}}/>
+                </div>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline"}}>
+                  <span style={{fontSize:8,color:"rgba(255,255,255,0.4)"}}>回収率</span>
+                  <span style={{fontSize:18,fontWeight:700,color:rate>=100?"#7cd97c":rate>=50?"#f0b840":"#ff7c7c"}}>{rate}%</span>
+                </div>
+              </div>
+            );
+          })()}
 
           {/* 2カラムボディ */}
           <div className="kb-body">
