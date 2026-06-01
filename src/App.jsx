@@ -1805,7 +1805,7 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
             });
             bonus+=gradeBonus;
             // ⑥ 複数G1勝ちボーナス（二冠馬・三冠馬の評価）
-            const g1WinCount=gradeWins.filter(w=>w.grade==="G1"&&w.place===1).length;
+            const g1WinCount=gw.filter(w=>w.grade==="G1"&&w.place===1).length;
             if(g1WinCount>=3){bonus+=8;strengths.push(`G1×${g1WinCount}勝！三冠級`);}
             else if(g1WinCount>=2){bonus+=5;strengths.push(`G1×${g1WinCount}勝（二冠級）`);}
             // ⑦ 連勝ボーナス（pastRanksから直近連勝数を計算）
