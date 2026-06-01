@@ -1783,16 +1783,17 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
                 const winIdx=dOrderGrade.indexOf(winDistCat);
                 const raceIdx=dOrderGrade.indexOf(raceDistCat);
                 const distGap=Math.abs(winIdx-raceIdx);
-                if(distGap===1) distDecay=0.7;
-                else if(distGap>=2) distDecay=0.4;
+                if(distGap===1) distDecay=0.85;
+                else if(distGap>=2) distDecay=0.5;
               }
               let base=0;
               if(w.grade==="G1"){
-                if(w.place===1){base=8;strengths.push(yearsAgo<=1?"G1勝ち馬":"G1勝ち実績");}
-                else if(w.place===2){base=5;strengths.push(margin<=0.5?"G1接戦2着":"G1連対実績");}
-                else if(w.place===3){base=3;strengths.push(margin<=0.5?"G1接戦3着":"G1好走実績");}
+                if(w.place===1){base=12;strengths.push(yearsAgo<=1?"G1勝ち馬":"G1勝ち実績");}
+                else if(w.place===2){base=7;strengths.push(margin<=0.5?"G1接戦2着":"G1連対実績");}
+                else if(w.place===3){base=4;strengths.push(margin<=0.5?"G1接戦3着":"G1好走実績");}
+                else if(w.place<=5){base=2;}
               } else if(w.grade==="G2"){
-                if(w.place===1){base=5;strengths.push("G2勝ち馬");}
+                if(w.place===1){base=6;strengths.push("G2勝ち馬");}
                 else if(w.place<=2){base=3;strengths.push(margin<=0.5?"G2接戦2着":"G2連対実績");}
               } else if(w.grade==="G3"){
                 if(w.place===1){base=3;strengths.push("G3勝ち馬");}
@@ -1803,6 +1804,19 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               gradeBonus+=base*decay*marginDecay*distDecay;
             });
             bonus+=gradeBonus;
+            // ⑥ 複数G1勝ちボーナス（二冠馬・三冠馬の評価）
+            const g1WinCount=gradeWins.filter(w=>w.grade==="G1"&&w.place===1).length;
+            if(g1WinCount>=3){bonus+=8;strengths.push(`G1×${g1WinCount}勝！三冠級`);}
+            else if(g1WinCount>=2){bonus+=5;strengths.push(`G1×${g1WinCount}勝（二冠級）`);}
+            // ⑦ 連勝ボーナス（pastRanksから直近連勝数を計算）
+            const ranks=runner.pastRanks||[];
+            let winStreak=0;
+            for(let ri=0;ri<ranks.length;ri++){if(ranks[ri]===1)winStreak++;else break;}
+            if(winStreak>=4){bonus+=8;strengths.push(`${winStreak}連勝中！無敗`);}
+            else if(winStreak>=3){bonus+=5;strengths.push(`${winStreak}連勝中◎`);}
+            else if(winStreak>=2){bonus+=3;strengths.push(`${winStreak}連勝中`);}
+            // ⑧ 前走G1で1着の特別ボーナス（直近のG1連勝は非常に価値が高い）
+            if(prevRaceGrade==="G1"&&prevRank===1){bonus+=4;strengths.push("前走G1勝ち→直結◎");}
             // ペース適性補正（長距離3000m以上は±4pt、それ以外は±6pt）
             const isVeryLong=courseMeters>=3000;
             const paceRange=isVeryLong?4:6;
@@ -1888,9 +1902,11 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
             }
 
             const total=+(rawScore+bonus).toFixed(2);
-            // Normalize: 実際のスコア分布(20〜50)に合わせて50〜85pt表示
-            const normalizedPct=Math.max(0,Math.min(1,(total-20)/35));
-            const displayScore=+(50+normalizedPct*35).toFixed(1); // 50.0-85.0
+            // Normalize: 実際のスコア分布(15〜70)に合わせて45〜95pt表示
+            // 旧: (total-20)/35 → 50-85 だと上位が全員85で横並びになっていた
+            // 新: 分母を55に拡大し、95到達にはtotal=70が必要（差別化強化）
+            const normalizedPct=Math.max(0,Math.min(1,(total-15)/55));
+            const displayScore=+(45+normalizedPct*50).toFixed(1); // 45.0-95.0
 
             // 3-gauge breakdown (each 0-100)
             // 期待度: overall blood aptitude (sire + bms combined)
