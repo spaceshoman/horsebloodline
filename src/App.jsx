@@ -1984,6 +1984,14 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
                     父:<span style={{color:sireMatch?"#1e5fa8":"inherit",fontWeight:sireMatch?500:400}}>{r.sire}{sireMatch?" ✓":""}</span>
                     {" / "}母父:<span style={{color:bmsMatch?"#3578c4":"inherit",fontWeight:bmsMatch?500:400}}>{r.bms}{bmsMatch?" ✓":""}</span>
                   </div>
+                  <div style={{display:"flex",gap:4,flexWrap:"wrap",marginTop:3}}>
+                    {r.style&&<span style={{fontSize:8,padding:"1px 6px",borderRadius:8,background:r.style==="逃げ"?"#FCEBEB":r.style==="先行"?"#EAF3DE":r.style==="差し"?"#E6F1FB":"#FBEAF0",color:r.style==="逃げ"?"#791F1F":r.style==="先行"?"#27500A":r.style==="差し"?"#0C447C":"#72243E",fontWeight:600}}>{r.style}</span>}
+                    {r.age&&<span style={{fontSize:8,padding:"1px 6px",borderRadius:8,background:"var(--color-background-secondary)",color:"var(--color-text-tertiary)"}}>{r.age}歳{r.sex==="牝"?" 牝":""}</span>}
+                    {(r.gradeWins||[]).filter(w=>w.place===1).slice(0,2).map((w,j)=><span key={j} style={{fontSize:8,padding:"1px 6px",borderRadius:8,background:w.grade==="G1"?"rgba(200,168,75,0.2)":"rgba(30,95,168,0.1)",color:w.grade==="G1"?"#c8a84b":"#1e5fa8",fontWeight:600}}>{w.race}</span>)}
+                  </div>
+                  {r.training&&(
+                    <div style={{fontSize:8,color:"#c8a84b",marginTop:3,lineHeight:1.5}}>🏋️ {r.training.length>60?r.training.slice(0,60)+"…":r.training}</div>
+                  )}
                 </div>
               </div>
             );
@@ -2457,7 +2465,12 @@ ${bloodResults.length>=3?`
       </div>)}
       {section==="rotation"&&t&&(<div>
         <div style={{fontSize:12,fontWeight:500,marginBottom:6}}>前走ローテ傾向</div>
-        {t.rotation&&t.rotation.map((d,i)=><DataRow key={i} label={d.label} value={d.val} highlight={d.hl}/>)}
+        {t.rotation&&t.rotation.map((d,i)=>(
+          <div key={i}>
+            <DataRow label={d.label} value={d.val} highlight={d.hl}/>
+            {d.horses&&<div style={{fontSize:9,color:"#c8a84b",padding:"2px 0 6px 8px",lineHeight:1.5}}>→ {d.horses}</div>}
+          </div>
+        ))}
         {t.rotationTip&&<div style={{marginTop:8,padding:"8px 10px",background:"#f0f6fd",borderRadius:8,fontSize:10,color:"#d4941a",lineHeight:1.6}}>💡 {t.rotationTip}</div>}
         {t.rotationHorses&&(<div style={{marginTop:12}}>
           <div style={{fontSize:11,fontWeight:600,marginBottom:6,color:"var(--color-text-primary)"}}>📋 今年の出走馬ローテ別一覧</div>
