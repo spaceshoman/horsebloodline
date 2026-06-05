@@ -865,6 +865,13 @@ const PredictionCard=({entry,rank,expanded,onToggle,venueKey})=>{
                 <span style={{fontWeight:500}}>弱点: </span>{entry.weaknesses.join(" / ")}
               </div>
             )}
+            {/* Training comment */}
+            {entry.runner.training&&(
+              <div style={{marginTop:8,padding:"8px 10px",background:"rgba(200,168,75,0.08)",border:"1px solid rgba(200,168,75,0.25)",borderRadius:8}}>
+                <div style={{fontSize:10,fontWeight:600,color:"#c8a84b",marginBottom:3}}>🏋️ 調教コメント</div>
+                <div style={{fontSize:9,color:"var(--color-text-secondary)",lineHeight:1.6}}>{entry.runner.training}</div>
+              </div>
+            )}
           </div>
         </div>
       )}
