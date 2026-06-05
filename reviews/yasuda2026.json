@@ -1,0 +1,813 @@
+{
+  "id": "yasuda2026",
+  "race_id": "",
+  "race_name": "第76回 安田記念",
+  "date": "2026/6/7",
+  "venue": "東京",
+  "course": "芝1600m",
+  "expectedPace": "BOTH",
+  "trackCond": "良",
+  "frameBonus": {},
+  "runners": [
+    {
+      "num": 1,
+      "frame": 1,
+      "name": "レーベンスティール",
+      "sire": "リアルスティール",
+      "bms": "トウカイテイオー",
+      "dam": "トウカイライフ",
+      "jockey": "戸崎圭太",
+      "age": "6",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "毎日王冠",
+          "grade": "G2",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.1,
+          "dist": 1800
+        },
+        {
+          "race": "中山記念",
+          "grade": "G2",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.3,
+          "dist": 1800
+        }
+      ],
+      "prevRank": 6,
+      "pastRanks": [
+        6,
+        1,
+        12,
+        1
+      ],
+      "prevRaceName": "大阪杯",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 2000,
+      "training": "放牧先から5/12帰厩。坂路で800m60秒切りを8本も出す意欲的な調整。先週W追い切りでラスト200m10.9秒マーク。状態面は万全。"
+    },
+    {
+      "num": 2,
+      "frame": 1,
+      "name": "ロングラン",
+      "sire": "ヴィクトワールピサ",
+      "bms": "Kendargent",
+      "dam": "ノッテビアンカ",
+      "jockey": "F.ゴンサルベス",
+      "age": "8",
+      "sex": "せん",
+      "pop": 0,
+      "tan": 0,
+      "style": "追込",
+      "paceType": "HIGH",
+      "gradeWins": [],
+      "prevRank": 18,
+      "pastRanks": [
+        18,
+        14,
+        15,
+        8
+      ],
+      "prevRaceName": "マイラーズC",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 3,
+      "frame": 2,
+      "name": "オフトレイル",
+      "sire": "Farhh",
+      "bms": "Kingmambo",
+      "dam": "Rose Trail",
+      "jockey": "菅原明良",
+      "age": "5",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "スワンS",
+          "grade": "G2",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.0,
+          "dist": 1400
+        },
+        {
+          "race": "マイルCS",
+          "grade": "G1",
+          "place": 4,
+          "year": 2025,
+          "margin": 0.4,
+          "dist": 1600
+        }
+      ],
+      "prevRank": 5,
+      "pastRanks": [
+        5,
+        10,
+        4,
+        1
+      ],
+      "prevRaceName": "マイラーズC",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 4,
+      "frame": 2,
+      "name": "シックスペンス",
+      "sire": "キズナ",
+      "bms": "Twirling Candy",
+      "dam": "フィンレイズラッキーチャーム",
+      "jockey": "武豊",
+      "age": "5",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "先行",
+      "paceType": "HIGH",
+      "gradeWins": [],
+      "prevRank": 7,
+      "pastRanks": [
+        7,
+        9,
+        11,
+        2
+      ],
+      "prevRaceName": "マイラーズC",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 5,
+      "frame": 3,
+      "name": "サクラトゥジュール",
+      "sire": "ネオユニヴァース",
+      "bms": "シンボリクリスエス",
+      "dam": "サクラレーヌ",
+      "jockey": "佐々木大輔",
+      "age": "9",
+      "sex": "せん",
+      "pop": 0,
+      "tan": 0,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [],
+      "prevRank": 13,
+      "pastRanks": [
+        13,
+        9,
+        8,
+        15
+      ],
+      "prevRaceName": "フェブラリーS",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 6,
+      "frame": 3,
+      "name": "ステレンボッシュ",
+      "sire": "エピファネイア",
+      "bms": "ルーラーシップ",
+      "dam": "ブルークランズ",
+      "jockey": "D.レーン",
+      "age": "5",
+      "sex": "牝",
+      "pop": 0,
+      "tan": 0,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "桜花賞",
+          "grade": "G1",
+          "place": 1,
+          "year": 2024,
+          "margin": 0.0,
+          "dist": 1600
+        },
+        {
+          "race": "オークス",
+          "grade": "G1",
+          "place": 2,
+          "year": 2024,
+          "margin": 0.0,
+          "dist": 2400
+        }
+      ],
+      "prevRank": 2,
+      "pastRanks": [
+        2,
+        7,
+        10,
+        15
+      ],
+      "prevRaceName": "エプソムC",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 1800,
+      "training": "放牧先から5/22帰厩。先週ゴール前軽く促しただけでラスト200m11.1秒の鋭い末脚。以前より調教で動くようになっており仕上がり良好。"
+    },
+    {
+      "num": 7,
+      "frame": 4,
+      "name": "スズハローム",
+      "sire": "サトノダイヤモンド",
+      "bms": "ローレルゲレイロ",
+      "dam": "アイライン",
+      "jockey": "藤懸貴志",
+      "age": "6",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "追込",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "ダービーCT",
+          "grade": "G3",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0,
+          "dist": 1600
+        }
+      ],
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        1,
+        9,
+        11
+      ],
+      "prevRaceName": "ダービーCT",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 8,
+      "frame": 4,
+      "name": "シャンパンカラー",
+      "sire": "ドゥラメンテ",
+      "bms": "Reckless Abandon",
+      "dam": "メモリアルライフ",
+      "jockey": "岩田康誠",
+      "age": "6",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "NHKマイルC",
+          "grade": "G1",
+          "place": 1,
+          "year": 2023,
+          "margin": 0.0,
+          "dist": 1600
+        }
+      ],
+      "prevRank": 9,
+      "pastRanks": [
+        9,
+        10,
+        4,
+        14
+      ],
+      "prevRaceName": "マイラーズC",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 9,
+      "frame": 5,
+      "name": "ウォーターリヒト",
+      "sire": "ドレフォン",
+      "bms": "ヴィクトワールピサ",
+      "dam": "ウォーターピオニー",
+      "jockey": "高杉吏麒",
+      "age": "5",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "マイルCS",
+          "grade": "G1",
+          "place": 3,
+          "year": 2025,
+          "margin": 0.3,
+          "dist": 1600
+        }
+      ],
+      "prevRank": 13,
+      "pastRanks": [
+        13,
+        3,
+        3,
+        9
+      ],
+      "prevRaceName": "マイラーズC",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1600,
+      "training": "放牧を挟んで5月中旬帰厩。先週WコースでメイショウタバルとラストM11.1秒。今週坂路は終いの伸び上々、状態面に不安なし。"
+    },
+    {
+      "num": 10,
+      "frame": 5,
+      "name": "ルクソールカフェ",
+      "sire": "American Pharoah",
+      "bms": "More Than Ready",
+      "dam": "Mary's Follies",
+      "jockey": "岩田望来",
+      "age": "4",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "先行",
+      "paceType": "HIGH",
+      "gradeWins": [
+        {
+          "race": "武蔵野S",
+          "grade": "G3",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.6,
+          "dist": 1600
+        }
+      ],
+      "prevRank": 5,
+      "pastRanks": [
+        5,
+        15,
+        1,
+        3
+      ],
+      "prevRaceName": "サウジカップ",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 1800,
+      "training": ""
+    },
+    {
+      "num": 11,
+      "frame": 6,
+      "name": "ワールズエンド",
+      "sire": "ロードカナロア",
+      "bms": "ゼンノロブロイ",
+      "dam": "リラヴァティ",
+      "jockey": "津村明秀",
+      "age": "5",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "逃げ",
+      "paceType": "HIGH",
+      "gradeWins": [
+        {
+          "race": "京王杯SC",
+          "grade": "G2",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0,
+          "dist": 1400
+        }
+      ],
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        2,
+        8,
+        1
+      ],
+      "prevRaceName": "京王杯SC",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1400,
+      "training": "放牧を挟んで5/15帰厩。前走時と同じく1週前にWコースで強めの追い切り。今週坂路は楽な手応えで加速、前走時の好状態を維持。"
+    },
+    {
+      "num": 12,
+      "frame": 6,
+      "name": "シリウスコルト",
+      "sire": "マクフィ",
+      "bms": "ゼンノロブロイ",
+      "dam": "オールドフレイム",
+      "jockey": "横山和生",
+      "age": "5",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "先行",
+      "paceType": "BOTH",
+      "gradeWins": [],
+      "prevRank": 5,
+      "pastRanks": [
+        5,
+        13,
+        5,
+        13
+      ],
+      "prevRaceName": "京王杯SC",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1400,
+      "training": ""
+    },
+    {
+      "num": 13,
+      "frame": 7,
+      "name": "セイウンハーデス",
+      "sire": "シルバーステート",
+      "bms": "マンハッタンカフェ",
+      "dam": "ハイノリッジ",
+      "jockey": "幸英明",
+      "age": "7",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "逃げ",
+      "paceType": "HIGH",
+      "gradeWins": [
+        {
+          "race": "大阪杯",
+          "grade": "G1",
+          "place": 5,
+          "year": 2026,
+          "margin": 0.4,
+          "dist": 2000
+        }
+      ],
+      "prevRank": 5,
+      "pastRanks": [
+        5,
+        12,
+        12,
+        7
+      ],
+      "prevRaceName": "大阪杯",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 2000,
+      "training": "放牧先から約1か月前帰厩、9本追い切り。先週3頭併せで真ん中。今週坂路単走でラスト200m過ぎにハミをかけられると加速。時計も速く状態面万全。"
+    },
+    {
+      "num": 14,
+      "frame": 7,
+      "name": "ガイアフォース",
+      "sire": "キタサンブラック",
+      "bms": "クロフネ",
+      "dam": "ナターレ",
+      "jockey": "横山武史",
+      "age": "7",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "先行",
+      "paceType": "BOTH",
+      "gradeWins": [
+        {
+          "race": "安田記念",
+          "grade": "G1",
+          "place": 2,
+          "year": 2025,
+          "margin": 0.2,
+          "dist": 1600
+        },
+        {
+          "race": "マイルCS",
+          "grade": "G1",
+          "place": 2,
+          "year": 2025,
+          "margin": 0.3,
+          "dist": 1600
+        },
+        {
+          "race": "富士S",
+          "grade": "G2",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.1,
+          "dist": 1600
+        }
+      ],
+      "prevRank": 6,
+      "pastRanks": [
+        6,
+        2,
+        1,
+        2
+      ],
+      "prevRaceName": "ドバイターフ",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 1800,
+      "training": "放牧先から5月中旬帰厩。先週横山武騎手で坂路800m50.3秒の速い時計をマーク。今週は豪雨の中でもしっかりした脚どり。好仕上がり。"
+    },
+    {
+      "num": 15,
+      "frame": 8,
+      "name": "ドラゴンブースト",
+      "sire": "スクリーンヒーロー",
+      "bms": "エンパイアメーカー",
+      "dam": "トーコーディオーネ",
+      "jockey": "丹内祐次",
+      "age": "4",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "マイラーズC",
+          "grade": "G2",
+          "place": 2,
+          "year": 2026,
+          "margin": 0.1,
+          "dist": 1600
+        },
+        {
+          "race": "大阪城S",
+          "grade": "OP",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.1,
+          "dist": 1800
+        }
+      ],
+      "prevRank": 2,
+      "pastRanks": [
+        2,
+        1,
+        16,
+        1
+      ],
+      "prevRaceName": "マイラーズC",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 16,
+      "frame": 8,
+      "name": "パンジャタワー",
+      "sire": "タワーオブロンドン",
+      "bms": "ヴィクトワールピサ",
+      "dam": "クラークスデール",
+      "jockey": "松山弘平",
+      "age": "4",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "先行",
+      "paceType": "HIGH",
+      "gradeWins": [
+        {
+          "race": "NHKマイルC",
+          "grade": "G1",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.0,
+          "dist": 1600
+        },
+        {
+          "race": "キーンランドC",
+          "grade": "G3",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.1,
+          "dist": 1200
+        }
+      ],
+      "prevRank": 4,
+      "pastRanks": [
+        4,
+        5,
+        5,
+        1
+      ],
+      "prevRaceName": "高松宮記念",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 1200,
+      "training": "放牧先から1か月以上前に帰厩、計10本追い切り。先週松山騎手で2頭追走から大外を回り好時計。今週単走で折り合いつき直線きっちり伸びた。ほぼ万全の状態。"
+    },
+    {
+      "num": 17,
+      "frame": 8,
+      "name": "トロヴァトーレ",
+      "sire": "レイデオロ",
+      "bms": "エンパイアメーカー",
+      "dam": "シャルマント",
+      "jockey": "C.ルメール",
+      "age": "5",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "東京新聞杯",
+          "grade": "G3",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.1,
+          "dist": 1600
+        },
+        {
+          "race": "エプソムC",
+          "grade": "G3",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0,
+          "dist": 1800
+        }
+      ],
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        1,
+        4,
+        3
+      ],
+      "prevRaceName": "エプソムC",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 1800,
+      "training": "前走後は放牧を挟んで5/22帰厩。先週W追い切りで手応え劣勢も併入しラスト200m11.2秒。今週は前半セーブし余裕を残して先着。状態面に不安なし。"
+    }
+  ],
+  "trends": {
+    "popularity": [
+      {
+        "label": "1番人気",
+        "val": "【1.3.4.2】複勝率80%。信頼度高い",
+        "hl": true
+      },
+      {
+        "label": "2番人気",
+        "val": "【1.1.2.6】複勝率40%"
+      },
+      {
+        "label": "3番人気",
+        "val": "【1.1.0.8】複勝率20%"
+      },
+      {
+        "label": "4番人気",
+        "val": "【3.0.1.6】最多3勝。穴馬券の中心",
+        "hl": true
+      },
+      {
+        "label": "7-9番人気",
+        "val": "【4.2.0.24】4勝。伏兵の一発がある",
+        "hl": true
+      },
+      {
+        "label": "10番人気以下",
+        "val": "【0.0.0.72】好走例なし"
+      }
+    ],
+    "popTip": "1番人気は複勝率80%と堅い。ただし勝率は10%で取りこぼし多い。4番人気と7-9番人気に妙味。10番人気以下は全滅。",
+    "draw": [
+      {
+        "label": "1-2枠",
+        "val": "枠順の有利不利は少ない。東京マイルは大外でも届く"
+      },
+      {
+        "label": "3-6枠",
+        "val": "中枠は安定して好走。特に内目が有利とは限らない"
+      },
+      {
+        "label": "7-8枠",
+        "val": "外枠でも差し馬なら十分届く"
+      }
+    ],
+    "drawTip": "東京1600mは枠順の有利不利が少ないコース。frameBonusは設定なし。",
+    "style": [
+      {
+        "label": "逃げ",
+        "val": "【1.0.1.8】勝率10%。残りにくい",
+        "hl": false
+      },
+      {
+        "label": "先行",
+        "val": "【4.5.3.28】勝率10%、複勝率30%。中心脚質",
+        "hl": true
+      },
+      {
+        "label": "差し",
+        "val": "【3.4.5.48】勝率5%、複勝率20%",
+        "hl": true
+      },
+      {
+        "label": "追込",
+        "val": "【2.1.1.48】複勝率8%。稀に激走"
+      }
+    ],
+    "styleTip": "先行・差しが中心。逃げは残りにくく追込も厳しい。4角5番手以内の先行勢が圧倒的に有利。",
+    "blood": [
+      {
+        "label": "ロードカナロア系",
+        "val": "スプリント～マイルの王道血統。東京1600mでも高い適性"
+      },
+      {
+        "label": "ディープインパクト系",
+        "val": "安田記念の勝ち馬多数輩出。瞬発力勝負で真価を発揮"
+      },
+      {
+        "label": "キタサンブラック",
+        "val": "ガイアフォースの父。中距離～マイルの万能型"
+      },
+      {
+        "label": "エピファネイア",
+        "val": "ステレンボッシュの父。東京コースの瞬発力に優れる"
+      },
+      {
+        "label": "ドゥラメンテ",
+        "val": "シャンパンカラーの父。マイルG1勝ち馬を輩出"
+      }
+    ],
+    "bloodTip": "ロードカナロア系とディープインパクト系が東京マイルの王道。キタサンブラック産駒ガイアフォースは安田記念2着・マイルCS2着の実績。",
+    "rotation": [
+      {
+        "label": "前走海外",
+        "val": "【2.4.2.16】複勝率33.3%。好走率高い",
+        "hl": true
+      },
+      {
+        "label": "前走G1",
+        "val": "【4.5.3.38】複勝率24.0%。中心ローテ",
+        "hl": true
+      },
+      {
+        "label": "前走G2",
+        "val": "【2.1.5.60】複勝率11.8%。苦戦傾向"
+      },
+      {
+        "label": "前走G3",
+        "val": "【1.0.0.14】1勝のみ。苦戦必至"
+      },
+      {
+        "label": "前走VM",
+        "val": "【2.5.0.8】複勝率46.7%。最強ローテ",
+        "hl": true
+      }
+    ],
+    "rotationTip": "前走海外組かG1組が中心。前走G2以下は実績のある馬に限られる。前走ヴィクトリアマイル組は複勝率46.7%で最強ローテ。",
+    "rotationHorses": [
+      {
+        "name": "ガイアフォース",
+        "label": "前走ドバイターフ（海外）"
+      },
+      {
+        "name": "パンジャタワー",
+        "label": "前走高松宮記念（G1）"
+      },
+      {
+        "name": "レーベンスティール",
+        "label": "前走大阪杯（G1）"
+      },
+      {
+        "name": "ステレンボッシュ",
+        "label": "前走エプソムC（G3）"
+      }
+    ],
+    "pickup": {
+      "title": "注目傾向",
+      "horses": [
+        {
+          "name": "ガイアフォース",
+          "note": "安田記念2着→富士S1着→マイルCS2着の3戦連続マイルハイレベル。ただし7歳がネック（7歳以上は勝率0%）。"
+        },
+        {
+          "name": "パンジャタワー",
+          "note": "NHKマイルC1着の実績＋海外2戦経験の強み。4歳は最多5勝の年齢データ。松山騎手×万全の仕上がり。"
+        },
+        {
+          "name": "トロヴァトーレ",
+          "note": "東京新聞杯→エプソムC連勝中。C.ルメール騎手×関東馬は好走率高い。"
+        },
+        {
+          "name": "ステレンボッシュ",
+          "note": "桜花賞1着の実績。関東馬の牝馬は複勝率66.7%の驚異的データ。D.レーン騎手。"
+        }
+      ]
+    }
+  },
+  "result": null,
+  "review": null,
+  "verification": null
+}
