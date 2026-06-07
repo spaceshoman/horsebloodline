@@ -1457,6 +1457,7 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
       {id:"runners", label:"出走馬", accent:"#1e5fa8", phase:"pre"},
     ]:[]),
     {id:"overview", label:"傾向",  accent:"#3578c4", phase:"pre"},
+    {id:"track",   label:"馬場",  accent:"#d4941a", phase:"pre"},
     {id:"draw",     label:"枠順"},
     {id:"style",    label:"脚質",  accent:"#4a90d9", phase:"pre"},
     {id:"blood",    label:"血統"},
@@ -2448,6 +2449,57 @@ ${bloodResults.length>=3?`
         {t.popularity.map((d,i)=><DataRow key={i} label={d.label} value={d.val} highlight={d.hl}/>)}
         <div style={{marginTop:8,padding:"8px 10px",background:"#f0f6fd",borderRadius:8,fontSize:10,color:"#d4941a",lineHeight:1.6}}>💡 {t.popTip}</div>
       </div>)}
+      {/* 馬場分析セクション */}
+      {section==="track"&&(()=>{
+        const pa=race.prevDayAnalysis;
+        if(!pa) return <div style={{fontSize:11,color:"var(--color-text-tertiary)",padding:16,textAlign:"center"}}>前日馬場データ未設定</div>;
+        return(
+          <div>
+            <div style={{fontSize:12,fontWeight:500,marginBottom:8}}>📊 前日馬場分析</div>
+            <div style={{padding:"10px 12px",background:"rgba(200,168,75,0.08)",border:"1px solid rgba(200,168,75,0.25)",borderRadius:10,marginBottom:12}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
+                <span style={{fontSize:11,fontWeight:600,color:"#c8a84b"}}>{pa.date} {race.venue}競馬場</span>
+                <span style={{fontSize:9,padding:"2px 8px",borderRadius:8,background:"rgba(200,168,75,0.2)",color:"#c8a84b",fontWeight:600}}>翌日想定: {pa.trackCondForecast}</span>
+              </div>
+              {pa.summary&&<div style={{fontSize:10,color:"var(--color-text-secondary)",lineHeight:1.6,marginBottom:8}}>{pa.summary}</div>}
+            </div>
+            {/* 前日レース結果 */}
+            {pa.races&&pa.races.map((rc,i)=>(
+              <div key={i} style={{marginBottom:12,padding:"10px 12px",background:"var(--color-background-secondary)",borderRadius:8,borderLeft:"3px solid #1e5fa8"}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
+                  <span style={{fontSize:11,fontWeight:600,color:"#1e5fa8"}}>{rc.raceNum} {rc.raceName}</span>
+                  <span style={{fontSize:9,color:"var(--color-text-tertiary)"}}>{rc.course} / {rc.trackCond}</span>
+                </div>
+                <div style={{fontSize:9,color:"var(--color-text-secondary)",marginBottom:6}}>
+                  タイム {rc.time} / ペース: {rc.pace} / 前半{rc.frontHalf} / 上がり{rc.lastHalf}
+                </div>
+                {rc.results&&rc.results.map((res,j)=>(
+                  <div key={j} style={{display:"flex",alignItems:"center",gap:8,padding:"3px 0",borderBottom:"0.5px solid var(--color-border-tertiary)"}}>
+                    <span style={{width:20,fontSize:j===0?13:10,fontWeight:j===0?700:400,color:j===0?"#c8a84b":"var(--color-text-primary)",textAlign:"center"}}>{res.rank}</span>
+                    <span style={{flex:1,fontSize:10,fontWeight:j===0?600:400,color:"var(--color-text-primary)"}}>{res.name}</span>
+                    <span style={{fontSize:9,padding:"1px 6px",borderRadius:8,background:res.style==="差し"?"#E6F1FB":res.style==="逃げ"?"#FCEBEB":res.style==="先行"?"#EAF3DE":"#FBEAF0",color:res.style==="差し"?"#0C447C":res.style==="逃げ"?"#791F1F":res.style==="先行"?"#27500A":"#72243E",fontWeight:600}}>{res.style}</span>
+                    <span style={{fontSize:9,color:"var(--color-text-tertiary)"}}>4角{res.corner4}番手</span>
+                    <span style={{fontSize:9,fontWeight:600,color:j===0?"#c8a84b":"var(--color-text-secondary)"}}>{res.agari3f}</span>
+                  </div>
+                ))}
+                {rc.analysis&&<div style={{fontSize:9,color:"#d4941a",marginTop:6,lineHeight:1.5}}>💡 {rc.analysis}</div>}
+              </div>
+            ))}
+            {/* 翌日レースへの影響 */}
+            {pa.impactOnRace&&(
+              <div style={{padding:"10px 12px",background:"linear-gradient(135deg,rgba(200,168,75,0.12),rgba(200,168,75,0.04))",border:"1px solid rgba(200,168,75,0.3)",borderRadius:10}}>
+                <div style={{fontSize:11,fontWeight:600,color:"#c8a84b",marginBottom:6}}>⚡ 今日のレースへの影響</div>
+                {pa.impactOnRace.map((imp,i)=>(
+                  <div key={i} style={{display:"flex",gap:6,padding:"3px 0",fontSize:10,color:"var(--color-text-secondary)",lineHeight:1.5}}>
+                    <span style={{color:"#c8a84b",flexShrink:0}}>•</span>
+                    <span>{imp}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })()}
       {section==="draw"&&t&&(<div>
         <div style={{fontSize:12,fontWeight:500,marginBottom:6}}>枠順別傾向</div>
         {t.draw.map((d,i)=><DataRow key={i} label={d.label} value={d.val} highlight={d.hl}/>)}
