@@ -2487,12 +2487,99 @@ ${bloodResults.length>=3?`
             ))}
             {/* 翌日レースへの影響 */}
             {pa.impactOnRace&&(
-              <div style={{padding:"10px 12px",background:"linear-gradient(135deg,rgba(200,168,75,0.12),rgba(200,168,75,0.04))",border:"1px solid rgba(200,168,75,0.3)",borderRadius:10}}>
+              <div style={{marginBottom:12,padding:"10px 12px",background:"linear-gradient(135deg,rgba(200,168,75,0.12),rgba(200,168,75,0.04))",border:"1px solid rgba(200,168,75,0.3)",borderRadius:10}}>
                 <div style={{fontSize:11,fontWeight:600,color:"#c8a84b",marginBottom:6}}>⚡ 今日のレースへの影響</div>
                 {pa.impactOnRace.map((imp,i)=>(
                   <div key={i} style={{display:"flex",gap:6,padding:"3px 0",fontSize:10,color:"var(--color-text-secondary)",lineHeight:1.5}}>
-                    <span style={{color:"#c8a84b",flexShrink:0}}>•</span>
+                    <span style={{flexShrink:0}}>•</span>
                     <span>{imp}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+            {/* 良馬場→重馬場の変化比較 */}
+            {pa.conditionChange&&(
+              <div style={{marginBottom:12}}>
+                <div style={{fontSize:12,fontWeight:500,marginBottom:6}}>良馬場 → 重馬場の変化</div>
+                <div style={{borderRadius:8,overflow:"hidden",border:"1px solid var(--color-border-tertiary)"}}>
+                  <div style={{display:"grid",gridTemplateColumns:"60px 1fr 1fr",background:"rgba(30,95,168,0.1)",padding:"6px 8px",fontSize:9,fontWeight:600,color:"#1e5fa8"}}>
+                    <span>項目</span><span>良馬場（昨日）</span><span>重馬場（今日）</span>
+                  </div>
+                  {pa.conditionChange.map((c,i)=>(
+                    <div key={i} style={{display:"grid",gridTemplateColumns:"60px 1fr 1fr",padding:"5px 8px",borderTop:"0.5px solid var(--color-border-tertiary)",fontSize:9,color:"var(--color-text-secondary)"}}>
+                      <span style={{fontWeight:600,color:"var(--color-text-primary)"}}>{c.item}</span>
+                      <span>{c.good}</span>
+                      <span style={{color:"#A32D2D",fontWeight:500}}>{c.heavy}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {/* 全馬評価マトリクス */}
+            {pa.horseMatrix&&(
+              <div style={{marginBottom:12}}>
+                <div style={{fontSize:12,fontWeight:500,marginBottom:6}}>🎯 全馬評価マトリクス（重馬場想定）</div>
+                {pa.horseMatrix.map((h,i)=>{
+                  const rankColor=h.rank==="S"?"#c8a84b":h.rank==="A"||h.rank==="A-"?"#1e5fa8":h.rank.startsWith("B")?"#3578c4":"#999";
+                  return(
+                    <div key={i} style={{display:"flex",alignItems:"center",gap:6,padding:"5px 0",borderBottom:"0.5px solid var(--color-border-tertiary)"}}>
+                      <span style={{width:22,height:22,borderRadius:6,background:rankColor,color:"#fff",fontSize:10,fontWeight:700,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{h.rank}</span>
+                      <div style={{flex:1,minWidth:0}}>
+                        <div style={{display:"flex",alignItems:"center",gap:4}}>
+                          <span style={{fontSize:11,fontWeight:600,color:"var(--color-text-primary)"}}>{h.name}</span>
+                          <span style={{fontSize:8,color:"var(--color-text-tertiary)"}}>{h.pop}人気</span>
+                          <span style={{fontSize:8,padding:"1px 5px",borderRadius:6,background:h.style==="差し"?"#E6F1FB":h.style==="逃げ"?"#FCEBEB":h.style==="先行"?"#EAF3DE":"#FBEAF0",color:h.style==="差し"?"#0C447C":h.style==="逃げ"?"#791F1F":h.style==="先行"?"#27500A":"#72243E",fontWeight:600}}>{h.style}</span>
+                        </div>
+                        <div style={{fontSize:8,color:"var(--color-text-tertiary)",marginTop:1}}>{h.frame} / 重{h.heavy} 差{h.sashi} / {h.data}</div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+            {/* 重馬場で浮上する馬 */}
+            {pa.pickupHorses&&(
+              <div style={{marginBottom:12}}>
+                <div style={{fontSize:12,fontWeight:500,marginBottom:6}}>🔑 重馬場で浮上する馬</div>
+                {pa.pickupHorses.map((h,i)=>(
+                  <div key={i} style={{marginBottom:8,padding:"10px 12px",background:"rgba(30,95,168,0.05)",borderLeft:`3px solid ${h.color}`,borderRadius:8}}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
+                      <span style={{fontSize:12,fontWeight:700,color:h.color}}>{"①②③"[i]} {h.name}（{h.pop}人気 {h.odds}倍）</span>
+                      <span style={{fontSize:9,padding:"2px 8px",borderRadius:8,background:h.color,color:"#fff",fontWeight:700}}>{h.label}</span>
+                    </div>
+                    {h.reasons.map((r,j)=>(
+                      <div key={j} style={{fontSize:9,color:"var(--color-text-secondary)",lineHeight:1.6,paddingLeft:4}}>• {r}</div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            )}
+            {/* 危険な人気馬 */}
+            {pa.dangerHorses&&(
+              <div style={{marginBottom:12}}>
+                <div style={{fontSize:12,fontWeight:500,marginBottom:6}}>⚠️ 危険な人気馬</div>
+                {pa.dangerHorses.map((h,i)=>(
+                  <div key={i} style={{marginBottom:6,padding:"8px 12px",background:"rgba(163,45,45,0.06)",borderLeft:"3px solid #A32D2D",borderRadius:8}}>
+                    <div style={{fontSize:11,fontWeight:600,color:"#A32D2D",marginBottom:2}}>{h.name}（{h.pop}人気 {h.odds}倍）</div>
+                    <div style={{fontSize:9,color:"var(--color-text-secondary)",lineHeight:1.6}}>{h.note}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {/* 馬券戦略 */}
+            {pa.bettingStrategy&&(
+              <div style={{padding:"10px 12px",background:"linear-gradient(135deg,rgba(200,168,75,0.15),rgba(200,168,75,0.05))",border:"1px solid rgba(200,168,75,0.4)",borderRadius:10}}>
+                <div style={{fontSize:12,fontWeight:600,color:"#c8a84b",marginBottom:8}}>💡 馬券戦略の提案</div>
+                {[
+                  {label:"◎ 軸",   val:pa.bettingStrategy.axis,   sub:pa.bettingStrategy.axisReason,   color:"#c8a84b"},
+                  {label:"○ 対抗", val:pa.bettingStrategy.counter, sub:pa.bettingStrategy.counterReason, color:"#1e5fa8"},
+                  {label:"▲ 穴",   val:pa.bettingStrategy.hole,   sub:pa.bettingStrategy.holeReason,   color:"#d4941a"},
+                  {label:"△ 大穴", val:pa.bettingStrategy.bighole, sub:pa.bettingStrategy.bigholeReason, color:"#A32D2D"},
+                ].map((b,i)=>(
+                  <div key={i} style={{display:"flex",alignItems:"baseline",gap:8,padding:"4px 0",borderBottom:i<3?"0.5px solid rgba(200,168,75,0.2)":"none"}}>
+                    <span style={{fontSize:10,fontWeight:700,color:b.color,width:50,flexShrink:0}}>{b.label}</span>
+                    <span style={{fontSize:10,fontWeight:600,color:"var(--color-text-primary)"}}>{b.val}</span>
+                    <span style={{fontSize:8,color:"var(--color-text-tertiary)"}}>{b.sub}</span>
                   </div>
                 ))}
               </div>
