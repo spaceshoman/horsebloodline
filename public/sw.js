@@ -1,4 +1,4 @@
-const CACHE_NAME = 'keibakun-v5';
+const CACHE_NAME = 'keibakun-v4';
 const BASE = '/horsebloodline';
 
 self.addEventListener('install', () => {
@@ -21,7 +21,7 @@ self.addEventListener('fetch', (e) => {
           const clone = r.clone();
           caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
         }
-        return r;
+        rを返す;
       })
       .catch(() => caches.match(e.request))
   );
