@@ -1319,7 +1319,7 @@ const GRADE_RACES = {
   oaks2026:{id:"oaks2026",grade:"G1",name:"第87回 優駿牝馬（オークス）",date:"2026/5/24",venue:"東京",course:"芝2400m",weather:"",trackCond:"",emoji:"🌹",trends:null,result:null,review:null},
   derby2026:{id:"derby2026",grade:"G1",name:"第93回 東京優駿（日本ダービー）",date:"2026/5/31",venue:"東京",course:"芝2400m",weather:"",trackCond:"",emoji:"🏆",trends:null,result:null,review:null},
   yasuda2026:{id:"yasuda2026",grade:"G1",name:"第76回 安田記念",date:"2026/6/7",venue:"東京",course:"芝1600m",weather:"",trackCond:"",emoji:"⚡",trends:null,result:null,review:null},
-  takarazuka2026:{id:"takarazuka2026",grade:"G1",name:"第67回 宝塚記念",date:"2026/6/28",venue:"阪神",course:"芝2200m",weather:"",trackCond:"",emoji:"🌟",trends:null,result:null,review:null},
+  takarazuka2026:{id:"takarazuka2026",grade:"G1",name:"第67回 宝塚記念",date:"2026/6/14",venue:"阪神",course:"芝2200m",weather:"",trackCond:"",emoji:"🌟",trends:null,result:null,review:null},
   sprinters2026:{id:"sprinters2026",grade:"G1",name:"第60回 スプリンターズS",date:"2026/10/4",venue:"中山",course:"芝1200m",weather:"",trackCond:"",emoji:"💨",trends:null,result:null,review:null},
   shuka2026:{id:"shuka2026",grade:"G1",name:"第29回 秋華賞",date:"2026/10/18",venue:"京都",course:"芝2000m",weather:"",trackCond:"",emoji:"🍂",trends:null,result:null,review:null},
   kikka2026:{id:"kikka2026",grade:"G1",name:"第87回 菊花賞",date:"2026/10/25",venue:"京都",course:"芝3000m",weather:"",trackCond:"",emoji:"🌻",trends:null,result:null,review:null},
@@ -1844,21 +1844,22 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
             bonus+=paceBonus;
 
             // ⑤a コース×脚質ペナルティ（ダービー2026の教訓）
-            // 東京2400m逃げ馬の近10年複勝率0%、東京1600mも逃げ・追込は不利
-            // runner.style があればそれを優先（"逃げ","先行","差し","追込"）
-            // styleが未指定で paceType=HIGH の場合は「先行寄り」とみなす（逃げ判定はしない）
+            // 安田記念2026の教訓: 良馬場時は逃げ・先行ペナルティを緩和（前残りリスク）
             const runnerStyle=runner.style||null;
+            const isGoodTrack=(race.trackCond==="良"||!race.trackCond);
+            const nigePenaltyScale=isGoodTrack?0.5:1.0; // 良馬場では逃げペナルティ半減
             // 東京2400m: 逃げ・追込は強いペナルティ
             if(isTokyo&&courseMeters===2400){
               if(runnerStyle==="逃げ"){
-                bonus-=10;weaknesses.push("東京2400m逃げ脚質×（複勝率0%データ）");
+                const p=Math.round(10*nigePenaltyScale);
+                bonus-=p;weaknesses.push(`東京2400m逃げ脚質×（-${p}pt${isGoodTrack?"・良馬場で緩和":""}）`);
               } else if(runnerStyle==="追込"){
                 bonus-=5;weaknesses.push("東京2400m追込×（届かないパターン）");
               }
             }
             // 東京1600m（安田記念・NHKマイル）: 4角5番手以内が圧倒的有利
             if(isTokyo&&courseMeters===1600){
-              if(runnerStyle==="逃げ"){bonus-=4;weaknesses.push("東京1600m逃げ×（差し優位コース）");}
+              if(runnerStyle==="逃げ"){const p=Math.round(4*nigePenaltyScale);bonus-=p;weaknesses.push(`東京1600m逃げ×（-${p}pt${isGoodTrack?"・良馬場で緩和":""}）`);}
               else if(runnerStyle==="先行"){bonus+=3;strengths.push("東京1600m先行○（4角5番手以内有利）");}
               else if(runnerStyle==="差し"){bonus+=2;strengths.push("東京1600m差し○");}
               else if(runnerStyle==="追込"){bonus-=3;weaknesses.push("東京1600m追込×（届きにくい）");}
@@ -1867,6 +1868,23 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
             if(race.venue==="中山"&&courseMeters===2500){
               if(runnerStyle==="逃げ"||runnerStyle==="先行"){bonus+=2;strengths.push("中山2500m前々○");}
               else if(runnerStyle==="追込"){bonus-=3;weaknesses.push("中山2500m追込×");}
+            }
+            // 阪神2200m（宝塚記念）: 内回りでスタミナ型先行有利。昨年逃げ切りメイショウタバルの例も
+            if(race.venue==="阪神"&&courseMeters===2200){
+              if(runnerStyle==="先行"){bonus+=3;strengths.push("阪神2200m先行○（内回りで前有利）");}
+              else if(runnerStyle==="逃げ"){bonus+=2;strengths.push("阪神2200m逃げ○（昨年逃げ切りの例）");}
+              else if(runnerStyle==="追込"){bonus-=3;weaknesses.push("阪神2200m追込×（内回りで届きにくい）");}
+            }
+
+            // ⑤c リピーターボーナス（安田記念2026の教訓: ガイアフォースが2年連続2着）
+            // 同レースでの過去好走実績（gradeWinsに同名レースがある場合）
+            const raceBaseName=(race.race_name||race.name||"").replace(/第\d+回\s*/,"").replace(/（.*?）/,"");
+            if(raceBaseName){
+              const repeaterWin=gw.find(w=>w.race&&raceBaseName.includes(w.race.replace(/（.*?）/,"")));
+              if(repeaterWin){
+                if(repeaterWin.place===1){bonus+=6;strengths.push(`リピーター◎（${repeaterWin.year}年同レース1着）`);}
+                else if(repeaterWin.place<=3){bonus+=4;strengths.push(`リピーター○（${repeaterWin.year}年同レース${repeaterWin.place}着）`);}
+              }
             }
 
             // ⑤b ペース×脚質3次元評価（脚質specified時に追加加点）
