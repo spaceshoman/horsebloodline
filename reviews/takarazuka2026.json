@@ -1,0 +1,954 @@
+{
+  "id": "takarazuka2026",
+  "race_id": "",
+  "race_name": "第67回 宝塚記念",
+  "date": "2026/6/14",
+  "venue": "阪神",
+  "course": "芝2200m",
+  "expectedPace": "BOTH",
+  "trackCond": "良",
+  "frameBonus": {
+    "8": 2,
+    "1": 1
+  },
+  "runners": [
+    {
+      "num": 1,
+      "frame": 1,
+      "name": "ダノンデサイル",
+      "sire": "エピファネイア",
+      "bms": "Congrats",
+      "dam": "トップデサイル",
+      "jockey": "戸崎圭太",
+      "age": "5",
+      "sex": "牡",
+      "pop": 5,
+      "tan": 7.6,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "日本ダービー",
+          "grade": "G1",
+          "place": 1,
+          "year": 2024,
+          "margin": 0.0,
+          "dist": 2400
+        },
+        {
+          "race": "有馬記念",
+          "grade": "G1",
+          "place": 3,
+          "year": 2025,
+          "margin": 0.1,
+          "dist": 2500
+        },
+        {
+          "race": "ジャパンC",
+          "grade": "G1",
+          "place": 3,
+          "year": 2025,
+          "margin": 0.5,
+          "dist": 2400
+        }
+      ],
+      "prevRank": 3,
+      "pastRanks": [
+        3,
+        3,
+        3,
+        5
+      ],
+      "prevRaceName": "大阪杯",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 2000,
+      "training": ""
+    },
+    {
+      "num": 2,
+      "frame": 1,
+      "name": "ミュージアムマイル",
+      "sire": "リオンディーズ",
+      "bms": "ハーツクライ",
+      "dam": "ミュージアムヒル",
+      "jockey": "D.レーン",
+      "age": "4",
+      "sex": "牡",
+      "pop": 4,
+      "tan": 5.9,
+      "style": "追込",
+      "paceType": "HIGH",
+      "gradeWins": [
+        {
+          "race": "有馬記念",
+          "grade": "G1",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.1,
+          "dist": 2500
+        },
+        {
+          "race": "天皇賞（秋）",
+          "grade": "G1",
+          "place": 2,
+          "year": 2025,
+          "margin": 0.1,
+          "dist": 2000
+        },
+        {
+          "race": "セントライト記念",
+          "grade": "G2",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.1,
+          "dist": 2200
+        }
+      ],
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        2,
+        1,
+        6
+      ],
+      "prevRaceName": "有馬記念",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 2500,
+      "training": ""
+    },
+    {
+      "num": 3,
+      "frame": 2,
+      "name": "シュガークン",
+      "sire": "ドゥラメンテ",
+      "bms": "サクラバクシンオー",
+      "dam": "シュガーハート",
+      "jockey": "吉村誠之助",
+      "age": "5",
+      "sex": "牡",
+      "pop": 17,
+      "tan": 270.2,
+      "style": "先行",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "青葉賞",
+          "grade": "G2",
+          "place": 1,
+          "year": 2024,
+          "margin": 0.0,
+          "dist": 2400
+        }
+      ],
+      "prevRank": 15,
+      "pastRanks": [
+        15,
+        7,
+        1,
+        1
+      ],
+      "prevRaceName": "新潟大賞典",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 2000,
+      "training": ""
+    },
+    {
+      "num": 4,
+      "frame": 2,
+      "name": "ミクニインスパイア",
+      "sire": "アドマイヤマーズ",
+      "bms": "ティンバーカントリー",
+      "dam": "シルクヴィーナス",
+      "jockey": "丹内祐次",
+      "age": "4",
+      "sex": "牡",
+      "pop": 8,
+      "tan": 57.2,
+      "style": "先行",
+      "paceType": "BOTH",
+      "gradeWins": [
+        {
+          "race": "日経賞",
+          "grade": "G2",
+          "place": 2,
+          "year": 2026,
+          "margin": 0.2,
+          "dist": 2500
+        }
+      ],
+      "prevRank": 2,
+      "pastRanks": [
+        2,
+        1,
+        1,
+        1
+      ],
+      "prevRaceName": "日経賞",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 2500,
+      "training": ""
+    },
+    {
+      "num": 5,
+      "frame": 3,
+      "name": "クロワデュノール",
+      "sire": "キタサンブラック",
+      "bms": "Cape Cross",
+      "dam": "ライジングクロス",
+      "jockey": "北村友一",
+      "age": "4",
+      "sex": "牡",
+      "pop": 1,
+      "tan": 2.7,
+      "style": "先行",
+      "paceType": "BOTH",
+      "gradeWins": [
+        {
+          "race": "天皇賞（春）",
+          "grade": "G1",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0,
+          "dist": 3200
+        },
+        {
+          "race": "大阪杯",
+          "grade": "G1",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.1,
+          "dist": 2000
+        },
+        {
+          "race": "日本ダービー",
+          "grade": "G1",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.7,
+          "dist": 2400
+        },
+        {
+          "race": "ホープフルS",
+          "grade": "G1",
+          "place": 1,
+          "year": 2024,
+          "margin": 0.0,
+          "dist": 2000
+        }
+      ],
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        1,
+        4,
+        14
+      ],
+      "prevRaceName": "天皇賞（春）",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 3200,
+      "training": ""
+    },
+    {
+      "num": 6,
+      "frame": 3,
+      "name": "ビザンチンドリーム",
+      "sire": "エピファネイア",
+      "bms": "ジャングルポケット",
+      "dam": "ジャポニカーラ",
+      "jockey": "西村淳也",
+      "age": "5",
+      "sex": "牡",
+      "pop": 7,
+      "tan": 29.8,
+      "style": "追込",
+      "paceType": "HIGH",
+      "gradeWins": [
+        {
+          "race": "フォワ賞",
+          "grade": "G2",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.0,
+          "dist": 2400
+        },
+        {
+          "race": "天皇賞（春）",
+          "grade": "G1",
+          "place": 2,
+          "year": 2025,
+          "margin": 0.0,
+          "dist": 3200
+        }
+      ],
+      "prevRank": 7,
+      "pastRanks": [
+        7,
+        5,
+        1,
+        2
+      ],
+      "prevRaceName": "アミールT",
+      "prevRaceGrade": "海外",
+      "prevRaceDist": 2400,
+      "training": ""
+    },
+    {
+      "num": 7,
+      "frame": 4,
+      "name": "ファミリータイム",
+      "sire": "リアルスティール",
+      "bms": "Galileo",
+      "dam": "プリオバーン",
+      "jockey": "幸英明",
+      "age": "5",
+      "sex": "牡",
+      "pop": 18,
+      "tan": 364.2,
+      "style": "逃げ",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "日経新春杯",
+          "grade": "G2",
+          "place": 2,
+          "year": 2026,
+          "margin": 0.0,
+          "dist": 2400
+        }
+      ],
+      "prevRank": 9,
+      "pastRanks": [
+        9,
+        2,
+        7,
+        1
+      ],
+      "prevRaceName": "阪神大賞典",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 3000,
+      "training": ""
+    },
+    {
+      "num": 8,
+      "frame": 4,
+      "name": "タガノデュード",
+      "sire": "ヤマカツエース",
+      "bms": "ハーツクライ",
+      "dam": "タガノミューチャン",
+      "jockey": "高杉吏麒",
+      "age": "5",
+      "sex": "牡",
+      "pop": 12,
+      "tan": 86.4,
+      "style": "追込",
+      "paceType": "HIGH",
+      "gradeWins": [
+        {
+          "race": "小倉大賞典",
+          "grade": "G3",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.1,
+          "dist": 1800
+        }
+      ],
+      "prevRank": 6,
+      "pastRanks": [
+        6,
+        4,
+        1,
+        1
+      ],
+      "prevRaceName": "天皇賞（春）",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 3200,
+      "training": ""
+    },
+    {
+      "num": 9,
+      "frame": 5,
+      "name": "コスモキュランダ",
+      "sire": "アルアイン",
+      "bms": "Southern Image",
+      "dam": "サザンスピード",
+      "jockey": "横山武史",
+      "age": "5",
+      "sex": "牡",
+      "pop": 9,
+      "tan": 60.5,
+      "style": "先行",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "有馬記念",
+          "grade": "G1",
+          "place": 2,
+          "year": 2025,
+          "margin": 0.1,
+          "dist": 2500
+        },
+        {
+          "race": "弥生賞",
+          "grade": "G2",
+          "place": 1,
+          "year": 2024,
+          "margin": 0.0,
+          "dist": 2000
+        }
+      ],
+      "prevRank": 7,
+      "pastRanks": [
+        7,
+        2,
+        9,
+        12
+      ],
+      "prevRaceName": "日経賞",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 2500,
+      "training": ""
+    },
+    {
+      "num": 10,
+      "frame": 5,
+      "name": "ジューンテイク",
+      "sire": "キズナ",
+      "bms": "シンボリクリスエス",
+      "dam": "アドマイヤサブリナ",
+      "jockey": "松山弘平",
+      "age": "5",
+      "sex": "牡",
+      "pop": 14,
+      "tan": 165.5,
+      "style": "先行",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "京都記念",
+          "grade": "G2",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.1,
+          "dist": 2200
+        }
+      ],
+      "prevRank": 8,
+      "pastRanks": [
+        8,
+        4,
+        1,
+        3
+      ],
+      "prevRaceName": "QE2世C",
+      "prevRaceGrade": "海外",
+      "prevRaceDist": 2000,
+      "training": ""
+    },
+    {
+      "num": 11,
+      "frame": 6,
+      "name": "シンエンペラー",
+      "sire": "Siyouni",
+      "bms": "Galileo",
+      "dam": "Starlet's Sister",
+      "jockey": "坂井瑠星",
+      "age": "5",
+      "sex": "牡",
+      "pop": 11,
+      "tan": 76.6,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "京都2歳S",
+          "grade": "G3",
+          "place": 1,
+          "year": 2023,
+          "margin": 0.0,
+          "dist": 2000
+        }
+      ],
+      "prevRank": 7,
+      "pastRanks": [
+        7,
+        4,
+        14,
+        8
+      ],
+      "prevRaceName": "天皇賞（春）",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 3200,
+      "training": ""
+    },
+    {
+      "num": 12,
+      "frame": 6,
+      "name": "マイネルエンペラー",
+      "sire": "ゴールドシップ",
+      "bms": "ロージズインメイ",
+      "dam": "マイネテレジア",
+      "jockey": "川田将雅",
+      "age": "6",
+      "sex": "牡",
+      "pop": 15,
+      "tan": 172.7,
+      "style": "先行",
+      "paceType": "SLOW",
+      "gradeWins": [],
+      "prevRank": 5,
+      "pastRanks": [
+        5,
+        11,
+        9,
+        5
+      ],
+      "prevRaceName": "阪神大賞典",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 3000,
+      "training": ""
+    },
+    {
+      "num": 13,
+      "frame": 7,
+      "name": "シェイクユアハート",
+      "sire": "ハーツクライ",
+      "bms": "Sri Pekan",
+      "dam": "ルンバロッカ",
+      "jockey": "古川吉洋",
+      "age": "6",
+      "sex": "牡",
+      "pop": 10,
+      "tan": 64.9,
+      "style": "差し",
+      "paceType": "HIGH",
+      "gradeWins": [
+        {
+          "race": "金鯱賞",
+          "grade": "G2",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0,
+          "dist": 2000
+        },
+        {
+          "race": "中日新聞杯",
+          "grade": "G3",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.2,
+          "dist": 2000
+        }
+      ],
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        4,
+        1,
+        2
+      ],
+      "prevRaceName": "金鯱賞",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 2000,
+      "training": ""
+    },
+    {
+      "num": 14,
+      "frame": 7,
+      "name": "スティンガーグラス",
+      "sire": "キズナ",
+      "bms": "Not For Sale",
+      "dam": "ライフフォーセール",
+      "jockey": "岩田望来",
+      "age": "5",
+      "sex": "牡",
+      "pop": 16,
+      "tan": 192.0,
+      "style": "先行",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "ダイヤモンドS",
+          "grade": "G3",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.2,
+          "dist": 3400
+        }
+      ],
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        2,
+        1,
+        11
+      ],
+      "prevRaceName": "ダイヤモンドS",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 3400,
+      "training": ""
+    },
+    {
+      "num": 15,
+      "frame": 7,
+      "name": "マイユニバース",
+      "sire": "レイデオロ",
+      "bms": "ネオユニヴァース",
+      "dam": "チャーチクワイア",
+      "jockey": "横山典弘",
+      "age": "4",
+      "sex": "牡",
+      "pop": 6,
+      "tan": 17.1,
+      "style": "差し",
+      "paceType": "HIGH",
+      "gradeWins": [
+        {
+          "race": "日経賞",
+          "grade": "G2",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.2,
+          "dist": 2500
+        }
+      ],
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        1,
+        2,
+        13
+      ],
+      "prevRaceName": "日経賞",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 2500,
+      "training": ""
+    },
+    {
+      "num": 16,
+      "frame": 8,
+      "name": "メイショウタバル",
+      "sire": "ゴールドシップ",
+      "bms": "フレンチデピュティ",
+      "dam": "メイショウツバクロ",
+      "jockey": "武豊",
+      "age": "5",
+      "sex": "牡",
+      "pop": 2,
+      "tan": 4.8,
+      "style": "逃げ",
+      "paceType": "HIGH",
+      "gradeWins": [
+        {
+          "race": "宝塚記念",
+          "grade": "G1",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.5,
+          "dist": 2200
+        },
+        {
+          "race": "大阪杯",
+          "grade": "G1",
+          "place": 2,
+          "year": 2026,
+          "margin": 0.1,
+          "dist": 2000
+        },
+        {
+          "race": "神戸新聞杯",
+          "grade": "G2",
+          "place": 1,
+          "year": 2024,
+          "margin": 0.0,
+          "dist": 2400
+        }
+      ],
+      "prevRank": 2,
+      "pastRanks": [
+        2,
+        13,
+        6,
+        1
+      ],
+      "prevRaceName": "大阪杯",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 2000,
+      "training": ""
+    },
+    {
+      "num": 17,
+      "frame": 8,
+      "name": "レガレイラ",
+      "sire": "スワーヴリチャード",
+      "bms": "ハービンジャー",
+      "dam": "ロカ",
+      "jockey": "C.ルメール",
+      "age": "5",
+      "sex": "牝",
+      "pop": 3,
+      "tan": 5.5,
+      "style": "追込",
+      "paceType": "HIGH",
+      "gradeWins": [
+        {
+          "race": "有馬記念",
+          "grade": "G1",
+          "place": 1,
+          "year": 2024,
+          "margin": 0.0,
+          "dist": 2500
+        },
+        {
+          "race": "エリザベス女王杯",
+          "grade": "G1",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.3,
+          "dist": 2200
+        },
+        {
+          "race": "オールカマー",
+          "grade": "G2",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.2,
+          "dist": 2200
+        }
+      ],
+      "prevRank": 4,
+      "pastRanks": [
+        4,
+        1,
+        1,
+        11
+      ],
+      "prevRaceName": "有馬記念",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 2500,
+      "training": ""
+    },
+    {
+      "num": 18,
+      "frame": 8,
+      "name": "ミステリーウェイ",
+      "sire": "ジャスタウェイ",
+      "bms": "High Chaparral",
+      "dam": "ジプシーハイウェイ",
+      "jockey": "松本大輝",
+      "age": "8",
+      "sex": "せん",
+      "pop": 13,
+      "tan": 135.9,
+      "style": "逃げ",
+      "paceType": "HIGH",
+      "gradeWins": [
+        {
+          "race": "アルゼンチン共和国杯",
+          "grade": "G2",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.1,
+          "dist": 2500
+        }
+      ],
+      "prevRank": 8,
+      "pastRanks": [
+        8,
+        14,
+        16,
+        1
+      ],
+      "prevRaceName": "天皇賞（春）",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 3200,
+      "training": ""
+    }
+  ],
+  "trends": {
+    "popularity": [
+      {
+        "label": "1番人気",
+        "val": "【2.3.0.5】複勝率50%。勝率20%",
+        "hl": true
+      },
+      {
+        "label": "2番人気",
+        "val": "【2.0.3.5】複勝率50%",
+        "hl": true
+      },
+      {
+        "label": "3番人気",
+        "val": "【3.0.0.7】最多3勝。勝率30%",
+        "hl": true
+      },
+      {
+        "label": "4-5番人気",
+        "val": "【0.2.3.15】勝利なし"
+      },
+      {
+        "label": "6-9番人気",
+        "val": "【3.3.1.33】3勝。伏兵の台頭あり",
+        "hl": true
+      },
+      {
+        "label": "10番人気以下",
+        "val": "【0.2.3.56】2-3着に5回。ヒモ穴に注意",
+        "hl": true
+      }
+    ],
+    "popTip": "1-3番人気が7勝と上位中心だが、7-8番人気が3勝。さらに2-3着に10番人気以下が5回も入っており、ヒモは下位人気まで吟味が必要。",
+    "draw": [
+      {
+        "label": "1枠",
+        "val": "【0.3.1.10】3着内率28.6%でトップ。勝ち切れないが堅実",
+        "hl": true
+      },
+      {
+        "label": "2-3枠",
+        "val": "【3.2.2.23】3勝。好走多い"
+      },
+      {
+        "label": "4-7枠",
+        "val": "【2.4.5.60】平均的"
+      },
+      {
+        "label": "8枠",
+        "val": "【4.0.1.18】最多4勝。勝率17.4%",
+        "hl": true
+      }
+    ],
+    "drawTip": "8枠が最多4勝（勝率17.4%）、1枠が3着内率トップ（28.6%）。8枠に+2pt、1枠に+1pt設定。メイショウタバル・レガレイラが8枠、ダノンデサイル・ミュージアムマイルが1枠。",
+    "style": [
+      {
+        "label": "逃げ",
+        "val": "昨年メイショウタバルが逃げ切り。阪神内回りは前残りあり → メイショウタバル、ミステリーウェイ、ファミリータイム"
+      },
+      {
+        "label": "先行",
+        "val": "内回り2200mで最も有利な脚質 → クロワデュノール、コスモキュランダ、ミクニインスパイア",
+        "hl": true
+      },
+      {
+        "label": "差し",
+        "val": "中団からの立ち回り力が必要 → ダノンデサイル、マイユニバース、シェイクユアハート",
+        "hl": true
+      },
+      {
+        "label": "追込",
+        "val": "届きにくい。ミュージアムマイルは有馬で追込み勝ちの実力 → レガレイラ、ビザンチンドリーム"
+      }
+    ],
+    "styleTip": "阪神内回り2200mは先行有利。スタート後すぐ坂、最後も急坂のタフなコース。昨年は逃げのメイショウタバルが押し切り。",
+    "blood": [
+      {
+        "label": "キタサンブラック",
+        "val": "クロワデュノールの父。父は17年宝塚9着だが産駒は阪神適性高い"
+      },
+      {
+        "label": "ゴールドシップ",
+        "val": "メイショウタバル・マイネルエンペラーの父。自身宝塚連覇の血。阪神内回り鬼",
+        "hl": true
+      },
+      {
+        "label": "エピファネイア",
+        "val": "ダノンデサイル・ビザンチンドリームの父。スタミナ型"
+      },
+      {
+        "label": "ハーツクライ系",
+        "val": "シェイクユアハートなど。瞬発力より持続力勝負向き"
+      },
+      {
+        "label": "スワーヴリチャード",
+        "val": "レガレイラの父。自身は大阪杯勝ち馬で阪神適性あり"
+      }
+    ],
+    "bloodTip": "ゴールドシップ産駒は父自身が宝塚記念連覇（13,14年）の血統で、阪神内回りのタフな展開に強い。メイショウタバルは昨年同レース勝ち＝父子制覇済み。",
+    "rotation": [
+      {
+        "label": "前走G1",
+        "val": "【5.6.8.58】3着内馬25/30頭が国内外G1組。中心ローテ",
+        "hl": true,
+        "horses": "クロワデュノール（天皇賞春1着）、メイショウタバル（大阪杯2着）、ダノンデサイル（大阪杯3着）、ミュージアムマイル（有馬記念1着）、レガレイラ（有馬記念4着）、タガノデュード・シンエンペラー・ミステリーウェイ（天皇賞春）"
+      },
+      {
+        "label": "前走海外G1",
+        "val": "【4.1.1.20】勝率15.4%。好走率高い",
+        "hl": true,
+        "horses": "ビザンチンドリーム（アミールT 7着）、ジューンテイク（QE2世C 8着）"
+      },
+      {
+        "label": "前走G2",
+        "val": "【1.0.1.18】苦戦傾向。前走3着以下は【0.0.0.29】",
+        "horses": "マイユニバース（日経賞1着）、ミクニインスパイア（日経賞2着）、シェイクユアハート（金鯱賞1着）、コスモキュランダ（日経賞7着⚠️）、ファミリータイム（阪神大賞典9着⚠️）、マイネルエンペラー（阪神大賞典5着⚠️）"
+      },
+      {
+        "label": "前走G3",
+        "val": "【0.2.0.21】勝利なし",
+        "horses": "スティンガーグラス（ダイヤモンドS1着）、シュガークン（新潟大賞典15着⚠️）"
+      }
+    ],
+    "rotationTip": "3着以内馬の25/30頭が前走国内外G1。前走G2/G3で3着以下に敗れた馬は【0.0.0.29】と全滅データ。コスモキュランダ・ファミリータイム・マイネルエンペラー・シュガークンは厳しい。",
+    "rotationHorses": [
+      {
+        "name": "クロワデュノール",
+        "label": "前走天皇賞（春）1着・春古馬三冠挑戦"
+      },
+      {
+        "name": "メイショウタバル",
+        "label": "前走大阪杯2着・連覇狙い"
+      },
+      {
+        "name": "ミュージアムマイル",
+        "label": "前走有馬記念1着"
+      },
+      {
+        "name": "レガレイラ",
+        "label": "前走有馬記念4着"
+      }
+    ],
+    "pickup": {
+      "title": "重要データ×出走馬マッチング",
+      "horses": [
+        {
+          "name": "クロワデュノール",
+          "note": "📊「前走1-2着の4歳馬」複勝率66.7%に該当。大阪杯→天皇賞春→宝塚の春古馬三冠挑戦（達成すれば史上初）。父キタサンブラックは17年同三冠挑戦で宝塚9着に散った。G1×4勝の実績は断然。過去4走すべてG1かつ勝利あり＝優勝馬の必須条件もクリア。"
+        },
+        {
+          "name": "メイショウタバル",
+          "note": "🔁リピーター: 昨年宝塚記念1着＋「前走2着の5歳馬」好走データに該当。父ゴールドシップも宝塚連覇しており父子連覇＋自身連覇のロマン。武豊×逃げは安田記念でワールズエンドが2着に粘った再現に注意。8枠は最多4勝の好枠。"
+        },
+        {
+          "name": "ミュージアムマイル",
+          "note": "📊「前走1-2着の4歳馬」複勝率66.7%に該当。有馬記念1着の実績。ただし追込脚質は阪神内回りで届きにくい点が懸念。1枠は3着内率トップ。"
+        },
+        {
+          "name": "マイユニバース",
+          "note": "📊「前走1-2着の4歳馬」複勝率66.7%に該当。日経賞1着から上昇中。横山典弘の一発に注意。"
+        },
+        {
+          "name": "ミクニインスパイア",
+          "note": "📊「前走1-2着の4歳馬」複勝率66.7%に該当。日経賞2着。4連勝中の上がり馬で勢いは本物。"
+        },
+        {
+          "name": "レガレイラ",
+          "note": "⚠️「前走3-5着」は前走G1なら好走例あり（該当）。有馬記念1着・エリザベス女王杯1着のG1×2勝馬。ただし追込×阪神内回りと、牝馬56kgでも昨年宝塚11着の適性不安。"
+        },
+        {
+          "name": "ダノンデサイル",
+          "note": "⚠️「前走3-5着」前走G1で好走例あり（該当）。ダービー馬でG1実績は十分だが、5歳の前走3-5着は勝率12.5%とやや苦戦データ。"
+        },
+        {
+          "name": "コスモキュランダ",
+          "note": "🔴前走G2で7着＝【0.0.0.29】の全滅データに該当。有馬記念2着の実績はあるが、データ上は消し。"
+        },
+        {
+          "name": "ミステリーウェイ",
+          "note": "🔴8歳＝6歳以上は過去10年勝利なし（複勝率3.7%）。"
+        }
+      ]
+    }
+  },
+  "result": null,
+  "review": null,
+  "verification": null
+}
