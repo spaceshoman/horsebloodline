@@ -217,6 +217,91 @@ const surfBadge=k=><Badge variant={k==="TURF"?"turf":k==="DIRT"?"dirt":"both"}>{
 const courseBadge=k=><Badge variant={k==="RIGHT"?"right":k==="LEFT"?"left":"bothC"}>{COURSE[k]}</Badge>;
 const growthBadge=k=><Badge variant={k==="EARLY"?"early":k==="LATE"?"late":"normal"}>{GROWTH[k]}</Badge>;
 
+/* ===== Race Animation ===== */
+const FRAME_COLORS={1:{bg:"#fff",text:"#333",b:"#999"},2:{bg:"#333",text:"#fff",b:"#333"},3:{bg:"#e03c3c",text:"#fff",b:"#e03c3c"},4:{bg:"#2563c4",text:"#fff",b:"#2563c4"},5:{bg:"#e8c832",text:"#333",b:"#d4b520"},6:{bg:"#3da53d",text:"#fff",b:"#3da53d"},7:{bg:"#e8842e",text:"#fff",b:"#e8842e"},8:{bg:"#e87aa4",text:"#fff",b:"#e87aa4"}};
+const RaceAnimation=({horses,raceName})=>{
+  const[pos,setPos]=useState(null);
+  const[finished,setFinished]=useState([]);
+  const[running,setRunning]=useState(false);
+  const rafRef=useRef(null);
+  const stateRef=useRef(null);
+  useEffect(()=>()=>{if(rafRef.current)cancelAnimationFrame(rafRef.current);},[]);
+  const start=()=>{
+    if(rafRef.current)cancelAnimationFrame(rafRef.current);
+    const maxScore=Math.max(...horses.map(h=>h.score||50));
+    const minScore=Math.min(...horses.map(h=>h.score||50));
+    const range=Math.max(1,maxScore-minScore);
+    const st=horses.map(h=>({...h,x:0,fin:false,mom:0}));
+    stateRef.current={st,finArr:[]};
+    setFinished([]);setRunning(true);
+    const tick=()=>{
+      const{st,finArr}=stateRef.current;
+      let allDone=true;
+      st.forEach(h=>{
+        if(h.fin)return;
+        allDone=false;
+        // スコア比例の基礎速度 + 慣性付きランダム（展開のアヤ）
+        const norm=((h.score||50)-minScore)/range; // 0-1
+        const base=0.18+norm*0.10;
+        h.mom=h.mom*0.9+(Math.random()-0.5)*0.10;
+        h.x+=Math.max(0.05,base+h.mom);
+        if(h.x>=100){h.x=100;h.fin=true;finArr.push({num:h.num,name:h.name,frame:h.frame});}
+      });
+      setPos(st.map(h=>({num:h.num,name:h.name,x:h.x,fin:h.fin,frame:h.frame})));
+      setFinished([...finArr]);
+      if(!allDone)rafRef.current=requestAnimationFrame(tick);
+      else setRunning(false);
+    };
+    rafRef.current=requestAnimationFrame(tick);
+  };
+  const laneH=20;
+  return(
+    <div style={{marginTop:16,background:"linear-gradient(180deg,rgba(61,165,61,0.08),rgba(61,165,61,0.03))",border:"2px solid rgba(61,165,61,0.35)",borderRadius:12,padding:14}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+        <div style={{fontFamily:"Bebas Neue,sans-serif",fontSize:17,fontWeight:400,color:"#3da53d",letterSpacing:"2px"}}>レースアニメーション</div>
+        <button onClick={start} disabled={running} style={{padding:"6px 14px",borderRadius:8,border:"none",background:running?"#999":"#3da53d",color:"#fff",fontSize:11,fontWeight:600,cursor:running?"default":"pointer"}}>{running?"レース中…":"🏁 発走！"}</button>
+      </div>
+      <div style={{fontSize:9,color:"rgba(61,165,61,0.7)",marginBottom:10}}>血統スコアをベースに展開のアヤを加えた仮想レース。{raceName||""}</div>
+      {/* コース */}
+      <div style={{position:"relative",background:"linear-gradient(180deg,#2d6b2d,#235823)",borderRadius:8,padding:"8px 4px",overflow:"hidden"}}>
+        {/* ゴール線 */}
+        <div style={{position:"absolute",right:28,top:0,bottom:0,width:3,background:"repeating-linear-gradient(180deg,#fff 0 6px,#d33 6px 12px)",zIndex:1}}/>
+        <div style={{position:"absolute",right:6,top:"50%",transform:"translateY(-50%)",fontSize:10,color:"#fff",fontWeight:700,writingMode:"vertical-rl",letterSpacing:"2px",opacity:0.7}}>GOAL</div>
+        {(pos||horses.map(h=>({num:h.num,name:h.name,x:0,fin:false,frame:h.frame}))).map((h)=>{
+          const fc=FRAME_COLORS[h.frame]||FRAME_COLORS[1];
+          return(
+            <div key={h.num} style={{position:"relative",height:laneH,borderBottom:"1px dashed rgba(255,255,255,0.12)"}}>
+              <div style={{position:"absolute",left:`calc(${Math.min(h.x,100)*0.85}% )`,top:1,display:"flex",alignItems:"center",gap:2,transition:"none",zIndex:2}}>
+                <span style={{width:15,height:15,borderRadius:3,background:fc.bg,color:fc.text,border:`1px solid ${fc.b}`,fontSize:8,fontWeight:700,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{h.num}</span>
+                <span style={{fontSize:12,transform:"scaleX(-1)",display:"inline-block"}}>🏇</span>
+                {h.fin&&<span style={{fontSize:8,color:"#ffd700",fontWeight:700}}>✓</span>}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      {/* 着順速報 */}
+      {finished.length>0&&(
+        <div style={{marginTop:10,padding:"8px 10px",background:"rgba(0,0,0,0.15)",borderRadius:8}}>
+          <div style={{fontSize:10,fontWeight:700,color:"#3da53d",marginBottom:4}}>🏆 着順速報</div>
+          <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
+            {finished.slice(0,5).map((f,i)=>{
+              const fc=FRAME_COLORS[f.frame]||FRAME_COLORS[1];
+              return(
+                <div key={f.num} style={{display:"flex",alignItems:"center",gap:3,padding:"3px 8px",background:i===0?"rgba(255,215,0,0.15)":"rgba(255,255,255,0.05)",borderRadius:8,border:i===0?"1px solid rgba(255,215,0,0.4)":"1px solid transparent"}}>
+                  <span style={{fontSize:11,fontWeight:700,color:i===0?"#ffd700":i<3?"#3da53d":"var(--color-text-tertiary)"}}>{i+1}着</span>
+                  <span style={{width:14,height:14,borderRadius:3,background:fc.bg,color:fc.text,fontSize:8,fontWeight:700,display:"flex",alignItems:"center",justifyContent:"center"}}>{f.num}</span>
+                  <span style={{fontSize:10,fontWeight:i===0?700:400,color:"var(--color-text-primary)"}}>{f.name}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const Field=({label,children})=>(<div style={{display:"flex",flexDirection:"column",gap:3}}><label style={{fontSize:11,color:"var(--color-text-secondary)",fontWeight:500}}>{label}</label>{children}</div>);
 const inputStyle={padding:"6px 8px",borderRadius:8,border:"1px solid var(--color-border-tertiary)",background:"var(--color-background-primary)",color:"var(--color-text-primary)",fontSize:12};
 
@@ -1441,6 +1526,7 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
     else setSection("overview");
   },[raceId,hasResult,hasRunners]);
   const [bloodResults,setBloodResults]=useState(null);
+  const [simResults,setSimResults]=useState(null);
   const [selectedCond,setSelectedCond]=useState(null);
   const [diagView,setDiagView]=useState("list"); // "list" or "diag"
   // sectionsはhasResult/hasVerifyが変わるたびに再計算
@@ -2450,6 +2536,111 @@ ${bloodResults.length>=3?`
                   </div>
                 );
               })()}
+              {/* 事前計算シミュレーション結果（JSONに格納済み） */}
+              {race.simulation&&(
+                <div style={{marginTop:16,background:"rgba(200,168,75,0.04)",border:"2px solid rgba(200,168,75,0.3)",borderRadius:12,padding:14}}>
+                  <div style={{fontFamily:"Bebas Neue,sans-serif",fontSize:17,fontWeight:400,color:"#c8a84b",letterSpacing:"2px",marginBottom:4}}>🎲 レースシミュレーション（{race.simulation.n}回）</div>
+                  <div style={{fontSize:9,color:"rgba(200,168,75,0.6)",marginBottom:10}}>{race.simulation.method}{race.simulation.note?" / "+race.simulation.note:""}</div>
+                  <div style={{display:"grid",gridTemplateColumns:"24px 1fr 50px 50px 50px 44px",gap:4,padding:"4px 0",borderBottom:"1px solid rgba(200,168,75,0.3)",fontSize:8,fontWeight:700,color:"#c8a84b"}}>
+                    <span></span><span>馬名</span><span style={{textAlign:"right"}}>勝率</span><span style={{textAlign:"right"}}>連対率</span><span style={{textAlign:"right"}}>複勝率</span><span style={{textAlign:"right"}}>平均着</span>
+                  </div>
+                  {race.simulation.results.map((s,i)=>{
+                    return(
+                      <div key={s.num} style={{display:"grid",gridTemplateColumns:"24px 1fr 50px 50px 50px 44px",gap:4,padding:"5px 0",borderBottom:"0.5px solid var(--color-border-tertiary)",alignItems:"center"}}>
+                        <span style={{fontSize:10,fontWeight:i<3?700:400,color:i===0?"#c8a84b":i<3?"#1e5fa8":"var(--color-text-tertiary)",textAlign:"center"}}>{i+1}</span>
+                        <div style={{minWidth:0}}>
+                          <div style={{display:"flex",alignItems:"center",gap:4}}>
+                            <span style={{fontSize:10,fontWeight:i<3?600:400,color:"var(--color-text-primary)",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>({s.num}){s.name}</span>
+                            <span style={{fontSize:8,color:"var(--color-text-tertiary)"}}>{s.pop}人気</span>
+                            {s.style&&<span style={{fontSize:7,padding:"1px 4px",borderRadius:4,background:s.style==="先行"?"#EAF3DE":s.style==="逃げ"?"#FCEBEB":s.style==="差し"?"#E6F1FB":"#FBEAF0",color:s.style==="先行"?"#27500A":s.style==="逃げ"?"#791F1F":s.style==="差し"?"#0C447C":"#72243E",fontWeight:600}}>{s.style}</span>}
+                            {s.ev>=1.2&&<span style={{fontSize:7,padding:"1px 4px",borderRadius:6,background:"rgba(212,148,26,0.2)",color:"#d4941a",fontWeight:700,flexShrink:0}}>💰妙味{s.ev.toFixed(1)}</span>}
+                          </div>
+                          <div style={{height:4,borderRadius:2,background:"rgba(255,255,255,0.08)",overflow:"hidden",marginTop:2}}>
+                            <div style={{width:`${s.place3Pct}%`,height:"100%",background:i===0?"linear-gradient(90deg,#c8a84b,#e8c86b)":"linear-gradient(90deg,#1e5fa8,#4a90d9)",borderRadius:2}}/>
+                          </div>
+                        </div>
+                        <span style={{fontSize:10,fontWeight:700,textAlign:"right",color:s.winPct>=20?"#c8a84b":s.winPct>=10?"#1e5fa8":"var(--color-text-primary)"}}>{s.winPct}%</span>
+                        <span style={{fontSize:9,textAlign:"right",color:"var(--color-text-secondary)"}}>{s.place2Pct}%</span>
+                        <span style={{fontSize:9,textAlign:"right",color:"var(--color-text-secondary)"}}>{s.place3Pct}%</span>
+                        <span style={{fontSize:9,textAlign:"right",color:"var(--color-text-tertiary)"}}>{s.avgRank}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+              {/* リアルタイムシミュレーション */}
+              {bloodResults.length>=5&&(
+                <div style={{marginTop:16,background:"rgba(13,31,60,0.04)",border:"2px solid rgba(30,95,168,0.3)",borderRadius:12,padding:14}}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+                    <div style={{fontFamily:"Bebas Neue,sans-serif",fontSize:17,fontWeight:400,color:"#1e5fa8",letterSpacing:"2px"}}>レースシミュレーション</div>
+                    <button onClick={()=>{
+                      // モンテカルロ100回シミュレーション
+                      const N=100;
+                      const gauss=()=>{ // Box-Muller法による正規乱数
+                        let u=0,v=0;
+                        while(u===0)u=Math.random();
+                        while(v===0)v=Math.random();
+                        return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);
+                      };
+                      const stats=bloodResults.map(r=>({num:r.num,name:r.name,score:r.score,pop:r.pop,tan:r.tan,style:r.style,win:0,place2:0,place3:0,sumRank:0}));
+                      for(let race=0;race<N;race++){
+                        // 各馬のパフォーマンス = スコア + 展開運(σ=8)
+                        const perf=stats.map(s=>({s,p:s.score+gauss()*8}));
+                        perf.sort((a,b)=>b.p-a.p);
+                        perf.forEach((e,rank)=>{
+                          e.s.sumRank+=rank+1;
+                          if(rank===0)e.s.win++;
+                          if(rank<=1)e.s.place2++;
+                          if(rank<=2)e.s.place3++;
+                        });
+                      }
+                      stats.sort((a,b)=>b.win-a.win||b.place3-a.place3);
+                      setSimResults({n:N,stats,ranAt:new Date().toLocaleTimeString()});
+                    }} style={{padding:"6px 14px",borderRadius:8,border:"none",background:"#1e5fa8",color:"#fff",fontSize:11,fontWeight:600,cursor:"pointer"}}>🎲 100回走らせる</button>
+                  </div>
+                  <div style={{fontSize:9,color:"rgba(30,95,168,0.6)",marginBottom:10}}>血統スコアに展開運（正規乱数σ=8）を加えた100回のモンテカルロ・シミュレーション</div>
+                  {simResults&&(
+                    <div>
+                      <div style={{display:"grid",gridTemplateColumns:"24px 1fr 50px 50px 50px 44px",gap:4,padding:"4px 0",borderBottom:"1px solid rgba(30,95,168,0.3)",fontSize:8,fontWeight:700,color:"#1e5fa8"}}>
+                        <span></span><span>馬名</span><span style={{textAlign:"right"}}>勝率</span><span style={{textAlign:"right"}}>連対率</span><span style={{textAlign:"right"}}>複勝率</span><span style={{textAlign:"right"}}>平均着</span>
+                      </div>
+                      {simResults.stats.map((s,i)=>{
+                        const winPct=Math.round(s.win/simResults.n*100);
+                        const p2Pct=Math.round(s.place2/simResults.n*100);
+                        const p3Pct=Math.round(s.place3/simResults.n*100);
+                        const avgRank=(s.sumRank/simResults.n).toFixed(1);
+                        // 期待値判定: 勝率% × 単勝オッズ / 100 > 1 なら妙味あり
+                        const ev=s.tan?(winPct*s.tan/100):0;
+                        return(
+                          <div key={s.num} style={{display:"grid",gridTemplateColumns:"24px 1fr 50px 50px 50px 44px",gap:4,padding:"5px 0",borderBottom:"0.5px solid var(--color-border-tertiary)",alignItems:"center"}}>
+                            <span style={{fontSize:10,fontWeight:i<3?700:400,color:i===0?"#c8a84b":i<3?"#1e5fa8":"var(--color-text-tertiary)",textAlign:"center"}}>{i+1}</span>
+                            <div style={{minWidth:0}}>
+                              <div style={{display:"flex",alignItems:"center",gap:4}}>
+                                <span style={{fontSize:10,fontWeight:i<3?600:400,color:"var(--color-text-primary)",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>({s.num}){s.name}</span>
+                                {ev>=1.2&&<span style={{fontSize:7,padding:"1px 4px",borderRadius:6,background:"rgba(212,148,26,0.2)",color:"#d4941a",fontWeight:700,flexShrink:0}}>妙味</span>}
+                              </div>
+                              <div style={{height:4,borderRadius:2,background:"rgba(255,255,255,0.08)",overflow:"hidden",marginTop:2}}>
+                                <div style={{width:`${p3Pct}%`,height:"100%",background:i===0?"linear-gradient(90deg,#c8a84b,#e8c86b)":"linear-gradient(90deg,#1e5fa8,#4a90d9)",borderRadius:2}}/>
+                              </div>
+                            </div>
+                            <span style={{fontSize:10,fontWeight:700,textAlign:"right",color:winPct>=20?"#c8a84b":"var(--color-text-primary)"}}>{winPct}%</span>
+                            <span style={{fontSize:9,textAlign:"right",color:"var(--color-text-secondary)"}}>{p2Pct}%</span>
+                            <span style={{fontSize:9,textAlign:"right",color:"var(--color-text-secondary)"}}>{p3Pct}%</span>
+                            <span style={{fontSize:9,textAlign:"right",color:"var(--color-text-tertiary)"}}>{avgRank}</span>
+                          </div>
+                        );
+                      })}
+                      <div style={{fontSize:8,color:"var(--color-text-tertiary)",marginTop:8,lineHeight:1.5}}>
+                        ※「妙味」= シミュレーション勝率×単勝オッズの期待値が1.2以上の馬。実行 {simResults.ranAt} / 再実行で結果は変わります
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+              {/* レースアニメーション */}
+              {bloodResults.length>=5&&(
+                <RaceAnimation horses={bloodResults.map(r=>({num:r.num,name:r.name,score:r.score,frame:r.frame}))} raceName={race.race_name||race.name}/>
+              )}
             </div>
           )}
           {!bloodResults&&diagView==="diag"&&(
