@@ -1,4 +1,4 @@
-const CACHE_NAME = 'keibakun-v4';
+const CACHE_NAME = 'keibakun-v7';
 const BASE = '/horsebloodline';
 
 self.addEventListener('install', () => {
