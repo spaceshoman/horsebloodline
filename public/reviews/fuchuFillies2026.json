@@ -1,0 +1,929 @@
+{
+  "id": "fuchuFillies2026",
+  "race_id": "",
+  "race_name": "第74回 府中牝馬ステークス",
+  "date": "2026/6/21",
+  "venue": "東京",
+  "course": "芝1800m",
+  "expectedPace": "BOTH",
+  "trackCond": "良",
+  "frameBonus": {},
+  "runners": [
+    {
+      "num": 1,
+      "frame": 1,
+      "name": "マカナ",
+      "sire": "ゴールドシップ",
+      "bms": "タニノギムレット",
+      "dam": "シルクリバー",
+      "jockey": "松岡正海",
+      "age": "4",
+      "sex": "牝",
+      "pop": 7,
+      "tan": 16.2,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [],
+      "prevRank": 12,
+      "pastRanks": [
+        12,
+        1,
+        1,
+        1
+      ],
+      "prevRaceName": "シドニーT",
+      "prevRaceGrade": "3勝",
+      "prevRaceDist": 2000,
+      "training": ""
+    },
+    {
+      "num": 2,
+      "frame": 1,
+      "name": "ウイントワイライト",
+      "sire": "レイデオロ",
+      "bms": "ダイワメジャー",
+      "dam": "ダイワベスパー",
+      "jockey": "横山典弘",
+      "age": "4",
+      "sex": "牝",
+      "pop": 8,
+      "tan": 18.2,
+      "style": "追込",
+      "paceType": "HIGH",
+      "gradeWins": [],
+      "prevRank": 16,
+      "pastRanks": [
+        16,
+        7,
+        1,
+        12
+      ],
+      "prevRaceName": "京王杯SC",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1400,
+      "training": ""
+    },
+    {
+      "num": 3,
+      "frame": 2,
+      "name": "ブラウンラチェット",
+      "sire": "キズナ",
+      "bms": "Congrats",
+      "dam": "フォエヴァーダーリング",
+      "jockey": "丸山元気",
+      "age": "4",
+      "sex": "牝",
+      "pop": 14,
+      "tan": 85.6,
+      "style": "先行",
+      "paceType": "SLOW",
+      "gradeWins": [],
+      "prevRank": 11,
+      "pastRanks": [
+        11,
+        13,
+        18,
+        7
+      ],
+      "prevRaceName": "福島牝馬S",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 1800,
+      "training": ""
+    },
+    {
+      "num": 4,
+      "frame": 2,
+      "name": "ミアネーロ",
+      "sire": "ドゥラメンテ",
+      "bms": "Pulpit",
+      "dam": "ミスエーニョ",
+      "jockey": "大野拓弥",
+      "age": "5",
+      "sex": "牝",
+      "pop": 15,
+      "tan": 92.5,
+      "style": "追込",
+      "paceType": "HIGH",
+      "gradeWins": [],
+      "prevRank": 15,
+      "pastRanks": [
+        15,
+        4,
+        11,
+        0
+      ],
+      "prevRaceName": "総武S",
+      "prevRaceGrade": "OP",
+      "prevRaceDist": 1800,
+      "training": ""
+    },
+    {
+      "num": 5,
+      "frame": 3,
+      "name": "エストゥペンダ",
+      "sire": "サートゥルナーリア",
+      "bms": "Offlee Wild",
+      "dam": "エストレチャダ",
+      "jockey": "荻野極",
+      "age": "4",
+      "sex": "牝",
+      "pop": 4,
+      "tan": 7.6,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [],
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        5,
+        1,
+        5
+      ],
+      "prevRaceName": "弥彦S",
+      "prevRaceGrade": "3勝",
+      "prevRaceDist": 1800,
+      "training": ""
+    },
+    {
+      "num": 6,
+      "frame": 3,
+      "name": "ヴァルキリーバース",
+      "sire": "エピファネイア",
+      "bms": "ハーツクライ",
+      "dam": "グロリアーナ",
+      "jockey": "C.ルメール",
+      "age": "4",
+      "sex": "牝",
+      "pop": 1,
+      "tan": 3.0,
+      "style": "先行",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "東風S",
+          "grade": "OP",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0,
+          "dist": 1600
+        },
+        {
+          "race": "フローラS",
+          "grade": "G2",
+          "place": 2,
+          "year": 2025,
+          "margin": 0.2,
+          "dist": 2000
+        }
+      ],
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "prevRaceName": "東風S",
+      "prevRaceGrade": "OP",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 7,
+      "frame": 4,
+      "name": "セキトバイースト",
+      "sire": "デクラレーションオブウォー",
+      "bms": "Footstepsinthesand",
+      "dam": "ベアフットレディ",
+      "jockey": "浜中俊",
+      "age": "5",
+      "sex": "牝",
+      "pop": 5,
+      "tan": 10.7,
+      "style": "先行",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "府中牝馬S",
+          "grade": "G3",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.0,
+          "dist": 1800
+        },
+        {
+          "race": "都大路S",
+          "grade": "OP",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.0,
+          "dist": 1800
+        }
+      ],
+      "prevRank": 7,
+      "pastRanks": [
+        7,
+        11,
+        6,
+        10
+      ],
+      "prevRaceName": "新潟大賞典",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 2000,
+      "training": ""
+    },
+    {
+      "num": 8,
+      "frame": 4,
+      "name": "ニシノティアモ",
+      "sire": "ドゥラメンテ",
+      "bms": "コンデュイット",
+      "dam": "ニシノアモーレ",
+      "jockey": "津村明秀",
+      "age": "5",
+      "sex": "牝",
+      "pop": 2,
+      "tan": 6.5,
+      "style": "先行",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "福島記念",
+          "grade": "G3",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.2,
+          "dist": 2000
+        }
+      ],
+      "prevRank": 6,
+      "pastRanks": [
+        6,
+        5,
+        1,
+        1
+      ],
+      "prevRaceName": "ヴィクトリアマイル",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 9,
+      "frame": 5,
+      "name": "テリオスララ",
+      "sire": "シスキン",
+      "bms": "マンハッタンカフェ",
+      "dam": "シャンドランジュ",
+      "jockey": "F.ゴンサルベス",
+      "age": "4",
+      "sex": "牝",
+      "pop": 12,
+      "tan": 30.0,
+      "style": "逃げ",
+      "paceType": "HIGH",
+      "gradeWins": [],
+      "prevRank": 10,
+      "pastRanks": [
+        10,
+        1,
+        10,
+        7
+      ],
+      "prevRaceName": "大阪城S",
+      "prevRaceGrade": "OP",
+      "prevRaceDist": 1800,
+      "training": ""
+    },
+    {
+      "num": 10,
+      "frame": 5,
+      "name": "ホールネス",
+      "sire": "Lope de Vega",
+      "bms": "Golan",
+      "dam": "Missunited",
+      "jockey": "三浦皇成",
+      "age": "6",
+      "sex": "牝",
+      "pop": 11,
+      "tan": 29.4,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "エリザベス女王杯",
+          "grade": "G1",
+          "place": 3,
+          "year": 2024,
+          "margin": 0.5,
+          "dist": 2200
+        }
+      ],
+      "prevRank": 8,
+      "pastRanks": [
+        8,
+        9,
+        14,
+        3
+      ],
+      "prevRaceName": "新潟大賞典",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 2000,
+      "training": ""
+    },
+    {
+      "num": 11,
+      "frame": 6,
+      "name": "テレサ",
+      "sire": "アドマイヤマーズ",
+      "bms": "Nathaniel",
+      "dam": "タムニア",
+      "jockey": "戸崎圭太",
+      "age": "4",
+      "sex": "牝",
+      "pop": 10,
+      "tan": 26.1,
+      "style": "先行",
+      "paceType": "SLOW",
+      "gradeWins": [],
+      "prevRank": 5,
+      "pastRanks": [
+        5,
+        4,
+        14,
+        2
+      ],
+      "prevRaceName": "福島牝馬S",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 1800,
+      "training": ""
+    },
+    {
+      "num": 12,
+      "frame": 6,
+      "name": "コガネノソラ",
+      "sire": "ゴールドシップ",
+      "bms": "ロージズインメイ",
+      "dam": "マイネヒメル",
+      "jockey": "菊沢一樹",
+      "age": "5",
+      "sex": "牝",
+      "pop": 3,
+      "tan": 6.8,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "福島牝馬S",
+          "grade": "G3",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.2,
+          "dist": 1800
+        }
+      ],
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        11,
+        3,
+        8
+      ],
+      "prevRaceName": "福島牝馬S",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 1800,
+      "training": ""
+    },
+    {
+      "num": 13,
+      "frame": 7,
+      "name": "ビップデイジー",
+      "sire": "サトノダイヤモンド",
+      "bms": "キングカメハメハ",
+      "dam": "ローズベリル",
+      "jockey": "西村淳也",
+      "age": "4",
+      "sex": "牝",
+      "pop": 13,
+      "tan": 49.5,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [],
+      "prevRank": 5,
+      "pastRanks": [
+        5,
+        10,
+        10,
+        6
+      ],
+      "prevRaceName": "阪神牝馬S",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 14,
+      "frame": 7,
+      "name": "パラディレーヌ",
+      "sire": "キズナ",
+      "bms": "Closing Argument",
+      "dam": "パラダイスガーデン",
+      "jockey": "原優介",
+      "age": "4",
+      "sex": "牝",
+      "pop": 9,
+      "tan": 19.4,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "エリザベス女王杯",
+          "grade": "G1",
+          "place": 2,
+          "year": 2025,
+          "margin": 0.3,
+          "dist": 2200
+        }
+      ],
+      "prevRank": 12,
+      "pastRanks": [
+        12,
+        8,
+        3,
+        2
+      ],
+      "prevRaceName": "ヴィクトリアマイル",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 15,
+      "frame": 8,
+      "name": "ルージュソリテール",
+      "sire": "ロードカナロア",
+      "bms": "ディープインパクト",
+      "dam": "レッドオルガ",
+      "jockey": "西塚洸二",
+      "age": "4",
+      "sex": "牝",
+      "pop": 6,
+      "tan": 12.4,
+      "style": "先行",
+      "paceType": "SLOW",
+      "gradeWins": [],
+      "prevRank": 3,
+      "pastRanks": [
+        3,
+        1,
+        2,
+        8
+      ],
+      "prevRaceName": "阪神牝馬S",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 16,
+      "frame": 8,
+      "name": "セントメモリーズ",
+      "sire": "エピファネイア",
+      "bms": "ネオユニヴァース",
+      "dam": "ネオフレグランス",
+      "jockey": "木幡巧也",
+      "age": "5",
+      "sex": "牝",
+      "pop": 16,
+      "tan": 139.7,
+      "style": "差し",
+      "paceType": "HIGH",
+      "gradeWins": [],
+      "prevRank": 14,
+      "pastRanks": [
+        14,
+        17,
+        14,
+        15
+      ],
+      "prevRaceName": "ポラリスS",
+      "prevRaceGrade": "OP",
+      "prevRaceDist": 1400,
+      "training": ""
+    }
+  ],
+  "trends": {
+    "popularity": [
+      {
+        "label": "1-2番人気",
+        "val": "複勝率30%止まりで計1勝。上位人気の信頼性低い"
+      },
+      {
+        "label": "3番人気",
+        "val": "【1.2.1.6】複勝率40%"
+      },
+      {
+        "label": "5-6番人気",
+        "val": "複勝率40%。中位人気に妙味",
+        "hl": true
+      },
+      {
+        "label": "7番人気",
+        "val": "【2.1.0.7】勝率20%",
+        "hl": true
+      },
+      {
+        "label": "10番人気",
+        "val": "【3.1.1.5】勝率・複勝率トップ50%。最も妙味",
+        "hl": true
+      },
+      {
+        "label": "11番人気以下",
+        "val": "【0.0.0.48】好走例なし。27倍以上も全滅"
+      }
+    ],
+    "popTip": "上位人気が不安定で中位人気に妙味。10番人気が複勝率50%でトップ、5-6番人気も40%。一方11番人気以下と単勝27倍以上は全滅。荒れるハンデ戦。",
+    "draw": [
+      {
+        "label": "内枠",
+        "val": "東京1800mは内枠の経済コースが有利"
+      },
+      {
+        "label": "中枠",
+        "val": "バランス良く好走"
+      },
+      {
+        "label": "外枠",
+        "val": "差し馬なら長い直線で差し込み可能"
+      }
+    ],
+    "drawTip": "東京芝1800mは枠順の有利不利が比較的小さいコース。",
+    "style": [
+      {
+        "label": "逃げ",
+        "val": "スローなら粘れる → テリオスララ"
+      },
+      {
+        "label": "先行",
+        "val": "好位差しが理想 → ヴァルキリーバース、ニシノティアモ、セキトバイースト",
+        "hl": true
+      },
+      {
+        "label": "差し",
+        "val": "東京の長い直線で末脚活きる → エストゥペンダ、コガネノソラ、パラディレーヌ",
+        "hl": true
+      },
+      {
+        "label": "追込",
+        "val": "展開向けば一発 → ウイントワイライト、ミアネーロ"
+      }
+    ],
+    "styleTip": "東京芝1800mは直線525mと長く瞬発力勝負。好位〜中団から長く脚を使える馬が有利。ハンデ戦のため斤量も重要。",
+    "blood": [
+      {
+        "label": "ゴールドシップ",
+        "val": "牝馬の中距離で堅実 → マカナ、コガネノソラ",
+        "hl": true
+      },
+      {
+        "label": "エピファネイア",
+        "val": "東京コースの瞬発力◎ → ヴァルキリーバース、セントメモリーズ",
+        "hl": true
+      },
+      {
+        "label": "ドゥラメンテ",
+        "val": "中距離の王道 → ニシノティアモ、ミアネーロ"
+      },
+      {
+        "label": "キズナ",
+        "val": "東京芝に高い適性 → ブラウンラチェット、パラディレーヌ",
+        "hl": true
+      },
+      {
+        "label": "ロードカナロア",
+        "val": "マイル〜中距離 → ルージュソリテール"
+      }
+    ],
+    "bloodTip": "東京芝1800mはエピファネイア・ゴールドシップ・キズナの瞬発力＆持続力血統が活きる。ヴァルキリーバース（エピファネイア）、コガネノソラ（ゴールドシップ）が血統的に注目。",
+    "rotation": [
+      {
+        "label": "前走OP特別",
+        "val": "【3.1.1.12】複勝率29%。5番人気内なら複勝率80%",
+        "hl": true,
+        "horses": "ヴァルキリーバース（東風S1着）、テリオスララ（大阪城S10着）、ミアネーロ（総武S15着）"
+      },
+      {
+        "label": "前走3勝クラス",
+        "val": "最多5勝。前走4着以内×5-10番人気が複勝率53.8%",
+        "hl": true,
+        "horses": "マカナ（シドニーT12着）、エストゥペンダ（弥彦S1着）"
+      },
+      {
+        "label": "前走G2",
+        "val": "【0.2.2.7】複勝率36%。前走5-8着で今回3-5番人気が好走",
+        "horses": "ウイントワイライト（京王杯SC）、ビップデイジー・ルージュソリテール（阪神牝馬S）"
+      },
+      {
+        "label": "前走G3",
+        "val": "5歳・前走福島牝馬S・前走ひと桁着順が好走条件",
+        "horses": "コガネノソラ（福島牝馬S1着）、テレサ（福島牝馬S5着）、セキトバイースト・ホールネス（新潟大賞典）、ブラウンラチェット（福島牝馬S）"
+      },
+      {
+        "label": "前走G1",
+        "val": "【0.0.0.9】全滅データ。減点材料",
+        "horses": "ニシノティアモ（ヴィクトリアM6着）、パラディレーヌ（ヴィクトリアM12着）"
+      }
+    ],
+    "rotationTip": "前走3勝クラス組が最多5勝で妙味（前走4着以内×5-10番人気が複勝率53.8%・単回436%）。前走OP特別・G2組の上位人気も安定。一方、前走G1組は【0.0.0.9】の全滅データ。",
+    "rotationHorses": [
+      {
+        "name": "エストゥペンダ",
+        "label": "前走弥彦S1着（3勝クラス組・本命候補）"
+      },
+      {
+        "name": "ヴァルキリーバース",
+        "label": "前走東風S1着（OP特別組・1番人気）"
+      },
+      {
+        "name": "コガネノソラ",
+        "label": "前走福島牝馬S1着（G3組好走条件クリア）"
+      },
+      {
+        "name": "ニシノティアモ",
+        "label": "前走ヴィクトリアM（G1組＝危険データ）"
+      }
+    ],
+    "pickup": {
+      "title": "重要データ×出走馬マッチング",
+      "horses": [
+        {
+          "name": "エストゥペンダ",
+          "note": "📊前走3勝クラス1着の4歳＝最多5勝データの中心。4番人気なら4歳の好走条件もクリア。記事の本命候補。"
+        },
+        {
+          "name": "ヴァルキリーバース",
+          "note": "⚠️前走OP特別1着＋G2連対実績で一見良いが、4歳で1-3番人気は【0.0.1.11】と苦戦データ。1番人気が最大の不安。"
+        },
+        {
+          "name": "ニシノティアモ",
+          "note": "⚠️前走G1（ヴィクトリアM）組は【0.0.0.9】全滅データ。5歳の安定感はあるが前走クラスが減点。"
+        },
+        {
+          "name": "コガネノソラ",
+          "note": "📊前走G3組で5歳・前走福島牝馬S・前走1着の3条件すべてクリア。ゴールドシップ産駒。好走条件合致。"
+        },
+        {
+          "name": "ルージュソリテール",
+          "note": "⚠️前走G2（阪神牝馬S3着）。4-5番人気止まりなら候補。ロードカナロア×母父ディープ。"
+        },
+        {
+          "name": "マカナ",
+          "note": "⚡前走3勝クラス組（シドニーT12着）。7番人気＝勝率20%データゾーン。ゴールドシップ産駒で中距離向き。"
+        },
+        {
+          "name": "セキトバイースト",
+          "note": "🔁前年府中牝馬S覇者のリピーター。ただし今年は前走G3で7着と精彩を欠く。"
+        },
+        {
+          "name": "パラディレーヌ",
+          "note": "⚠️前走G1（ヴィクトリアM12着）＝全滅データ。エリ女2着の実績はあるが前走クラスが減点。"
+        }
+      ]
+    }
+  },
+  "result": null,
+  "review": null,
+  "verification": null,
+  "simulation": {
+    "n": 1000,
+    "sigma": 8,
+    "method": "モンテカルロ法（Box-Muller正規乱数、σ=8）",
+    "note": "血統スコア推定値ベース。ハンデ戦のため波乱含み。",
+    "results": [
+      {
+        "num": 6,
+        "name": "ヴァルキリーバース",
+        "pop": 1,
+        "tan": 3.0,
+        "style": "先行",
+        "frame": 3,
+        "score": 88.0,
+        "winPct": 44.1,
+        "place2Pct": 62.4,
+        "place3Pct": 74.2,
+        "avgRank": 2.8,
+        "ev": 1.32
+      },
+      {
+        "num": 15,
+        "name": "ルージュソリテール",
+        "pop": 6,
+        "tan": 12.4,
+        "style": "先行",
+        "frame": 8,
+        "score": 79.6,
+        "winPct": 10.0,
+        "place2Pct": 21.8,
+        "place3Pct": 32.7,
+        "avgRank": 6.3,
+        "ev": 1.24
+      },
+      {
+        "num": 5,
+        "name": "エストゥペンダ",
+        "pop": 4,
+        "tan": 7.6,
+        "style": "差し",
+        "frame": 3,
+        "score": 79.6,
+        "winPct": 9.8,
+        "place2Pct": 21.1,
+        "place3Pct": 33.8,
+        "avgRank": 6.0,
+        "ev": 0.74
+      },
+      {
+        "num": 12,
+        "name": "コガネノソラ",
+        "pop": 3,
+        "tan": 6.8,
+        "style": "差し",
+        "frame": 6,
+        "score": 77.4,
+        "winPct": 6.3,
+        "place2Pct": 14.7,
+        "place3Pct": 23.3,
+        "avgRank": 7.2,
+        "ev": 0.43
+      },
+      {
+        "num": 13,
+        "name": "ビップデイジー",
+        "pop": 13,
+        "tan": 49.5,
+        "style": "差し",
+        "frame": 7,
+        "score": 77.4,
+        "winPct": 5.2,
+        "place2Pct": 13.5,
+        "place3Pct": 22.5,
+        "avgRank": 7.2,
+        "ev": 2.57
+      },
+      {
+        "num": 14,
+        "name": "パラディレーヌ",
+        "pop": 9,
+        "tan": 19.4,
+        "style": "差し",
+        "frame": 7,
+        "score": 76.3,
+        "winPct": 4.2,
+        "place2Pct": 12.6,
+        "place3Pct": 19.4,
+        "avgRank": 7.5,
+        "ev": 0.81
+      },
+      {
+        "num": 8,
+        "name": "ニシノティアモ",
+        "pop": 2,
+        "tan": 6.5,
+        "style": "先行",
+        "frame": 4,
+        "score": 76.5,
+        "winPct": 4.0,
+        "place2Pct": 12.3,
+        "place3Pct": 19.6,
+        "avgRank": 7.7,
+        "ev": 0.26
+      },
+      {
+        "num": 16,
+        "name": "セントメモリーズ",
+        "pop": 16,
+        "tan": 139.7,
+        "style": "差し",
+        "frame": 8,
+        "score": 74.8,
+        "winPct": 4.0,
+        "place2Pct": 8.6,
+        "place3Pct": 14.7,
+        "avgRank": 8.4,
+        "ev": 5.59
+      },
+      {
+        "num": 1,
+        "name": "マカナ",
+        "pop": 7,
+        "tan": 16.2,
+        "style": "差し",
+        "frame": 1,
+        "score": 75.4,
+        "winPct": 3.4,
+        "place2Pct": 8.7,
+        "place3Pct": 14.5,
+        "avgRank": 8.3,
+        "ev": 0.55
+      },
+      {
+        "num": 2,
+        "name": "ウイントワイライト",
+        "pop": 8,
+        "tan": 18.2,
+        "style": "追込",
+        "frame": 1,
+        "score": 72.9,
+        "winPct": 2.4,
+        "place2Pct": 7.0,
+        "place3Pct": 11.1,
+        "avgRank": 9.1,
+        "ev": 0.44
+      },
+      {
+        "num": 11,
+        "name": "テレサ",
+        "pop": 10,
+        "tan": 26.1,
+        "style": "先行",
+        "frame": 6,
+        "score": 73.0,
+        "winPct": 1.9,
+        "place2Pct": 4.7,
+        "place3Pct": 8.7,
+        "avgRank": 9.5,
+        "ev": 0.5
+      },
+      {
+        "num": 7,
+        "name": "セキトバイースト",
+        "pop": 5,
+        "tan": 10.7,
+        "style": "先行",
+        "frame": 4,
+        "score": 72.0,
+        "winPct": 1.6,
+        "place2Pct": 3.6,
+        "place3Pct": 7.3,
+        "avgRank": 9.9,
+        "ev": 0.17
+      },
+      {
+        "num": 9,
+        "name": "テリオスララ",
+        "pop": 12,
+        "tan": 30.0,
+        "style": "逃げ",
+        "frame": 5,
+        "score": 71.7,
+        "winPct": 1.5,
+        "place2Pct": 4.4,
+        "place3Pct": 8.5,
+        "avgRank": 10.0,
+        "ev": 0.45
+      },
+      {
+        "num": 3,
+        "name": "ブラウンラチェット",
+        "pop": 14,
+        "tan": 85.6,
+        "style": "先行",
+        "frame": 2,
+        "score": 70.4,
+        "winPct": 1.1,
+        "place2Pct": 2.5,
+        "place3Pct": 5.4,
+        "avgRank": 10.6,
+        "ev": 0.94
+      },
+      {
+        "num": 4,
+        "name": "ミアネーロ",
+        "pop": 15,
+        "tan": 92.5,
+        "style": "追込",
+        "frame": 2,
+        "score": 66.9,
+        "winPct": 0.4,
+        "place2Pct": 1.5,
+        "place3Pct": 2.3,
+        "avgRank": 12.4,
+        "ev": 0.37
+      },
+      {
+        "num": 10,
+        "name": "ホールネス",
+        "pop": 11,
+        "tan": 29.4,
+        "style": "差し",
+        "frame": 5,
+        "score": 65.4,
+        "winPct": 0.1,
+        "place2Pct": 0.6,
+        "place3Pct": 2.0,
+        "avgRank": 13.0,
+        "ev": 0.03
+      }
+    ]
+  }
+}
