@@ -1,0 +1,988 @@
+{
+  "id": "shirasagiS2026",
+  "race_id": "",
+  "race_name": "第2回 しらさぎステークス",
+  "date": "2026/6/21",
+  "venue": "阪神",
+  "course": "芝1600m",
+  "expectedPace": "BOTH",
+  "trackCond": "良",
+  "frameBonus": {},
+  "runners": [
+    {
+      "num": 1,
+      "frame": 1,
+      "name": "スマートワイス",
+      "sire": "ロードカナロア",
+      "bms": "ディープインパクト",
+      "dam": "スマートレイアー",
+      "jockey": "川田将雅",
+      "age": "5",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "先行",
+      "paceType": "BOTH",
+      "gradeWins": [],
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        10,
+        4,
+        2
+      ],
+      "prevRaceName": "渡月橋S",
+      "prevRaceGrade": "3勝",
+      "prevRaceDist": 1400,
+      "training": ""
+    },
+    {
+      "num": 2,
+      "frame": 1,
+      "name": "ファインライン",
+      "sire": "ファインニードル",
+      "bms": "ディープインパクト",
+      "dam": "ディープサウス",
+      "jockey": "小崎綾也",
+      "age": "5",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [],
+      "prevRank": 15,
+      "pastRanks": [
+        15,
+        1,
+        11,
+        10
+      ],
+      "prevRaceName": "マイラーズC",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 3,
+      "frame": 2,
+      "name": "メイショウシンタケ",
+      "sire": "ワールドエース",
+      "bms": "アドマイヤコジーン",
+      "dam": "アドマイヤビアン",
+      "jockey": "太宰啓介",
+      "age": "8",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "追込",
+      "paceType": "HIGH",
+      "gradeWins": [
+        {
+          "race": "米子S",
+          "grade": "OP",
+          "place": 1,
+          "year": 2023,
+          "margin": 0.0,
+          "dist": 1600
+        }
+      ],
+      "prevRank": 17,
+      "pastRanks": [
+        17,
+        4,
+        10,
+        10
+      ],
+      "prevRaceName": "安土城S",
+      "prevRaceGrade": "OP",
+      "prevRaceDist": 1400,
+      "training": ""
+    },
+    {
+      "num": 4,
+      "frame": 2,
+      "name": "ブエナオンダ",
+      "sire": "リオンディーズ",
+      "bms": "ディープインパクト",
+      "dam": "オーサムウインド",
+      "jockey": "田口貫太",
+      "age": "5",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "スポーツ報知京都金杯",
+          "grade": "G3",
+          "place": 1,
+          "year": 2026,
+          "margin": 0.0,
+          "dist": 1600
+        }
+      ],
+      "prevRank": 12,
+      "pastRanks": [
+        12,
+        6,
+        15,
+        1
+      ],
+      "prevRaceName": "マイラーズC",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 5,
+      "frame": 3,
+      "name": "ファーヴェント",
+      "sire": "ハーツクライ",
+      "bms": "Street Cry",
+      "dam": "トータルヒート",
+      "jockey": "高杉吏麒",
+      "age": "5",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "先行",
+      "paceType": "SLOW",
+      "gradeWins": [],
+      "prevRank": 6,
+      "pastRanks": [
+        6,
+        3,
+        2,
+        7
+      ],
+      "prevRaceName": "マイラーズC",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 6,
+      "frame": 3,
+      "name": "シンフォーエバー",
+      "sire": "Complexity",
+      "bms": "Pulpit",
+      "dam": "Praising",
+      "jockey": "吉村誠之助",
+      "age": "4",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "差し",
+      "paceType": "HIGH",
+      "gradeWins": [],
+      "prevRank": 14,
+      "pastRanks": [
+        14,
+        13,
+        13,
+        16
+      ],
+      "prevRaceName": "安土城S",
+      "prevRaceGrade": "OP",
+      "prevRaceDist": 1400,
+      "training": ""
+    },
+    {
+      "num": 7,
+      "frame": 4,
+      "name": "キープカルム",
+      "sire": "ロードカナロア",
+      "bms": "サクラバクシンオー",
+      "dam": "ダンスアミーガ",
+      "jockey": "坂井瑠星",
+      "age": "5",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [],
+      "prevRank": 6,
+      "pastRanks": [
+        6,
+        9,
+        6,
+        5
+      ],
+      "prevRaceName": "京王杯SC",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1400,
+      "training": ""
+    },
+    {
+      "num": 8,
+      "frame": 4,
+      "name": "サイルーン",
+      "sire": "ディープインパクト",
+      "bms": "キングカメハメハ",
+      "dam": "ハウオリ",
+      "jockey": "岩田望来",
+      "age": "7",
+      "sex": "せん",
+      "pop": 0,
+      "tan": 0,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "ダービー卿CT",
+          "grade": "G3",
+          "place": 2,
+          "year": 2026,
+          "margin": 0.0,
+          "dist": 1600
+        }
+      ],
+      "prevRank": 2,
+      "pastRanks": [
+        2,
+        7,
+        12,
+        1
+      ],
+      "prevRaceName": "ダービー卿CT",
+      "prevRaceGrade": "G3",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 9,
+      "frame": 5,
+      "name": "ファンダム",
+      "sire": "サートゥルナーリア",
+      "bms": "ジャスタウェイ",
+      "dam": "ファナティック",
+      "jockey": "北村宏司",
+      "age": "4",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "先行",
+      "paceType": "SLOW",
+      "gradeWins": [],
+      "prevRank": 8,
+      "pastRanks": [
+        8,
+        12,
+        3,
+        14
+      ],
+      "prevRaceName": "京王杯SC",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1400,
+      "training": ""
+    },
+    {
+      "num": 10,
+      "frame": 5,
+      "name": "エルトンバローズ",
+      "sire": "ディープブリランテ",
+      "bms": "ブライアンズタイム",
+      "dam": "ショウナンカラット",
+      "jockey": "松若風馬",
+      "age": "6",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "先行",
+      "paceType": "SLOW",
+      "gradeWins": [
+        {
+          "race": "毎日王冠",
+          "grade": "G2",
+          "place": 1,
+          "year": 2023,
+          "margin": 0.0,
+          "dist": 1800
+        },
+        {
+          "race": "ラジオNIKKEI賞",
+          "grade": "G3",
+          "place": 1,
+          "year": 2023,
+          "margin": 0.0,
+          "dist": 1800
+        }
+      ],
+      "prevRank": 8,
+      "pastRanks": [
+        8,
+        13,
+        12,
+        5
+      ],
+      "prevRaceName": "マイラーズC",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 11,
+      "frame": 6,
+      "name": "エコロアルバ",
+      "sire": "モズアスコット",
+      "bms": "フレンチデピュティ",
+      "dam": "スターアクトレス",
+      "jockey": "横山和生",
+      "age": "3",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "差し",
+      "paceType": "HIGH",
+      "gradeWins": [
+        {
+          "race": "サウジアラビアRC",
+          "grade": "G3",
+          "place": 1,
+          "year": 2025,
+          "margin": 0.3,
+          "dist": 1600
+        }
+      ],
+      "prevRank": 9,
+      "pastRanks": [
+        9,
+        4,
+        1,
+        1
+      ],
+      "prevRaceName": "NHKマイルC",
+      "prevRaceGrade": "G1",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 12,
+      "frame": 6,
+      "name": "カズミクラーシュ",
+      "sire": "モーリス",
+      "bms": "キングカメハメハ",
+      "dam": "シャンボールフィズ",
+      "jockey": "幸英明",
+      "age": "5",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "先行",
+      "paceType": "SLOW",
+      "gradeWins": [],
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        1,
+        8,
+        18
+      ],
+      "prevRaceName": "錦S",
+      "prevRaceGrade": "3勝",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 13,
+      "frame": 7,
+      "name": "メタルスピード",
+      "sire": "シルバーステート",
+      "bms": "Shamardal",
+      "dam": "マイビビアーヌ",
+      "jockey": "菱田裕二",
+      "age": "6",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "逃げ",
+      "paceType": "HIGH",
+      "gradeWins": [],
+      "prevRank": 9,
+      "pastRanks": [
+        9,
+        1,
+        11,
+        15
+      ],
+      "prevRaceName": "ダービーCT",
+      "prevRaceGrade": "OP",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 14,
+      "frame": 7,
+      "name": "ミニトランザット",
+      "sire": "エピファネイア",
+      "bms": "ゼンノロブロイ",
+      "dam": "イチオクノホシ",
+      "jockey": "松山弘平",
+      "age": "4",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [],
+      "prevRank": 4,
+      "pastRanks": [
+        4,
+        1,
+        7,
+        1
+      ],
+      "prevRaceName": "ダービーCT",
+      "prevRaceGrade": "OP",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 15,
+      "frame": 7,
+      "name": "ショウナンアデイブ",
+      "sire": "ディープインパクト",
+      "bms": "Mineshaft",
+      "dam": "シーヴ",
+      "jockey": "池添謙一",
+      "age": "7",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "逃げ",
+      "paceType": "HIGH",
+      "gradeWins": [],
+      "prevRank": 4,
+      "pastRanks": [
+        4,
+        3,
+        3,
+        13
+      ],
+      "prevRaceName": "マイラーズC",
+      "prevRaceGrade": "G2",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 16,
+      "frame": 8,
+      "name": "スリールミニョン",
+      "sire": "ミスターメロディ",
+      "bms": "クロフネ",
+      "dam": "ルミノハレブタイ",
+      "jockey": "永島まなみ",
+      "age": "4",
+      "sex": "牝",
+      "pop": 0,
+      "tan": 0,
+      "style": "先行",
+      "paceType": "HIGH",
+      "gradeWins": [],
+      "prevRank": 3,
+      "pastRanks": [
+        3,
+        14,
+        16,
+        7
+      ],
+      "prevRaceName": "安土城S",
+      "prevRaceGrade": "OP",
+      "prevRaceDist": 1400,
+      "training": ""
+    },
+    {
+      "num": 17,
+      "frame": 8,
+      "name": "スイープアワーズ",
+      "sire": "ディープインパクト",
+      "bms": "エンドスウィープ",
+      "dam": "スイープトウショウ",
+      "jockey": "国分優作",
+      "age": "6",
+      "sex": "牡",
+      "pop": 0,
+      "tan": 0,
+      "style": "差し",
+      "paceType": "SLOW",
+      "gradeWins": [],
+      "prevRank": 1,
+      "pastRanks": [
+        1,
+        2,
+        2,
+        8
+      ],
+      "prevRaceName": "立雲峡S",
+      "prevRaceGrade": "3勝",
+      "prevRaceDist": 1600,
+      "training": ""
+    },
+    {
+      "num": 18,
+      "frame": 8,
+      "name": "タガノエルピーダ",
+      "sire": "キズナ",
+      "bms": "キングカメハメハ",
+      "dam": "タガノレヴェントン",
+      "jockey": "亀田温心",
+      "age": "5",
+      "sex": "牝",
+      "pop": 0,
+      "tan": 0,
+      "style": "逃げ",
+      "paceType": "HIGH",
+      "gradeWins": [],
+      "prevRank": 2,
+      "pastRanks": [
+        2,
+        4,
+        5,
+        13
+      ],
+      "prevRaceName": "安土城S",
+      "prevRaceGrade": "OP",
+      "prevRaceDist": 1400,
+      "training": ""
+    }
+  ],
+  "trends": {
+    "popularity": [
+      {
+        "label": "1番人気",
+        "val": "【4.3.0.3】連対率・複勝率70%。信頼度高い",
+        "hl": true
+      },
+      {
+        "label": "2番人気",
+        "val": "【2.1.0.7】複勝率30%"
+      },
+      {
+        "label": "4番人気",
+        "val": "【2.1.2.5】複勝率50%。穴の中心",
+        "hl": true
+      },
+      {
+        "label": "5-10番人気",
+        "val": "複勝率20-30%に分散。穴馬の激走に警戒",
+        "hl": true
+      },
+      {
+        "label": "11番人気",
+        "val": "【0.0.1.6】複勝率14.3%"
+      },
+      {
+        "label": "12番人気以下",
+        "val": "【0.0.0.24】好走例なし"
+      }
+    ],
+    "popTip": "1番人気が複勝率70%と堅い反面、好走馬は幅広い人気に分散。4番人気が複勝率50%と妙味。11番人気以内なら穴の激走を警戒。",
+    "draw": [
+      {
+        "label": "内枠",
+        "val": "阪神外回りは内枠の経済コースが有利"
+      },
+      {
+        "label": "中枠",
+        "val": "バランス良く好走"
+      },
+      {
+        "label": "外枠",
+        "val": "差し馬なら外から差し込み可能"
+      }
+    ],
+    "drawTip": "阪神芝1600m外回りは紛れの少ないコース。枠順の有利不利は小さい。",
+    "style": [
+      {
+        "label": "逃げ",
+        "val": "外回りは逃げ切り難しい → メタルスピード、ショウナンアデイブ、タガノエルピーダ"
+      },
+      {
+        "label": "先行",
+        "val": "好位差しが理想 → スマートワイス、ファーヴェント、カズミクラーシュ",
+        "hl": true
+      },
+      {
+        "label": "差し",
+        "val": "長い直線で末脚活きる → サイルーン、ミニトランザット、スイープアワーズ",
+        "hl": true
+      },
+      {
+        "label": "追込",
+        "val": "展開向けば一発 → メイショウシンタケ"
+      }
+    ],
+    "styleTip": "阪神外回りは直線473mと長く、瞬発力勝負になりやすい。好位〜中団から長く脚を使える馬が有利。",
+    "blood": [
+      {
+        "label": "ディープインパクト",
+        "val": "阪神マイル外回りの王道血統 → サイルーン、ショウナンアデイブ、スイープアワーズ。母父としても優秀",
+        "hl": true
+      },
+      {
+        "label": "ロードカナロア",
+        "val": "マイルのスピード血統 → スマートワイス、キープカルム",
+        "hl": true
+      },
+      {
+        "label": "エピファネイア",
+        "val": "瞬発力型。母父ゼンノロブロイとの配合 → ミニトランザット"
+      },
+      {
+        "label": "ハーツクライ",
+        "val": "持続力勝負向き → ファーヴェント"
+      },
+      {
+        "label": "モーリス",
+        "val": "マイル〜中距離の中距離砲 → カズミクラーシュ"
+      }
+    ],
+    "bloodTip": "阪神芝1600m外回りはディープインパクト系の瞬発力が活きる舞台。サイルーン・ショウナンアデイブ・スイープアワーズの父ディープ、ブエナオンダ・ファインラインの母父ディープが血統的に注目。",
+    "rotation": [
+      {
+        "label": "前走条件戦1着",
+        "val": "【2.0.2.4】複勝率50%。前走1着なら57.1%と優秀",
+        "hl": true,
+        "horses": "スマートワイス（渡月橋S1着）、カズミクラーシュ（錦S1着）、スイープアワーズ（立雲峡S1着）"
+      },
+      {
+        "label": "前走G1",
+        "val": "【2.2.0.6】連対率40%と優秀",
+        "hl": true,
+        "horses": "エコロアルバ（NHKマイルC9着）"
+      },
+      {
+        "label": "前走OP特別",
+        "val": "【3.6.7.63】最多の好走数。間隔中2-17週に注目",
+        "horses": "メイショウシンタケ・シンフォーエバー・スリールミニョン・タガノエルピーダ（安土城S）、メタルスピード・ミニトランザット（ダービーCT）"
+      },
+      {
+        "label": "前走G2-G3",
+        "val": "前走掲示板外でも今回6番人気以内なら好走例あり",
+        "horses": "ファインライン・ブエナオンダ・ファーヴェント・ショウナンアデイブ（マイラーズC）、サイルーン（ダービー卿CT2着）、キープカルム・ファンダム（京王杯SC）"
+      }
+    ],
+    "rotationTip": "前走条件戦組（特に1着）が複勝率50-57%と要注意。前走G1組も連対率40%。条件戦組の好走馬は芝1600mでOP特別1着か重賞3着以内の距離実績が共通点。",
+    "rotationHorses": [
+      {
+        "name": "スマートワイス",
+        "label": "前走渡月橋S1着（条件戦組）"
+      },
+      {
+        "name": "カズミクラーシュ",
+        "label": "前走錦S1着（条件戦組）"
+      },
+      {
+        "name": "スイープアワーズ",
+        "label": "前走立雲峡S1着（条件戦組）"
+      },
+      {
+        "name": "エコロアルバ",
+        "label": "前走NHKマイルC（G1組）"
+      }
+    ],
+    "pickup": {
+      "title": "重要データ×出走馬マッチング",
+      "horses": [
+        {
+          "name": "スマートワイス",
+          "note": "📊前走3勝クラス1着＝複勝率57.1%データに該当。川田騎手×ロードカナロア。1番人気想定の中心。"
+        },
+        {
+          "name": "ブエナオンダ",
+          "note": "🏆京都金杯（G3）勝ち馬。リオンディーズ×母父ディープで阪神マイル適性。前走マイラーズC12着だが格上。"
+        },
+        {
+          "name": "サイルーン",
+          "note": "📊前走G3で2着（ダービー卿CT）。父ディープ×阪神外回り。せん7歳が年齢的に微妙。"
+        },
+        {
+          "name": "エコロアルバ",
+          "note": "📊前走G1組（NHKマイルC9着）＝連対率40%データ該当。3歳53kgの斤量恩恵。サウジアラビアRC勝ちの素質馬。"
+        },
+        {
+          "name": "カズミクラーシュ",
+          "note": "📊前走条件戦1着（錦S）＝複勝率57.1%。モーリス産駒で2連勝中の勢い。"
+        },
+        {
+          "name": "ミニトランザット",
+          "note": "⚡前走OP特別（ダービーCT4着）。エピファネイア×ゼンノロブロイの瞬発力配合。4歳の上昇馬。"
+        },
+        {
+          "name": "スイープアワーズ",
+          "note": "📊前走条件戦1着（立雲峡S）＝複勝率57.1%。父ディープの阪神マイル適性。6歳が年齢的にやや不安。"
+        },
+        {
+          "name": "メイショウシンタケ",
+          "note": "⚠️8歳＝7歳以上は複勝率7.7%の苦戦データ。23年米子S勝ち馬だが全盛期過ぎ。"
+        }
+      ]
+    }
+  },
+  "result": null,
+  "review": null,
+  "verification": null,
+  "simulation": {
+    "n": 1000,
+    "sigma": 8,
+    "method": "モンテカルロ法（Box-Muller正規乱数、σ=8）",
+    "note": "血統スコア推定値ベース。オッズ未確定のため期待値は参考値。",
+    "results": [
+      {
+        "num": 12,
+        "name": "カズミクラーシュ",
+        "pop": 0,
+        "tan": 0,
+        "style": "先行",
+        "frame": 6,
+        "score": 85.2,
+        "winPct": 20.5,
+        "place2Pct": 34.7,
+        "place3Pct": 47.3,
+        "avgRank": 4.6,
+        "ev": 0
+      },
+      {
+        "num": 1,
+        "name": "スマートワイス",
+        "pop": 0,
+        "tan": 0,
+        "style": "先行",
+        "frame": 1,
+        "score": 83.9,
+        "winPct": 17.9,
+        "place2Pct": 34.6,
+        "place3Pct": 48.0,
+        "avgRank": 4.7,
+        "ev": 0
+      },
+      {
+        "num": 10,
+        "name": "エルトンバローズ",
+        "pop": 0,
+        "tan": 0,
+        "style": "先行",
+        "frame": 5,
+        "score": 83.1,
+        "winPct": 16.5,
+        "place2Pct": 29.3,
+        "place3Pct": 40.6,
+        "avgRank": 5.2,
+        "ev": 0
+      },
+      {
+        "num": 11,
+        "name": "エコロアルバ",
+        "pop": 0,
+        "tan": 0,
+        "style": "差し",
+        "frame": 6,
+        "score": 82.5,
+        "winPct": 15.9,
+        "place2Pct": 28.1,
+        "place3Pct": 38.9,
+        "avgRank": 5.4,
+        "ev": 0
+      },
+      {
+        "num": 8,
+        "name": "サイルーン",
+        "pop": 0,
+        "tan": 0,
+        "style": "差し",
+        "frame": 4,
+        "score": 78.0,
+        "winPct": 4.9,
+        "place2Pct": 10.7,
+        "place3Pct": 17.2,
+        "avgRank": 8.1,
+        "ev": 0
+      },
+      {
+        "num": 4,
+        "name": "ブエナオンダ",
+        "pop": 0,
+        "tan": 0,
+        "style": "差し",
+        "frame": 2,
+        "score": 77.0,
+        "winPct": 4.6,
+        "place2Pct": 10.3,
+        "place3Pct": 17.7,
+        "avgRank": 8.2,
+        "ev": 0
+      },
+      {
+        "num": 17,
+        "name": "スイープアワーズ",
+        "pop": 0,
+        "tan": 0,
+        "style": "差し",
+        "frame": 8,
+        "score": 78.4,
+        "winPct": 4.5,
+        "place2Pct": 11.7,
+        "place3Pct": 18.7,
+        "avgRank": 7.9,
+        "ev": 0
+      },
+      {
+        "num": 9,
+        "name": "ファンダム",
+        "pop": 0,
+        "tan": 0,
+        "style": "先行",
+        "frame": 5,
+        "score": 77.3,
+        "winPct": 3.8,
+        "place2Pct": 9.6,
+        "place3Pct": 16.6,
+        "avgRank": 8.2,
+        "ev": 0
+      },
+      {
+        "num": 7,
+        "name": "キープカルム",
+        "pop": 0,
+        "tan": 0,
+        "style": "差し",
+        "frame": 4,
+        "score": 76.5,
+        "winPct": 3.7,
+        "place2Pct": 9.6,
+        "place3Pct": 14.3,
+        "avgRank": 8.7,
+        "ev": 0
+      },
+      {
+        "num": 14,
+        "name": "ミニトランザット",
+        "pop": 0,
+        "tan": 0,
+        "style": "差し",
+        "frame": 7,
+        "score": 75.5,
+        "winPct": 3.2,
+        "place2Pct": 6.8,
+        "place3Pct": 11.0,
+        "avgRank": 9.2,
+        "ev": 0
+      },
+      {
+        "num": 5,
+        "name": "ファーヴェント",
+        "pop": 0,
+        "tan": 0,
+        "style": "先行",
+        "frame": 3,
+        "score": 73.6,
+        "winPct": 1.9,
+        "place2Pct": 4.4,
+        "place3Pct": 7.6,
+        "avgRank": 9.9,
+        "ev": 0
+      },
+      {
+        "num": 2,
+        "name": "ファインライン",
+        "pop": 0,
+        "tan": 0,
+        "style": "差し",
+        "frame": 1,
+        "score": 74.5,
+        "winPct": 1.2,
+        "place2Pct": 3.6,
+        "place3Pct": 7.1,
+        "avgRank": 9.8,
+        "ev": 0
+      },
+      {
+        "num": 18,
+        "name": "タガノエルピーダ",
+        "pop": 0,
+        "tan": 0,
+        "style": "逃げ",
+        "frame": 8,
+        "score": 74.0,
+        "winPct": 1.1,
+        "place2Pct": 4.4,
+        "place3Pct": 8.9,
+        "avgRank": 9.9,
+        "ev": 0
+      },
+      {
+        "num": 15,
+        "name": "ショウナンアデイブ",
+        "pop": 0,
+        "tan": 0,
+        "style": "逃げ",
+        "frame": 7,
+        "score": 69.4,
+        "winPct": 0.1,
+        "place2Pct": 0.8,
+        "place3Pct": 2.6,
+        "avgRank": 12.4,
+        "ev": 0
+      },
+      {
+        "num": 13,
+        "name": "メタルスピード",
+        "pop": 0,
+        "tan": 0,
+        "style": "逃げ",
+        "frame": 7,
+        "score": 68.1,
+        "winPct": 0.1,
+        "place2Pct": 0.9,
+        "place3Pct": 1.8,
+        "avgRank": 12.8,
+        "ev": 0
+      },
+      {
+        "num": 16,
+        "name": "スリールミニョン",
+        "pop": 0,
+        "tan": 0,
+        "style": "先行",
+        "frame": 8,
+        "score": 67.5,
+        "winPct": 0.1,
+        "place2Pct": 0.4,
+        "place3Pct": 1.4,
+        "avgRank": 13.3,
+        "ev": 0
+      },
+      {
+        "num": 6,
+        "name": "シンフォーエバー",
+        "pop": 0,
+        "tan": 0,
+        "style": "差し",
+        "frame": 3,
+        "score": 59.5,
+        "winPct": 0.0,
+        "place2Pct": 0.1,
+        "place3Pct": 0.3,
+        "avgRank": 15.9,
+        "ev": 0
+      },
+      {
+        "num": 3,
+        "name": "メイショウシンタケ",
+        "pop": 0,
+        "tan": 0,
+        "style": "追込",
+        "frame": 2,
+        "score": 55.0,
+        "winPct": 0.0,
+        "place2Pct": 0.0,
+        "place3Pct": 0.0,
+        "avgRank": 17.0,
+        "ev": 0
+      }
+    ]
+  }
+}
