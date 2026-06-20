@@ -1295,6 +1295,7 @@ const GRADE_RACES = {
   derby2026:{id:"derby2026",grade:"G1",name:"第93回 東京優駿（日本ダービー）",date:"2026/5/31",venue:"東京",course:"芝2400m",weather:"",trackCond:"",emoji:"🏆",trends:null,result:null,review:null},
   yasuda2026:{id:"yasuda2026",grade:"G1",name:"第76回 安田記念",date:"2026/6/7",venue:"東京",course:"芝1600m",weather:"",trackCond:"",emoji:"⚡",trends:null,result:null,review:null},
   takarazuka2026:{id:"takarazuka2026",grade:"G1",name:"第67回 宝塚記念",date:"2026/6/14",venue:"阪神",course:"芝2200m",weather:"",trackCond:"",emoji:"🌟",trends:null,result:null,review:null},
+  shirasagiS2026:{id:"shirasagiS2026",grade:"G3",name:"第2回 しらさぎステークス",date:"2026/6/21",venue:"阪神",course:"芝1600m",weather:"",trackCond:"",emoji:"🦢",trends:null,result:null,review:null},
   sprinters2026:{id:"sprinters2026",grade:"G1",name:"第60回 スプリンターズS",date:"2026/10/4",venue:"中山",course:"芝1200m",weather:"",trackCond:"",emoji:"💨",trends:null,result:null,review:null},
   shuka2026:{id:"shuka2026",grade:"G1",name:"第29回 秋華賞",date:"2026/10/18",venue:"京都",course:"芝2000m",weather:"",trackCond:"",emoji:"🍂",trends:null,result:null,review:null},
   kikka2026:{id:"kikka2026",grade:"G1",name:"第87回 菊花賞",date:"2026/10/25",venue:"京都",course:"芝3000m",weather:"",trackCond:"",emoji:"🌻",trends:null,result:null,review:null},
