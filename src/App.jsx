@@ -1854,14 +1854,42 @@ const GradeRacePage=({raceId,stallions=[],reviews={}})=>{
               else if(runnerStyle==="追込"){bonus-=3;weaknesses.push("阪神2200m追込×（内回りで届きにくい）");}
             }
 
-            // ⑤c リピーターボーナス（安田記念2026の教訓: ガイアフォースが2年連続2着）
-            // 同レースでの過去好走実績（gradeWinsに同名レースがある場合）
+            // ⑤d 当日馬場バイアス（しらさぎS・府中牝馬S2026の教訓）
+            // レースJSONに trackBias を設定すると、当日の馬場傾向で脚質を補正
+            // "差し有利": 差し・追込+3pt、逃げ・先行-2pt（東京6/21稍重の例）
+            // "先行有利": 逃げ・先行+3pt、差し・追込-2pt（高速・前残りの例）
+            // 未設定時は補正なし（事前予想は従来通りコース形態ベース）
+            const trackBias=race.trackBias||null;
+            if(trackBias==="差し有利"){
+              if(runnerStyle==="差し"||runnerStyle==="追込"){bonus+=3;strengths.push("当日差し有利馬場○");}
+              else if(runnerStyle==="逃げ"||runnerStyle==="先行"){bonus-=2;weaknesses.push("当日差し有利馬場×（前残りにくい）");}
+            } else if(trackBias==="先行有利"){
+              if(runnerStyle==="逃げ"||runnerStyle==="先行"){bonus+=3;strengths.push("当日先行有利馬場○");}
+              else if(runnerStyle==="差し"||runnerStyle==="追込"){bonus-=2;weaknesses.push("当日先行有利馬場×（差し届きにくい）");}
+            }
+
+            // ⑤e 人気馬の苦戦データ（府中牝馬S2026の教訓: 4歳1番人気ヴァルキリーバース14着）
+            // レースJSONに dangerPattern を設定すると該当馬を減点
+            const dp=race.dangerPattern||null;
+            if(dp&&runner.age&&runner.pop){
+              const ageMatch=!dp.age||parseInt(runner.age)===dp.age;
+              const popMatch=!dp.popMax||(runner.pop>0&&runner.pop<=dp.popMax);
+              if(ageMatch&&popMatch){
+                bonus-=(dp.penalty||5);
+                weaknesses.push(dp.label||`危険データ該当（-${dp.penalty||5}pt）`);
+              }
+            }
+
+            // ⑤c リピーターボーナス（府中牝馬S2026の教訓: 前年覇者セキトバイーストの連覇を軽視）
+            // 安田記念ガイアフォース2年連続2着・宝塚メイショウタバル連覇・府中牝馬セキトバイースト連覇と3レース連続でリピーターが好走
+            // 同レースでの過去好走実績（gradeWinsに同名レースがある場合）→ ボーナスを増額
             const raceBaseName=(race.race_name||race.name||"").replace(/第\d+回\s*/,"").replace(/（.*?）/,"");
             if(raceBaseName){
               const repeaterWin=gw.find(w=>w.race&&raceBaseName.includes(w.race.replace(/（.*?）/,"")));
               if(repeaterWin){
-                if(repeaterWin.place===1){bonus+=6;strengths.push(`リピーター◎（${repeaterWin.year}年同レース1着）`);}
-                else if(repeaterWin.place<=3){bonus+=4;strengths.push(`リピーター○（${repeaterWin.year}年同レース${repeaterWin.place}着）`);}
+                if(repeaterWin.place===1){bonus+=9;strengths.push(`リピーター◎（${repeaterWin.year}年同レース1着）`);}
+                else if(repeaterWin.place<=3){bonus+=6;strengths.push(`リピーター○（${repeaterWin.year}年同レース${repeaterWin.place}着）`);}
+                else if(repeaterWin.place<=5){bonus+=3;strengths.push(`リピーター△（${repeaterWin.year}年同レース${repeaterWin.place}着）`);}
               }
             }
 
